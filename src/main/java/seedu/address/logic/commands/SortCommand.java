@@ -21,6 +21,10 @@ public class SortCommand extends Command {
                 + "Parameters: KEYWORD [FIELD] [ORDER]\n"
                 + "Example: " + COMMAND_WORD + " email desc";
 
+    public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n"
+            + "Accepted Field Values: NAME, PHONE, EMAIL, ADDRESS \n"
+            + "Accepted Order Values: ASC, DESC";
+
     public static final String MESSAGE_SUCCESS = "All persons in address book successfully sorted";
 
     public final String field;
