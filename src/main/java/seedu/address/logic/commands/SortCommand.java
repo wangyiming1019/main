@@ -48,7 +48,7 @@ public class SortCommand extends Command {
 //        System.out.println(getField() + "\n");
 //        System.out.println(getOrder() + "\n");
 
-        model.sortBy(getField(), getOrder());
+        model.sortPersons(getField(), getOrder());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

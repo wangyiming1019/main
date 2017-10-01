@@ -45,4 +45,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Sorts all persons in person list by field in ascending (asc) or descending (desc) order
+     * @param field
+     * @param order
+     */
+    void sortPersons(String field, String order);
 }
