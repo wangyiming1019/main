@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.model.person.NameContainsKeywordsPredicate;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,14 +28,12 @@ public class SortCommand extends Command {
             + "Accepted Order Values: ASC, DESC";
 
     public static final String MESSAGE_SUCCESS = "All persons in address book successfully sorted";
-//
-//    public final String field;
-//    public final String order;
-//
-//    public SortCommand(String field, String order) {
-//        this.field = field.toLowerCase();
-//        this.order = order.toLowerCase();
-//    }
+
+    private final NameContainsKeywordsPredicate predicate;
+
+    public SortCommand(NameContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
+    }
 //
 //    public String getField() {
 //        return this.field;
