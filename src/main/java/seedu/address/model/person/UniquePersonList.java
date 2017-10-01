@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +28,37 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
+
+    /**
+     * Comparators for the various fields available for sorting
+     */
+    public Comparator<Person> personNameComparator = new Comparator<Person>() {
+        @Override
+        public int compare(Person o1, Person o2) {
+            return o1.getName().fullName.compareTo(o2.getName().fullName);
+        }
+    };
+
+    public Comparator<Person> personPhoneComparator = new Comparator<Person>() {
+        @Override
+        public int compare(Person o1, Person o2) {
+            return o1.getPhone().value.compareTo(o2.getPhone().value);
+        }
+    };
+
+    public Comparator<Person> personEmailComparator = new Comparator<Person>() {
+        @Override
+        public int compare(Person o1, Person o2) {
+            return o1.getEmail().value.compareTo(o2.getEmail().value);
+        }
+    };
+
+    public Comparator<Person> personAddressComparator = new Comparator<Person>() {
+        @Override
+        public int compare(Person o1, Person o2) {
+            return o1.getAddress().value.compareTo(o2.getAddress().value);
+        }
+    };
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -101,6 +134,56 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    public void sortBy(String field, String order) {
+        //sortyBy first chooses the right comparator
+        Comparator<Person> comparator = null;
+        switch (field) {
+        case "name":
+            comparator = personNameComparator;
+            break;
+
+        case "phone":
+            comparator = personPhoneComparator;
+            break;
+
+        case "email":
+            comparator = personEmailComparator;
+            break;
+
+        case "address":
+            comparator = personAddressComparator;
+            break;
+
+        default:
+            try {
+                System.out.println("An error occured");
+                throw new Exception("Invalid field parameter entered...\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        //sortBy then chooses the right ordering
+        switch (order) {
+        case "asc":
+            Collections.sort(internalList, comparator);
+            break;
+
+        case "desc":
+            Collections.sort(internalList, Collections.reverseOrder(comparator));
+            break;
+
+        default:
+            try {
+                System.out.println("An error occured");
+                throw new Exception("Invalid field parameter entered...\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
