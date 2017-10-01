@@ -832,6 +832,36 @@ Use case resumes at step 2.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Undo/Redo
+
+*MSS*
+
+1.  User requests to undo/redo a specified number of steps
+2.  AddressBook undos/redos the last X commands, where X was the number of commands to undo/redo
+3.  AddressBook displays a success message
+4.  AddressBook displays a list of all the commands that were undone/redone.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The number of commands entered were less than the specified number of undo commands.
++
+[none]
+** 2a1. AddressBook undos all previous commands.
++
+Use case resumes at step 3.
+
+[none]
+* 2a. The number of commands entered were less than the specified number of redo commands.
++
+[none]
+** 2a1. AddressBook redos all previously undone commands.
++
+Use case resumes at step 3
+
 [appendix]
 == Non Functional Requirements
 
