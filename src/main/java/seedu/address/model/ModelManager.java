@@ -83,7 +83,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void sortPersons(String field, String order) {
-        addressBook.sortBy(field, order);
+        addressBook.sortPersonsBy(field, order);
         indicateAddressBookChanged();
     }
 
