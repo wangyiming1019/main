@@ -767,7 +767,70 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Search for person
+
+*MSS*
+
+1.  User requests to search for a person with criteria
+2.  AddressBook shows a list of persons who match the criteria
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2a. No such person was found.
++
+[none]
+** 2a1. AddressBook informs the user that no matching users were found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to change the details of a specific person in the list
+4.  AddressBook changes the details of the specified person.
+5.  AddressBook shows the new details of the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3a. The specified detail to change is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. The specified detail to change is exactly the same as the previous detail.
++
+[none]
+** 4a1. AddressBook informs the user that no change was made.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
