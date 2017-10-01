@@ -776,8 +776,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-{More to be added}
-
 [appendix]
 == Use Cases
 
