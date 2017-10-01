@@ -7,6 +7,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import java.util.Arrays;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_INPUT;
 
 public class SortCommandParser implements Parser<SortCommand> {
 
@@ -32,7 +33,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         if (!SortCommand.ACCEPTED_FIELD_PARAMETERS.contains(argKeywords[fieldArgPosition])
                     || !SortCommand.ACCEPTED_ORDER_PARAMETERS.contains(argKeywords[orderArgPosition])) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_INPUT, SortCommand.MESSAGE_USAGE));
         }
 
         // If there are no problems with the input, return a new instance of SortCommand
