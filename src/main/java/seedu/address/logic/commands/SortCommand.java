@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,29 +27,29 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "All persons in address book successfully sorted";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final String field;
+    private final String order;
 
-    public SortCommand(NameContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
+    public SortCommand(String field, String order) {
+        this.field = field;
+        this.order = order;
     }
-//
-//    public String getField() {
-//        return this.field;
-//    }
-//    public String getOrder() { return this.order; }
-//
-//    @Override
-//    public CommandResult execute() {
-////        System.out.println(getField() + "\n");
-////        System.out.println(getOrder() + "\n");
-//
-//        // Check for inappropriate field parameters. If input is invalid, return invalid input message
-//        if (!ACCEPTED_FIELD_PARAMETERS.contains(getField()) || !ACCEPTED_ORDER_PARAMETERS.contains(getOrder())) {
-//            return new CommandResult(MESSAGE_INVALID_INPUT);
-//        }
-//
-//        addressBook.sortBy(getField(), getOrder());
-//        return new CommandResult(MESSAGE_SUCCESS);
-//    }
+
+    private String getField() {
+        return this.field;
+    }
+
+    private String getOrder() {
+        return this.order;
+    }
+
+    @Override
+    public CommandResult execute() {
+//        System.out.println(getField() + "\n");
+//        System.out.println(getOrder() + "\n");
+
+        model.sortBy(getField(), getOrder());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
 
 }

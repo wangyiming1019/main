@@ -11,8 +11,8 @@ import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_INPUT;
 
 public class SortCommandParser implements Parser<SortCommand> {
 
-    private static final int fieldArgPosition = 0;
-    private static final int orderArgPosition = 1;
+    public static final int FIELD_ARG_POSITION = 0;
+    public static final int ORDER_ARG_POSITION = 1;
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
@@ -31,13 +31,13 @@ public class SortCommandParser implements Parser<SortCommand> {
             argKeywords[i] = argKeywords[i].toLowerCase();
         }
 
-        if (!SortCommand.ACCEPTED_FIELD_PARAMETERS.contains(argKeywords[fieldArgPosition])
-                    || !SortCommand.ACCEPTED_ORDER_PARAMETERS.contains(argKeywords[orderArgPosition])) {
+        if (!SortCommand.ACCEPTED_FIELD_PARAMETERS.contains(argKeywords[FIELD_ARG_POSITION])
+                    || !SortCommand.ACCEPTED_ORDER_PARAMETERS.contains(argKeywords[ORDER_ARG_POSITION])) {
             throw new ParseException(String.format(MESSAGE_INVALID_INPUT, SortCommand.MESSAGE_USAGE));
         }
 
         // If there are no problems with the input, return a new instance of SortCommand
-        return new SortCommand(new NameContainsKeywordsPredicate(Arrays.asList(argKeywords)));
+        return new SortCommand(argKeywords[FIELD_ARG_POSITION], argKeywords[ORDER_ARG_POSITION]);
 
     }
 
