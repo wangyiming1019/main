@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -893,8 +893,13 @@ Use case resumes at step 1.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Feature sets are to be rolled out on a regular weekly basis, following the proper forking workflow procedure.
+.  The application should be intuitive for all users, regardless of technical ability.
+.  The application's graphic user interface should display properly on monitors of all resolutions.
+.  New features will have relevant tests created to root out possible bugs.
+.  New features and changes are to be documented in the user and developer guides.
+.  Saved data is to be backwards compatible from v1.0 onwards.
+.  The application is not required to handle physical printing
 
 [appendix]
 == Glossary
@@ -911,6 +916,41 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[feature-set]]
+Feature Set
+
+....
+A feature set is a set of enhancements rolled out at each set interval
+....
+
+[[graphic-user-interface]]
+Graphic User Interface
+
+....
+The Graphic User Interface (GUI) consists of the organised visual elements that users can see and interact with.
+....
+
+[[bugs]]
+Bugs
+
+....
+Bugs refer to errors and flaws in the implementation of features. It causes the application to behave unexpectedly or give incorrect outputs/outcomes.
+....
+
+[[enhancements]]
+Enhancements
+
+....
+An enhancement refers to an addition of a feature to the application with the intention of improving user experience. It is rolled out as part of a feature set.
+....
+
+[[backwards-compatible]]
+Backwards Compatible
+
+....
+In the context of this project, backwards compatible save data refers to the ability for multiple versions of this application to use the same saved data.
 ....
 
 [appendix]
