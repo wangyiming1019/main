@@ -18,6 +18,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.OpenRequestEvent;
+import seedu.address.commons.events.ui.SaveAsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -194,6 +196,22 @@ public class MainWindow extends UiPart<Region> {
 
     void show() {
         primaryStage.show();
+    }
+
+    /**
+     * Opens the data from a desired location
+     */
+    @FXML
+    private void handleOpen() {
+        raise(new OpenRequestEvent());
+    }
+
+    /**
+     * Saves the data at a desired location
+     */
+    @FXML
+    private void handleSaveAs() {
+        raise(new SaveAsRequestEvent());
     }
 
     /**
