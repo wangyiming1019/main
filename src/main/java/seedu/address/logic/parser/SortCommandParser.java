@@ -6,6 +6,9 @@ import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_INPUT;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new SortCommand object based on the field and order parameters provided
+ */
 public class SortCommandParser implements Parser<SortCommand> {
 
     public static final int FIELD_ARG_POSITION = 0;
