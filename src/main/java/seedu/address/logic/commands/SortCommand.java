@@ -45,9 +45,6 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() {
-//        System.out.println(getField() + "\n");
-//        System.out.println(getOrder() + "\n");
-
         model.sortPersons(getField(), getOrder());
         return new CommandResult(MESSAGE_SUCCESS);
     }
