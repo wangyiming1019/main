@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -75,10 +76,10 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     /**
-     * Changes the filepath of the save file
+     * Changes the file path of the save file
      * @param filepath the new file path of the save file. Cannot be null
      */
-    public void changeFilePath(String filepath) {
+    public void changeFilePath(String filepath, UserPrefs u) {
         requireNonNull(filepath);
         filePath = filepath;
     }

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,7 +14,9 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -38,6 +41,9 @@ public class MainWindow extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private final FileChooser fileChooser = new FileChooser();
+
+    private MainApp mainApp;
     private Stage primaryStage;
     private Logic logic;
 
@@ -125,6 +131,15 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Is called by the main application to give a reference back to itself.
+     *
+     * @param mainApp
+     */
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
@@ -203,6 +218,10 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleOpen() {
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+
+        }
         raise(new OpenRequestEvent());
     }
 
@@ -211,6 +230,10 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleSaveAs() {
+        File file = fileChooser.showSaveDialog(primaryStage);
+        if (file != null) {
+
+        }
         raise(new SaveAsRequestEvent());
     }
 
