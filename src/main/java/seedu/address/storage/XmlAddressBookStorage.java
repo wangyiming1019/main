@@ -74,4 +74,12 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    /**
+     * Changes the filepath of the save file
+     * @param filepath the new file path of the save file. Cannot be null
+     */
+    public void changeFilePath(String filepath) {
+        requireNonNull(filepath);
+        filePath = filepath;
+    }
 }

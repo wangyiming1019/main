@@ -89,4 +89,8 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    @Override
+    public void changeFilePath(String filepath) {
+        addressBookStorage.changeFilePath(filepath);
+    }
 }
