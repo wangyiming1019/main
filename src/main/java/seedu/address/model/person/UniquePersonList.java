@@ -31,37 +31,6 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
     /**
-     * Comparators for the various fields available for sorting
-     */
-    public Comparator<Person> personNameComparator = new Comparator<Person>() {
-        @Override
-        public int compare(Person o1, Person o2) {
-            return o1.getName().fullName.compareTo(o2.getName().fullName);
-        }
-    };
-
-    public Comparator<Person> personPhoneComparator = new Comparator<Person>() {
-        @Override
-        public int compare(Person o1, Person o2) {
-            return o1.getPhone().value.compareTo(o2.getPhone().value);
-        }
-    };
-
-    public Comparator<Person> personEmailComparator = new Comparator<Person>() {
-        @Override
-        public int compare(Person o1, Person o2) {
-            return o1.getEmail().value.compareTo(o2.getEmail().value);
-        }
-    };
-
-    public Comparator<Person> personAddressComparator = new Comparator<Person>() {
-        @Override
-        public int compare(Person o1, Person o2) {
-            return o1.getAddress().value.compareTo(o2.getAddress().value);
-        }
-    };
-
-    /**
      * Returns true if the list contains an equivalent person as the given argument.
      */
     public boolean contains(ReadOnlyPerson toCheck) {
@@ -137,9 +106,46 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    /**
+     * Sorts person list by all persons by any field in ascending or descending order
+     * @param field
+     * @param order
+     */
     public void sortBy(String field, String order) {
         //sortyBy first chooses the right comparator
         Comparator<Person> comparator = null;
+
+        /**
+         * Comparators for the various fields available for sorting
+         */
+        Comparator<Person> personNameComparator = new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getName().fullName.compareTo(o2.getName().fullName);
+            }
+        };
+
+        Comparator<Person> personPhoneComparator = new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getPhone().value.compareTo(o2.getPhone().value);
+            }
+        };
+
+        Comparator<Person> personEmailComparator = new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getEmail().value.compareTo(o2.getEmail().value);
+            }
+        };
+
+        Comparator<Person> personAddressComparator = new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getAddress().value.compareTo(o2.getAddress().value);
+            }
+        };
+
         switch (field) {
         case "name":
             comparator = personNameComparator;
