@@ -30,7 +30,6 @@ public class Address {
             this.value = ADDRESS_PLACEHOLDER_VALUE;
             return;
         }
-        
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
