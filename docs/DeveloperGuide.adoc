@@ -934,12 +934,9 @@ Use case resumes at step 1.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Feature sets are to be rolled out on a regular weekly basis, following the proper forking workflow procedure.
-.  The application should be intuitive for all users, regardless of technical ability.
-.  The application's graphic user interface should display properly on monitors of all resolutions.
-.  New features will have relevant tests created to root out possible bugs.
-.  New features and changes are to be documented in the user and developer guides.
-.  Saved data is to be backwards compatible from v1.0 onwards.
-.  The application is not required to handle physical printing
+.  The application should be intuitive the target users: students (and professionals) who prefer typing over using the mouse.
+.  Future versions of the application should be backwards compatible with data saved in versions after v1.0.
+.  The application is not required to handle physical printing.
 
 [appendix]
 == Glossary
@@ -949,41 +946,6 @@ Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
-....
-
-[[feature-set]]
-Feature Set
-
-....
-A feature set is a set of enhancements rolled out at each set interval
-....
-
-[[graphic-user-interface]]
-Graphic User Interface
-
-....
-The Graphic User Interface (GUI) consists of the organised visual elements that users can see and interact with.
-....
-
-[[bugs]]
-Bugs
-
-....
-Bugs refer to errors and flaws in the implementation of features. It causes the application to behave unexpectedly or give incorrect outputs/outcomes.
-....
-
-[[enhancements]]
-Enhancements
-
-....
-An enhancement refers to an addition of a feature to the application with the intention of improving user experience. It is rolled out as part of a feature set.
 ....
 
 [[backwards-compatible]]
