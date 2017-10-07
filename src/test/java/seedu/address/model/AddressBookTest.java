@@ -3,11 +3,13 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Rule;
@@ -67,6 +69,118 @@ public class AddressBookTest {
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
+    }
+
+    @Test
+    public void sortCommandLogic_name_asc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("name", "asc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Comparator.comparing(o -> o.getName().toString()));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
+    }
+
+    @Test
+    public void sortCommandLogic_name_desc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("name", "desc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Collections.reverseOrder(Comparator.comparing(o -> o.getName().toString())));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
+    }
+
+    @Test
+    public void sortCommandLogic_phone_asc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("phone", "asc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Comparator.comparing(o -> o.getPhone().toString()));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
+    }
+
+    @Test
+    public void sortCommandLogic_phone_desc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("phone", "desc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Collections.reverseOrder(Comparator.comparing(o -> o.getPhone().toString())));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
+    }
+
+    @Test
+    public void sortCommandLogic_email_asc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("email", "asc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Comparator.comparing(o -> o.getEmail().toString()));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
+    }
+
+    @Test
+    public void sortCommandLogic_email_desc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("email", "desc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Collections.reverseOrder(Comparator.comparing(o -> o.getEmail().toString())));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
+    }
+
+    @Test
+    public void sortCommandLogic_address_asc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("address", "asc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Comparator.comparing(o -> o.getAddress().toString()));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
+    }
+
+    @Test
+    public void sortCommandLogic_address_desc() {
+        AddressBook testBook = getTypicalAddressBook();
+        testBook.sortPersonsBy("address", "desc");
+        ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
+
+
+        List<ReadOnlyPerson> expectedList = getTypicalPersons();
+        Collections.sort(expectedList, Collections.reverseOrder(Comparator.comparing(o -> o.getAddress().toString())));
+        ObservableList<ReadOnlyPerson> sortedexpectedList = FXCollections.observableArrayList(expectedList);
+
+        assertEquals(sortedTestList, sortedexpectedList);
     }
 
     /**

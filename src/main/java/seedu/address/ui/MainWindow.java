@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,11 +14,15 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.OpenRequestEvent;
+import seedu.address.commons.events.ui.SaveAsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -29,13 +34,16 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/address_book_32_alternative.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private final FileChooser fileChooser = new FileChooser();
+
+    private MainApp mainApp;
     private Stage primaryStage;
     private Logic logic;
 
@@ -123,6 +131,15 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Is called by the main application to give a reference back to itself.
+     *
+     * @param mainApp
+     */
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
@@ -194,6 +211,30 @@ public class MainWindow extends UiPart<Region> {
 
     void show() {
         primaryStage.show();
+    }
+
+    /**
+     * Opens the data from a desired location
+     */
+    @FXML
+    private void handleOpen() {
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+
+        }
+        raise(new OpenRequestEvent());
+    }
+
+    /**
+     * Saves the data at a desired location
+     */
+    @FXML
+    private void handleSaveAs() {
+        File file = fileChooser.showSaveDialog(primaryStage);
+        if (file != null) {
+
+        }
+        raise(new SaveAsRequestEvent());
     }
 
     /**

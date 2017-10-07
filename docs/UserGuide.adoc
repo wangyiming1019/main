@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -57,7 +57,7 @@ Format: `help`
 === Adding a person: `add` `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL a/ADDRESS] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -66,6 +66,7 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Ima Hidearu p/ a/ e/`
 
 === Listing all persons : `list` `l`
 
@@ -132,7 +133,25 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select` `s`
+=== Sorting all persons : `sort`
+
+Sorts all persons in address book by any field in ascending or descending order. +
+Format: `sort FIELD ORDER`
+
+****
+* Sorts all persons currenlty in the address book by user input field and order.
+* Field parameters are limited to the following fields: NAME, PHONE, EMAIL, ADDRESS.
+* Order parameters are limited to the following fields: ASC, DESC.
+****
+
+Examples:
+
+* `sort name asc` +
+Sorts all persons in the address book in ascending order by the name field.
+* `sort address desc` +
+Sorts all persons in the address book in descending order by the address field.
+
+=== Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -250,3 +269,5 @@ e.g.`select 2`
 * *History* : `history or h`
 * *Undo* : `undo or u`
 * *Redo* : `redo or r`
+* *Sort* : `sort FIELD ORDER` +
+e.g.`sort phone desc`
