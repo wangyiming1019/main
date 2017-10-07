@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -727,14 +727,54 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |have a search function |easily search for the contact I am looking for without browsing through thousands of contacts
+
+|`* * *` |user |have the option to edit my created contacts |make changes to the contacts that I have added
+
+|`* * *` |error-prone user |have the ability to Undo and Redo |automatically undo or redo the changes that I have made
+
+|`* * *` |user with secretive friends |be able to add contacts with incomplete data |operate without the need to create dummy values
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |have access to a Open button |load contact details from any data file I choose instead of following the default save location
 
-{More to be added}
+|`* *` |user |have an auto-fill feature when typing in my tags |not have to remember all the tags that I ever wrote
+
+|`* *` |user |have access to a Save As option |customize my save location instead of using the default one
+
+|`* *` |first-time user |be able to see a user guide when I first start the program |be clear on how to use it
+
+|`* *` |multi-tasking user |be able to record things other than contacts, such as tasks |manage myself better
+
+|`* *` |user |be able to filter my contacts based on tags |view the people who are relevant to me
+
+|`* *` |organized user |be able to sort my contacts by different fields such as by name and birthday  |better organize my contacts
+
+|`* *` |user with multiple devices |be able to import and export my address book |use the address book without having to add all my contacts when I switch platforms
+
+|`* *` |user with many social media accounts |be able to add my contacts' social media accounts to the address book |improve connectivity and learn more about my contacts
+
+|`* *` |user who values privacy |be able to to choose and modify which contacts and what information are to be displayed |hide information I do not want to share from others
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |lazy user |have an easy way to add a person with his full details into my address book |add new contacts quickly
+
+|`*` |user who values aesthetics |be able to customize my layout |display self-identity, and use a layout that I like
+
+|`*` |user |have the ability to add a short description to my contacts |add more information about my contacts
+
+|`*` |long-time user |be able to access shortcut commands |use the address book more efficiently
+
+|`*` |non tech-savvy user |have the option to fill out certain fields |use the address book without having to use the intimidating CLI.
+
+|`*` |error-prone user |have minor typos auto corrected |continue using the address book without correcting my mistakes
+
+|`*` |user |be able to update the address book application easily when new updates are published |continue using the address book easily with any newly added features
+
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -893,8 +933,13 @@ Use case resumes at step 1.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Feature sets are to be rolled out on a regular weekly basis, following the proper forking workflow procedure.
+.  The application should be intuitive for all users, regardless of technical ability.
+.  The application's graphic user interface should display properly on monitors of all resolutions.
+.  New features will have relevant tests created to root out possible bugs.
+.  New features and changes are to be documented in the user and developer guides.
+.  Saved data is to be backwards compatible from v1.0 onwards.
+.  The application is not required to handle physical printing
 
 [appendix]
 == Glossary
@@ -911,6 +956,41 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[feature-set]]
+Feature Set
+
+....
+A feature set is a set of enhancements rolled out at each set interval
+....
+
+[[graphic-user-interface]]
+Graphic User Interface
+
+....
+The Graphic User Interface (GUI) consists of the organised visual elements that users can see and interact with.
+....
+
+[[bugs]]
+Bugs
+
+....
+Bugs refer to errors and flaws in the implementation of features. It causes the application to behave unexpectedly or give incorrect outputs/outcomes.
+....
+
+[[enhancements]]
+Enhancements
+
+....
+An enhancement refers to an addition of a feature to the application with the intention of improving user experience. It is rolled out as part of a feature set.
+....
+
+[[backwards-compatible]]
+Backwards Compatible
+
+....
+In the context of this project, backwards compatible save data refers to the ability for multiple versions of this application to use the same saved data.
 ....
 
 [appendix]
