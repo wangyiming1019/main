@@ -737,11 +737,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |have access to a Open button |load contact details from any data file I choose instead of following the default save location
+|`* *` |user |load contact data from any file of my choosing | have more flexibility for my file's storage location
 
-|`* *` |user |have an auto-fill feature when typing in my tags |not have to remember all the tags that I ever wrote
+|`* *` |user |save contact data in a directory of my choosing |save the file in a location that fits my needs
 
-|`* *` |user |have access to a Save As option |customize my save location instead of using the default one
+|`* *` |user |type commands partially and have the application fill in the rest for me | increase typing productivity
 
 |`* *` |first-time user |be able to see a user guide when I first start the program |be clear on how to use it
 
