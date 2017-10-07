@@ -824,10 +824,10 @@ Use case ends.
 +
 Use case ends.
 
-* 2a. No such person was found.
+* 2b. No such person was found.
 +
 [none]
-** 2a1. AddressBook informs the user that no matching users were found.
+** 2b1. AddressBook informs the user that no matching users were found.
 +
 Use case ends.
 
@@ -858,10 +858,10 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 3a. The specified detail to change is invalid.
+* 3b. The specified detail to change is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3b1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -873,7 +873,7 @@ Use case resumes at step 2.
 Use case ends.
 
 [discrete]
-=== Use case: Undo/Redo
+=== Use case: Undo/Redo by multiple steps
 
 *MSS*
 
@@ -895,10 +895,10 @@ Use case ends.
 Use case resumes at step 3.
 
 [none]
-* 2a. The number of commands entered were less than the specified number of redo commands.
+* 2b. The number of commands entered were less than the specified number of redo commands.
 +
 [none]
-** 2a1. AddressBook redos all previously undone commands.
+** 2b1. AddressBook redos all previously undone commands.
 +
 Use case resumes at step 3
 
