@@ -6,6 +6,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -17,12 +19,42 @@
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
-         <MenuItem mnemonicParsing="false" text="Open..." />
-         <MenuItem mnemonicParsing="false" text="Save As..." />
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+      <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open">
+            <graphic>
+               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/open-folder.png" />
+                  </image>
+               </ImageView>
+            </graphic></MenuItem>
+         <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save As">
+            <graphic>
+               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/floppy-disk.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </MenuItem>
+         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit">
+            <graphic>
+               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/quit.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </MenuItem>
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
-      <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+      <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help">
+            <graphic>
+               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/help_icon.png" />
+                  </image>
+               </ImageView>
+            </graphic></MenuItem>
     </Menu>
   </MenuBar>
 
