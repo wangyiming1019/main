@@ -833,7 +833,7 @@ Use case resumes at step 2.
 Use case ends.
 
 [discrete]
-=== Use case: Undo/Redo
+=== Use case: Undo/Redo by multiple steps
 
 *MSS*
 
