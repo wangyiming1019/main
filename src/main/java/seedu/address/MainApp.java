@@ -188,6 +188,8 @@ public class MainApp extends Application {
         ui.start(primaryStage);
         MainWindow mw = ui.getMainWindow();
         mw.setMainApp(this);
+        mw.setStorage(storage);
+        mw.setModel(model);
     }
 
     @Override
