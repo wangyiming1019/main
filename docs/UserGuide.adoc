@@ -53,6 +53,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help`
 
 Format: `help`
+
 Alternatively, the keyboard shortcut `F1` may be used
 
 === Adding a person: `add`
@@ -222,6 +223,7 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
+
 Alternatively, the keyboard shortcut `ALT+F4` may be used.
 
 === Saving the data
@@ -256,3 +258,10 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Keyboard Shortcuts
+
+* *Exit* : `ALT+F4` 
+* *Help* : `F1`
+* *Open* : `CTRL+O`
+* *Save As* : `CTRL+S`
