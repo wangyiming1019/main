@@ -70,6 +70,15 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem openMenuItem;
+
+    @FXML
+    private MenuItem saveMenuItem;
+
+    @FXML
+    private MenuItem exitMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -106,6 +115,9 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(openMenuItem, KeyCombination.valueOf("CTRL+O"));
+        setAccelerator(saveMenuItem, KeyCombination.valueOf("CTRL+S"));
+        setAccelerator(exitMenuItem, KeyCombination.valueOf("ALT+F4"));
     }
 
     /**
@@ -141,25 +153,25 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Is called by the main application to give a reference back to itself.
      *
-     * @param mainApp
+     * @param mainApp the MainApp itself
      */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Is called by the main application to provide MainWindow with Storage
      *
-     * @param s
+     * @param s the Storage used by MainApp
      */
     public void setStorage(Storage s) {
         this.storage = s;
     }
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Is called by the main application to  provide MainWindow with Model
      *
-     * @param m
+     * @param m the Model used by MainApp
      */
     public void setModel(Model m) {
         this.model = m;
