@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -56,10 +56,10 @@ Format: `help`
 
 Alternatively, the keyboard shortcut `F1` may be used.
 
-=== Adding a person: `add`
+=== Adding a person: `add` `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL a/ADDRESS] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -68,13 +68,14 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Ima Hidearu p/ a/ e/`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` `l`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` `e`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -94,7 +95,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` `f`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -114,7 +115,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` `d`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -134,7 +135,25 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Sorting all persons : `sort`
+
+Sorts all persons in address book by any field in ascending or descending order. +
+Format: `sort FIELD ORDER`
+
+****
+* Sorts all persons currenlty in the address book by user input field and order.
+* Field parameters are limited to the following fields: NAME, PHONE, EMAIL, ADDRESS.
+* Order parameters are limited to the following fields: ASC, DESC.
+****
+
+Examples:
+
+* `sort name asc` +
+Sorts all persons in the address book in ascending order by the name field.
+* `sort address desc` +
+Sorts all persons in the address book in descending order by the address field.
+
+=== Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -154,7 +173,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history` `h`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -165,7 +184,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -191,7 +210,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` `r`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -214,7 +233,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` `c`
 
 Clears all entries from the address book. +
 Format: `clear`
@@ -242,22 +261,26 @@ To open a different save file, click on `File -> Open` or use the keyboard short
 
 == Command Summary
 
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+
+* *Add* : `add or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Clear* : `clear or c`
+* *Delete* : `delete or d INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit or e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find or f KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *List* : `list or l`
 * *Help* : `help`
-* *Select* : `select INDEX` +
+* *Select* : `select or s INDEX` +
 e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+
+* *History* : `history or h`
+* *Undo* : `undo or u`
+* *Redo* : `redo or r`
+* *Sort* : `sort FIELD ORDER` +
+e.g.`sort phone desc`
 
 == Keyboard Shortcuts
 
@@ -265,3 +288,4 @@ e.g.`select 2`
 * *Help* : `F1`
 * *Open* : `CTRL+O`
 * *Save As* : `CTRL+S`
+
