@@ -53,6 +53,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help`
 
 Format: `help`
+Alternatively, the keyboard shortcut `F1` may be used
 
 === Adding a person: `add`
 
@@ -221,11 +222,16 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
+Alternatively, the keyboard shortcut `ALT+F4` may be used.
 
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+To change the location of the save file, click on `File -> Save As` or use the keyboard shortcut `CTRL+S` and select the new location and file name for the save file in the pop-up window.
+
+To open a different save file, click on `File -> Open` or use the keyboard shortcut `CTRL+O` and select the new save file to use from the pop-up window.
 
 == FAQ
 
