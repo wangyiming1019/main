@@ -54,6 +54,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+Alternatively, the keyboard shortcut `F1` may be used.
+
 === Adding a person: `add` `a`
 
 Adds a person to the address book +
@@ -241,10 +243,16 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+Alternatively, the keyboard shortcut `ALT+F4` may be used.
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+To change the location of the save file, click on `File -> Save As` or use the keyboard shortcut `CTRL+S` and select the new location and file name for the save file in the pop-up window.
+
+To open a different save file, click on `File -> Open` or use the keyboard shortcut `CTRL+O` and select the new save file to use from the pop-up window.
 
 == FAQ
 
@@ -253,7 +261,8 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+
+* *Add* : `add or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear or c`
 * *Delete* : `delete or d INDEX` +
@@ -266,8 +275,16 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select or s INDEX` +
 e.g.`select 2`
+
 * *History* : `history or h`
 * *Undo* : `undo or u`
 * *Redo* : `redo or r`
 * *Sort* : `sort FIELD ORDER` +
 e.g.`sort phone desc`
+
+== Keyboard Shortcuts
+
+* *Exit* : `ALT+F4`
+* *Help* : `F1`
+* *Open* : `CTRL+O`
+* *Save As* : `CTRL+S`
