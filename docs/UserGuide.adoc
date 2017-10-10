@@ -55,7 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 Format: `help` +
 Alternatively, the keyboard shortcut `F1` may be used.
 
-=== Adding a person/task: `add` `addtask` 
+=== Adding a person/task: `add` `addtask`
 
 Adds a person or task to the address book +
 Format (person): `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] [t/TAG]...` +
