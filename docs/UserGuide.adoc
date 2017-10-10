@@ -234,8 +234,9 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/[NAME] p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
+e.g. `add n/Ima Hidearu p/ e/ a/ t/verysecretive t/getmoreinfo`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -250,3 +251,19 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Add task* : `addtask n/NAME d/DESCRIPTION [t/DEADLINE] [p/PRIORITY]` +
+e.g. `addtask n/Update Documentation d/Update documentations for V1.1 for CS2103T t/30/10/17 p/high`
+* *Remove task* : `cleartask INDEX` +
+e.g. `cleartask 4`
+* *Mark task as complete* : `markcomplete INDEX` +
+e.g. `markcomplete 4`
+* *Mark task as incomplete* : `markincomplete INDEX` +
+e.g. `markincomplete 5`
+* *Edit task* : `edittask INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
+e.g. `edittask 2 p/veryhigh`
+* *View task* : `viewtask INDEX` +
+e.g. `view 6`
+* *Assign to task* : `assign TASKINDEX PERSONINDEX...`
+e.g. `assign 4 1 17 18 21`
+* *Dismiss from task* : `dismiss TASKINDEX PERSONINDEX...`
+e.g. `dismiss 4 1 17`
