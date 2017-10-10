@@ -115,6 +115,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Sorts persons in person list by any field, in either ascending or descending order
+     *
+     * @param field
+     * @param order
+     */
+    public void sortPersonsBy(String field, String order) {
+        persons.sortBy(field, order);
+    }
+
+    /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
