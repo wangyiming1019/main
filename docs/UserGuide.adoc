@@ -254,6 +254,12 @@ To change the location of the save file, click on `File -> Save As` or use the k
 
 To open a different save file, click on `File -> Open` or use the keyboard shortcut `CTRL+O` and select the new save file to use from the pop-up window.
 
+=== Exporting the data
+
+Address book data can be exported in a number of different formats, thus allowing the data to be compatible to any device.
+
+To export data, click on `File -> Export As...` or use the keyboard shortcut `CTRL+E` and select the new location and file name for the export file in the pop-up window.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
