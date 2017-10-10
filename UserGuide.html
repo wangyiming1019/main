@@ -49,6 +49,8 @@
 <li><a href="#exiting-the-program-code-exit-code">2.20. Exiting the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">2.21. Saving the data</a></li>
 <li><a href="#using-the-browser-to-be-added-in-v2-0">2.22. Using the browser (To be added in V2.0)</a></li>
+<li><a href="#exporting-the-data">2.23. Exporting the data</a></li>
+<li><a href="#auto-complete-learning-your-typing-habits">2.24. Auto-Complete: Learning Your Typing Habits</a></li>
 </ul>
 </li>
 <li><a href="#faq">3. FAQ</a></li>
@@ -159,7 +161,7 @@ Alternatively, the keyboard shortcut <code>F1</code> may be used.</p>
 <h3 id="adding-a-person-task-code-add-code-code-addtask-code"><a class="link" href="#adding-a-person-task-code-add-code-code-addtask-code">2.2. Adding a person/task: <code>add</code> <code>addtask</code></a></h3>
 <div class="paragraph">
 <p>Adds a person or task to the address book<br>
-Format (person): <code>add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] [t/TAG]&#8230;&#8203;</code><br>
+Format (person): <code>add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] c/[GOOGLE CALENDAR URL] [t/TAG]&#8230;&#8203;</code><br>
 Format (task): <code>addtask n/NAME [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]</code><br>
 Shorthand commands: <code>a</code> <code>at</code></p>
 </div>
@@ -192,6 +194,9 @@ Newly added tasks are marked as incomplete by default.
 <p><code>add n/Ima Hidearu b/ a/ e/ p/ t/secretive</code></p>
 </li>
 <li>
+<p><code>add n/Luke Groundswimmer p/ a/ e/ c/</code></p>
+</li>
+<li>
 <p><code>addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high</code></p>
 </li>
 <li>
@@ -212,8 +217,8 @@ Shorthand commands: <code>l</code> <code>lt</code></p>
 <div class="sect2">
 <h3 id="editing-a-person-code-edit-code-code-edittask-code"><a class="link" href="#editing-a-person-code-edit-code-code-edittask-code">2.4. Editing a person : <code>edit</code> <code>edittask</code></a></h3>
 <div class="paragraph">
-<p>Edits an existing person or task in the address book.<br>
-Format (person): <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]&#8230;&#8203;</code><br>
+<p>Edits an existing person in the address book.<br>
+Format (person): <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] c/[GOOGLE CALENDAR URL] [t/TAG]&#8230;&#8203;</code><br>
 Format (task): <code>edittask INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]</code><br>
 Shorthand commands: <code>e</code> <code>et</code></p>
 </div>
@@ -956,6 +961,21 @@ There is no need to save manually.</p>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="exporting-the-data"><a class="link" href="#exporting-the-data">2.23. Exporting the data</a></h3>
+<div class="paragraph">
+<p>Address book data can be exported in a number of different formats, thus allowing the data to be compatible to any device.</p>
+</div>
+<div class="paragraph">
+<p>To export data, click on <code>File &#8594; Export As&#8230;&#8203;</code> or use the keyboard shortcut <code>CTRL+E</code> and select the new location and file name for the export file in the pop-up window.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="auto-complete-learning-your-typing-habits"><a class="link" href="#auto-complete-learning-your-typing-habits">2.24. Auto-Complete: Learning Your Typing Habits</a></h3>
+<div class="paragraph">
+<p>The program will learn your typing habits and give autocomplete suggestions that become more accurate over time.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -973,8 +993,8 @@ There is no need to save manually.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add person</strong> <code>add n/[NAME] p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/11-11-1995 t/friend t/colleague</code><br></p>
+<p><strong>Add</strong> : <code>add or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/[GOOGLE CALENDAR URL] [t/TAG]&#8230;&#8203;</code><br>
+e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665, c/www.enteryourcalendarurlhere.com t/friend t/colleague</code></p>
 </li>
 <li>
 <p><strong>Add task</strong> : <code>addtask n/NAME d/DESCRIPTION [t/DEADLINE] [p/PRIORITY]</code><br>
@@ -995,7 +1015,7 @@ e.g. <code>delete 3</code></p>
 e.g. <code>deletetask 4</code></p>
 </li>
 <li>
-<p><strong>Edit person</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code><br>
+<p><strong>Edit</strong> : <code>edit or e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] c/[GOOGLE CALENDAR URL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code><br>
 e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code></p>
 </li>
 <li>
@@ -1080,7 +1100,7 @@ e.g. <code>dismiss 4 1 17</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-10 14:07:39 +00:00
+Last updated 2017-10-10 14:18:41 +00:00
 </div>
 </div>
 </body>
