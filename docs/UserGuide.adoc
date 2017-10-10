@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4
+:repoURL: https://github.com/CS2103T-W09B2/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -57,7 +57,7 @@ Format: `help`
 === Adding a person/task: `add` `addtask`
 
 Adds a person or task to the address book +
-Format (person): `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
+Format (person): `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] [t/TAG]...` +
 Format (task): `addtask n/NAME [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
 
 [TIP]
@@ -67,9 +67,9 @@ Newly added tasks are marked as incomplete by default.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `add n/Ima Hidearu a/ e/ p/ t/secretive`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal`
+* `add n/Ima Hidearu b/ a/ e/ p/ t/secretive`
 * `addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high`
 * `addtask n/Buy new pencil p/low`
 
@@ -82,7 +82,7 @@ Format (task): `listtask`
 === Editing a person : `edit` `edittask`
 
 Edits an existing person or task in the address book. +
-Format (person): `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Format (person): `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 Format (task): `edittask INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]`
 
 ****
@@ -186,7 +186,7 @@ Selects the 2nd task in the address book.
 `selecttask 1` +
 Selects the 1st task in the results of the `findtask` command.
 
-=== Mark task as complete : `setcomplete`
+=== Mark task as complete : `setcomplete` (To be coming in V2.0)
 
 Sets the specified task as complete. +
 Format: `setcomplete INDEX`
@@ -206,7 +206,7 @@ Sets the 2nd task in the address book as completed.
 `setcomplete 1` +
 Sets the 1st task in the results of the `findtask` command as completed.
 
-=== Mark task as incomplete : `seticomplete`
+=== Mark task as incomplete : `seticomplete` (To be coming in V2.0)
 
 Sets the specified task as incomplete. +
 Format: `setincomplete INDEX`
@@ -226,7 +226,7 @@ Sets the 2nd task in the address book as incomplete.
 `setincomplete 1` +
 Sets the 1st task in the results of the `findtask` command as incomplete.
 
-=== Assign contacts to task : `assign`
+=== Assign contacts to task : `assign` (To be coming in V2.0)
 
 Assigns the people associated with the PEOPLEINDEX to the task at the specified TASKINDEX. +
 Format: `assign TASKINDEX PEOPLEINDEX...`
@@ -249,7 +249,7 @@ Assigns the 2nd task in the address book to the 1st, 4th and 5th contacts.
 `assign 1 2` +
 Assigns the 1st task in the results of the `findtask` command to the 2nd person in the address book.
 
-=== Dismiss contacts from task : `dismiss`
+=== Dismiss contacts from task : `dismiss` (To be coming in V2.0)
 
 Removes assignment of the people associated with the PEOPLEINDEX to the task at the specified TASKINDEX. +
 Format: `dismiss TASKINDEX PEOPLEINDEX...`
