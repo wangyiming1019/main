@@ -261,6 +261,10 @@ Address book data can be exported in a number of different formats, thus allowin
 
 To export data, click on `File -> Export As...` or use the keyboard shortcut `CTRL+E` and select the new location and file name for the export file in the pop-up window.
 
+=== Auto-Complete: Learning Your Typing Habits
+
+The program will learn your typing habits and give autocomplete suggestions that become more accurate over time.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
