@@ -54,31 +54,39 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person/task: `add` `addtask`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person or task to the address book +
+Format (person): `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
+Format (task): `addtask n/NAME [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+A task can have the following 5 priorities: `lowest, low, normal, high, highest` +
+Newly added tasks are marked as incomplete by default.
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Ima Hidearu a/ e/ p/ t/secretive`
+* `addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high`
+* `addtask n/Buy new pencil p/low`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` `listtask`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of all persons or tasks in the address book. +
+Format (person): `list`
+Format (task): `listtask`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` `edittask`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing person or task in the address book. +
+Format (person): `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Format (task): `edittask INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person/task at the specified `INDEX`. The index refers to the index number shown in the last listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -91,16 +99,23 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/` +
+Removes the phone number of the 1st person.
+* `edittask 2 p/highest` +
+Edits the priority of the 2nd task to be `highest`.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` `findtask`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons/tasks whose names or description contain any of the given keywords. +
+Format (person): `find KEYWORD [MORE_KEYWORDS]` +
+Format (task): `findtask KEYWORD [MORE_KEYWORDS] [p/PRIORITY]
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name is searched for persons.
+* Tasks may also be searched based on their `PRIORITY`, in addition to any other keywords being searched
+* If a priority search is used, all tasks that have a priority level above that of the keyword will be returned. e.g. p/normal will match all `normal, high, highest` tasks.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -111,14 +126,19 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `findtask update` +
+Returns any task that has the word `update` in their names or descriptions
+* `findtask update high` +
+Returns all tasks that has the word `update` in their names or descriptions, and are of priority `high` or higher.
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` `deletetask`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified person or task from the address book. +
+Format (person): `delete INDEX`
+Format (task): `deletetask INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the person or task at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -131,14 +151,22 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `listtask` +
+`deletetask 2` +
+Deletes the 2nd task in the address book.
+* `findtask update` +
+`deletetask 1` +
+Deletes the 1st task in the results of the `findtask` command.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` `selecttask`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format (person): `select INDEX` +
+Format (task): `selecttask INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selecting a task will load a list of the people who are assigned to it, instead of the Google search page.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -151,6 +179,98 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+* `listtask` +
+`selecttask 2` +
+Selects the 2nd task in the address book.
+* `findtask update` +
+`selecttask 1` +
+Selects the 1st task in the results of the `findtask` command.
+
+=== Mark task as complete : `setcomplete`
+
+Sets the specified task as complete. +
+Format: `setcomplete INDEX`
+
+****
+* Marks the task at the specified `INDEX` as completed.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `listtask` +
+`setcomplete 2` +
+Sets the 2nd task in the address book as completed.
+* `findtask update` +
+`setcomplete 1` +
+Sets the 1st task in the results of the `findtask` command as completed.
+
+=== Mark task as incomplete : `seticomplete`
+
+Sets the specified task as incomplete. +
+Format: `setincomplete INDEX`
+
+****
+* Marks the task at the specified `INDEX` as incomplete.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `listtask` +
+`setincomplete 2` +
+Sets the 2nd task in the address book as incomplete.
+* `findtask update` +
+`setincomplete 1` +
+Sets the 1st task in the results of the `findtask` command as incomplete.
+
+=== Assign contacts to task : `assign`
+
+Assigns the people associated with the PEOPLEINDEX to the task at the specified TASKINDEX. +
+Format: `assign TASKINDEX PEOPLEINDEX...`
+
+****
+* The PEOPLEINDEX refers to the index numbers shown in the most recent *person* listing.
+* The TASKINDEX refers to the index number shown in the most recent *task* listing.
+* At least 1 or more PEOPLEINDEX must be present in the command.
+* PERSONINDEX and TASKINDEX *must be positive integers* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`listtask` +
+`assign 2 1 4 5` +
+Assigns the 2nd task in the address book to the 1st, 4th and 5th contacts.
+* `list` +
+`findtask update` +
+`assign 1 2` +
+Assigns the 1st task in the results of the `findtask` command to the 2nd person in the address book.
+
+=== Dismiss contacts from task : `dismiss`
+
+Removes assignment of the people associated with the PEOPLEINDEX to the task at the specified TASKINDEX. +
+Format: `dismiss TASKINDEX PEOPLEINDEX...`
+
+****
+* The PEOPLEINDEX refers to the index numbers shown in the most recent *person* listing.
+* The TASKINDEX refers to the index number shown in the most recent *task* listing.
+* At least 1 or more PEOPLEINDEX must be present in the command.
+* PERSONINDEX and TASKINDEX *must be positive integers* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`listtask` +
+`dismiss 2 1 4 5` +
+Dismisses 1st, 4th and 5th contacts in the address book from the 2nd task.
+* `list` +
+`findtask update` +
+`dismiss 1 2` +
+Dismisses the 2nd person in the address book from the 1st task in the results of the `findtask` command.
 
 === Listing entered commands : `history`
 
@@ -234,36 +354,43 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/[NAME] p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
+* *Add person* `add n/[NAME] p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
 e.g. `add n/Ima Hidearu p/ e/ a/ t/verysecretive t/getmoreinfo`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
 * *Add task* : `addtask n/NAME d/DESCRIPTION [t/DEADLINE] [p/PRIORITY]` +
 e.g. `addtask n/Update Documentation d/Update documentations for V1.1 for CS2103T t/30/10/17 p/high`
-* *Remove task* : `cleartask INDEX` +
-e.g. `cleartask 4`
+* *Clear person* : `clear`
+* *Clear tasks* : `cleartask`
+* *Delete person* : `delete INDEX` +
+e.g. `delete 3`
+* *Delete task* : `deletetask INDEX` +
+e.g. `deletetask 4`
+* *Edit person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit task* : `edittask INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
+e.g. `edittask 2 p/veryhigh`
+* *Find person* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake`
+* *Find task* : `findtask KEYWORD [MORE_KEYWORDS] [p/PRIORITY]` +
+e.g. `findtask update p/high`
+* *List persons* : `list`
+* *List tasks* : `listtask`
+* *Help* : `help`
+* *Select person* : `select INDEX` +
+e.g.`select 2`
+* *Select task* : `selecttask INDEX` +
+e.g.`selecttask 2`
 * *Mark task as complete* : `markcomplete INDEX` +
 e.g. `markcomplete 4`
 * *Mark task as incomplete* : `markincomplete INDEX` +
 e.g. `markincomplete 5`
-* *Edit task* : `edittask INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
-e.g. `edittask 2 p/veryhigh`
-* *View task* : `viewtask INDEX` +
-e.g. `view 6`
 * *Assign to task* : `assign TASKINDEX PERSONINDEX...`
 e.g. `assign 4 1 17 18 21`
 * *Dismiss from task* : `dismiss TASKINDEX PERSONINDEX...`
 e.g. `dismiss 4 1 17`
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+
+
+
