@@ -18,7 +18,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>CS2103AUG2017-W09-B2</code>      Since: <code>September 2017</code>      Licence: <code>MIT</code></p>
+<p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -34,7 +34,7 @@
 <li><a href="#changing-the-privacy-of-a-person-s-details-code-changeprivacy-code-code-cp-code-to-be-added-in-v2-0">2.5. Changing the Privacy of a person&#8217;s details : <code>changeprivacy</code> <code>cp</code> (To be added in V2.0)</a></li>
 <li><a href="#locating-persons-by-name-code-find-code-code-findtask-code">2.6. Locating persons by name: <code>find</code> <code>findtask</code></a></li>
 <li><a href="#deleting-a-person-code-delete-code-code-deletetask-code">2.7. Deleting a person : <code>delete</code> <code>deletetask</code></a></li>
-<li><a href="#deleting-persons-by-tag-code-deletetag-code-code-dtag-code">2.8. Deleting persons by tag: <code>deletetag</code> <code>(dtag)</code></a></li>
+<li><a href="#sorting-all-persons-code-sort-code">2.8. Sorting all persons : <code>sort</code></a></li>
 <li><a href="#selecting-a-person-code-select-code-code-selecttask-code">2.9. Selecting a person : <code>select</code> <code>selecttask</code></a></li>
 <li><a href="#mark-task-as-complete-code-setcomplete-code-to-be-coming-in-v2-0">2.10. Mark task as complete : <code>setcomplete</code> (To be coming in V2.0)</a></li>
 <li><a href="#mark-task-as-incomplete-code-setincomplete-code-to-be-coming-in-v2-0">2.11. Mark task as incomplete : <code>setincomplete</code> (To be coming in V2.0)</a></li>
@@ -106,13 +106,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p><strong><code>list</code></strong> : lists all contacts</p>
 </li>
 <li>
-<p><strong><code>l</code></strong> : lists all contacts</p>
-</li>
-<li>
-<p><strong><code>add</code></strong><code>n/John Doe p/98765432 f/SOC e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
-</li>
-<li>
-<p><strong><code>a</code></strong><code>n/John Doe p/98765432 f/SOC e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
+<p><strong><code>add</code></strong><code>n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
 </li>
 <li>
 <p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd contact shown in the current list</p>
@@ -144,9 +138,6 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p>Words in <code>UPPER_CASE</code> are the parameters to be supplied by the user e.g. in <code>add n/NAME</code>, <code>NAME</code> is a parameter which can be used as <code>add n/John Doe</code>.</p>
 </li>
 <li>
-<p>Commands can be used in short form e.g. <code>a</code> is the alias of <code>add</code>.</p>
-</li>
-<li>
 <p>Items in square brackets are optional e.g <code>n/NAME [t/TAG]</code> can be used as <code>n/John Doe t/friend</code> or as <code>n/John Doe</code>.</p>
 </li>
 <li>
@@ -170,7 +161,7 @@ Alternatively, the keyboard shortcut <code>F1</code> may be used.</p>
 <h3 id="adding-a-person-task-code-add-code-code-addtask-code"><a class="link" href="#adding-a-person-task-code-add-code-code-addtask-code">2.2. Adding a person/task: <code>add</code> <code>addtask</code></a></h3>
 <div class="paragraph">
 <p>Adds a person or task to the address book<br>
-Format (person): <code>add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] f/[FACULTY] c/[GOOGLE CALENDAR URL] [t/TAG]&#8230;&#8203;</code><br>
+Format (person): <code>add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] c/[GOOGLE CALENDAR URL] [t/TAG]&#8230;&#8203;</code><br>
 Format (task): <code>addtask n/NAME [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]</code><br>
 Shorthand commands: <code>a</code> <code>at</code></p>
 </div>
@@ -189,19 +180,29 @@ Newly added tasks are marked as incomplete by default.
 </table>
 </div>
 <div class="paragraph">
-<p>Examples:
-* <code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995</code>
-* <code>add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 f/FASS a/Newgate Prison p/1234567 t/criminal</code>
-* <code>add n/Ima Hidearu b/ a/ e/ p/ t/secretive</code>
-* <code>add n/Luke Groundswimmer p/ a/ e/ c/</code>
-* <code>addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high</code>
-* <code>addtask n/Buy new pencil p/low</code>
-* <code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995</code>
-* <code>add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal</code>
-* <code>add n/Ima Hidearu b/ a/ e/ p/ t/secretive</code>
-* <code>add n/Luke Groundswimmer p/ a/ e/ c/</code>
-* <code>addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high</code>
-* <code>addtask n/Buy new pencil p/low</code></p>
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995</code></p>
+</li>
+<li>
+<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal</code></p>
+</li>
+<li>
+<p><code>add n/Ima Hidearu b/ a/ e/ p/ t/secretive</code></p>
+</li>
+<li>
+<p><code>add n/Luke Groundswimmer p/ a/ e/ c/</code></p>
+</li>
+<li>
+<p><code>addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high</code></p>
+</li>
+<li>
+<p><code>addtask n/Buy new pencil p/low</code></p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -258,8 +259,8 @@ Edits the phone number and email address of the 1st person to be <code>91234567<
 Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all existing tags.</p>
 </li>
 <li>
-<p><code>edit 1 p/ f/soc</code><br>
-Removes the phone number and edits the faculty of the 1st person to be <code>soc</code>.</p>
+<p><code>edit 1 p/</code><br>
+Removes the phone number of the 1st person.</p>
 </li>
 <li>
 <p><code>edittask 2 p/highest</code><br>
@@ -363,7 +364,7 @@ Shorthand commands: `f</code> <code>ft</code></p>
 Returns <code>john</code> and <code>John Doe</code></p>
 </li>
 <li>
-<p><code>f Betsy Tim John</code><br>
+<p><code>find Betsy Tim John</code><br>
 Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>John</code></p>
 </li>
 <li>
@@ -414,7 +415,7 @@ Deletes the 2nd person in the address book.</p>
 </li>
 <li>
 <p><code>find Betsy</code><br>
-<code>d 1</code><br>
+<code>delete 1</code><br>
 Deletes the 1st person in the results of the <code>find</code> command.</p>
 </li>
 <li>
@@ -431,34 +432,40 @@ Deletes the 1st task in the results of the <code>findtask</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-persons-by-tag-code-deletetag-code-code-dtag-code"><a class="link" href="#deleting-persons-by-tag-code-deletetag-code-code-dtag-code">2.8. Deleting persons by tag: <code>deletetag</code> <code>(dtag)</code></a></h3>
+<h3 id="sorting-all-persons-code-sort-code"><a class="link" href="#sorting-all-persons-code-sort-code">2.8. Sorting all persons : <code>sort</code></a></h3>
 <div class="paragraph">
-<p>Deletes persons from the address book with specific tag.<br>
-Format: <code>deletetag KEYWORD [MORE_KEYWORDS]</code><br>
-Format: <code>dtag KEYWORD [MORE_KEYWORDS]</code></p>
+<p>Sorts all persons in address book by any field in ascending or descending order.<br>
+Format: <code>sort FIELD ORDER</code></p>
 </div>
+<div class="sidebarblock">
+<div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>The order of the keywords does not matter. e.g. <code>friend classmate</code> and <code>classmate friend</code> will have the same result.</p>
+<p>Sorts all persons currenlty in the address book by user input field and order.</p>
 </li>
 <li>
-<p>Only full words will be matched e.g. <code>friend</code> will not match <code>friends</code></p>
+<p>Field parameters are limited to the following fields: NAME, PHONE, EMAIL, ADDRESS.</p>
+</li>
+<li>
+<p>Order parameters are limited to the following fields: ASC, DESC.</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
 <div class="paragraph">
-<p>Example:</p>
+<p>Examples:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>deletetag projectmates</code><br>
-Delete all the persons with the one tag <code>projectmates</code>.</p>
+<p><code>sort name asc</code><br>
+Sorts all persons in the address book in ascending order by the name field.</p>
 </li>
 <li>
-<p><code>dtag classmates schoolfriends</code><br>
-Delete all the persons with these two tags <code>classmates schoolfriends</code>.</p>
+<p><code>sort address desc</code><br>
+Sorts all persons in the address book in descending order by the address field.</p>
 </li>
 </ul>
 </div>
@@ -498,7 +505,7 @@ Shorthand commands: <code>s</code> <code>st</code></p>
 <ul>
 <li>
 <p><code>list</code><br>
-<code>s 2</code><br>
+<code>select 2</code><br>
 Selects the 2nd person in the address book.</p>
 </li>
 <li>
@@ -748,7 +755,7 @@ Shorthand commands: <code>u</code></p>
 <li>
 <p><code>delete 1</code><br>
 <code>list</code><br>
-<code>u</code> (reverses the <code>delete 1</code> command)<br></p>
+<code>undo</code> (reverses the <code>delete 1</code> command)<br></p>
 </li>
 <li>
 <p><code>select 1</code><br>
@@ -780,7 +787,7 @@ Shorthand commands: <code>r</code></p>
 <li>
 <p><code>delete 1</code><br>
 <code>undo</code> (reverses the <code>delete 1</code> command)<br>
-<code>r</code> (reapplies the <code>delete 1</code> command)<br></p>
+<code>redo</code> (reapplies the <code>delete 1</code> command)<br></p>
 </li>
 <li>
 <p><code>delete 1</code><br>
@@ -986,8 +993,8 @@ There is no need to save manually.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add</strong> : <code>add or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS f/[FACULTY] c/[GOOGLE CALENDAR URL] [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665, f/SOC c/www.enteryourcalendarurlhere.com t/friend t/colleague</code></p>
+<p><strong>Add</strong> : <code>add or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/[GOOGLE CALENDAR URL] [t/TAG]&#8230;&#8203;</code><br>
+e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665, c/www.enteryourcalendarurlhere.com t/friend t/colleague</code></p>
 </li>
 <li>
 <p><strong>Add task</strong> : <code>addtask n/NAME d/DESCRIPTION [t/DEADLINE] [p/PRIORITY]</code><br>
@@ -1093,7 +1100,7 @@ e.g. <code>dismiss 4 1 17</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-11 02:49:13 +00:00
+Last updated 2017-10-11 03:00:04 +00:00
 </div>
 </div>
 </body>
