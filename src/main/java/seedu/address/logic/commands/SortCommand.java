@@ -9,6 +9,7 @@ import java.util.Arrays;
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "so";
 
     public static final ArrayList<String> ACCEPTED_FIELD_PARAMETERS = new ArrayList<>(Arrays.asList(
             "name", "phone", "email", "address"));

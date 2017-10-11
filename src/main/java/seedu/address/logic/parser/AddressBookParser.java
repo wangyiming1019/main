@@ -96,6 +96,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
 
         default:
