@@ -7,7 +7,7 @@ https://ci.appveyor.com/project/jeffreygohkw/addressbook-level4-x6ah4[image:http
 https://coveralls.io/github/CS2103AUG2017-W09-B2/main[image:https://coveralls.io/repos/github/CS2103AUG2017-W09-B2/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/Ui.png[width="790"]
 endif::[]
 
 ifndef::env-github[]
