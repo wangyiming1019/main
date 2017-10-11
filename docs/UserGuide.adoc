@@ -190,6 +190,7 @@ Deletes the 1st task in the results of the `findtask` command.
 
 Sorts all persons in address book by any field in ascending or descending order. +
 Format: `sort FIELD ORDER`
+Shorthand command: `so`
 
 ****
 * Sorts all persons currenlty in the address book by user input field and order.
