@@ -13,7 +13,7 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-W09-B2/main
 
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W09-B2`      Since: `September 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -78,6 +78,12 @@ Examples:
 * `add n/Luke Groundswimmer p/ a/ e/ c/`
 * `addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high`
 * `addtask n/Buy new pencil p/low`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal`
+* `add n/Ima Hidearu b/ a/ e/ p/ t/secretive`
+* `add n/Luke Groundswimmer p/ a/ e/ c/`
+* `addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high`
+* `addtask n/Buy new pencil p/low`
 
 === Listing all persons : `list` `listtask`
 
@@ -92,7 +98,6 @@ Edits an existing person in the address book. +
 Format (person): `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] c/[GOOGLE CALENDAR URL] [t/TAG]...` +
 Format (task): `edittask INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
 Shorthand commands: `e` `et`
->>>>>>> master
 
 ****
 * Edits the person/task at the specified `INDEX`. The index refers to the index number shown in the last listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -108,10 +113,8 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `edit 1 p/` +
-Removes the phone number of the 1st person.
-* `edit 1 f/soc` +
-Edits the faculty of the 1st person to be `soc` +
+* `edit 1 p/ f/soc` +
+Removes the phone number and edits the faculty of the 1st person to be `soc`.
 * `edittask 2 p/highest` +
 Edits the priority of the 2nd task to be `highest`.
 
@@ -144,7 +147,6 @@ Format (task): `findtask KEYWORD [MORE_KEYWORDS] [p/PRIORITY] +
 Shorthand commands: `f` `ft`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
->>>>>>> master
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched for persons.
 * Tasks may also be searched based on their `PRIORITY`, in addition to any other keywords being searched
@@ -170,7 +172,6 @@ Deletes the specified person or task from the address book. +
 Format (person): `delete INDEX` +
 Format (task): `deletetask INDEX`+
 Shorthand commands: `d` `dt`
->>>>>>> master
 
 ****
 * Deletes the person or task at the specified `INDEX`.
@@ -215,7 +216,6 @@ Selects the person identified by the index number used in the last person listin
 Format (person): `select INDEX` +
 Format (task): `selecttask INDEX` +
 Shorthand commands: `s` `st`
->>>>>>> master
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -334,7 +334,6 @@ Dismisses the 2nd person in the address book from the 1st task in the results of
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` +
 Shorthand commands: `h`
->>>>>>> master
 
 [NOTE]
 ====
@@ -347,7 +346,6 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
 Shorthand commands: `u`
->>>>>>> master
 
 [NOTE]
 ====
@@ -375,7 +373,6 @@ The `undo` command fails as there are no undoable commands executed previously.
 Reverses the most recent `undo` command. +
 Format: `redo` +
 Shorthand commands: `r`
->>>>>>> master
 
 Examples:
 
@@ -452,7 +449,6 @@ Sets a $60 untagged budget and spends $0.50, leaving a budget of $59.50.
 Clears all entries from the address book. +
 Format: `clear` +
 Shorthand commands: `c`
->>>>>>> master
 
 === Exiting the program : `exit`
 
@@ -539,4 +535,3 @@ e.g. `dismiss 4 1 17`
 * *Help* : `F1`
 * *Open* : `CTRL+O`
 * *Save As* : `CTRL+S`
->>>>>>> master

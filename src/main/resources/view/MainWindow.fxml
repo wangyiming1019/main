@@ -19,7 +19,7 @@
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open">
+      <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#handleOpen" text="Open">
             <graphic>
                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -27,7 +27,7 @@
                   </image>
                </ImageView>
             </graphic></MenuItem>
-         <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save As">
+         <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#handleSaveAs" text="Save As">
             <graphic>
                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -36,7 +36,7 @@
                </ImageView>
             </graphic>
          </MenuItem>
-         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit">
+         <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#handleExit" text="Exit">
             <graphic>
                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
