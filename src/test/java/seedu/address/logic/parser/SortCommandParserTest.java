@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_INPUT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
@@ -27,6 +28,10 @@ public class SortCommandParserTest {
         assertParseFailure(parser, "phone", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "email", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "address", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        // no field or order
+        assertParseFailure(parser, "random text", String.format(MESSAGE_INVALID_INPUT, SortCommand.MESSAGE_USAGE));
+
     }
 
 }
