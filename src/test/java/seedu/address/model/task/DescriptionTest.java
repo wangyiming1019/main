@@ -10,11 +10,11 @@ public class DescriptionTest {
     @Test
     public void isValidDescription() {
         // invalid descriptions
-        assertFalse(Decription.isValidDecription(" ")); // spaces only
+        assertFalse(Description.isValidDescription(" ")); // spaces only
 
         // valid descriptions
-        assertTrue(Decription.isValidDecription("")); // empty string
-        assertTrue(Decription.isValidDecription("alphanumerical contents")); // alphanumerical contents
-        assertTrue(Decription.isValidDecription("-")); // single character
+        assertTrue(Description.isValidDescription("")); // empty string
+        assertTrue(Description.isValidDescription("alphanumerical contents")); // alphanumerical contents
+        assertTrue(Description.isValidDescription("-")); // single character
     }
 }

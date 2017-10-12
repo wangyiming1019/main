@@ -36,14 +36,7 @@ public class DeadlineTest {
         // valid deadline (empty deadline for optional data)
         assertTrue(Deadline.isValidDeadline("")); // empty string
 
-        // valid deadlines (6 numbers, short year)
-        assertTrue(Deadline.isValidDeadline("040417")); // continuous numbers
-        assertTrue(Deadline.isValidDeadline("04-04-17")); // dashes
-        assertTrue(Deadline.isValidDeadline("04/04/17")); // slashes
-        assertTrue(Deadline.isValidDeadline("04.04.17")); // dots
-
-        // valid deadlines (8 numbers, long year)
-        assertTrue(Deadline.isValidDeadline("04042017")); // continuous numbers
+        // valid deadlines
         assertTrue(Deadline.isValidDeadline("04-04-2017")); // dashes
         assertTrue(Deadline.isValidDeadline("04/04/2017")); // slashes
         assertTrue(Deadline.isValidDeadline("04.04.2017")); // dots

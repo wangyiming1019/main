@@ -13,11 +13,11 @@ public class PriorityTest {
 
         assertFalse(Priority.isValidPriority(" ")); // spaces only
         assertFalse(Priority.isValidPriority("invalid")); // invalid priority
-        assertFalse(Priority.isValidPriority("777")); // numerical priority out of range
+        assertFalse(Priority.isValidPriority("777")); // priority out of range
+        assertFalse(Priority.isValidPriority("0")); // priority out of range
 
         // valid names
         assertTrue(Priority.isValidPriority("")); // empty string
-        assertTrue(Priority.isValidPriority("low")); // string representation
-        assertTrue(Priority.isValidPriority("0")); // numerical representation
+        assertTrue(Priority.isValidPriority("1")); // numerical representation
     }
 }
