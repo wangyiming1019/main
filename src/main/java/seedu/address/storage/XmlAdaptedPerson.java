@@ -23,12 +23,16 @@ public class XmlAdaptedPerson {
 
     @XmlElement(required = true)
     private String name;
+    private Boolean nameIsPrivate;
     @XmlElement(required = true)
     private String phone;
+    private Boolean phoneIsPrivate;
     @XmlElement(required = true)
     private String email;
+    private Boolean emailIsPrivate;
     @XmlElement(required = true)
     private String address;
+    private Boolean addressIsPrivate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -50,6 +54,12 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+
+        nameIsPrivate = source.getName().isPrivate();
+        phoneIsPrivate = source.getPhone().isPrivate();
+        emailIsPrivate = source.getEmail().isPrivate();
+        addressIsPrivate = source.getAddress().isPrivate();
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -66,10 +76,10 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
-        final Name name = new Name(this.name, );
-        final Phone phone = new Phone(this.phone);
-        final Email email = new Email(this.email);
-        final Address address = new Address(this.address);
+        final Name name = new Name(this.name, this.nameIsPrivate);
+        final Phone phone = new Phone(this.phone, this.phoneIsPrivate);
+        final Email email = new Email(this.email, this.emailIsPrivate);
+        final Address address = new Address(this.address, this.addressIsPrivate);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, tags);
     }
