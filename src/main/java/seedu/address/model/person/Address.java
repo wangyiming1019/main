@@ -19,13 +19,14 @@ public class Address {
     public static final String ADDRESS_PLACEHOLDER_VALUE = "";
 
     public final String value;
+    private boolean isPrivate;
 
     /**
      * Validates given address.
      *
      * @throws IllegalValueException if given address string is invalid.
      */
-    public Address(String address) throws IllegalValueException {
+    public Address(String address, boolean isPrivate) throws IllegalValueException {
         if (address == null) {
             this.value = ADDRESS_PLACEHOLDER_VALUE;
             return;
@@ -34,6 +35,7 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = address;
+        this.isPrivate = isPrivate;
     }
 
     /**
@@ -60,4 +62,11 @@ public class Address {
         return value.hashCode();
     }
 
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
 }

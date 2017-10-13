@@ -15,12 +15,14 @@ public class Phone {
     public static final String PHONE_PLACEHOLDER_VALUE = "";
     public final String value;
 
+    private boolean isPrivate;
+
     /**
      * Validates given phone number.
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-    public Phone(String phone) throws IllegalValueException {
+    public Phone(String phone, boolean isPrivate) throws IllegalValueException {
         if (phone == null) {
             this.value = PHONE_PLACEHOLDER_VALUE;
             return;
@@ -30,6 +32,7 @@ public class Phone {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;
+        this.isPrivate = isPrivate;
     }
 
     /**
@@ -56,4 +59,11 @@ public class Phone {
         return value.hashCode();
     }
 
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
 }
