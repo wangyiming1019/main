@@ -14,14 +14,14 @@ public class Email {
     public static final String EMAIL_PLACEHOLDER_VALUE = "";
 
     public final String value;
-    private boolean isPrivate;
+    private boolean isPrivate = false;
 
     /**
      * Validates given email.
      *
      * @throws IllegalValueException if given email address string is invalid.
      */
-    public Email(String email, boolean isPrivate) throws IllegalValueException {
+    public Email(String email) throws IllegalValueException {
         if (email == null) {
             this.value = EMAIL_PLACEHOLDER_VALUE;
             return;
@@ -31,6 +31,10 @@ public class Email {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
         this.value = trimmedEmail;
+    }
+
+    public Email(String email, boolean isPrivate) throws IllegalValueException {
+        this(email);
         this.isPrivate = isPrivate;
     }
 
