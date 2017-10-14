@@ -35,7 +35,7 @@ public class Email {
 
     public Email(String email, boolean isPrivate) throws IllegalValueException {
         this(email);
-        this.isPrivate = isPrivate;
+        this.setPrivate(isPrivate);
     }
 
     /**

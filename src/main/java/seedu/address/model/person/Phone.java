@@ -36,7 +36,7 @@ public class Phone {
 
     public Phone(String phone, boolean isPrivate) throws IllegalValueException {
         this(phone);
-        this.isPrivate = isPrivate;
+        this.setPrivate(isPrivate);
     }
 
     /**

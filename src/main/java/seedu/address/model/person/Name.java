@@ -38,7 +38,7 @@ public class Name {
 
     public Name(String name, boolean isPrivate) throws IllegalValueException {
         this(name);
-        this.isPrivate = isPrivate;
+        this.setPrivate(isPrivate);
     }
 
     /**

@@ -39,7 +39,7 @@ public class Address {
 
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         this(address);
-        this.isPrivate = isPrivate;
+        this.setPrivate(isPrivate);
     }
 
     /**
