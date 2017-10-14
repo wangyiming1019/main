@@ -76,6 +76,18 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        if (nameIsPrivate == null) {
+            nameIsPrivate = false;
+        }
+        if (phoneIsPrivate == null) {
+            phoneIsPrivate = false;
+        }
+        if (emailIsPrivate == null) {
+            emailIsPrivate = false;
+        }
+        if (addressIsPrivate == null) {
+            addressIsPrivate = false;
+        }
         final Name name = new Name(this.name, this.nameIsPrivate);
         final Phone phone = new Phone(this.phone, this.phoneIsPrivate);
         final Email email = new Email(this.email, this.emailIsPrivate);
