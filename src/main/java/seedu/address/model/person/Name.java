@@ -51,6 +51,9 @@ public class Name {
 
     @Override
     public String toString() {
+        if (isPrivate) {
+            return "<private>";
+        }
         return fullName;
     }
 

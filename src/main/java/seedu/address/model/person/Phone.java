@@ -48,6 +48,9 @@ public class Phone {
 
     @Override
     public String toString() {
+        if (isPrivate) {
+            return "<private>";
+        }
         return value;
     }
 

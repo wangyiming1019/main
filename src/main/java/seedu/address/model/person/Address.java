@@ -51,6 +51,9 @@ public class Address {
 
     @Override
     public String toString() {
+        if (isPrivate) {
+            return "<private>";
+        }
         return value;
     }
 
