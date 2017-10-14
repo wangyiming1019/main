@@ -23,15 +23,19 @@ public class XmlAdaptedPerson {
 
     @XmlElement(required = true)
     private String name;
+    @XmlElement(required = true)
     private Boolean nameIsPrivate;
     @XmlElement(required = true)
     private String phone;
+    @XmlElement(required = true)
     private Boolean phoneIsPrivate;
     @XmlElement(required = true)
     private String email;
+    @XmlElement(required = true)
     private Boolean emailIsPrivate;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
     private Boolean addressIsPrivate;
 
     @XmlElement
