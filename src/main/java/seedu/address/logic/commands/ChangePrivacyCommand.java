@@ -11,6 +11,7 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -40,12 +41,12 @@ public class ChangePrivacyCommand extends UndoableCommand {
     public static final String MESSAGE_NO_FIELDS = "At least one field to change must be provided.";
 
     private final Index index;
-    private final personPrivacySettings pps;
+    private final PersonPrivacySettings pps;
 
     /**
      * @param index of the person in the filtered person list to change the privacy of
      */
-    public ChangePrivacyCommand(Index index, personPrivacySettings pps) {
+    public ChangePrivacyCommand(Index index, PersonPrivacySettings pps) {
         requireNonNull(index);
         requireNonNull(pps);
 
@@ -73,55 +74,77 @@ public class ChangePrivacyCommand extends UndoableCommand {
      * @param person the person whose privacy we would like to change
      * @param pps the settings of privacy for each field
      */
-    private static void changePersonPrivacy(ReadOnlyPerson person, personPrivacySettings pps) {
-        person.getName().setPrivate(pps.nameIsPrivate());
-        person.getAddress().setPrivate(pps.addressIsPrivate());
-        person.getEmail().setPrivate(pps.emailIsPrivate());
-        person.getPhone().setPrivate(pps.phoneIsPrivate());
+    private static void changePersonPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        if (pps.nameIsPrivate() != null) {
+            person.getName().setPrivate(pps.nameIsPrivate());
+        }
+        if (pps.phoneIsPrivate() != null) {
+            person.getPhone().setPrivate(pps.phoneIsPrivate());
+        }
+
+        if (pps.emailIsPrivate() != null) {
+            person.getEmail().setPrivate(pps.emailIsPrivate());
+        }
+
+        if (pps.addressIsPrivate() != null) {
+            person.getAddress().setPrivate(pps.addressIsPrivate());
+        }
     }
 
     /**
      * Stores the privacy settings for each field of a person.
      */
-    public static class personPrivacySettings {
-        private boolean nameIsPrivate;
-        private boolean phoneIsPrivate;
-        private boolean emailIsPrivate;
-        private boolean addressIsPrivate;
+    public static class PersonPrivacySettings {
+        private Boolean nameIsPrivate;
+        private Boolean phoneIsPrivate;
+        private Boolean emailIsPrivate;
+        private Boolean addressIsPrivate;
 
-        public personPrivacySettings() {
+        public PersonPrivacySettings() {
 
         }
 
-        public boolean nameIsPrivate() {
+        /**
+         * Returns true if at least one field is not null.
+         */
+        public boolean isAnyFieldNonNull() {
+            return CollectionUtil.isAnyNonNull(this.nameIsPrivate, this.phoneIsPrivate,
+                    this.emailIsPrivate, this.addressIsPrivate);
+        }
+
+        public Boolean nameIsPrivate() {
             return nameIsPrivate;
         }
 
         public void setNameIsPrivate(boolean nameIsPrivate) {
+            requireNonNull(nameIsPrivate);
             this.nameIsPrivate = nameIsPrivate;
         }
 
-        public boolean phoneIsPrivate() {
+        public Boolean phoneIsPrivate() {
             return phoneIsPrivate;
         }
 
         public void setPhoneIsPrivate(boolean phoneIsPrivate) {
+            requireNonNull(phoneIsPrivate);
             this.phoneIsPrivate = phoneIsPrivate;
         }
 
-        public boolean emailIsPrivate() {
+        public Boolean emailIsPrivate() {
             return emailIsPrivate;
         }
 
         public void setEmailIsPrivate(boolean emailIsPrivate) {
+            requireNonNull(emailIsPrivate);
             this.emailIsPrivate = emailIsPrivate;
         }
 
-        public boolean addressIsPrivate() {
+        public Boolean addressIsPrivate() {
             return addressIsPrivate;
         }
 
         public void setAddressIsPrivate(boolean addressIsPrivate) {
+            requireNonNull(addressIsPrivate);
             this.addressIsPrivate = addressIsPrivate;
         }
     }
