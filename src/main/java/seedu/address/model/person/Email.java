@@ -48,7 +48,7 @@ public class Email {
     @Override
     public String toString() {
         if (isPrivate) {
-            return "<private>";
+            return "<Private Email>";
         }
         return value;
     }
