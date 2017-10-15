@@ -59,9 +59,7 @@ public class PersonCard extends UiPart<Region> {
         if (!tagcolors.containsKey(tag)) {
             tagcolors.put(tag, allColors[random.nextInt(allColors.length)]);
         }
-        
         return tagcolors.get(tag);
-        
     }
 
 
