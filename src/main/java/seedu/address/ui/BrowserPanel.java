@@ -24,8 +24,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String PRIVATE_NAME_CANNOT_SEARCH = "Cannot perform a search on that person. " +
-            "Their name is private.";
+    public static final String PRIVATE_NAME_CANNOT_SEARCH = "Cannot perform a search on that person. "
+            + "Their name is private.";
 
     private static final String FXML = "BrowserPanel.fxml";
 
