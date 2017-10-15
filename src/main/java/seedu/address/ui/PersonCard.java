@@ -78,6 +78,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise tag with randomly assigned colours
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
