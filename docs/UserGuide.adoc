@@ -225,13 +225,15 @@ Delete the freinds tag of the 1st person in the address book.
 === Sorting all persons : `sort`
 
 Sorts all persons in address book by any field in ascending or descending order. +
-Format: `sort FIELD ORDER`
-Shorthand commands: so
+Format: `sort FIELD ORDER` +
+Shorthand command: `so`
+
 
 ****
 * Sorts all persons currenlty in the address book by user input field and order.
 * Field parameters are limited to the following fields: NAME, PHONE, EMAIL, ADDRESS.
 * Order parameters are limited to the following fields: ASC, DESC.
+* Sort can be undone to return to the original list of people.
 ****
 
 Examples:
