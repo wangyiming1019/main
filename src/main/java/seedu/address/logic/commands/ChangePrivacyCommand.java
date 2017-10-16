@@ -100,10 +100,6 @@ public class ChangePrivacyCommand extends UndoableCommand {
         private Boolean emailIsPrivate;
         private Boolean addressIsPrivate;
 
-        public PersonPrivacySettings() {
-
-        }
-
         /**
          * Returns true if at least one field is not null.
          */
