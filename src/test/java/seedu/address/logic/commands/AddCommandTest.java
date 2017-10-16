@@ -25,6 +25,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.commons.core.index.Index;
+import seedu.address.model.tag.Tag;
 
 public class AddCommandTest {
 
@@ -102,6 +104,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addTag(Tag toAdd, ArrayList<Index> targetIndexes)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -117,6 +124,11 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
+        public void deleteTag(Tag toDelete, ArrayList<Index> targetIndexes)  {
+            fail("This method should not be called.");
+        }
+        
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
