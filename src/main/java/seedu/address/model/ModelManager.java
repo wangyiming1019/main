@@ -79,12 +79,12 @@ public class ModelManager extends ComponentManager implements Model {
             DuplicatePersonException {
         for (int i = 0; i < personIndexes.size(); i++) {
             int index = personIndexes.get(i).getZeroBased();
-            ReadOnlyPerson PersonWithTag = this.getFilteredPersonList().get(index);
-            Person PersonWithoutTag = new Person(PersonWithTag);
-            Set<Tag> newTags = new HashSet<Tag>(PersonWithoutTag.getTags());
+            ReadOnlyPerson personWithTag = this.getFilteredPersonList().get(index);
+            Person personWithoutTag = new Person(personWithTag);
+            Set<Tag> newTags = new HashSet<Tag>(personWithoutTag.getTags());
             newTags.remove(toDelete);
-            PersonWithoutTag.setTags(newTags);
-            addressBook.updatePerson(PersonWithTag, PersonWithoutTag);
+            personWithoutTag.setTags(newTags);
+            addressBook.updatePerson(personWithTag, personWithoutTag);
             indicateAddressBookChanged();
         }
     }
@@ -104,12 +104,12 @@ public class ModelManager extends ComponentManager implements Model {
             DuplicatePersonException {
         for (int i = 0; i < personIndexes.size(); i++) {
             int index = personIndexes.get(i).getZeroBased();
-            ReadOnlyPerson PersonWithoutTag = this.getFilteredPersonList().get(index);
-            Person PersonWithTag = new Person(PersonWithoutTag);
-            Set<Tag> newTags = new HashSet<Tag>(PersonWithTag.getTags());
+            ReadOnlyPerson personWithoutTag = this.getFilteredPersonList().get(index);
+            Person personWithTag = new Person(personWithoutTag);
+            Set<Tag> newTags = new HashSet<Tag>(personWithTag.getTags());
             newTags.add(toAdd);
-            PersonWithTag.setTags(newTags);
-            addressBook.updatePerson(PersonWithoutTag, PersonWithTag);
+            personWithTag.setTags(newTags);
+            addressBook.updatePerson(personWithoutTag, personWithTag);
             indicateAddressBookChanged();
         }
     }
