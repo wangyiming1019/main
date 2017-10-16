@@ -125,10 +125,10 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(Tag toDelete, ArrayList<Index> targetIndexes)  {
+        public void deleteTag(Tag toDelete, ArrayList<Index> targetIndexes) {
             fail("This method should not be called.");
         }
-        
+
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
