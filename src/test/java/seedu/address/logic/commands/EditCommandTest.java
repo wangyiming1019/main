@@ -141,6 +141,11 @@ public class EditCommandTest {
         assertEquals(personInFilteredList.getPhone(), originalPhone);
         assertEquals(personInFilteredList.getEmail(), originalEmail);
         assertEquals(personInFilteredList.getAddress(), originalAddress);
+
+        personInFilteredList.getName().setPrivate(false);
+        personInFilteredList.getPhone().setPrivate(false);
+        personInFilteredList.getEmail().setPrivate(false);
+        personInFilteredList.getAddress().setPrivate(false);
     }
 
     @Test
