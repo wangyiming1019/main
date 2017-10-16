@@ -67,9 +67,9 @@ public class AddTagCommand extends UndoableCommand {
         }
         // check whether all persons have the given tag
         for (int i = 0; i < targetIndexes.size(); i++) {
-            int PersonIndex = targetIndexes.get(i).getZeroBased();
-            ReadOnlyPerson PersonToAddTag = lastShownList.get(PersonIndex);
-            if (!PersonToAddTag.getTags().contains(addTag)) {
+            int personIndex = targetIndexes.get(i).getZeroBased();
+            ReadOnlyPerson personToAddTag = lastShownList.get(personIndex);
+            if (!personToAddTag.getTags().contains(addTag)) {
                 allPersonsContainGivenTag = false;
             }
         }
