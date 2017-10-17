@@ -75,6 +75,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    @Override
+    public void backupAddressBookToLocation(ReadOnlyAddressBook addressBook, String backupFilePath) throws IOException {
+        // Function assumes that backupFilePath ends with a /
+        String concatenatedFilePath = backupFilePath + "backup.xml";
+        logger.fine("Attempting to write to backup data file: " + concatenatedFilePath);
+        this.saveAddressBook(addressBook, concatenatedFilePath);
+    }
+
     /**
      * Changes the file path of the save file
      * @param filepath the new file path of the save file. Cannot be null
