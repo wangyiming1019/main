@@ -32,6 +32,16 @@ public class PersonCard extends UiPart<Region> {
 
     public final ReadOnlyPerson person;
 
+    /**
+     * Preset values for random selection later.
+     */
+    private enum Colours {
+        blue, green, brown, purple, navy, crimson, firebrick, maroon, aliceblue
+    }
+
+    private HashMap<String, String> colourHash;
+    private Random randomNumber;
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -49,6 +59,10 @@ public class PersonCard extends UiPart<Region> {
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
+
+        colourHash = new HashMap<>();
+        randomNumber = new Random(Colours.values().length - 1);
+
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
@@ -79,13 +93,30 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Initialise tag with randomly assigned colours
+     * Locate hashed colour for tag. If not found, new colour is assigned to tag
+     * @param tag
+     * @return
+     */
+    private String getTagColour(String tag) {
+        if (!colourHash.containsKey(tag)) {
+            int randomiser = randomNumber.nextInt(Colours.values().length - 1);
+            String colour = Colours.values()[randomiser].toString();
+            colourHash.put(tag, colour);
+        }
+        return colourHash.get(tag);
+    }
+
+    /**
+     * Assigns each tag a colour
+     * @param person
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getTagColor(tag.tagName));
-            tags.getChildren().add(tagLabel);
+            Label newTagLabel = new Label(tag.getTagName());
+
+            newTagLabel.setStyle("-fx-background-color: " + this.getTagColour(tag.getTagName()));
+
+            tags.getChildren().add(newTagLabel);
         });
     }
 
