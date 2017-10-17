@@ -28,7 +28,7 @@ public class Priority {
         }
         String trimmedPriority = priority.trim();
         try {
-            int numericPriority = Integer.parseInt(trimmedPriority);
+            Integer.parseInt(trimmedPriority);
         } catch (NumberFormatException e) {
             throw new IllegalValueException(MESSAGE_PRIORITY_CONSTRAINTS);
         }
