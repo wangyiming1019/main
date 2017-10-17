@@ -81,10 +81,9 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void backupAddressBookToLocation(ReadOnlyAddressBook addressBook, String backupFilePath) throws IOException {
-        // Function assumes that backupFilePath ends with a /
-        String concatenatedFilePath = backupFilePath + "backup.xml";
-        logger.fine("Attempting to write to backup data file: " + concatenatedFilePath);
-        this.saveAddressBook(addressBook, concatenatedFilePath);
+        // Function assumes that backupFilePath includes file name at the back
+        logger.fine("Attempting to write to backup data file: " + backupFilePath);
+        this.saveAddressBook(addressBook, backupFilePath);
     }
 
     @Override
