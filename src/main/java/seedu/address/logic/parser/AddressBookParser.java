@@ -112,7 +112,7 @@ public class AddressBookParser {
 
         case BackupCommand.COMMAND_WORD:
         case BackupCommand.COMMAND_ALIAS:
-            return new BackupCommandParser().parse(arguments);
+            return new BackupCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

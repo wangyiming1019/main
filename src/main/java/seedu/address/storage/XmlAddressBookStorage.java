@@ -76,10 +76,9 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public void backupAddressBookToLocation(ReadOnlyAddressBook addressBook, String backupFilePath) throws IOException {
-        // Function assumes that backupFilePath includes file name at the back
-        logger.fine("Attempting to write to backup data file: " + backupFilePath);
-        this.saveAddressBook(addressBook, backupFilePath);
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        logger.fine("Attempting to write to backup data file");
+        this.saveAddressBook(addressBook, filePath + "-backup.xml");
     }
 
     /**

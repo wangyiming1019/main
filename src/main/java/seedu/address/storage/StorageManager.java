@@ -80,10 +80,9 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void backupAddressBookToLocation(ReadOnlyAddressBook addressBook, String backupFilePath) throws IOException {
-        // Function assumes that backupFilePath includes file name at the back
-        logger.fine("Attempting to write to backup data file: " + backupFilePath);
-        this.saveAddressBook(addressBook, backupFilePath);
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        logger.fine("Attempting to write to backup data file");
+        this.saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
 
     @Override
