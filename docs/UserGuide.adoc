@@ -64,6 +64,7 @@ Shorthand commands: `a` `at`
 
 [TIP]
 A person can have any number of tags (including 0) +
+A person's `Name`, `Phone`, `Email` or `Address` can be set to be private by placing a `p` in front of the prefix. +
 A task can have the following 5 priorities: `lowest, low, normal, high, highest` +
 Newly added tasks are marked as incomplete by default.
 
@@ -73,6 +74,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal`
 * `add n/Ima Hidearu b/ a/ e/ p/ t/secretive`
 * `add n/Luke Groundswimmer p/ a/ e/ c/`
+* `add pn/Neville Shorttop pp/46492787 pe/nevilleS@gmail.com pa/Gryphon Gate c/`
 * `addtask n/Update documentationn d/Update docs for V1.1 for CS2103T t/10-10-17 p/high`
 * `addtask n/Buy new pencil p/low`
 
@@ -114,6 +116,7 @@ Shorthand commands: `e` `et`
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* A private field will not be modified by the Edit command.
 ****
 
 Examples:
