@@ -34,6 +34,14 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
     }
 
+    public LogicManager(Model model) {
+        this.model = model;
+        this.storage = null;
+        this.history = new CommandHistory();
+        this.addressBookParser = new AddressBookParser();
+        this.undoRedoStack = new UndoRedoStack();
+    }
+
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
