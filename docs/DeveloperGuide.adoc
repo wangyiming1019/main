@@ -471,6 +471,84 @@ Note that the execution of the sort methods result in the actual person list bei
 **Pros:** Old order of contact instances remains intact. +
 **Cons:** Will use more memory and may be less intuitive for developer to understand and in terms of user experience. Also, sorting will not persist in the system.
 
+
+// tag::Privacy
+=== Privacy of fields
+
+The `Name`, `Phone`, `Email` and `Address` of a `Person` contains a boolean `isPrivate`, which will determine if the field belonging to that person is private or not.
+
+Adding a person with private fields uses the same `AddCommand` as adding a person with no public fields. +
+To determine if the field that is added should be set to private, a `p` is added to the start of the prefix. +
+Hence, `pe/[EMAIL]` will set that person's email to be private, whereas if `e/[EMAIL]` was used, that person's email would be public. +
+
+The `isPrivate` boolean is private, however, the value can be obtained using the following getter method:
+[source,java]
+----
+public boolean isPrivate() {
+    return isPrivate;
+}
+----
+
+To change the `isPrivate` value, the following setter method is used:
+[source,java]
+----
+public void setPrivate(boolean isPrivate) {
+    this.isPrivate = isPrivate;
+}
+----
+
+If a field is private, then the `toString` method will return a string `<Private [FIELD]>`, where `[FIELD]` is the name of that field. +
+This can be seen from the `toString` method in `Name`:
+[source,java]
+----
+@Override
+public String toString() {
+    if (isPrivate) {
+        return "<Private Name>";
+    }
+    return fullName;
+}
+----
+
+Since the information displayed in a person's card in the UI gets the value of the field through the `toString()` method, this hides the actual value of the field in the UI.
+
+In addition, if `isPrivate` is `true` for `Name`, clicking on a person's card in the UI will not trigger a search on Google for that person's name.
+
+Instead, a message `"Cannot perform a search on that person. Their name is private."` will be printed in the UI to inform the user that they are not allowed to search for a person possessing a private `Name`.
+
+`ChangePrivacyCommand` facilitates the setting of an existing person's field's privacy. Depending on the user's input, `ChangePrivacyCommand` will use each field's `setPrivate()` method to set the value of `isPrivate`.
+
+To keep track of whether each field is private or not, `XmlAdaptedPerson` will have to store the `isPrivate` value for each field of `Person`.
+
+If an old save file without privacy data is loaded, then the `toModelType()` method in `XmlAdaptedPerson` will set `isPrivate` to be `false` for each field of `Person`, to keep the displayed information the same.
+
+[NOTE]
+If a private field is to be edited by `EditCommand`, `EditCommand` will not modify the data of that field, even though the command succeeds. +
+Hence, a private field will remain private and the value stored by that field will remain the same as it originally was.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of `isPrivate` +
+**Alternative 1 (current choice):** Add a boolean to each field class +
+**Pros:** Similar implementation to how the fields are currently being implemented. Privacy settings can be obtained directly from the field class itself. +
+**Cons:** Repetitive code. Additional overloaded constructor and methods are needed to set and get the value of `isPrivate`.  +
+**Alternative 2:** Store a person's privacy settings outside of the field classes in an Array or a HashMap in `Person`. +
+**Pros:** Can access and modify the privacy settings of all fields easily. +
+**Cons:** The fields themselves do not have any indication of whether or not they are private, and will have to check with the `Person` the belong to.
+
+---
+**Aspect:** How to determine if a field for a newly added person should be private. +
+**Alternative 1 (current choice):** Add a `p` to the start of each field's prefix to signify that that field should be private. +
+**Pros:** Can add `Person` containing any combination of private and public fields in 1 command line. +
+**Cons:** Have to modify `AddCommand`, `AddCommandParser`, `ParserUtil` and other classes to detect the new prefix and call a separate constructor when a field is private. +
+**Alternative 2:** A `Person` is added with all field public, a separate command will then have to be used to set the desired fields to be private. +
+**Pros:** Easier implementation, do not have to modify `AddCommand`. +
+**Cons:** Requires 2 command lines to create a `Person` with private fields, which takes more time and is more inconvenient for users.
+
+// end::Privacy
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
