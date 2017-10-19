@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -22,6 +24,9 @@ public class BackupCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        requireNonNull(model.getAddressBook());
+        requireNonNull(storage);
         try {
             storage.backupAddressBook(model.getAddressBook());
         } catch (IOException e) {

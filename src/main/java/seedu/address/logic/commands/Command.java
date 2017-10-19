@@ -45,7 +45,7 @@ public abstract class Command {
         this.model = model;
     }
 
-    public void setData(Storage storage) {
+    public void setStorageInfo(Storage storage) {
         this.storage = storage;
     }
 }
