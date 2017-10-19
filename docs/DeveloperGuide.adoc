@@ -430,7 +430,6 @@ Tasks objects are stored in the same level of hierarchy as Person objects, and d
 **Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
 **Cons** Any changes to the Person or Task will affect the storage of both the Person and Task objects. This will increase coupling between the Person and Task classes.
 
-
 === Sort enhancement
 
 The sort enhancment is facilitated by the `sortBy` method in UniquePersonList. It supports
@@ -471,7 +470,6 @@ Note that the execution of the sort methods result in the actual person list bei
 **Alternative 2:** Duplicate a temporary version of the list and sort it for viewing (i.e. the actual list is not sorted) +
 **Pros:** Old order of contact instances remains intact. +
 **Cons:** Will use more memory and may be less intuitive for developer to understand and in terms of user experience. Also, sorting will not persist in the system.
-
 
 === Logging
 
