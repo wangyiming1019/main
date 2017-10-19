@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -126,6 +127,30 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortPersons(String field, String order) {
         addressBook.sortPersonsBy(field, order);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Replaces the toChange Tag with the newTag Tag, for all Person objects denoted by the indexes.
+     * Guarantees: indexes contains at least 1 person that has the toChange Tag.
+     */
+    public synchronized void editTag(Tag toChange, Tag newTag, ArrayList<Index> indexes)
+            throws PersonNotFoundException, DuplicatePersonException {
+        List<ReadOnlyPerson> allPersons = this.getFilteredPersonList();
+        Set<Tag> personTags;
+        Person toUpdate;
+        ReadOnlyPerson toRead;
+        int index;
+        for (Index i : indexes) {
+            index = i.getZeroBased();
+            toRead = allPersons.get(index);
+            toUpdate = new Person(toRead);
+            personTags = toRead.getTags();
+            personTags.remove(toChange);
+            personTags.add(newTag);
+            toUpdate.setTags(personTags);
+            addressBook.updatePerson(toRead, toUpdate);
+        }
         indicateAddressBookChanged();
     }
 
