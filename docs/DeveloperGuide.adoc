@@ -345,6 +345,91 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Task Object
+
+The Task object stores information related to a single deadline or task, in a manner similar to how Person information is stored. +
+As such, it also shares the same types of commands as the Person object, namely the add, delete, list, select, and edit commands.
+Instead of making a new Logic object for each new command, polymorphism is used to implement the "Task" version of each command.
+
+An example of using polymorphism to handle Person vs Task addition:
+
+[source,java]
+----
+public class AddCommand extends Command {
+    public AddCommand(ReadOnlyPerson person) {
+        toAdd = new Person(person);
+        toHandle = HANDLE_TYPE_PERSON;
+    }
+
+    public AddCommand(ReadOnlyTask task) {
+        toAdd = new Task(task);
+        toHandle = HANDLE_TYPE_TASK;
+    }
+}
+----
+
+The AddCommand will thus call a different constructor depending on the type of the argument supplied to it. To facilitate this, the respective Parser class must also be modified:
+
+[source,java]
+----
+public AddCommand parse(String args) throws ParseException {
+    int objectType = checkType(args);
+
+    if (objectType == HANDLE_TYPE_PERSON) {
+        Person toAdd = createNewPerson(args);
+    } else if (objectType == HANDLE_TYPE_TASK) {
+        Task toAdd = createNewTask(args);
+    }
+    return new AddCommand(toAdd);
+}
+----
+
+The AddCommandParser checks the args to see if this is a task, then creates the object to be added, and creates a new AddCommand to handle the result. +
+The sequence diagram below shows how this is done:
+
+image::AddTaskSeq.png[width="800"]
+
+To support the addition of Task objects, the Storage component is modified to accept Task objects in a similar manner as to how Person objects are being stored.
+
+[source, html]
+---
+    <persons>
+        <name>someone else</name>
+        <phone></phone>
+        <email></email>
+        <address></address>
+    </persons>
+    <tasks>
+        <name>Buy new pencil</name>
+        <description>Buy new pencil for writing purposes</description>
+        <deadline></deadline>
+        <priority>2</priority>
+    </tasks>
+---
+
+Tasks objects are stored in the same level of hierarchy as Person objects, and during startup, are read and entered into the UniqueTaskList, which handles all the tasks that are present in the address book.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of Task-related commands +
+**Alternative 1 (current choice):** Use polymorphism to allow existing commands to implement the new commands +
+**Pros:** Under this scheme, any command can be extended to allow addition of new commands of any type, without affecting the architecture significantly +
+**Cons:** SRP may be violated as each Command class may now need to handle 2 different types of objects. +
+**Alternative 2:** Create new classes for all new commands +
+**Pros:** Simpler to implement. +
+**Cons:** Code duplication occurs as the commands for Person and Tasks objects share the same structure.
+
+---
+
+**Aspect:** Storage of Task objects +
+**Alternative 1 (current choice):** Store Tasks objects in a separate XML file +
+**Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa.
+**Cons:** All existing save/load functions will require an additional method to handle Task storage.
+**Alternative 2:** Store Task objects together in the default XML storage file +
+**Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
+**Cons** Any changes to the Person or Task will affect the storage of both the Person and Task objects. This will increase coupling between the Person and Task classes.
+
 === Sort enhancement
 
 The sort enhancment is facilitated by the `sortBy` method in UniquePersonList. It supports
