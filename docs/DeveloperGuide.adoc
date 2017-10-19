@@ -345,7 +345,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-<<<<<<< HEAD
 === Task Object
 
 The Task object stores information related to a single deadline or task, in a manner similar to how Person information is stored. +
@@ -431,8 +430,7 @@ Tasks objects are stored in the same level of hierarchy as Person objects, and d
 **Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
 **Cons** Any changes to the Person or Task will affect the storage of both the Person and Task objects. This will increase coupling between the Person and Task classes.
 
----
-=======
+
 === Sort enhancement
 
 The sort enhancment is facilitated by the `sortBy` method in UniquePersonList. It supports
@@ -473,7 +471,7 @@ Note that the execution of the sort methods result in the actual person list bei
 **Alternative 2:** Duplicate a temporary version of the list and sort it for viewing (i.e. the actual list is not sorted) +
 **Pros:** Old order of contact instances remains intact. +
 **Cons:** Will use more memory and may be less intuitive for developer to understand and in terms of user experience. Also, sorting will not persist in the system.
->>>>>>> c25e91fccc0efceaf99a61360b7769a1b961abc8
+
 
 === Logging
 
