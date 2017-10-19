@@ -389,6 +389,27 @@ The sequence diagram below shows how this is done:
 
 image::AddTaskSeq.png[width="800"]
 
+To support the addition of Task objects, the Storage component is modified to accept Task objects in a similar manner as to how Person objects are being stored.
+
+[source, html]
+---
+    <persons>
+        <name>someone else</name>
+        <phone></phone>
+        <email></email>
+        <address></address>
+    </persons>
+    <tasks>
+        <name>Buy new pencil</name>
+        <description>Buy new pencil for writing purposes</description>
+        <deadline></deadline>
+        <priority>2</priority>
+    </tasks>
+---
+
+Tasks objects are stored in the same level of hierarchy as Person objects, and during startup, are read and entered into the UniqueTaskList, which handles all the tasks that are present in the address book.
+
+
 ==== Design Considerations
 
 **Aspect:** Implementation of Task-related commands +
@@ -398,6 +419,16 @@ image::AddTaskSeq.png[width="800"]
 **Alternative 2:** Create new classes for all new commands +
 **Pros:** Simpler to implement. +
 **Cons:** Code duplication occurs as the commands for Person and Tasks objects share the same structure.
+
+---
+
+**Aspect:** Storage of Task objects +
+**Alternative 1 (current choice):** Store Tasks objects in a separate XML file +
+**Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa.
+**Cons:** All existing save/load functions will require an additional method to handle Task storage.
+**Alternative 2:** Store Task objects together in the default XML storage file +
+**Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
+**Cons** Any changes to the Person or Task will affect the storage of both the Person and Task objects. This will increase coupling between the Person and Task classes.
 
 ---
 
