@@ -47,8 +47,9 @@
 <li><a href="#undo-redo-mechanism">3.1. Undo/Redo mechanism</a></li>
 <li><a href="#task-object">3.2. Task Object</a></li>
 <li><a href="#sort-enhancement">3.3. Sort enhancement</a></li>
-<li><a href="#logging">3.4. Logging</a></li>
-<li><a href="#configuration">3.5. Configuration</a></li>
+<li><a href="#privacy-of-fields">3.4. Privacy of fields</a></li>
+<li><a href="#logging">3.5. Logging</a></li>
+<li><a href="#configuration">3.6. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -923,7 +924,106 @@ demonstrates how the sort command works.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
+<h3 id="privacy-of-fields"><a class="link" href="#privacy-of-fields">3.4. Privacy of fields</a></h3>
+<div class="paragraph">
+<p>The <code>Name</code>, <code>Phone</code>, <code>Email</code> and <code>Address</code> of a <code>Person</code> contains a boolean <code>isPrivate</code>, which will determine if the field belonging to that person is private or not.</p>
+</div>
+<div class="paragraph">
+<p>Adding a person with private fields uses the same <code>AddCommand</code> as adding a person with no public fields.<br>
+To determine if the field that is added should be set to private, a <code>p</code> is added to the start of the prefix.<br>
+Hence, <code>pe/[EMAIL]</code> will set that person&#8217;s email to be private, whereas if <code>e/[EMAIL]</code> was used, that person&#8217;s email would be public.<br></p>
+</div>
+<div class="paragraph">
+<p>The <code>isPrivate</code> boolean is private, however, the value can be obtained using the following getter method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> isPrivate() {
+    <span class="keyword">return</span> isPrivate;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To change the <code>isPrivate</code> value, the following setter method is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> setPrivate(<span class="type">boolean</span> isPrivate) {
+    <span class="local-variable">this</span>.isPrivate = isPrivate;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If a field is private, then the <code>toString</code> method will return a string <code>&lt;Private [FIELD]&gt;</code>, where <code>[FIELD]</code> is the name of that field.<br>
+This can be seen from the <code>toString</code> method in <code>Name</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">public</span> <span class="predefined-type">String</span> toString() {
+    <span class="keyword">if</span> (isPrivate) {
+        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;Private Name&gt;</span><span class="delimiter">&quot;</span></span>;
+    }
+    <span class="keyword">return</span> fullName;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since the information displayed in a person&#8217;s card in the UI gets the value of the field through the <code>toString()</code> method, this hides the actual value of the field in the UI.</p>
+</div>
+<div class="paragraph">
+<p>In addition, if <code>isPrivate</code> is <code>true</code> for <code>Name</code>, clicking on a person&#8217;s card in the UI will not trigger a search on Google for that person&#8217;s name.</p>
+</div>
+<div class="paragraph">
+<p>Instead, a message <code>"Cannot perform a search on that person. Their name is private."</code> will be printed in the UI to inform the user that they are not allowed to search for a person possessing a private <code>Name</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>ChangePrivacyCommand</code> facilitates the setting of an existing person&#8217;s field&#8217;s privacy. Depending on the user&#8217;s input, <code>ChangePrivacyCommand</code> will use each field&#8217;s <code>setPrivate()</code> method to set the value of <code>isPrivate</code>.</p>
+</div>
+<div class="paragraph">
+<p>To keep track of whether each field is private or not, <code>XmlAdaptedPerson</code> will have to store the <code>isPrivate</code> value for each field of <code>Person</code>.</p>
+</div>
+<div class="paragraph">
+<p>If an old save file without privacy data is loaded, then the <code>toModelType()</code> method in <code>XmlAdaptedPerson</code> will set <code>isPrivate</code> to be <code>false</code> for each field of <code>Person</code>, to keep the displayed information the same.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a private field is to be edited by <code>EditCommand</code>, <code>EditCommand</code> will not modify the data of that field, even though the command succeeds.<br>
+Hence, a private field will remain private and the value stored by that field will remain the same as it originally was.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>isPrivate</code><br>
+<strong>Alternative 1 (current choice):</strong> Add a boolean to each field class<br>
+<strong>Pros:</strong> Similar implementation to how the fields are currently being implemented. Privacy settings can be obtained directly from the field class itself.<br>
+<strong>Cons:</strong> Repetitive code. Additional overloaded constructor and methods are needed to set and get the value of <code>isPrivate</code>. <br>
+<strong>Alternative 2:</strong> Store a person&#8217;s privacy settings outside of the field classes in an Array or a HashMap in <code>Person</code>.<br>
+<strong>Pros:</strong> Can access and modify the privacy settings of all fields easily.<br>
+<strong>Cons:</strong> The fields themselves do not have any indication of whether or not they are private, and will have to check with the <code>Person</code> the belong to.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How to determine if a field for a newly added person should be private.<br>
+<strong>Alternative 1 (current choice):</strong> Add a <code>p</code> to the start of each field&#8217;s prefix to signify that that field should be private.<br>
+<strong>Pros:</strong> Can add <code>Person</code> containing any combination of private and public fields in 1 command line.<br>
+<strong>Cons:</strong> Have to modify <code>AddCommand</code>, <code>AddCommandParser</code>, <code>ParserUtil</code> and other classes to detect the new prefix and call a separate constructor when a field is private.<br>
+<strong>Alternative 2:</strong> A <code>Person</code> is added with all field public, a separate command will then have to be used to set the desired fields to be private.<br>
+<strong>Pros:</strong> Easier implementation, do not have to modify <code>AddCommand</code>.<br>
+<strong>Cons:</strong> Requires 2 command lines to create a <code>Person</code> with private fields, which takes more time and is more inconvenient for users.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
@@ -961,7 +1061,7 @@ demonstrates how the sort command works.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration"><a class="link" href="#configuration">3.5. Configuration</a></h3>
+<h3 id="configuration"><a class="link" href="#configuration">3.6. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2397,7 +2497,7 @@ for <code>RemarkCommandParser</code>.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-19 11:57:11 +00:00
+Last updated 2017-10-19 12:38:51 +00:00
 </div>
 </div>
 </body>
