@@ -30,14 +30,14 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
         if (!arePrefixesPresent(argMultimap, PREFIX_TAG)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
         }
-
         try {
             String indexes = argMultimap.getPreamble();
-            ArrayList<Index> indexList = convertToArrayList(indexes);
-
             String tagName = argMultimap.getValue(PREFIX_TAG).orElse("");
             Tag toDelete = new Tag(tagName);
-
+            if (indexes.trim().isEmpty()) {
+                return new DeleteTagCommand(toDelete);
+            }
+            ArrayList<Index> indexList = convertToArrayList(indexes);
             return new DeleteTagCommand(toDelete, indexList);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

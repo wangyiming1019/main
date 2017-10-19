@@ -49,7 +49,15 @@ public class DeleteTagCommand extends UndoableCommand {
         this.targetIndexes = targetIndexes;
         this.toDelete = toDelete;
     }
+    /**
+     * @param toDelete tag to delete from given target indexes
+     */
+    public DeleteTagCommand(Tag toDelete) {
 
+        requireNonNull(toDelete);
+        this.targetIndexes = new ArrayList<>();
+        this.toDelete = toDelete;
+    }
     /**
      * Check whether the index within the range then checks whether the tag exists among the specific persons.
      * If yes, delete the tag from the specific person in the person list.
@@ -58,6 +66,12 @@ public class DeleteTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean nonexistentTag = true;
+
+        if (targetIndexes.size() == 0) {
+            for (int i = 0; i < lastShownList.size(); i++) {
+                targetIndexes.add(Index.fromZeroBased(i));
+            }
+        }
 
         for (Index targetIndex : targetIndexes) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
