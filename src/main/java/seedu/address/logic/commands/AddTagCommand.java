@@ -50,7 +50,16 @@ public class AddTagCommand extends UndoableCommand {
         this.targetIndexes = targetIndexes;
         this.addTag = addTag;
     }
+    /**
+     * @param addTag tag to add to all entries in the address book
+     */
+    public AddTagCommand(Tag addTag) {
 
+        requireNonNull(addTag);
+
+        this.targetIndexes = new ArrayList<>();
+        this.addTag = addTag;
+    }
     /**
      * Check whether the index within the range then checks whether the specific persons have the tag.
      * If not, add the tag to the person that doesn't have the given tag.
@@ -59,7 +68,11 @@ public class AddTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean allPersonsContainGivenTag = true;
-
+        if (targetIndexes.size() == 0) {
+            for (int i = 0; i < lastShownList.size(); i++) {
+                targetIndexes.add(Index.fromZeroBased(i));
+            }
+        }
         for (Index targetIndex : targetIndexes) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
