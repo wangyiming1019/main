@@ -145,7 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
             index = i.getZeroBased();
             toRead = allPersons.get(index);
             toUpdate = new Person(toRead);
-            personTags = toRead.getTags();
+            personTags = new HashSet<>(toRead.getTags());
             personTags.remove(toChange);
             personTags.add(newTag);
             toUpdate.setTags(personTags);
