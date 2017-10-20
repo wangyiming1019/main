@@ -57,7 +57,7 @@ public class DeleteTagCommandParserTest {
 
     @Test
     public void parseInvalidArgsFailure() throws Exception {
-        assertParseFailure(parser, DeleteTagCommand.COMMAND_WORD, 
+        assertParseFailure(parser, DeleteTagCommand.COMMAND_WORD,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
     }
 }
