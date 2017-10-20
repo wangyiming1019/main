@@ -16,7 +16,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditTagCommand;
 import seedu.address.model.tag.Tag;
 
-public class EditTagParserTest {
+public class EditTagCommandParserTest {
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
 
     private static final String MESSAGE_INVALID_FORMAT =
