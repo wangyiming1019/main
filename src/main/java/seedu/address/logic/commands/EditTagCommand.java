@@ -28,7 +28,9 @@ public class EditTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_EDIT_TAG_SUCCESS = "Replaced tag %1$s with %2$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "No such tag was found in the address book.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_INSUFFICIENT_ARGS = "Only 2 arguments should be provided!";
+    public static final String MESSAGE_INVALID_TAG_NAME = "Tag names must be alphanumerical.";
+    public static final String MESSAGE_DUPLICATE_TAGS = "The new name of the tag cannot be the same as the old name.";
     private final ArrayList<Index> affectedIndexes;
     private final Tag toEdit;
     private final Tag newTag;
@@ -66,7 +68,7 @@ public class EditTagCommand extends UndoableCommand {
         try {
             model.editTag(toEdit, newTag, affectedIndexes);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_TAGS);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }

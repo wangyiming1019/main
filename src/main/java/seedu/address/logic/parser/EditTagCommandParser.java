@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_DUPLICATE_TAGS;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_INSUFFICIENT_ARGS;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_INVALID_TAG_NAME;
 
 import java.util.ArrayList;
 
@@ -11,9 +14,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 /** Parses input arguments and creates a new EditTagCommand object */
 public class EditTagCommandParser implements Parser<EditTagCommand> {
-    public static final String MESSAGE_INSUFFICIENT_ARGS = "Only 2 arguments should be provided!";
-    public static final String MESSAGE_INVALID_TAG_NAME = "Tag names must be alphanumerical.";
-    public static final String MESSAGE_DUPLICATE_TAGS = "The new name of the tag cannot be the same as the old name.";
     public static final String EDITTAG_VALIDATION_REGEX = "[\\p{Alnum}\\s]+[\\p{Alnum}]+";
     public static final int EXPECTED_NUMBER_OF_ARGS = 2;
 
