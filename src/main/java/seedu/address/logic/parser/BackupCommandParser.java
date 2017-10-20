@@ -7,7 +7,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses arguments for backup command and returns a BackupCommand instance. Arguments should consist of only one
  * filepath.
  */
-public class BackupCommandParser implements Parser<BackupCommand>{
+public class BackupCommandParser implements Parser<BackupCommand> {
 
     @Override
     public BackupCommand parse(String userInput) throws ParseException {
