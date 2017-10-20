@@ -55,3 +55,5 @@ public class AddTagCommandParserTest {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
     }
 }
+
+
