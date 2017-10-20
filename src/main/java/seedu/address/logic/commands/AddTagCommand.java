@@ -69,9 +69,7 @@ public class AddTagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         boolean allPersonsContainGivenTag = true;
         if (targetIndexes.size() == 0) {
-            for (int i = 0; i < lastShownList.size(); i++) {
-                targetIndexes.add(Index.fromZeroBased(i));
-            }
+            reinitlializeArray(lastShownList.size());
         }
         for (Index targetIndex : targetIndexes) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -100,6 +98,12 @@ public class AddTagCommand extends UndoableCommand {
         }
 
         return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, addTag));
+    }
+
+    private void reinitlializeArray(int size) {
+        for (int i = 0; i < size; i++) {
+            targetIndexes.add(Index.fromZeroBased(i));
+        }
     }
 
     @Override

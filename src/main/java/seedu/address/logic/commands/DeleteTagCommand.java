@@ -68,9 +68,7 @@ public class DeleteTagCommand extends UndoableCommand {
         boolean nonexistentTag = true;
 
         if (targetIndexes.size() == 0) {
-            for (int i = 0; i < lastShownList.size(); i++) {
-                targetIndexes.add(Index.fromZeroBased(i));
-            }
+            reinitlializeArray(lastShownList.size());
         }
 
         for (Index targetIndex : targetIndexes) {
@@ -100,6 +98,12 @@ public class DeleteTagCommand extends UndoableCommand {
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, toDelete));
+    }
+
+    private void reinitlializeArray(int size) {
+        for (int i = 0; i < size; i++) {
+            targetIndexes.add(Index.fromZeroBased(i));
+        }
     }
 
     @Override
