@@ -22,13 +22,24 @@ public class BackupCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "AddressBook++ data backed up successfully.";
 
+    private String args;
+
+    public BackupCommand(String trimmedArgs) {
+        super();
+        this.args = trimmedArgs;
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         requireNonNull(model.getAddressBook());
         requireNonNull(storage);
         try {
-            storage.backupAddressBook(model.getAddressBook());
+            if (args.equals("")) {
+                storage.backupAddressBookDefault(model.getAddressBook());
+            } else {
+                storage.backupAddressBook(model.getAddressBook(), args);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
