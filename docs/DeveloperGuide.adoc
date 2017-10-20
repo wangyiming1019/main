@@ -481,6 +481,15 @@ Adding a person with private fields uses the same `AddCommand` as adding a perso
 To determine if the field that is added should be set to private, a `p` is added to the start of the prefix. +
 Hence, `pe/[EMAIL]` will set that person's email to be private, whereas if `e/[EMAIL]` was used, that person's email would be public. +
 
+These new prefixes can be found in `CliSyntax`, and `AddCommandParser` will take data with these prefixes.
+`AddCommandParser` will then call the appropriate method in `ParserUtil`, which will parse the string provided into a new field.
+Depending on whether or not the field is supposed to be private, `ParsetUtil` will call the appropriate constructor.
+Upon obtaining all the fields anc creating a new `Person`, `AddCommandParser` will create a new `AddCommand` to handle the addition of the new `Person`.
+
+This is illustrated by the following sequence diagram:
+
+image::AddPrivateSequenceDiagram.png[width="800"]
+
 The `isPrivate` boolean is private, however, the value can be obtained using the following getter method:
 [source,java]
 ----
@@ -514,16 +523,45 @@ Since the information displayed in a person's card in the UI gets the value of t
 
 In addition, if `isPrivate` is `true` for `Name`, clicking on a person's card in the UI will not trigger a search on Google for that person's name.
 
-Instead, a message `"Cannot perform a search on that person. Their name is private."` will be printed in the UI to inform the user that they are not allowed to search for a person possessing a private `Name`.
+Instead, a `NewResultAvailableEvent` will be raised by `BrowserPanel` to inform the user that they are not allowed to search for a person possessing a private `Name`.
 
 `ChangePrivacyCommand` facilitates the setting of an existing person's field's privacy. Depending on the user's input, `ChangePrivacyCommand` will use each field's `setPrivate()` method to set the value of `isPrivate`.
 
 To keep track of whether each field is private or not, `XmlAdaptedPerson` will have to store the `isPrivate` value for each field of `Person`.
+This is done by adding the following
+
+[source,java]
+----
+@XmlElement(required = true)
+   private Boolean nameIsPrivate;
+@XmlElement(required = true)
+   private Boolean phoneIsPrivate;
+@XmlElement(required = true)
+   private Boolean emailIsPrivate;
+@XmlElement(required = true)
+   private Boolean addressIsPrivate;
+----
+Which results in a `Person` being saved in the xml file in the following format
+
+[source, html]
+----
+<persons>
+    <name>Alex Yeoh</name>
+    <nameIsPrivate>false</nameIsPrivate>
+    <phone>87438807</phone>
+    <phoneIsPrivate>false</phoneIsPrivate>
+    <email>alexyeoh@example.com</email>
+    <emailIsPrivate>false</emailIsPrivate>
+    <address>Blk 30 Geylang Street 29, #06-40</address>
+    <addressIsPrivate>false</addressIsPrivate>
+    <tagged>friends</tagged>
+</persons>
+----
 
 If an old save file without privacy data is loaded, then the `toModelType()` method in `XmlAdaptedPerson` will set `isPrivate` to be `false` for each field of `Person`, to keep the displayed information the same.
 
 [NOTE]
-If a private field is to be edited by `EditCommand`, `EditCommand` will not modify the data of that field, even though the command succeeds. +
+If a private field is to be edited by `EditCommand`, `createEditedPerson()` in `EditCommand` will not modify the data of that field, even though `EditCommand` will create a new `CommandResult` with a success message. +
 Hence, a private field will remain private and the value stored by that field will remain the same as it originally was.
 
 

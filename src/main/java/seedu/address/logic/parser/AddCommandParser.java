@@ -69,25 +69,25 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address;
 
             if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
-                name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME), false).get();
+                name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             } else {
                 name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME_PRIVATE), true).get();
             }
 
             if ((arePrefixesPresent(argMultimap, PREFIX_PHONE))) {
-                phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE), false).get();
+                phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             } else {
                 phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE_PRIVATE), true).get();
             }
 
             if ((arePrefixesPresent(argMultimap, PREFIX_EMAIL))) {
-                email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL), false).get();
+                email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             } else {
                 email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL_PRIVATE), true).get();
             }
 
             if ((arePrefixesPresent(argMultimap, PREFIX_ADDRESS))) {
-                address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS), false).get();
+                address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             } else {
                 address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS_PRIVATE), true).get();
             }
