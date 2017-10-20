@@ -21,7 +21,10 @@ public class EditTagCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "et";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the specified tag "
-            + "and updates all existing contacts that shares this tag with the new value.";
+            + "and updates all existing contacts that shares this tag with the new value.\n"
+            + "Parameters: TAGTOCHANGE (must be alphanumerical) "
+            + "TAGNEWNAME (must be alphanumerical)\n"
+            + "Example: " + COMMAND_WORD + " friends enemies";
 
     public static final String MESSAGE_EDIT_TAG_SUCCESS = "Replaced tag %1$s with %2$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "No such tag was found in the address book.";
