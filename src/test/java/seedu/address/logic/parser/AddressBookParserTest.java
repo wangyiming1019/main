@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -179,6 +180,26 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandBackupWord() throws Exception {
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
+    }
+
+    @Test
+    public void parseCommandBackupWordWithInput() throws Exception {
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " test.xml") instanceof BackupCommand);
+    }
+
+    @Test
+    public void parseCommandBackupAlias() throws Exception {
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_ALIAS) instanceof BackupCommand);
+    }
+
+    @Test
+    public void parseCommandBackupAliasWithInput() throws Exception {
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_ALIAS + " test.xml") instanceof BackupCommand);
     }
 
     @Test
