@@ -18,9 +18,9 @@ import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.model.tag.Tag;
 
 public class AddTagCommandParserTest {
-
+    
     private AddTagCommandParser parser = new AddTagCommandParser();
-
+    
     @Test
     public void parseValidIndexAndTagSuccess() throws Exception {
         ArrayList<Index> indexes = new ArrayList<Index>();
@@ -35,7 +35,7 @@ public class AddTagCommandParserTest {
                 + tagName;
         assertParseSuccess(parser, userInput, new AddTagCommand(tagToAdd, indexes));
     }
-
+    
     @Test
     public void parseInvalidTagFailure() throws Exception {
         ArrayList<Index> indexes = new ArrayList<Index>();
