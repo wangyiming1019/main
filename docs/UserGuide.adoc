@@ -233,26 +233,46 @@ Delete the friends tag of the 1st and 2nd person in the address book.
 `deletetag t/friends` +
 Delete the friends tag from all contacts in the address book.
 
-=== Sorting all persons : `sort`
+=== Sorting your contact list : `sort`
 
-Sorts all persons in address book by any field in ascending or descending order. +
+Sort your contacts by any field in ascending or descending order using the `sort` command +
 Format: `sort FIELD ORDER` +
 Shorthand command: `so`
 
 
 ****
-* Sorts all persons currenlty in the address book by user input field and order.
+* Allows you to sort your contact by any field in either ascending or descending order
 * Field parameters are limited to the following fields: NAME, PHONE, EMAIL, ADDRESS.
 * Order parameters are limited to the following fields: ASC, DESC.
-* Sort can be undone to return to the original list of people.
+* You can undo this command if you want to revert to the pre-sort ordering of contacts
 ****
 
 Examples:
 
 * `sort name asc` +
-Sorts all persons in the address book in ascending order by the name field.
+This allows you to sort all persons in the address book in ascending order by the name field.
 * `sort address desc` +
-Sorts all persons in the address book in descending order by the address field.
+This allows you to sort all persons in the address book in descending order by the address field.
+
+=== Backing up your data : `backup` or `bk`
+
+You can backup your saved data on AddressBook++ by using the `backup` command.
+Format: `backup [RELATIVE LOCATION]` +
+Shorthand command: `bk`
+
+
+****
+* Allows you to backup your saved data on AddressBook++ in another file.
+* You can backup your data in the default location or you can specify your desired save location.
+* You can use the default save name or use your own.
+****
+
+Examples:
+
+* `backup` or `bk` +
+This command will help you back up in the default save location --> In the data directory of your application.
+* `backup ./test.xml` or `bk ./test.xml` +
+This saves the backup file in the current data directory, with the name `test.xml`.
 
 === Selecting a person : `select`
 
