@@ -40,33 +40,34 @@ public class ChangePrivacyCommandParser {
         PersonPrivacySettings pps = new PersonPrivacySettings();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            if (argMultimap.getValue(PREFIX_NAME).equals("true")) {
+            if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[true]")) {
                 pps.setNameIsPrivate(true);
-            } else if (argMultimap.getValue(PREFIX_NAME).equals("false")) {
+
+            } else if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[false]")) {
                 pps.setNameIsPrivate(false);
             }
         }
 
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            if (argMultimap.getValue(PREFIX_PHONE).equals("true")) {
+            if (argMultimap.getValue(PREFIX_PHONE).toString().equals("Optional[true]")) {
                 pps.setPhoneIsPrivate(true);
-            } else if (argMultimap.getValue(PREFIX_PHONE).equals("false")) {
+            } else if (argMultimap.getValue(PREFIX_PHONE).toString().equals("Optional[false]")) {
                 pps.setPhoneIsPrivate(false);
             }
         }
 
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            if (argMultimap.getValue(PREFIX_EMAIL).equals("true")) {
+            if (argMultimap.getValue(PREFIX_EMAIL).toString().equals("Optional[true]")) {
                 pps.setEmailIsPrivate(true);
-            } else if (argMultimap.getValue(PREFIX_EMAIL).equals("false")) {
+            } else if (argMultimap.getValue(PREFIX_EMAIL).toString().equals("Optional[false]")) {
                 pps.setEmailIsPrivate(false);
             }
         }
 
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            if (argMultimap.getValue(PREFIX_ADDRESS).equals("true")) {
+            if (argMultimap.getValue(PREFIX_ADDRESS).toString().equals("Optional[true]")) {
                 pps.setAddressIsPrivate(true);
-            } else if (argMultimap.getValue(PREFIX_ADDRESS).equals("false")) {
+            } else if (argMultimap.getValue(PREFIX_ADDRESS).toString().equals("Optional[false]")) {
                 pps.setAddressIsPrivate(false);
             }
         }
