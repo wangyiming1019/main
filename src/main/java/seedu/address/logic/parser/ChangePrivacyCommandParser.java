@@ -46,7 +46,8 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
             } else if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[false]")) {
                 pps.setNameIsPrivate(false);
             } else {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
 
@@ -56,7 +57,8 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
             } else if (argMultimap.getValue(PREFIX_PHONE).toString().equals("Optional[false]")) {
                 pps.setPhoneIsPrivate(false);
             } else {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
 
@@ -66,7 +68,8 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
             } else if (argMultimap.getValue(PREFIX_EMAIL).toString().equals("Optional[false]")) {
                 pps.setEmailIsPrivate(false);
             } else {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
 
@@ -76,7 +79,8 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
             } else if (argMultimap.getValue(PREFIX_ADDRESS).toString().equals("Optional[false]")) {
                 pps.setAddressIsPrivate(false);
             } else {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
 

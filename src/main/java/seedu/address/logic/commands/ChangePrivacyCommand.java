@@ -102,7 +102,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Phone p = person.getPhone();
         Email e = person.getEmail();
         Address a = person.getAddress();
-        Set<Tag> t = person.getTags( );
+        Set<Tag> t = person.getTags();
 
         if (pps.nameIsPrivate() != null) {
             n.setPrivate(pps.nameIsPrivate());
