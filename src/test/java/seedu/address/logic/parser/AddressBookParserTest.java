@@ -72,10 +72,10 @@ public class AddressBookParserTest {
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertEquals(command.getIndex(), actualCommand.getIndex());
-        assertEquals(command.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
-        assertEquals(command.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
-        assertEquals(command.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
-        assertEquals(command.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+        assertEquals(command.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(command.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(command.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(command.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
     }
 
     @Test
@@ -89,10 +89,10 @@ public class AddressBookParserTest {
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertEquals(command.getIndex(), actualCommand.getIndex());
-        assertEquals(command.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
-        assertEquals(command.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
-        assertEquals(command.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
-        assertEquals(command.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+        assertEquals(command.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(command.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(command.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(command.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
     }
 
     @Test

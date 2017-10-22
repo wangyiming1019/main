@@ -93,10 +93,10 @@ public class ChangePrivacyCommandParserTest {
         ChangePrivacyCommand actualCommand = parser.parse(userInput);
 
         assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
-        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
-        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
-        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
-        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+        assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(expectedCommand.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(expectedCommand.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(expectedCommand.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
     }
 
     @Test
@@ -111,10 +111,10 @@ public class ChangePrivacyCommandParserTest {
         ChangePrivacyCommand actualCommand = parser.parse(userInput);
 
         assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
-        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
-        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
-        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
-        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+        assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(expectedCommand.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(expectedCommand.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(expectedCommand.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
     }
 
     @Test
@@ -129,10 +129,10 @@ public class ChangePrivacyCommandParserTest {
         ChangePrivacyCommand actualCommand = parser.parse(userInput);
 
         assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
-        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
-        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
-        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
-        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+        assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(expectedCommand.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(expectedCommand.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(expectedCommand.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
     }
 
     @Test
@@ -149,10 +149,10 @@ public class ChangePrivacyCommandParserTest {
         ChangePrivacyCommand actualCommand = parser.parse(userInput);
 
         assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
-        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
-        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
-        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
-        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+        assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(expectedCommand.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(expectedCommand.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(expectedCommand.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
     }
 
     @Test
@@ -167,9 +167,9 @@ public class ChangePrivacyCommandParserTest {
         ChangePrivacyCommand actualCommand = parser.parse(userInput);
 
         assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
-        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
-        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
-        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
-        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+        assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(expectedCommand.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(expectedCommand.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(expectedCommand.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
     }
 }
