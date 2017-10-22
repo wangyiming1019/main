@@ -47,7 +47,7 @@ public class DeleteTagCommandParserTest {
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
 
-        final String tagName = "friends";
+        final String tagToDelete = "friends";
         Index targetIndex1 = INDEX_FIRST_PERSON;
         Index targetIndex2 = INDEX_SECOND_PERSON;
 
