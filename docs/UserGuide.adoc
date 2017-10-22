@@ -114,7 +114,7 @@ Adds the acquaintance tag to all contacts in the address book.
 
 === Listing all persons : `list`
 
-You can use the `list` command to quickly show all your contacts, or tasks, in the address book. To list out only the tasks present, use `list task` instead. +
+Need a quick overview of what needs to be done? You can use the `list` command to quickly show all your contacts, or tasks, in the address book. To list out only the tasks present, use `list task` instead. +
 Format: `list` `list task` +
 
 If you want to see all your contacts, as well as all your tasks at the same time, type `list all` instead. +
