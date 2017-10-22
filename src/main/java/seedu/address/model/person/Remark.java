@@ -21,16 +21,16 @@ public class Remark {
     private boolean isPrivate = false;
 
     /**
-     * Validates given address.
+     * Validates given remark.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given remark string is invalid.
      */
     public Remark(String remark) throws IllegalValueException {
         if (remark == null) {
             this.value = REMARK_PLACEHOLDER_VALUE;
             return;
         }
-        if (!isValidAddress(remark)) {
+        if (!isValidRemark(remark)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = remark;
@@ -44,14 +44,14 @@ public class Remark {
     /**
      * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidAddress(String test) {
+    public static boolean isValidRemark(String test) {
         return test.matches(REMARK_VALIDATION_REGEX) || test.equals(REMARK_PLACEHOLDER_VALUE);
     }
 
     @Override
     public String toString() {
         if (isPrivate) {
-            return "<Private Address>";
+            return "<Private Remark>";
         }
         return value;
     }
