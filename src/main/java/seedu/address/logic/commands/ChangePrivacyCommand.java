@@ -36,16 +36,17 @@ public class ChangePrivacyCommand extends UndoableCommand {
     public static final String FALSE_WORD = "false";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes the privacy of the details of the person"
-            + "identified by the index number used in the last person listing.\n "
+            + " identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + TRUE_WORD + " OR " + FALSE_WORD + "]"
             + "[" + PREFIX_PHONE + TRUE_WORD + " OR " + FALSE_WORD + "]"
             + "[" + PREFIX_EMAIL + TRUE_WORD + " OR " + FALSE_WORD + "]"
-            + "[" + PREFIX_ADDRESS + TRUE_WORD + " OR " + FALSE_WORD + "]"
-            + "[" + PREFIX_TAG + TRUE_WORD + " OR " + FALSE_WORD + "]...\n"
+            + "[" + PREFIX_ADDRESS + TRUE_WORD + " OR " + FALSE_WORD + "]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + TRUE_WORD
-            + PREFIX_EMAIL + FALSE_WORD;
+            + PREFIX_NAME + TRUE_WORD + " "
+            + PREFIX_PHONE + FALSE_WORD + " "
+            + PREFIX_EMAIL + TRUE_WORD + " "
+            + PREFIX_ADDRESS + FALSE_WORD;
 
     public static final String MESSAGE_CHANGE_PRIVACY_SUCCESS = "Changed the Privacy of the Person: %1$s";
     public static final String MESSAGE_NO_FIELDS = "At least one field to change must be provided.";
