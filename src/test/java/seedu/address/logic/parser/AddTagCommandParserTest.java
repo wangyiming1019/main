@@ -41,7 +41,7 @@ public class AddTagCommandParserTest {
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
 
-        final String tagName = "friends";
+        final String tagToAdd = "friends";
         Index targetIndex1 = INDEX_FIRST_PERSON;
         Index targetIndex2 = INDEX_SECOND_PERSON;
 
