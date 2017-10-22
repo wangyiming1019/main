@@ -34,8 +34,11 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
         try {
             String tagName = argMultimap.getValue(PREFIX_TAG).orElse("");
             Tag toAdd = new Tag(tagName);
-
             String indexes = argMultimap.getPreamble();
+
+            if (indexes.trim().isEmpty()) {
+                return new AddTagCommand(toAdd);
+            }
             ArrayList<Index> indexList = toArrayList(indexes);
 
             return new AddTagCommand(toAdd, indexList);
