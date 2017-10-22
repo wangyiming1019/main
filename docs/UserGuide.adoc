@@ -147,6 +147,7 @@ Shorthand commands: `cp`
 * Fields with an input of `show` will set the privacy of that field for that person to be public. The data in that field will be visible in the UI.
 * Fields with an input of `hide` will set the privacy of that field for that person to be private. The data in that field will remain stored but not be visible in the UI.
 * Details that do not originally contain any data will still remain empty after changing their privacy
+* If you dot no add a prefix for the field in the command, that field will default to be public.
 ****
 
 Examples:
