@@ -17,6 +17,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_PHONE_PRIVATE = new Prefix("pp/");
     public static final Prefix PREFIX_EMAIL_PRIVATE = new Prefix("pe/");
     public static final Prefix PREFIX_ADDRESS_PRIVATE = new Prefix("pa/");
+    public static final Prefix PREFIX_REMARK_PRIVATE = new Prefix("ra/");
     public static final Prefix PREFIX_TAG_PRIVATE = new Prefix("pt/");
 
 }

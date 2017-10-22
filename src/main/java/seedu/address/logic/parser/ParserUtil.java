@@ -124,8 +124,6 @@ public class ParserUtil {
     }
 
 
-
-
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
