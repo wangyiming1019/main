@@ -44,7 +44,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredListThrowsCommandException() throws Exception {
+    public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(outOfBoundIndex);
@@ -56,7 +56,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_validIndexAndTagFilteredListSuccess() throws Exception {
+    public void executeValidIndexAndTagFilteredListSuccess() throws Exception {
         showFirstPersonOnly(model);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
@@ -73,7 +73,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexFilteredListThrowsCommandException() throws Exception {
+    public void executeInvalidIndexFilteredListThrowsCommandException() throws Exception {
         showFirstPersonOnly(model);
         ArrayList<Index> indexes = new ArrayList<Index>();
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
@@ -86,7 +86,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_invalidTagUnfilteredListThrowsCommandException() throws Exception {
+    public void executeInvalidTagUnfilteredListThrowsCommandException() throws Exception {
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
@@ -97,7 +97,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_invalidTagFilteredListThrowsCommandException() throws Exception {
+    public void executeInvalidTagFilteredListThrowsCommandException() throws Exception {
         showFirstPersonOnly(model);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
