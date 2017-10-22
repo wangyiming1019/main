@@ -576,7 +576,6 @@ Sets a $60 untagged budget and spends $0.50, leaving a budget of $59.50.
 
 If you would like to start fresh on a clean slate, you can use this command to clear all entries from the address book. +
 `clear` can be replaced by `c` for faster input. +
-
 Format: `clear` +
 
 === Exiting the program : `exit`
