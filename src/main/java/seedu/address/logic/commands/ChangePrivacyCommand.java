@@ -121,14 +121,31 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return new Person(n, p, e, a, t);
     }
 
+    public Index getIndex() {
+        return index;
+    }
+
+    public PersonPrivacySettings getPps() {
+        return pps;
+    }
+
     /**
      * Stores the privacy settings for each field of a person.
      */
     public static class PersonPrivacySettings {
-        private Boolean nameIsPrivate;
-        private Boolean phoneIsPrivate;
-        private Boolean emailIsPrivate;
-        private Boolean addressIsPrivate;
+        private Boolean nameIsPrivate = false;
+        private Boolean phoneIsPrivate = false;
+        private Boolean emailIsPrivate = false;
+        private Boolean addressIsPrivate = false;
+
+        public PersonPrivacySettings() {}
+
+        public PersonPrivacySettings(PersonPrivacySettings toCopy) {
+            this.nameIsPrivate = toCopy.nameIsPrivate;
+            this.phoneIsPrivate = toCopy.phoneIsPrivate;
+            this.emailIsPrivate = toCopy.emailIsPrivate;
+            this.addressIsPrivate = toCopy.addressIsPrivate;
+        }
 
         /**
          * Returns true if at least one field is not null.
