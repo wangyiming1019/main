@@ -17,7 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new ChangePrivacyCommand object
  */
-public class ChangePrivacyCommandParser {
+public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
