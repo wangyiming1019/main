@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -17,6 +18,8 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BackupCommand;
+import seedu.address.logic.commands.ChangePrivacyCommand;
+import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -34,6 +37,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.PersonPrivacySettingsBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddressBookParserTest {
@@ -57,6 +61,37 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    @Test
+    public void parseCommandChangePrivacy() throws Exception {
+        Person person = new PersonBuilder().build();
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
+
+        ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
+                ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
+        ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
+
+        assertEquals(command.getIndex(), actualCommand.getIndex());
+        assertEquals(command.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
+        assertEquals(command.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
+        assertEquals(command.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
+        assertEquals(command.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+    }
+
+    @Test
+    public void parseCommandAliasChangePrivacy() throws Exception {
+        Person person = new PersonBuilder().build();
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
+
+        ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
+                ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
+        ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
+
+        assertEquals(command.getIndex(), actualCommand.getIndex());
+        assertEquals(command.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
+        assertEquals(command.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
+        assertEquals(command.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
+        assertEquals(command.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+    }
 
     @Test
     public void parseCommandClear() throws Exception {
