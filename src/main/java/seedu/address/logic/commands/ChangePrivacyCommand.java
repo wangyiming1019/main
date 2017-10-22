@@ -6,14 +6,24 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Changes the privacy setting of a person's details in the address book
@@ -39,6 +49,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
 
     public static final String MESSAGE_CHANGE_PRIVACY_SUCCESS = "Changed the Privacy of the Person: %1$s";
     public static final String MESSAGE_NO_FIELDS = "At least one field to change must be provided.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
     private final PersonPrivacySettings pps;
@@ -64,9 +75,18 @@ public class ChangePrivacyCommand extends UndoableCommand {
 
         ReadOnlyPerson personToChange = lastShownList.get(index.getZeroBased());
 
-        changePersonPrivacy(personToChange, pps);
+        Person newPerson = createPersonWithChangedPrivacy(personToChange, pps);
 
-        return new CommandResult(String.format(MESSAGE_CHANGE_PRIVACY_SUCCESS, personToChange));
+        try {
+            model.updatePerson(personToChange, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson));
     }
 
     /**
@@ -74,21 +94,31 @@ public class ChangePrivacyCommand extends UndoableCommand {
      * @param person the person whose privacy we would like to change
      * @param pps the settings of privacy for each field
      */
-    private static void changePersonPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+    private static Person createPersonWithChangedPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        assert person != null;
+
+        Name n = person.getName();
+        Phone p = person.getPhone();
+        Email e = person.getEmail();
+        Address a = person.getAddress();
+        Set<Tag> t = person.getTags( );
+
         if (pps.nameIsPrivate() != null) {
-            person.getName().setPrivate(pps.nameIsPrivate());
+            n.setPrivate(pps.nameIsPrivate());
         }
         if (pps.phoneIsPrivate() != null) {
-            person.getPhone().setPrivate(pps.phoneIsPrivate());
+            p.setPrivate(pps.phoneIsPrivate());
         }
 
         if (pps.emailIsPrivate() != null) {
-            person.getEmail().setPrivate(pps.emailIsPrivate());
+            e.setPrivate(pps.emailIsPrivate());
         }
 
         if (pps.addressIsPrivate() != null) {
-            person.getAddress().setPrivate(pps.addressIsPrivate());
+            a.setPrivate(pps.addressIsPrivate());
         }
+
+        return new Person(n, p, e, a, t);
     }
 
     /**
