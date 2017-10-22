@@ -103,19 +103,19 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Address a = person.getAddress();
         Set<Tag> t = person.getTags();
 
-        if (pps.nameIsPrivate() != null) {
-            n.setPrivate(pps.nameIsPrivate());
+        if (pps.getNameIsPrivate() != null) {
+            n.setPrivate(pps.getNameIsPrivate());
         }
-        if (pps.phoneIsPrivate() != null) {
-            p.setPrivate(pps.phoneIsPrivate());
-        }
-
-        if (pps.emailIsPrivate() != null) {
-            e.setPrivate(pps.emailIsPrivate());
+        if (pps.getPhoneIsPrivate() != null) {
+            p.setPrivate(pps.getPhoneIsPrivate());
         }
 
-        if (pps.addressIsPrivate() != null) {
-            a.setPrivate(pps.addressIsPrivate());
+        if (pps.getEmailIsPrivate() != null) {
+            e.setPrivate(pps.getEmailIsPrivate());
+        }
+
+        if (pps.getAddressIsPrivate() != null) {
+            a.setPrivate(pps.getAddressIsPrivate());
         }
 
         return new Person(n, p, e, a, t);
@@ -133,10 +133,10 @@ public class ChangePrivacyCommand extends UndoableCommand {
      * Stores the privacy settings for each field of a person.
      */
     public static class PersonPrivacySettings {
-        private Boolean nameIsPrivate = false;
-        private Boolean phoneIsPrivate = false;
-        private Boolean emailIsPrivate = false;
-        private Boolean addressIsPrivate = false;
+        private Boolean nameIsPrivate;
+        private Boolean phoneIsPrivate;
+        private Boolean emailIsPrivate;
+        private Boolean addressIsPrivate;
 
         public PersonPrivacySettings() {}
 
@@ -155,7 +155,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
                     this.emailIsPrivate, this.addressIsPrivate);
         }
 
-        public Boolean nameIsPrivate() {
+        /**
+         * Returns the value of nameIsPrivate, returns false if null
+         * @return the value of nameIsPrivate
+         */
+        public Boolean getNameIsPrivate() {
+            if (nameIsPrivate == null) {
+                return false;
+            }
             return nameIsPrivate;
         }
 
@@ -164,7 +171,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.nameIsPrivate = nameIsPrivate;
         }
 
-        public Boolean phoneIsPrivate() {
+        /**
+         * Returns the value of phoneIsPrivate, returns false if null
+         * @return the value of phoneIsPrivate
+         */
+        public Boolean getPhoneIsPrivate() {
+            if (phoneIsPrivate == null) {
+                return false;
+            }
             return phoneIsPrivate;
         }
 
@@ -173,7 +187,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.phoneIsPrivate = phoneIsPrivate;
         }
 
-        public Boolean emailIsPrivate() {
+        /**
+         * Returns the value of emailIsPrivate, returns false if null
+         * @return the value of emailIsPrivate
+         */
+        public Boolean getEmailIsPrivate() {
+            if (emailIsPrivate == null) {
+                return false;
+            }
             return emailIsPrivate;
         }
 
@@ -182,7 +203,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.emailIsPrivate = emailIsPrivate;
         }
 
-        public Boolean addressIsPrivate() {
+        /**
+         * Returns the value of addressIsPrivate, returns false if null
+         * @return the value of addressIsPrivate
+         */
+        public Boolean getAddressIsPrivate() {
+            if (addressIsPrivate == null) {
+                return false;
+            }
             return addressIsPrivate;
         }
 
