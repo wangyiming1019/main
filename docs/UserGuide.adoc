@@ -91,12 +91,13 @@ Examples:
 * `add task n/Buy new pencil p/2`
 
 === Add a tag to persons : `addtag`
-Adds a tag to persons from the address book. +
+You can use the `addtag` command to add tag for multiple persons in the address book. For example, you may wish to add tag `friends` to the first two persons in the address book. +
+`addtag` can be replaced by `atag` for faster input. +
 Format: `addtag INDEX... t/[TAG]` +
-Shorthand commands: `atag`
+
 
 ****
-* Adds the tag of the person at the specific `INDEX`
+* Adds the tag of the person at the specific `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * If no indexes are provided, addtag will add the tag to all contacts in the address book.
@@ -271,9 +272,10 @@ Deletes the 2nd task in the address book.
 Deletes the 1st task in the results of the `find task` command.
 
 === delete a tag of persons : `deletetag`
-Delete the tag of persons from the address book. +
+You can use `deletetag` to delete the tag of multiple persons from the address book. +
+`deletetag` can be replaced by `dtag` for faster input. +
 Format: `deletetag INDEX... t/[TAG]` +
-Shorthand commands: `dtag`
+
 
 ****
 * Delete the tag of the person at the specific `INDEX`
@@ -294,8 +296,9 @@ Delete the friends tag from all contacts in the address book.
 === Sorting your contact list : `sort`
 
 Sort your contacts by any field in ascending or descending order using the `sort` command +
+`sort` can be replaced by `so` for faster input. +
 Format: `sort FIELD ORDER` +
-Shorthand command: `so`
+
 
 
 ****
@@ -314,9 +317,9 @@ This allows you to sort all persons in the address book in descending order by t
 
 === Backing up your data : `backup` or `bk`
 
-You can backup your saved data on AddressBook++ by using the `backup` command.
+You can backup your saved data on AddressBook++ by using the `backup` command. +
+`backup` can be replaced by `bk` for faster input. +
 Format: `backup [RELATIVE LOCATION]` +
-Shorthand command: `bk`
 
 
 ****
@@ -458,8 +461,8 @@ Dismisses the 2nd person in the address book from the 1st task in the results of
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+`history` can be replaced by `h` for faster input. +
 Format: `history` +
-Shorthand commands: `h`
 
 [NOTE]
 ====
@@ -520,9 +523,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Setting a budget : `setbudget` (To be added in V2.0)
 
-Sets the amount of money available to be a certain amount.
-Format: `setbudget MONEY [t/TAG]`
-Shorthand commands: `sb`
+Sets the amount of money available to be a certain amount. +
+`setbudget` can be replaced by `sb` for faster input.
+Format: `setbudget MONEY [t/TAG]` +
+
 ****
 * Set a certain amount of money to keep track of as a budget.
 * The value can be tagged so that multiple things can be kept track of at the same time.
@@ -571,11 +575,11 @@ Sets a $42.50 food budget and spends $2.40, leaving a budget of $40.10.
 `spend 0.50` +
 Sets a $60 untagged budget and spends $0.50, leaving a budget of $59.50.
 
-=== Clearing all entries : `clear` `c`
+=== Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+`clear` can be replaced by `c` for faster input. +
 Format: `clear` +
-Shorthand commands: `c`
 
 === Exiting the program : `exit`
 
