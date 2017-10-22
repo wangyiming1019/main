@@ -45,8 +45,7 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
 
             } else if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[false]")) {
                 pps.setNameIsPrivate(false);
-            }
-            else {
+            } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
@@ -56,8 +55,7 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                 pps.setPhoneIsPrivate(true);
             } else if (argMultimap.getValue(PREFIX_PHONE).toString().equals("Optional[false]")) {
                 pps.setPhoneIsPrivate(false);
-            }
-            else {
+            } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
@@ -67,8 +65,7 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                 pps.setEmailIsPrivate(true);
             } else if (argMultimap.getValue(PREFIX_EMAIL).toString().equals("Optional[false]")) {
                 pps.setEmailIsPrivate(false);
-            }
-            else {
+            } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
@@ -78,8 +75,7 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                 pps.setAddressIsPrivate(true);
             } else if (argMultimap.getValue(PREFIX_ADDRESS).toString().equals("Optional[false]")) {
                 pps.setAddressIsPrivate(false);
-            }
-            else {
+            } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
