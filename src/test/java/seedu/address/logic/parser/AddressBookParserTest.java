@@ -67,7 +67,8 @@ public class AddressBookParserTest {
         PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
-                ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
+                ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertEquals(command.getIndex(), actualCommand.getIndex());
@@ -83,7 +84,8 @@ public class AddressBookParserTest {
         PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
-                ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
+                ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertEquals(command.getIndex(), actualCommand.getIndex());
