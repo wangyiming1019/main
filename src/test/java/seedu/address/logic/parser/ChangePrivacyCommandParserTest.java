@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -8,10 +9,18 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ChangePrivacyCommand;
+import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.testutil.PersonPrivacySettingsBuilder;
 
 public class ChangePrivacyCommandParserTest {
 
@@ -69,5 +78,99 @@ public class ChangePrivacyCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "1" + " " + PREFIX_ADDRESS + "true" + " " + PREFIX_ADDRESS + "notBoolean",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+    }
+
+
+    @Test
+    public void parse_allFieldsSpecified_success() throws ParseException {
+        Index targetIndex = INDEX_SECOND_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "false" +
+                " " + PREFIX_ADDRESS + "true" + " " + PREFIX_PHONE + "false";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").
+                setEmailPrivate("false").setAddressPrivate("true").setPhonePrivate("false").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
+        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
+        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
+        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
+        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+    }
+
+    @Test
+    public void parse_someFieldsSpecified_success() throws ParseException {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").
+                setEmailPrivate("true").setAddressPrivate("false").setPhonePrivate("false").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
+        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
+        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
+        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
+        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+    }
+
+    @Test
+    public void parse_oneFieldSpecified_success() throws ParseException {
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").
+                setEmailPrivate("false").setAddressPrivate("false").setPhonePrivate("false").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
+        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
+        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
+        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
+        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+    }
+
+    @Test
+    public void parse_multipleRepeatedFields_acceptsLast() throws ParseException {
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "false" +
+                " " + PREFIX_ADDRESS + "true" + " " + PREFIX_PHONE + "false" + " " + PREFIX_NAME + "false" + " " +
+                PREFIX_EMAIL + "true" + " " + PREFIX_ADDRESS + "false" + " " + PREFIX_PHONE + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("false").
+                setEmailPrivate("true").setAddressPrivate("false").setPhonePrivate("true").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
+        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
+        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
+        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
+        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
+    }
+
+    @Test
+    public void parse_invalidValueFollowedByValidValue_success() throws ParseException {
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "notBoolean" + " " + PREFIX_NAME + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").
+                setEmailPrivate("false").setAddressPrivate("false").setPhonePrivate("false").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
+        assertEquals(expectedCommand.getPps().addressIsPrivate(), actualCommand.getPps().addressIsPrivate());
+        assertEquals(expectedCommand.getPps().nameIsPrivate(), actualCommand.getPps().nameIsPrivate());
+        assertEquals(expectedCommand.getPps().emailIsPrivate(), actualCommand.getPps().emailIsPrivate());
+        assertEquals(expectedCommand.getPps().phoneIsPrivate(), actualCommand.getPps().phoneIsPrivate());
     }
 }
