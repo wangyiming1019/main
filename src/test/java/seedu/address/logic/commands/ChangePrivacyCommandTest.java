@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
-import static seedu.address.logic.commands.ChangePrivacyCommand.*;
+import static seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -30,7 +30,7 @@ public class ChangePrivacyCommandTest {
         assertFalse(pps.isAnyFieldNonNull());
 
         PersonPrivacySettings ppsByBuilder = new PersonPrivacySettingsBuilder().setNamePrivate("true")
-        .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("true").build();
+            .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("true").build();
 
         pps.setNameIsPrivate(true);
         pps.setPhoneIsPrivate(false);
