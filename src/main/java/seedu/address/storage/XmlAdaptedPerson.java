@@ -14,13 +14,14 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
  * JAXB-friendly version of the Person.
  */
 public class XmlAdaptedPerson {
-
+    // TODO: ADD support for remark field
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -37,6 +38,10 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private Boolean addressIsPrivate;
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private Boolean remarkIsPrivate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -58,11 +63,13 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
 
         nameIsPrivate = source.getName().isPrivate();
         phoneIsPrivate = source.getPhone().isPrivate();
         emailIsPrivate = source.getEmail().isPrivate();
         addressIsPrivate = source.getAddress().isPrivate();
+        remarkIsPrivate = source.getRemark().isPrivate();
 
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -92,11 +99,15 @@ public class XmlAdaptedPerson {
         if (addressIsPrivate == null) {
             addressIsPrivate = false;
         }
+        if (remarkIsPrivate == null) {
+            remarkIsPrivate = false;
+        }
         final Name name = new Name(this.name, this.nameIsPrivate);
         final Phone phone = new Phone(this.phone, this.phoneIsPrivate);
         final Email email = new Email(this.email, this.emailIsPrivate);
         final Address address = new Address(this.address, this.addressIsPrivate);
+        final Remark remark = new Remark(this.remark, this.remarkIsPrivate);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, remark, tags);
     }
 }
