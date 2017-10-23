@@ -209,7 +209,9 @@ public class EditCommand extends UndoableCommand {
             this.email = email;
         }
 
-        public Optional<Email> getEmail() { return Optional.ofNullable(email); }
+        public Optional<Email> getEmail()  {
+            return Optional.ofNullable(email);
+        }
 
         public void setAddress(Address address) {
             this.address = address;
