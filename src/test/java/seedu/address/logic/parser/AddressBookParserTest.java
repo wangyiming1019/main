@@ -71,11 +71,7 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
-        assertEquals(command.getIndex(), actualCommand.getIndex());
-        assertEquals(command.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
-        assertEquals(command.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
-        assertEquals(command.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
-        assertEquals(command.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
+        assertTrue(changePrivacyCommandsEqual(command, actualCommand));
     }
 
     @Test
@@ -88,11 +84,7 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
-        assertEquals(command.getIndex(), actualCommand.getIndex());
-        assertEquals(command.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
-        assertEquals(command.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
-        assertEquals(command.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
-        assertEquals(command.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
+        assertTrue(changePrivacyCommandsEqual(command, actualCommand));
     }
 
     @Test
@@ -263,5 +255,20 @@ public class AddressBookParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
+    }
+
+    /**
+     * Checks if 2 ChangePrivacyCommands are equal
+     * @param command the expected command
+     * @param actualCommand the actual command
+     * @return true if all the data are equal
+     */
+    private boolean changePrivacyCommandsEqual(ChangePrivacyCommand command, ChangePrivacyCommand actualCommand) {
+        assertEquals(command.getIndex(), actualCommand.getIndex());
+        assertEquals(command.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(command.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(command.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(command.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
+        return true;
     }
 }

@@ -83,7 +83,6 @@ public class ChangePrivacyCommandTest {
 
         expectedModel.updatePerson(lastPerson, personInList);
 
-
         assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
     }
 }
