@@ -35,7 +35,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
-  
+
     @FXML
     private HBox cardPane;
     @FXML
