@@ -34,10 +34,9 @@ public class PersonCard extends UiPart<Region> {
     private enum Colours {
         blue, green, brown, purple, navy, crimson, firebrick, maroon, aliceblue
     }
-    
+
     private static Random randomNumber = new Random();
     private static HashMap<String, String> colourHash = new HashMap<String, String>();
-    
 
     @FXML
     private HBox cardPane;
