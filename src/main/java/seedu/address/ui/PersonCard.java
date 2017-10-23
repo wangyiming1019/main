@@ -17,7 +17,15 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-
+    /**
+     * Preset values for random selection later.
+     */
+    private enum Colours {
+        blue, green, brown, purple, navy, crimson, firebrick, maroon, aliceblue
+    }
+    private static HashMap<String, String> colourHash = new HashMap<String, String>();
+    private static Random randomNumber = new Random();
+    
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -27,15 +35,6 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
-
-    /**
-     * Preset values for random selection later.
-     */
-    private enum Colours {
-        blue, green, brown, purple, navy, crimson, firebrick, maroon, aliceblue
-    }
-    private static HashMap<String, String> colourHash = new HashMap<String, String>();
-    private static Random randomNumber = new Random();
 
     @FXML
     private HBox cardPane;
