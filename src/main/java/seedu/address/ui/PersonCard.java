@@ -35,8 +35,8 @@ public class PersonCard extends UiPart<Region> {
         blue, green, brown, purple, navy, crimson, firebrick, maroon, aliceblue
     }
 
-    private HashMap<String, String> colourHash;
-    private Random randomNumber;
+    private static HashMap<String, String> colourHash = new HashMap<String, String>();
+    private static Random randomNumber = new Random();
 
     @FXML
     private HBox cardPane;
@@ -55,10 +55,6 @@ public class PersonCard extends UiPart<Region> {
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
-
-        colourHash = new HashMap<>();
-        randomNumber = new Random(Colours.values().length - 1);
-
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
@@ -76,7 +72,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
@@ -87,7 +83,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private String getTagColour(String tag) {
         if (!colourHash.containsKey(tag)) {
-            int randomiser = randomNumber.nextInt(Colours.values().length - 1);
+            int randomiser = randomNumber.nextInt(Colours.values().length);
             String colour = Colours.values()[randomiser].toString();
             colourHash.put(tag, colour);
         }
