@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * Wraps all data at the address-book level
@@ -26,6 +27,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueTasksList tasks;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -183,6 +185,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyTask> getTasksList() {
+        return tasks.asObservableList();
     }
 
     @Override
