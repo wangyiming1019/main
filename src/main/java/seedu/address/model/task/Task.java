@@ -23,4 +23,23 @@ public class Task implements ReadOnlyTask {
         this.deadline = task.getDeadline();
         this.priority = task.getPriority();
     }
+
+    public Name getName() {
+        return name;
+    }
+
+    @Override
+    public Description getDescription() {
+        return description;
+    }
+
+    @Override
+    public Deadline getDeadline() {
+        return deadline;
+    }
+
+    @Override
+    public Priority getPriority() {
+        return priority;
+    }
 }
