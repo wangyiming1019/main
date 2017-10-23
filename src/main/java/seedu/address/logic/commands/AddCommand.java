@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 
 /**
@@ -65,7 +66,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             if (isTask) {
-                // model.addTask(taskToAdd);
+                model.addTask(taskToAdd);
                 return new CommandResult(String.format(MESSAGE_SUCCESS, taskToAdd));
             } else {
                 model.addPerson(personToAdd);
