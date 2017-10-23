@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.task.Task;
 
 /**
  * Adds a person to the address book.
@@ -38,21 +39,38 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person toAdd;
+    private final Person personToAdd;
+    private final Task taskToAdd;
+    private boolean isTask = false;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
     public AddCommand(ReadOnlyPerson person) {
-        toAdd = new Person(person);
+        personToAdd = new Person(person);
+        taskToAdd = null;
+    }
+
+    /**
+     * Creates an AddCommand to add the specified ReadOnlyTask
+     */
+    public AddCommand(ReadOnlyTask task) {
+        taskToAdd = new Task(task);
+        personToAdd = null;
+        isTask = true;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addPerson(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            if (isTask) {
+                // model.addTask(taskToAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, taskToAdd));
+            } else {
+                model.addPerson(personToAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, personToAdd));
+            }
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -61,8 +79,20 @@ public class AddCommand extends UndoableCommand {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddCommand // instanceof handles nulls
-                && toAdd.equals(((AddCommand) other).toAdd));
+        if (other == this) {
+            return true;
+        } else if (!(other instanceof AddCommand)) {
+            return false;
+        } else if (taskToAdd == null && ((AddCommand) other).taskToAdd == null) {
+            assert(personToAdd != null);
+            assert(((AddCommand) other).personToAdd != null); // The personToAdd cannot be null
+            return personToAdd.equals(((AddCommand) other).personToAdd);
+        } else if (personToAdd == null && ((AddCommand) other).personToAdd == null) {
+            assert(taskToAdd != null);
+            assert(((AddCommand) other).taskToAdd != null); // The taskToAdd cannot be null
+            return taskToAdd.equals(((AddCommand) other).taskToAdd);
+        } else {
+            return false;
+        }
     }
 }
