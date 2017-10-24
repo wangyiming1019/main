@@ -20,4 +20,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_REMARK_PRIVATE = new Prefix("ra/");
     public static final Prefix PREFIX_TAG_PRIVATE = new Prefix("pt/");
 
+    public static final Prefix PREFIX_TASK = new Prefix("task");
+    public static final Prefix PREFIX_DEADLINE = new Prefix("by/");
+    public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
+    public static final Prefix PREFIX_PRIORITY = new Prefix("pr/");
 }

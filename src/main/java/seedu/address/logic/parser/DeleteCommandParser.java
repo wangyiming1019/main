@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -19,8 +20,17 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DeleteCommand(index);
+            ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK);
+            Index index;
+
+            if (argMultimap.getValue(PREFIX_TASK).isPresent()) {
+                String filteredString = args.replace(PREFIX_TASK.getPrefix(), " ");
+                index = ParserUtil.parseIndex(filteredString.trim());
+                return new DeleteCommand(index, DeleteCommand.DELETE_TYPE_TASK);
+            } else {
+                index = ParserUtil.parseIndex(args);
+                return new DeleteCommand(index, DeleteCommand.DELETE_TYPE_PERSON);
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
