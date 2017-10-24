@@ -125,6 +125,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Favourites the given person {@code target} to this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code target} is not in this {@code AddressBook}.
+     */
+    public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        persons.favouritePerson(target);
+    }
+
+    /**
+     * Unfavourites the given person {@code target} from this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code target} is not in this {@code AddressBook}.
+     */
+    public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        persons.unfavouritePerson(target);
+    }
+
+    /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
