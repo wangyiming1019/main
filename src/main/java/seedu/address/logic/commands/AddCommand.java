@@ -2,10 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -37,7 +41,20 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
+    public static final String MESSAGE_TASK_USAGE = COMMAND_WORD + ": Adds a task to the address book. "
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_DESCRIPTION + "DESCRIPTION "
+            + PREFIX_DEADLINE + "DEADLINE "
+            + PREFIX_PRIORITY + "PRIORITY "
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TASK + " "
+            + PREFIX_NAME + "Buy pencil "
+            + PREFIX_DESCRIPTION + "Buy a new pencil from ABS "
+            + PREFIX_DEADLINE + "10-10-2017 "
+            + PREFIX_PRIORITY + "4 ";
+
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_TASK_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Person personToAdd;
@@ -67,7 +84,7 @@ public class AddCommand extends UndoableCommand {
         try {
             if (isTask) {
                 model.addTask(taskToAdd);
-                return new CommandResult(String.format(MESSAGE_SUCCESS, taskToAdd));
+                return new CommandResult(String.format(MESSAGE_TASK_SUCCESS, taskToAdd));
             } else {
                 model.addPerson(personToAdd);
                 return new CommandResult(String.format(MESSAGE_SUCCESS, personToAdd));
