@@ -1,45 +1,50 @@
 package seedu.address.model.task;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 /**
  * Represents a task object in the address book.
  */
 public class Task implements ReadOnlyTask {
 
-    private Name name;
-    private Description description;
-    private Deadline deadline;
-    private Priority priority;
+    private ObjectProperty<TaskName> taskName;
+    private ObjectProperty<Description> description;
+    private ObjectProperty<Deadline> deadline;
+    private ObjectProperty<Priority> priority;
 
-    public Task(Name name, Description description, Deadline deadline, Priority priority) {
-        this.name = name;
-        this.description = description;
-        this.deadline = deadline;
-        this.priority = priority;
+    public Task(TaskName taskName, Description description, Deadline deadline, Priority priority) {
+        this.taskName = new SimpleObjectProperty<>(taskName);
+        this.description = new SimpleObjectProperty<>(description);
+        this.deadline = new SimpleObjectProperty<>(deadline);
+        this.priority = new SimpleObjectProperty<>(priority);
     }
 
     public Task(ReadOnlyTask task) {
-        this.name = task.getName();
-        this.description = task.getDescription();
-        this.deadline = task.getDeadline();
-        this.priority = task.getPriority();
+        this(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority());
     }
 
-    public Name getName() {
-        return name;
+    public TaskName getTaskName() {
+        return taskName.get();
     }
 
     @Override
     public Description getDescription() {
-        return description;
+        return description.get();
     }
 
     @Override
     public Deadline getDeadline() {
-        return deadline;
+        return deadline.get();
     }
 
     @Override
     public Priority getPriority() {
-        return priority;
+        return priority.get();
+    }
+
+    @Override
+    public String toString() {
+        return getAsText();
     }
 }
