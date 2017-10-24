@@ -21,4 +21,16 @@ public interface ReadOnlyTask {
                 .append(getPriority());
         return builder.toString();
     }
+
+    /**
+     * Returns true if both have the same state. (interfaces cannot override .equals)
+     */
+    default boolean isSameStateAs(ReadOnlyTask other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getTaskName().equals(this.getTaskName()) // state checks here onwards
+                && other.getDescription().equals(this.getDescription())
+                && other.getDeadline().equals(this.getDeadline())
+                && other.getPriority().equals(this.getPriority()));
+    }
 }
