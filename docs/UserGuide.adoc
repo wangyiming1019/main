@@ -14,6 +14,16 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Overview
+
+Address++ is an address book application that can store contacts, as well as maintain a list of ongoing tasks. You can use the various commands in Address++ to maintain, create, and delete your contacts, or tasks. +
+Address++ is targeted at NUS students, such as those working on projects or assignments.
+
+== About
+
+After reading this user guide, you should be more familiar with how Address++ can be used to maintain your contacts and tasks. +
+No technical knowledge is required when running the application, although basic knowledge of installation is required to install the prerequisite libraries for Address++ (Java). +
+
 == Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
