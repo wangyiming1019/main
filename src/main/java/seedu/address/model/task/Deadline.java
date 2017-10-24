@@ -40,6 +40,10 @@ public class Deadline {
             this.value = DEADLINE_PLACEHOLDER_VALUE;
             this.calendar = null;
             return;
+        } else if (deadline.equals(DEADLINE_PLACEHOLDER_VALUE)) {
+            this.value = DEADLINE_PLACEHOLDER_VALUE;
+            this.calendar = null;
+            return;
         }
         String trimmedDeadline = deadline.trim();
         if (!isValidDeadline(trimmedDeadline)) {
