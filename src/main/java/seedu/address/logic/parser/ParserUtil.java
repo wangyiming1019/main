@@ -15,6 +15,10 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.TaskName;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -134,13 +138,34 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a string and returns true if it is preceded by "task"
+     * Parses a string into a {@code TaskName} if it is present.
      */
-    public static boolean parseTask(String args) {
-        String trimmed = args.trim();
-        if (trimmed.length() < 4) {
-            return false;
-        }
-        return trimmed.substring(0, 4).equals(TASK_NAME);
+    public static Optional<TaskName> parseTaskName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new TaskName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a string into a {@code Description} if it is present.
+     */
+    public static Optional<Description> parseDescription(Optional<String> description) throws IllegalValueException {
+        requireNonNull(description);
+        return description.isPresent() ? Optional.of(new Description(description.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a string into a {@code Deadline} if it is present.
+     */
+    public static Optional<Deadline> parseDeadline(Optional<String> deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(new Deadline(deadline.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a string into a {@code Priority} if it is present.
+     */
+    public static Optional<Priority> parsePriority(Optional<String> priority) throws IllegalValueException {
+        requireNonNull(priority);
+        return priority.isPresent() ? Optional.of(new Priority(priority.get())) : Optional.empty();
     }
 }
