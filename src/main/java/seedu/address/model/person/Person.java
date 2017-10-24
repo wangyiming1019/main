@@ -21,17 +21,18 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<Boolean> favourite;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Boolean favourite, Set<Tag> tags) {
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.favourite = new SimpleObjectProperty<>(favourite);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -41,7 +42,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getFavourite(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -100,6 +101,20 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    public void setFavourite(Boolean favourite) {
+        this.favourite.set(requireNonNull(favourite));
+    }
+
+    @Override
+    public ObjectProperty<Boolean> favouriteProperty() {
+        return favourite;
+    }
+
+    @Override
+    public Boolean getFavourite() {
+        return favourite.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -130,7 +145,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, favourite, tags);
     }
 
     @Override
