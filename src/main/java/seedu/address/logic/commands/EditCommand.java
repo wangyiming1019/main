@@ -229,6 +229,7 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Boolean> getFavourite() {
             return Optional.ofNullable(favourite);
+        }
 
         public void setRemark(Remark remark) {
             this.remark = remark;
