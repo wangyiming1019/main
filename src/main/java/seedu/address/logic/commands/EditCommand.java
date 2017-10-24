@@ -126,8 +126,8 @@ public class EditCommand extends UndoableCommand {
             updatedAddress = personToEdit.getAddress();
         }
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        Boolean updateFavourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updateFavourite, updatedTags);
     }
 
     @Override
@@ -157,6 +157,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Boolean favourite;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -166,6 +167,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.favourite = toCopy.favourite;
             this.tags = toCopy.tags;
         }
 
@@ -208,6 +210,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setFavourite(Boolean favourite) {
+            this.favourite = favourite;
+        }
+
+        public Optional<Boolean> getFavourite() {
+            return Optional.ofNullable(favourite);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -235,6 +245,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getFavourite().equals(e.getFavourite())
                     && getTags().equals(e.getTags());
         }
     }
