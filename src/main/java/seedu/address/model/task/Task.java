@@ -47,4 +47,22 @@ public class Task implements ReadOnlyTask {
     public String toString() {
         return getAsText();
     }
+
+    // Setters for TaskBuilder testing
+
+    public void setTaskName(TaskName taskName) {
+        this.taskName.set(taskName);
+    }
+
+    public void setDeadline(Deadline deadline) {
+        this.deadline.set(deadline);
+    }
+
+    public void setDescription(Description description) {
+        this.description.set(description);
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority.set(priority);
+    }
 }
