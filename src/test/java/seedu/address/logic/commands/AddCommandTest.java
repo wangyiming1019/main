@@ -26,6 +26,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 
@@ -34,12 +36,6 @@ public class AddCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new AddCommand(null);
-    }
 
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
@@ -157,6 +153,22 @@ public class AddCommandTest {
         @Override
         public void sortPersons(String field, String order) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void addTask(ReadOnlyTask toAdd) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTask(ReadOnlyTask toDelete) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+            fail("This method should not be called.");
+            return null;
         }
     }
 
