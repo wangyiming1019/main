@@ -23,6 +23,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
@@ -159,12 +160,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addTask(ReadOnlyTask toAdd) {
+    public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
+        addressBook.addTask(toAdd);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void deleteTask(ReadOnlyTask toDelete) throws TaskNotFoundException {
+        addressBook.removeTask(toDelete);
         indicateAddressBookChanged();
     }
     //=========== Filtered Person List Accessors =============================================================
