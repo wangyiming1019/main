@@ -88,6 +88,18 @@ public class PersonBuilder {
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
+    public PersonBuilder withRemark(String remark) {
+        try {
+            this.person.setRemark(new Remark(remark));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Remark is invalid");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Phone} of the {@code Person} that we are building.
+     */
     public PersonBuilder withPhone(String phone) {
         try {
             this.person.setPhone(new Phone(phone));

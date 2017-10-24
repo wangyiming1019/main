@@ -44,7 +44,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`help`*: opens this page in a new window
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/This remark is a stub` :
+adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -70,19 +71,19 @@ Alternatively,  you may opt to use the keyboard shortcut `F1`.
 
 You can use the `add` command to add new people to your address book, be it a newly met project member, or your friend who is taking the same module as you. +
 `add` can be replaced by `a` for faster input. +
-Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] f/[FACULTY] c/[GOOGLE CALENDAR URL] [t/TAG]...` +
+Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] r/[REMARK] f/[FACULTY] c/[GOOGLE CALENDAR URL] [t/TAG]...` +
 
 ****
 * A person can have any number of tags (including 0) +
 * The `EMAIL` should be in the format address@email.domain +
-* You can set a person's `Name`, `Phone`, `Email` or `Address` to be private by placing a `p` in front of the prefix. +
+* You can set a person's `Name`, `Phone`, `Email`, `Address` or `Remark` to be private by placing a `p` in front of the prefix. +
 ****
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal`
-* `add n/Ima Hidearu b/ a/ e/ p/ t/secretive`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995 r/Likes panda bears`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal r/Stares at the wall`
+* `add n/Ima Hidearu b/ a/ e/ p/ r/ t/secretive`
 * `add n/Luke Groundswimmer p/ a/ e/ c/`
 * `add pn/Neville Shorttop pp/46492787 pe/nevilleS@gmail.com pa/Gryphon Gate c/`
 
