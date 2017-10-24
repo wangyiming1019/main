@@ -38,11 +38,11 @@ public class SortCommand extends UndoableCommand {
         this.order = order;
     }
 
-    private String getField() {
+    public String getField() {
         return this.field;
     }
 
-    private String getOrder() {
+    public String getOrder() {
         return this.order;
     }
 

@@ -25,6 +25,9 @@ public class Priority {
         if (priority == null) {
             this.value = PRIORITY_PLACEHOLDER_VALUE;
             return;
+        } else if (priority.equals(PRIORITY_PLACEHOLDER_VALUE)) {
+            this.value = PRIORITY_PLACEHOLDER_VALUE;
+            return;
         }
         String trimmedPriority = priority.trim();
         try {
