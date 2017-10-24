@@ -4,13 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +45,15 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_COLLEAGUE = "colleague";
 
+    public static final String VALID_TASK_NAME_PENCIL = "Buy pencil";
+    public static final String VALID_TASK_NAME_PAPER = "Buy paper";
+    public static final String VALID_DESCRIPTION_PENCIL = "Buy mechanical pencil from ABS";
+    public static final String VALID_DESCRIPTION_PAPER = "Buy 500 pieces of paper";
+    public static final String VALID_DEADLINE_PENCIL = "04-04-2017";
+    public static final String VALID_DEADLINE_PAPER = "05-04-2017";
+    public static final String VALID_PRIORITY_PENCIL = "1";
+    public static final String VALID_PRIORITY_PAPER = "3";
+
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
@@ -60,10 +73,23 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_AMY_PRIVATE = " " + PREFIX_ADDRESS_PRIVATE + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB_PRIVATE = " " + PREFIX_ADDRESS_PRIVATE + VALID_ADDRESS_BOB;
 
+    public static final String TASK_NAME_DESC_PENCIL = " " + PREFIX_NAME + VALID_TASK_NAME_PENCIL;
+    public static final String TASK_NAME_DESC_PAPER = " " + PREFIX_NAME + VALID_TASK_NAME_PAPER;
+    public static final String DESCRIPTION_DESC_PENCIL = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_PENCIL;
+    public static final String DESCRIPTION_DESC_PAPER = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_PAPER;
+    public static final String DEADLINE_DESC_PENCIL = " " + PREFIX_DEADLINE + VALID_DEADLINE_PENCIL;
+    public static final String DEADLINE_DESC_PAPER = " " + PREFIX_DEADLINE + VALID_DEADLINE_PAPER;
+    public static final String PRIORITY_DESC_PENCIL = " " + PREFIX_PRIORITY + VALID_PRIORITY_PENCIL;
+    public static final String PRIORITY_DESC_PAPER = " " + PREFIX_PRIORITY + VALID_PRIORITY_PAPER;
+
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "20-20-20000"; // bad date format
+    public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "6"; // priority is out of bounds
+
+    public static final String TASK_SEPARATOR = " " + PREFIX_TASK + " ";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
