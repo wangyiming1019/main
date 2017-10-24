@@ -101,6 +101,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Phone p = person.getPhone();
         Email e = person.getEmail();
         Address a = person.getAddress();
+        Remark r = person.getRemark();
         Set<Tag> t = person.getTags();
 
         if (pps.getNameIsPrivate() != null) {
@@ -118,7 +119,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             a.setPrivate(pps.getAddressIsPrivate());
         }
 
-        return new Person(n, p, e, a, t);
+        return new Person(n, p, e, a, r, t);
     }
 
     public Index getIndex() {
