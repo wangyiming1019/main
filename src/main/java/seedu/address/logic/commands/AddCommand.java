@@ -17,6 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * Adds a person to the address book.
@@ -56,6 +57,7 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_TASK_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book";
 
     private final Person personToAdd;
     private final Task taskToAdd;
@@ -91,6 +93,8 @@ public class AddCommand extends UndoableCommand {
             }
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (DuplicateTaskException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         }
 
     }
