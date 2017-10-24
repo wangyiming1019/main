@@ -12,6 +12,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
@@ -28,6 +30,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
@@ -48,9 +51,10 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE, PREFIX_ADDRESS_PRIVATE,
-                        PREFIX_TAG_PRIVATE, PREFIX_DEADLINE, PREFIX_DESCRIPTION, PREFIX_PRIORITY, PREFIX_TASK);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
+                        PREFIX_REMARK_PRIVATE, PREFIX_TAG, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE, 
+                        PREFIX_ADDRESS_PRIVATE, PREFIX_TAG_PRIVATE, PREFIX_DEADLINE, PREFIX_DESCRIPTION, PREFIX_PRIORITY, 
+                        PREFIX_TASK);
         if (arePrefixesPresent(argMultimap, PREFIX_TASK)) {
             ReadOnlyTask taskToAdd = constructTask(args);
             return new AddCommand(taskToAdd);
@@ -72,9 +76,9 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static ReadOnlyPerson constructPerson(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE, PREFIX_ADDRESS_PRIVATE,
-                        PREFIX_TAG_PRIVATE);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
+                        PREFIX_TAG, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE,
+                        PREFIX_ADDRESS_PRIVATE, PREFIX_REMARK_PRIVATE, PREFIX_TAG_PRIVATE);
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || (arePrefixesPresent(argMultimap, PREFIX_NAME_PRIVATE)))) {
@@ -96,11 +100,17 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
+        if (!(arePrefixesPresent(argMultimap, PREFIX_REMARK)
+                || (arePrefixesPresent(argMultimap, PREFIX_REMARK_PRIVATE)))) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
         try {
             Name name;
             Phone phone;
             Email email;
             Address address;
+            Remark remark;
 
             if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
                 name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
@@ -125,9 +135,15 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS_PRIVATE), true).get();
             }
+
+            if ((arePrefixesPresent(argMultimap, PREFIX_REMARK))) {
+                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+            } else {
+                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK_PRIVATE), true).get();
+            }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, remark, tagList);
             return person;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
