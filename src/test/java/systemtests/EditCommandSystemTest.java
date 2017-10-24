@@ -109,7 +109,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
         personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
-        editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).withRemark(VALID_REMARK_BOB).build();
+        editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
