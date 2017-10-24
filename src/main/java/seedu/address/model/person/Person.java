@@ -29,7 +29,8 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
 
-    public Person(Name name, Phone phone, Email email, Address address, Boolean favourite, Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Boolean favourite, Remark remark, Set<Tag> tags) {
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -45,7 +46,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavourite(),
-             source.getRemark(),source.getTags());
+             source.getRemark(), source.getTags());
     }
 
     public void setName(Name name) {
