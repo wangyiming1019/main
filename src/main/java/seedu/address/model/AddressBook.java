@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.UniqueTasksList;
 
 /**
  * Wraps all data at the address-book level
@@ -39,6 +40,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        tasks = new UniqueTasksList();
     }
 
     public AddressBook() {}
