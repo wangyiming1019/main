@@ -36,9 +36,17 @@ public interface Model {
     /** Adds given tag to specific persons */
     void addTag(Tag toAdd, ArrayList<Index> targetIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
+
     /** Edits the specified tag, and updates all instances in the address book */
     void editTag(Tag toChange, Tag newTag, ArrayList<Index> affectedIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
+
+    /** Favourites the given person */
+    void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Unfavourites the given person */
+    void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
