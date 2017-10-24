@@ -18,7 +18,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
 import seedu.address.model.task.UniqueTasksList;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -176,6 +179,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //// task-level operations
+    /**
+     * Adds a task to the address book.
+     *
+     * @throws DuplicateTaskException if an equivalent task already exists.
+     */
+    public void addTask(ReadOnlyTask t) throws DuplicateTaskException {
+        Task newTask = new Task(t);
+        tasks.add(newTask);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeTask(ReadOnlyTask key) throws TaskNotFoundException {
+        if (tasks.remove(key)) {
+            return true;
+        } else {
+            throw new TaskNotFoundException();
+        }
+    }
     //// util methods
 
     @Override
