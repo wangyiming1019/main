@@ -512,7 +512,6 @@ Note that the execution of the sort methods result in the actual person list bei
 **Pros:** Faster for the user to key in one word rather than a command with many words +
 **Cons:** Reduces choice for experienced users who may want to save to another location or use a different save name
 
-// tag::Privacy
 === Privacy of fields
 
 The `Name`, `Phone`, `Email` and `Address` of a `Person` contains a boolean `isPrivate`, which will determine if the field belonging to that person is private or not.
@@ -565,8 +564,6 @@ In addition, if `isPrivate` is `true` for `Name`, clicking on a person's card in
 
 Instead, a `NewResultAvailableEvent` will be raised by `BrowserPanel` to inform the user that they are not allowed to search for a person possessing a private `Name`.
 
-`ChangePrivacyCommand` facilitates the setting of an existing person's field's privacy. Depending on the user's input, `ChangePrivacyCommand` will use each field's `setPrivate()` method to set the value of `isPrivate`.
-
 To keep track of whether each field is private or not, `XmlAdaptedPerson` will have to store the `isPrivate` value for each field of `Person`.
 This is done by adding the following
 
@@ -604,7 +601,6 @@ If an old save file without privacy data is loaded, then the `toModelType()` met
 If a private field is to be edited by `EditCommand`, `createEditedPerson()` in `EditCommand` will not modify the data of that field, even though `EditCommand` will create a new `CommandResult` with a success message. +
 Hence, a private field will remain private and the value stored by that field will remain the same as it originally was.
 
-
 ==== Design Considerations
 
 **Aspect:** Implementation of `isPrivate` +
@@ -624,7 +620,39 @@ Hence, a private field will remain private and the value stored by that field wi
 **Pros:** Easier implementation, do not have to modify `AddCommand`. +
 **Cons:** Requires 2 command lines to create a `Person` with private fields, which takes more time and is more inconvenient for users.
 
-// end::Privacy
+=== Changing of a Person's Privacy
+
+`ChangePrivacyCommand` facilitates the setting of an existing person's field's privacy. Depending on the user's input, `ChangePrivacyCommand` will use each field's `setPrivate()` method to set the value of `isPrivate`.
+
+The sequence diagram for `ChangePrivacyCommand` is illustrated below.
+
+image::ChangePrivacySequenceDiagram.png[width="800"]
+
+Upon receiving a String containing the arguments from `AddressBookParser`, `ChangePrivacyCommandParser` will create a `PersonPrivacySettings` object.
+
+Depending on the input, the `ChangePrivacyCommandParser` will set the privacy values, represented by Booleans, in the `PersonPrivacySettings` object to be `true` or `false`.
+
+`ChangePrivacyCommandParser` will then create a new `ChangePrivacyCommand` using the input `Index` and the `PersonPrivacySettings`
+
+When `ChangePrivacyCommand` starts executing, it will create a new `Person` based on the data of the `Person` at the specified `Index`.
+It will then adjust the privacy values based on the input `PersonPrivacySettings`.
+
+Once it is done, it will update the original `Person` with the newly created `Person` in `Model`.
+
+[NOTE]
+If there are missing fields in the input string, the getter methods in `PersonPrivacySettings` will return `false`, but the actual value stored will remain as `null`.
+This allows `isAnyFieldNonNull` to check if the user has input any field at all.
+
+==== Design Considerations
+
+**Aspect:** How to implement changing of a person's privacy. +
+**Alternative 1 (current choice):** Create a separate command to do so. +
+**Pros:** It is clear to users and developers that `changeprivacy` is to modify a person's privacy while `edit` changes the actual data if the relevant field is not private.  +
+**Cons:** Additional command, parser and tests must be created.  +
+**Alternative 2:** Enhance the functionality of EditCommand. +
+**Pros:** Can make use of existing code to aid the implementation. +
+**Cons:** Increases the complexity of EditCommand for both users and developers. More ambiguous as to how editing a private field will affect the data.
+
 
 === Add/Delete Tag mechanism
 
