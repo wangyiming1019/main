@@ -7,6 +7,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -22,38 +24,55 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
+    public static final String MESSAGE_UNHANDLED_ADD_EXCEPTION = "Unhandled exception occurred during add operation.";
+    public static final int DELETE_TYPE_PERSON = 0;
+    public static final int DELETE_TYPE_TASK = 1;
 
     private final Index targetIndex;
+    private int type;
 
-    public DeleteCommand(Index targetIndex) {
+    public DeleteCommand(Index targetIndex, int objectType) {
         this.targetIndex = targetIndex;
+        this.type = objectType;
     }
 
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> personsList = model.getFilteredPersonList();
+        List<ReadOnlyTask> tasksList = model.getFilteredTaskList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (targetIndex.getZeroBased() >= personsList.size() && type == DELETE_TYPE_PERSON) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (targetIndex.getZeroBased() >= tasksList.size() && type == DELETE_TYPE_TASK) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.deletePerson(personToDelete);
+            if (type == DELETE_TYPE_PERSON) {
+                ReadOnlyPerson personToDelete = personsList.get(targetIndex.getZeroBased());
+                model.deletePerson(personToDelete);
+                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+            } else {
+                ReadOnlyTask taskToDelete = tasksList.get(targetIndex.getZeroBased());
+                model.deleteTask(taskToDelete);
+                return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
+            }
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
+        } catch (TaskNotFoundException tnfe) {
+            assert false : "The target task cannot be missing";
         }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        throw new CommandException(MESSAGE_UNHANDLED_ADD_EXCEPTION);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)
+                && this.type == ((DeleteCommand) other).type); // state check
     }
 }

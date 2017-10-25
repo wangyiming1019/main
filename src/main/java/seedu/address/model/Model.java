@@ -9,6 +9,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * The API of the Model component.
@@ -36,9 +39,17 @@ public interface Model {
     /** Adds given tag to specific persons */
     void addTag(Tag toAdd, ArrayList<Index> targetIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
+
     /** Edits the specified tag, and updates all instances in the address book */
     void editTag(Tag toChange, Tag newTag, ArrayList<Index> affectedIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
+
+    /** Favourites the given person */
+    void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Unfavourites the given person */
+    void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -49,8 +60,17 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Adds the given task */
+    void addTask(ReadOnlyTask task) throws DuplicateTaskException;
+
+    /** Deletes the given task */
+    void deleteTask(ReadOnlyTask toDelete) throws TaskNotFoundException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered tasks list */
+    ObservableList<ReadOnlyTask> getFilteredTaskList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

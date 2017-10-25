@@ -5,15 +5,25 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Changes the privacy setting of a person's details in the address book
@@ -26,19 +36,21 @@ public class ChangePrivacyCommand extends UndoableCommand {
     public static final String FALSE_WORD = "false";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes the privacy of the details of the person"
-            + "identified by the index number used in the last person listing.\n "
+            + " identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + TRUE_WORD + " OR " + FALSE_WORD + "]"
             + "[" + PREFIX_PHONE + TRUE_WORD + " OR " + FALSE_WORD + "]"
             + "[" + PREFIX_EMAIL + TRUE_WORD + " OR " + FALSE_WORD + "]"
-            + "[" + PREFIX_ADDRESS + TRUE_WORD + " OR " + FALSE_WORD + "]"
-            + "[" + PREFIX_TAG + TRUE_WORD + " OR " + FALSE_WORD + "]...\n"
+            + "[" + PREFIX_ADDRESS + TRUE_WORD + " OR " + FALSE_WORD + "]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + TRUE_WORD
-            + PREFIX_EMAIL + FALSE_WORD;
+            + PREFIX_NAME + TRUE_WORD + " "
+            + PREFIX_PHONE + FALSE_WORD + " "
+            + PREFIX_EMAIL + TRUE_WORD + " "
+            + PREFIX_ADDRESS + FALSE_WORD;
 
     public static final String MESSAGE_CHANGE_PRIVACY_SUCCESS = "Changed the Privacy of the Person: %1$s";
     public static final String MESSAGE_NO_FIELDS = "At least one field to change must be provided.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
     private final PersonPrivacySettings pps;
@@ -64,9 +76,18 @@ public class ChangePrivacyCommand extends UndoableCommand {
 
         ReadOnlyPerson personToChange = lastShownList.get(index.getZeroBased());
 
-        changePersonPrivacy(personToChange, pps);
+        Person newPerson = createPersonWithChangedPrivacy(personToChange, pps);
 
-        return new CommandResult(String.format(MESSAGE_CHANGE_PRIVACY_SUCCESS, personToChange));
+        try {
+            model.updatePerson(personToChange, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson));
     }
 
     /**
@@ -74,21 +95,41 @@ public class ChangePrivacyCommand extends UndoableCommand {
      * @param person the person whose privacy we would like to change
      * @param pps the settings of privacy for each field
      */
-    private static void changePersonPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
-        if (pps.nameIsPrivate() != null) {
-            person.getName().setPrivate(pps.nameIsPrivate());
+    private static Person createPersonWithChangedPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        assert person != null;
+
+        Name n = person.getName();
+        Phone p = person.getPhone();
+        Email e = person.getEmail();
+        Address a = person.getAddress();
+        Remark r = person.getRemark();
+        Boolean f = person.getFavourite();
+        Set<Tag> t = person.getTags();
+
+        if (pps.getNameIsPrivate() != null) {
+            n.setPrivate(pps.getNameIsPrivate());
         }
-        if (pps.phoneIsPrivate() != null) {
-            person.getPhone().setPrivate(pps.phoneIsPrivate());
+        if (pps.getPhoneIsPrivate() != null) {
+            p.setPrivate(pps.getPhoneIsPrivate());
         }
 
-        if (pps.emailIsPrivate() != null) {
-            person.getEmail().setPrivate(pps.emailIsPrivate());
+        if (pps.getEmailIsPrivate() != null) {
+            e.setPrivate(pps.getEmailIsPrivate());
         }
 
-        if (pps.addressIsPrivate() != null) {
-            person.getAddress().setPrivate(pps.addressIsPrivate());
+        if (pps.getAddressIsPrivate() != null) {
+            a.setPrivate(pps.getAddressIsPrivate());
         }
+
+        return new Person(n, p, e, a, f, r, t);
+    }
+
+    public Index getIndex() {
+        return index;
+    }
+
+    public PersonPrivacySettings getPps() {
+        return pps;
     }
 
     /**
@@ -100,6 +141,15 @@ public class ChangePrivacyCommand extends UndoableCommand {
         private Boolean emailIsPrivate;
         private Boolean addressIsPrivate;
 
+        public PersonPrivacySettings() {}
+
+        public PersonPrivacySettings(PersonPrivacySettings toCopy) {
+            this.nameIsPrivate = toCopy.nameIsPrivate;
+            this.phoneIsPrivate = toCopy.phoneIsPrivate;
+            this.emailIsPrivate = toCopy.emailIsPrivate;
+            this.addressIsPrivate = toCopy.addressIsPrivate;
+        }
+
         /**
          * Returns true if at least one field is not null.
          */
@@ -108,7 +158,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
                     this.emailIsPrivate, this.addressIsPrivate);
         }
 
-        public Boolean nameIsPrivate() {
+        /**
+         * Returns the value of nameIsPrivate, returns false if null
+         * @return the value of nameIsPrivate
+         */
+        public Boolean getNameIsPrivate() {
+            if (nameIsPrivate == null) {
+                return false;
+            }
             return nameIsPrivate;
         }
 
@@ -117,7 +174,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.nameIsPrivate = nameIsPrivate;
         }
 
-        public Boolean phoneIsPrivate() {
+        /**
+         * Returns the value of phoneIsPrivate, returns false if null
+         * @return the value of phoneIsPrivate
+         */
+        public Boolean getPhoneIsPrivate() {
+            if (phoneIsPrivate == null) {
+                return false;
+            }
             return phoneIsPrivate;
         }
 
@@ -126,7 +190,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.phoneIsPrivate = phoneIsPrivate;
         }
 
-        public Boolean emailIsPrivate() {
+        /**
+         * Returns the value of emailIsPrivate, returns false if null
+         * @return the value of emailIsPrivate
+         */
+        public Boolean getEmailIsPrivate() {
+            if (emailIsPrivate == null) {
+                return false;
+            }
             return emailIsPrivate;
         }
 
@@ -135,7 +206,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.emailIsPrivate = emailIsPrivate;
         }
 
-        public Boolean addressIsPrivate() {
+        /**
+         * Returns the value of addressIsPrivate, returns false if null
+         * @return the value of addressIsPrivate
+         */
+        public Boolean getAddressIsPrivate() {
+            if (addressIsPrivate == null) {
+                return false;
+            }
             return addressIsPrivate;
         }
 

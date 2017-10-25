@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 /**
  * Represents a Task name in the address book.
  */
-public class Name {
+public class TaskName {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Task names can be in any format, and should not be blank";
@@ -25,7 +25,7 @@ public class Name {
      *
      * @throws IllegalValueException if given name string is invalid.
      */
-    public Name(String name) throws IllegalValueException {
+    public TaskName(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!isValidName(trimmedName)) {
@@ -50,8 +50,8 @@ public class Name {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Name // instanceof handles nulls
-                && this.taskName.equals(((Name) other).taskName)); // state check
+                || (other instanceof TaskName // instanceof handles nulls
+                && this.taskName.equals(((TaskName) other).taskName)); // state check
     }
 
     @Override
