@@ -203,7 +203,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 

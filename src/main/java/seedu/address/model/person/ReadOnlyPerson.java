@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     Remark getRemark();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Boolean> favouriteProperty();
+    Boolean getFavourite();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -35,6 +37,7 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
+                && other.getFavourite().equals(this.getFavourite())
                 && other.getRemark().equals(this.getRemark());
     }
 
