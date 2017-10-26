@@ -21,7 +21,7 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
- * Adds a person to the address book.
+ * Adds a person or task to the address book.
  */
 public class AddCommand extends UndoableCommand {
 
@@ -57,7 +57,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_DEADLINE + "10-10-2017 "
             + PREFIX_PRIORITY + "4 ";
 
-    public static final String MESSAGE_TASK_SUCCESS = "New task added: %1$s";
+    public static final String MESSAGE_TASK_SUCCESS = "New task added: \n%1$s";
     public static final String MESSAGE_SUCCESS = "New person added: \n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book";
@@ -75,7 +75,7 @@ public class AddCommand extends UndoableCommand {
     }
 
     /**
-     * Creates an AddCommand to add the specified ReadOnlyTask
+     * Creates an AddCommand to add the specified {@Code ReadOnlyTask}
      */
     public AddCommand(ReadOnlyTask task) {
         taskToAdd = new Task(task);
