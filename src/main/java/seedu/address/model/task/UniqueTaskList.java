@@ -3,6 +3,7 @@ package seedu.address.model.task;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -14,7 +15,7 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 /**
  * Provides a list of Tasks that are unique, and are not null.
  */
-public class UniqueTasksList implements Iterable<Task> {
+public class UniqueTaskList implements Iterable<Task> {
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyTask> mappedList = EasyBind.map(internalList, (task) -> task);
@@ -80,6 +81,17 @@ public class UniqueTasksList implements Iterable<Task> {
         internalList.set(index, new Task(editedTask));
     }
 
+    public void setTasks(UniqueTaskList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
+        final UniqueTaskList replacement = new UniqueTaskList();
+        for (final ReadOnlyTask task : tasks) {
+            replacement.add(new Task(task));
+        }
+        setTasks(replacement);
+    }
     @Override
     public Iterator<Task> iterator() {
         return internalList.iterator();
