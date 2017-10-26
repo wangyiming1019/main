@@ -217,6 +217,21 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TaskNotFoundException();
         }
     }
+
+    /**
+     * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
+     *
+     * @throws DuplicateTaskException if updating the task's details causes the task to be equivalent to
+     *      another existing task in the list.
+     * @throws TaskNotFoundException if {@code target} could not be found in the list.
+     */
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireNonNull(editedReadOnlyTask);
+
+        Task editedTask = new Task(editedReadOnlyTask);
+        tasks.setTask(target, editedTask);
+    }
     //// util methods
 
     @Override
