@@ -48,11 +48,11 @@ public class EditTaskDescriptorBuilder {
     /**
      * Sets the {@code Description} of the {@code EditTaskDescriptor} that we are building.
      */
-    public EditTaskDescriptorBuilder withDescription(String phone) {
+    public EditTaskDescriptorBuilder withDescription(String description) {
         try {
-            ParserUtil.parseDescription(Optional.of(phone)).ifPresent(descriptor::setDescription);
+            ParserUtil.parseDescription(Optional.of(description)).ifPresent(descriptor::setDescription);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
+            throw new IllegalArgumentException("description is expected to be unique.");
         }
         return this;
     }
@@ -60,11 +60,11 @@ public class EditTaskDescriptorBuilder {
     /**
      * Sets the {@code Deadline} of the {@code EditTaskDescriptor} that we are building.
      */
-    public EditTaskDescriptorBuilder withDeadline(String email) {
+    public EditTaskDescriptorBuilder withDeadline(String deadline) {
         try {
-            ParserUtil.parseDeadline(Optional.of(email)).ifPresent(descriptor::setDeadline);
+            ParserUtil.parseDeadline(Optional.of(deadline)).ifPresent(descriptor::setDeadline);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("email is expected to be unique.");
+            throw new IllegalArgumentException("deadline is expected to be unique.");
         }
         return this;
     }
@@ -72,11 +72,11 @@ public class EditTaskDescriptorBuilder {
     /**
      * Sets the {@code Priority} of the {@code EditTaskDescriptor} that we are building.
      */
-    public EditTaskDescriptorBuilder withPriority(String address) {
+    public EditTaskDescriptorBuilder withPriority(String priority) {
         try {
-            ParserUtil.parsePriority(Optional.of(address)).ifPresent(descriptor::setPriority);
+            ParserUtil.parsePriority(Optional.of(priority)).ifPresent(descriptor::setPriority);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
+            throw new IllegalArgumentException("priority is expected to be unique.");
         }
         return this;
     }
