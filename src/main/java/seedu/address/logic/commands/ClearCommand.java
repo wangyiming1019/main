@@ -27,25 +27,29 @@ public class ClearCommand extends UndoableCommand {
     private boolean isClearTask;
     private boolean isClearPerson;
     private boolean isClearAll;
-    private String typeCleared;
+    private Prefix type;
+    private String cleared;
 
     public ClearCommand() {
         isClearAll = true;
         isClearPerson = false;
         isClearTask = false;
-        typeCleared = TYPE_ALL;
+        type = null;
+        cleared = TYPE_ALL;
     }
     public ClearCommand(Prefix type) {
-        if (type.getPrefix().equals(PREFIX_TASK)) {
+        if (type.equals(PREFIX_TASK)) {
             isClearTask = true;
             isClearPerson = false;
             isClearAll = false;
-            typeCleared = TYPE_TASKS;
-        } else if (type.getPrefix().equals(PREFIX_PERSON)) {
+            this.type = PREFIX_TASK;
+            cleared = TYPE_TASKS;
+        } else if (type.equals(PREFIX_PERSON)) {
             isClearPerson = true;
             isClearTask = false;
             isClearAll = false;
-            typeCleared = TYPE_PERSONS;
+            this.type = PREFIX_PERSON;
+            cleared = TYPE_PERSONS;
         } else {
             throw new AssertionError("An invalid type was provided!");
         }
@@ -57,12 +61,12 @@ public class ClearCommand extends UndoableCommand {
         if (isClearAll) {
             model.resetData(new AddressBook());
         } else if (isClearTask) {
-            model.resetTasks();
+            model.resetPartialData(new AddressBook(), type);
         } else if (isClearPerson) {
-            model.resetContacts();
+            model.resetPartialData(new AddressBook(), type);
         } else {
             assert false : "At least one boolean must be true.";
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, typeCleared));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, cleared));
     }
 }
