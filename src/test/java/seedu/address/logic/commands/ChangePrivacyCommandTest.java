@@ -9,6 +9,8 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -69,14 +71,21 @@ public class ChangePrivacyCommandTest {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
         ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
-        Person personInList = new PersonBuilder(lastPerson).build();
+        Person personInList = new PersonBuilder().withName(lastPerson.getName().toString())
+                .withPhone(lastPerson.getPhone().toString()).withEmail(lastPerson.getEmail().toString())
+                .withAddress(lastPerson.getAddress().toString()).withRemark(lastPerson.getRemark().toString())
+                .withFavourite(lastPerson.getFavourite().toString())
+                .build();
+
+        personInList.setTags(lastPerson.getTags());
         personInList.getName().setPrivate(true);
         personInList.getPhone().setPrivate(true);
+
 
         PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(personInList).setNamePrivate("true")
                 .setPhonePrivate("true").build();
         ChangePrivacyCommand changePrivacyCommand = new ChangePrivacyCommand(indexLastPerson, pps);
-        changePrivacyCommand.model = model;
+        changePrivacyCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
         String expectedMessage = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, personInList);
 
@@ -85,5 +94,21 @@ public class ChangePrivacyCommandTest {
         expectedModel.updatePerson(lastPerson, personInList);
 
         assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
+
+        PersonPrivacySettings ppsPublic = new PersonPrivacySettingsBuilder(personInList).setNamePrivate("false")
+                .setPhonePrivate("false").build();
+
+
+        personInList.getName().setPrivate(false);
+        personInList.getPhone().setPrivate(false);
+
+        ChangePrivacyCommand changePrivacyCommandPublic = new ChangePrivacyCommand(indexLastPerson, ppsPublic);
+        changePrivacyCommandPublic.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        String expectedMessagePublic = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, personInList);
+
+        expectedModel.updatePerson(lastPerson, personInList);
+
+        assertCommandSuccess(changePrivacyCommandPublic, model, expectedMessagePublic, expectedModel);
     }
 }
