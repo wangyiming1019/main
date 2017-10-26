@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.NameContainsFavouritePredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -60,6 +63,18 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void resetPartialData(ReadOnlyAddressBook newData, Prefix type) {
+        assert(type.equals(PREFIX_TASK) || type.equals(PREFIX_PERSON));
+        if (type.equals(PREFIX_TASK)) {
+            addressBook.resetPartialData(newData, PREFIX_TASK);
+            indicateAddressBookChanged();
+        } else {
+            addressBook.resetPartialData(newData, PREFIX_PERSON);
+            indicateAddressBookChanged();
+        }
     }
 
     @Override

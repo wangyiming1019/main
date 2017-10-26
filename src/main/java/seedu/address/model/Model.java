@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -24,6 +25,9 @@ public interface Model {
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
+
+    /** Clears only part of the existing backing model and replaces with the provided new data. */
+    void resetPartialData(ReadOnlyAddressBook newData, Prefix type);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();

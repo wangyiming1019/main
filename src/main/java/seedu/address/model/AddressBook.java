@@ -1,6 +1,8 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -19,7 +22,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.UniqueTasksList;
+import seedu.address.model.task.UniqueTaskList;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
@@ -31,7 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private final UniqueTasksList tasks;
+    private final UniqueTaskList tasks;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -43,7 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        tasks = new UniqueTasksList();
+        tasks = new UniqueTaskList();
     }
 
     public AddressBook() {}
@@ -66,6 +69,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
+        this.tasks.setTasks(tasks);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -73,14 +80,39 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            //setTasks(newData.getTasksList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
-        }
+        } /*catch (DuplicateTaskException e) {
+            assert false : "AddressBooks should not have duplicate tasks";
+        }*/
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
 
+    /**
+     * Resets only the existing contact or task data of this {@code AddressBook}.
+     */
+    public void resetPartialData(ReadOnlyAddressBook newData, Prefix type) {
+        requireNonNull(newData);
+        requireNonNull(type);
+        try {
+            if (type.equals(PREFIX_TASK)) {
+                setTasks(newData.getTasksList());
+            } else if (type.equals(PREFIX_PERSON)) {
+                setPersons(newData.getPersonList());
+                setTags(new HashSet<>(newData.getTagList()));
+                syncMasterTagListWith(persons);
+            } else {
+                throw new AssertionError("Type must either be persons or tasks");
+            }
+        } catch (DuplicatePersonException e) {
+            assert false : "Address books should not have duplicate persons";
+        } catch (DuplicateTaskException e) {
+            assert false : "Address books should not have duplicate tasks";
+        }
+    }
     //// person-level operations
 
     /**
