@@ -24,10 +24,12 @@ public class ClearCommandParser {
         }
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_PERSON);
 
-        if (argMultimap.getValue(PREFIX_PERSON).isPresent()) {
+        if (argMultimap.getValue(PREFIX_PERSON).isPresent() && argMultimap.getValue(PREFIX_TASK).isPresent()) {
+            return new ClearCommand();
+        } else if (argMultimap.getValue(PREFIX_PERSON).isPresent()) {
             return new ClearCommand(PREFIX_PERSON);
         } else if (argMultimap.getValue(PREFIX_TASK).isPresent()) {
-            return new ClearCommand(PREFIX_PERSON);
+            return new ClearCommand(PREFIX_TASK);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearCommand.MESSAGE_USAGE));
         }
