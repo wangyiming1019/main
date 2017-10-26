@@ -234,10 +234,16 @@ public class EditCommand extends UndoableCommand {
             return false;
         }
 
-        // state check
+        if (this.isTask != ((EditCommand) other).isTask) {
+            return false;
+        }
+
         EditCommand e = (EditCommand) other;
-        return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+        if (this.isTask) {
+            return index.equals(e.index) && editTaskDescriptor.equals(e.editTaskDescriptor);
+        } else {
+            return index.equals(e.index) && editPersonDescriptor.equals(e.editPersonDescriptor);
+        }
     }
 
     /**
