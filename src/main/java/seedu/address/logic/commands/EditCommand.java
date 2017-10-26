@@ -2,12 +2,16 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +31,17 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskName;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing person or task in the address book.
  */
 public class EditCommand extends UndoableCommand {
 
@@ -49,13 +61,28 @@ public class EditCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
+    public static final String MESSAGE_TASK_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
+            + "by the index number used in the last task listing. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
+            + "[" + PREFIX_DEADLINE + "DEADLINE] "
+            + "[" + PREFIX_PRIORITY + "PRIORITY] "
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_DESCRIPTION + "write 1200-word essay "
+            + PREFIX_PRIORITY + "1";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: \n%1$s";
+    public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: \n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
+    private final EditTaskDescriptor editTaskDescriptor;
+    private boolean isTask;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -67,28 +94,60 @@ public class EditCommand extends UndoableCommand {
 
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editTaskDescriptor = null;
+        this.isTask = false;
+    }
+
+    /**
+     * @param index of the task in the filtered task list to edit
+     * @param editTaskDescriptor details to edit the task with
+     */
+    public EditCommand(Index index, EditTaskDescriptor editTaskDescriptor) {
+        requireNonNull(index);
+        requireNonNull(editTaskDescriptor);
+
+        this.index = index;
+        this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
+        this.editPersonDescriptor = null;
+        this.isTask = true;
+        //TODO see if we can use Singleton pattern to handle the Descriptors.
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        List<ReadOnlyTask> lastShownTaskList = model.getFilteredTaskList();
 
         try {
-            model.updatePerson(personToEdit, editedPerson);
+            if (isTask) {
+                if (index.getZeroBased() >= lastShownList.size()) {
+                    throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+                }
+                ReadOnlyTask taskToEdit = lastShownTaskList.get(index.getZeroBased());
+                Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+                model.updateTask(taskToEdit, editedTask);
+                model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+                return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
+            } else {
+                if (index.getZeroBased() >= lastShownList.size()) {
+                    throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                }
+                ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+                Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+                model.updatePerson(personToEdit, editedPerson);
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+            }
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicateTaskException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("The target task cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+
     }
 
     /**
@@ -140,6 +199,27 @@ public class EditCommand extends UndoableCommand {
         Boolean updateFavourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                           updateFavourite, updatedRemark, updatedTags);
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}.
+     */
+    private static Task createEditedTask(ReadOnlyTask taskToEdit,
+                                             EditTaskDescriptor editTaskDescriptor) {
+        assert taskToEdit != null;
+
+        TaskName updatedTaskName;
+        Description updatedDescription;
+        Deadline updatedDeadline;
+        Priority updatedPriority;
+
+        updatedTaskName = editTaskDescriptor.getTaskName().orElse(taskToEdit.getTaskName());
+        updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
+        updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
+
+        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority);
     }
 
     @Override
@@ -270,6 +350,86 @@ public class EditCommand extends UndoableCommand {
                     && getFavourite().equals(e.getFavourite())
                     && getRemark().equals(e.getRemark())
                     && getTags().equals(e.getTags());
+        }
+    }
+
+    /**
+     * Stores the details to edit the task with. Each non-empty field value will replace the
+     * corresponding field value of the task.
+     */
+    public static class EditTaskDescriptor {
+        private TaskName taskName;
+        private Description description;
+        private Deadline deadline;
+        private Priority priority;
+
+        public EditTaskDescriptor() {}
+
+        public EditTaskDescriptor(EditTaskDescriptor toCopy) {
+            this.taskName = toCopy.taskName;
+            this.description = toCopy.description;
+            this.deadline = toCopy.deadline;
+            this.priority = toCopy.priority;
+        }
+
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isAnyFieldEdited() {
+            return CollectionUtil.isAnyNonNull(this.taskName, this.description, this.deadline, this.priority);
+        }
+
+        public void setTaskName(TaskName taskName) {
+            this.taskName = taskName;
+        }
+
+        public Optional<TaskName> getTaskName() {
+            return Optional.ofNullable(taskName);
+        }
+
+        public void setDescription(Description description) {
+            this.description = description;
+        }
+
+        public Optional<Description> getDescription() {
+            return Optional.ofNullable(description);
+        }
+
+        public void setDeadline(Deadline deadline) {
+            this.deadline = deadline;
+        }
+
+        public Optional<Deadline> getDeadline()  {
+            return Optional.ofNullable(deadline);
+        }
+
+        public void setPriority(Priority priority) {
+            this.priority = priority;
+        }
+
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof EditTaskDescriptor)) {
+                return false;
+            }
+
+            // state check
+            EditTaskDescriptor e = (EditTaskDescriptor) other;
+
+            return getTaskName().equals(e.getTaskName())
+                    && getDescription().equals(e.getDescription())
+                    && getDeadline().equals(e.getDeadline())
+                    && getPriority().equals(e.getPriority());
         }
     }
 }
