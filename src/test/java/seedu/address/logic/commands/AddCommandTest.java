@@ -198,6 +198,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void sortPersons(String field, String order) {
             fail("This method should not be called.");
         }
@@ -226,6 +231,11 @@ public class AddCommandTest {
         public ObservableList<ReadOnlyTask> getFilteredTaskList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask) throws DuplicateTaskException {
+            fail("This method should not be called.");
         }
     }
 
