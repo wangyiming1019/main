@@ -184,7 +184,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
         addressBook.addTask(toAdd);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateAddressBookChanged();
     }
 
