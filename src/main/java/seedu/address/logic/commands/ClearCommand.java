@@ -20,9 +20,9 @@ public class ClearCommand extends UndoableCommand {
             + "[" + PREFIX_PERSON + "] "
             + "[" + PREFIX_TASK + "] ";
 
-    private static final String TYPE_PERSONS = "Contact list";
-    private static final String TYPE_TASKS = "Task list";
-    private static final String TYPE_ALL = "Address book";
+    public static final String TYPE_PERSONS = "Contact list";
+    public static final String TYPE_TASKS = "Task list";
+    public static final String TYPE_ALL = "Address book";
 
     private boolean isClearTask;
     private boolean isClearPerson;
