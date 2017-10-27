@@ -80,12 +80,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
-            //setTasks(newData.getTasksList());
+            setTasks(newData.getTasksList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
-        } /*catch (DuplicateTaskException e) {
+        } catch (DuplicateTaskException e) {
             assert false : "AddressBooks should not have duplicate tasks";
-        }*/
+        }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
