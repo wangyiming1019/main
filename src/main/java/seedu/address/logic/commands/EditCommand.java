@@ -137,8 +137,9 @@ public class EditCommand extends UndoableCommand {
         }
 
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedTags);
+        Boolean updateFavourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                          updateFavourite, updatedRemark, updatedTags);
     }
 
     @Override
@@ -168,6 +169,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Boolean favourite;
         private Remark remark;
         private Set<Tag> tags;
 
@@ -178,6 +180,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.favourite = toCopy.favourite;
             this.remark = toCopy.remark;
             this.tags = toCopy.tags;
         }
@@ -221,6 +224,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setFavourite(Boolean favourite) {
+            this.favourite = favourite;
+        }
+
+        public Optional<Boolean> getFavourite() {
+            return Optional.ofNullable(favourite);
+        }
+
         public void setRemark(Remark remark) {
             this.remark = remark;
         }
@@ -256,6 +267,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getFavourite().equals(e.getFavourite())
                     && getRemark().equals(e.getRemark())
                     && getTags().equals(e.getTags());
         }

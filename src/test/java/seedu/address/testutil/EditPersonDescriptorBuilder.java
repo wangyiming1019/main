@@ -109,6 +109,14 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFavourite(String favourite) {
+        descriptor.setFavourite(new Boolean(favourite));
+        return this;
+    }
+
     public EditPersonDescriptor build() {
         return descriptor;
     }

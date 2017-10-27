@@ -37,6 +37,8 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private Boolean addressIsPrivate;
+    @XmlElement (required = true)
+    private String favourite;
     @XmlElement(required = true)
     private String remark;
     @XmlElement(required = true)
@@ -62,6 +64,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        favourite = source.getFavourite().toString();
         remark = source.getRemark().value;
 
         nameIsPrivate = source.getName().isPrivate();
@@ -105,8 +108,9 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone, this.phoneIsPrivate);
         final Email email = new Email(this.email, this.emailIsPrivate);
         final Address address = new Address(this.address, this.addressIsPrivate);
+        final Boolean favourite = new Boolean(this.favourite);
         final Remark remark = new Remark(this.remark, this.remarkIsPrivate);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, tags);
+        return new Person(name, phone, email, address, favourite, remark, tags);
     }
 }

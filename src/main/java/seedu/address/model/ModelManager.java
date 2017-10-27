@@ -17,6 +17,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.NameContainsFavouritePredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -160,9 +161,22 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.favouritePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
         addressBook.addTask(toAdd);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.unfavouritePerson(target);
+        updateFilteredPersonList(new NameContainsFavouritePredicate());
         indicateAddressBookChanged();
     }
 
@@ -171,6 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTask(toDelete);
         indicateAddressBookChanged();
     }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

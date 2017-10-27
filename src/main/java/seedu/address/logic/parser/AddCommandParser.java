@@ -142,8 +142,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK_PRIVATE), true).get();
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
-            ReadOnlyPerson person = new Person(name, phone, email, address, remark, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, tagList);
             return person;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
