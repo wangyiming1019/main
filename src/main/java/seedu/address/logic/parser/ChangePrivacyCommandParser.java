@@ -51,6 +51,12 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
         return new ChangePrivacyCommand(index, pps);
     }
 
+    /**
+     * Checks the input under the name prefix and sets the PersonPrivacySettings depending on the input
+     * @param argMultimap The input arguments of the Command
+     * @param pps The PersonPrivacySettings to modify
+     * @throws ParseException if the input is neither true nor false
+     */
     private void checkName(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[true]")) {
@@ -65,6 +71,12 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
         }
     }
 
+    /**
+     * Checks the input under the phone prefix and sets the PersonPrivacySettings depending on the input
+     * @param argMultimap The input arguments of the Command
+     * @param pps The PersonPrivacySettings to modify
+     * @throws ParseException if the input is neither true nor false
+     */
     private void checkPhone(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             if (argMultimap.getValue(PREFIX_PHONE).toString().equals("Optional[true]")) {
@@ -78,6 +90,12 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
         }
     }
 
+    /**
+     * Checks the input under the email prefix and sets the PersonPrivacySettings depending on the input
+     * @param argMultimap The input arguments of the Command
+     * @param pps The PersonPrivacySettings to modify
+     * @throws ParseException if the input is neither true nor false
+     */
     private void checkEmail(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             if (argMultimap.getValue(PREFIX_EMAIL).toString().equals("Optional[true]")) {
@@ -91,6 +109,12 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
         }
     }
 
+    /**
+     * Checks the input under the address prefix and sets the PersonPrivacySettings depending on the input
+     * @param argMultimap The input arguments of the Command
+     * @param pps The PersonPrivacySettings to modify
+     * @throws ParseException if the input is neither true nor false
+     */
     private void checkAddress(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             if (argMultimap.getValue(PREFIX_ADDRESS).toString().equals("Optional[true]")) {
