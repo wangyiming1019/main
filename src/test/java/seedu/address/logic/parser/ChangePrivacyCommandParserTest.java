@@ -157,6 +157,11 @@ public class ChangePrivacyCommandParserTest {
         compareChangePrivacyCommand(expectedCommand, actualCommand);
     }
 
+    /**
+     * Checks if two ChangePrivacyCommands are equal by comparing their contents
+     * @param expectedCommand The expected ChangePrivacyCommand
+     * @param actualCommand The actual ChangePrivacyCommand
+     */
     private void compareChangePrivacyCommand(ChangePrivacyCommand expectedCommand, ChangePrivacyCommand actualCommand) {
         assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
         assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
