@@ -40,18 +40,18 @@ public class UiPartTest {
     }
 
 
-        @Test
-        public void constructor_invalidFileUrl_throwsAssertionError() {
-            URL invalidFileUrl = getTestFileUrl(INVALID_FILE_PATH);
-            thrown.expect(AssertionError.class);
-            new TestUiPart<Object>(invalidFileUrl);
-        }
+    @Test
+    public void constructor_invalidFileUrl_throwsAssertionError() {
+        URL invalidFileUrl = getTestFileUrl(INVALID_FILE_PATH);
+        thrown.expect(AssertionError.class);
+        new TestUiPart<Object>(invalidFileUrl);
+    }
 
-        @Test
-        public void constructor_validFileUrl_loadsFile() {
-            URL validFileUrl = getTestFileUrl(VALID_FILE_PATH);
-            assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(validFileUrl).getRoot());
-        }
+    @Test
+    public void constructor_validFileUrl_loadsFile() {
+        URL validFileUrl = getTestFileUrl(VALID_FILE_PATH);
+        assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(validFileUrl).getRoot());
+    }
 
     @Test
     public void constructor_nullFileName_throwsNullPointerException() {
