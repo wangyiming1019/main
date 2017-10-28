@@ -529,6 +529,22 @@ This is illustrated by the following sequence diagram:
 
 image::AddPrivateSequenceDiagram.png[width="800"]
 
+The `isPrivate` boolean is private, however, the value can be obtained using the following getter method:
+[source,java]
+----
+public boolean isPrivate() {
+    return isPrivate;
+}
+----
+
+To change the `isPrivate` value, the following setter method is used:
+[source,java]
+----
+public void setPrivate(boolean isPrivate) {
+    this.isPrivate = isPrivate;
+}
+----
+
 If a field is private, then the `toString` method will return a string `<Private [FIELD]>`, where `[FIELD]` is the name of that field. +
 This can be seen from the `toString` method in `Name`:
 [source,java]
@@ -582,8 +598,32 @@ Which results in a `Person` being saved in the xml file in the following format
 If an old save file without privacy data is loaded, then the `toModelType()` method in `XmlAdaptedPerson` will set `isPrivate` to be `false` for each field of `Person`, to keep the displayed information the same.
 
 [NOTE]
-If an edit command only contains fields for private commands, the command will fail with an error message. +
-However, if there contains at least one field that is public, the command will succeed, but any private fields will remain unmodified.
+If a private field is to be edited by `EditCommand`, `createEditedPerson()` in `EditCommand` will not modify the data of that field, even though `EditCommand` will create a new `CommandResult` with a success message. +
+Hence, a private field will remain private and the value stored by that field will remain the same as it originally was.
+
+This is done through the `createEditedPerson` method in `EditCommand`.
+`createEditedPerson` sets the boolean `areFieldsAllPrivate` to initially be true.
+
+As the new instance of each field is being generated, if any field contains a value in the input `EditPersonDescriptor` and that field was not originally private, `areFieldsAllPrivate` is set to false.
+
+This can be seen from the following code, which is used for the generation of a new `Name` object.
+[source,java]
+----
+private static Name createUpdatedName(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
+        Name updatedName;
+        if (!personToEdit.getName().isPrivate()) {
+            updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+            if (editPersonDescriptor.getName().isPresent()) {
+                areFieldsAllPrivate = false;
+            }
+        } else {
+            updatedName = personToEdit.getName();
+        }
+        return updatedName;
+    }
+----
+
+Upon generation of all the fields, if `areFieldsAllPrivate` is still true, `createEditedPerson` will throw an `IllegalArgumentException`, which will cause `EditCommand` to throw a `CommandException` and prevent the command from continuing.
 
 ==== Design Considerations
 
