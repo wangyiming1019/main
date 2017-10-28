@@ -39,6 +39,19 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
 
         PersonPrivacySettings pps = new PersonPrivacySettings();
 
+        checkName(argMultimap, pps);
+        checkPhone(argMultimap, pps);
+        checkEmail(argMultimap, pps);
+        checkAddress(argMultimap, pps);
+
+        if (!pps.isAnyFieldNonNull()) {
+            throw new ParseException(ChangePrivacyCommand.MESSAGE_NO_FIELDS);
+        }
+
+        return new ChangePrivacyCommand(index, pps);
+    }
+
+    private void checkName(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[true]")) {
                 pps.setNameIsPrivate(true);
@@ -50,7 +63,9 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                         ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
+    }
 
+    private void checkPhone(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             if (argMultimap.getValue(PREFIX_PHONE).toString().equals("Optional[true]")) {
                 pps.setPhoneIsPrivate(true);
@@ -61,7 +76,9 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                         ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
+    }
 
+    private void checkEmail(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             if (argMultimap.getValue(PREFIX_EMAIL).toString().equals("Optional[true]")) {
                 pps.setEmailIsPrivate(true);
@@ -72,7 +89,9 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                         ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
+    }
 
+    private void checkAddress(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             if (argMultimap.getValue(PREFIX_ADDRESS).toString().equals("Optional[true]")) {
                 pps.setAddressIsPrivate(true);
@@ -83,11 +102,5 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                         ChangePrivacyCommand.MESSAGE_USAGE));
             }
         }
-
-        if (!pps.isAnyFieldNonNull()) {
-            throw new ParseException(ChangePrivacyCommand.MESSAGE_NO_FIELDS);
-        }
-
-        return new ChangePrivacyCommand(index, pps);
     }
 }
