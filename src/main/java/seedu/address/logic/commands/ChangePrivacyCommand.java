@@ -132,7 +132,6 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return pps;
     }
 
-
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -150,7 +149,6 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return index.equals(c.index)
                 && pps.equals(c.pps);
     }
-    
 
     /**
      * Stores the privacy settings for each field of a person.
