@@ -65,7 +65,7 @@ adds a contact named `John Doe` to the Address Book.
 === Viewing help : `help`
 
 Format: `help` +
-Alternatively,  you may opt to use the keyboard shortcut `F1`.
+Alternatively,  you may opt to use the keyboard shortcut kbd:[F1].
 
 === Adding a person/task: `add`
 
@@ -569,16 +569,16 @@ Format: `clear` +
 Once you have finished using Address++, you may use this command to exit the program. +
 Format: `exit`
 
-Alternatively, you may opt to use the keyboard shortcut `ALT+F4`.
+Alternatively, you may opt to use the keyboard shortcut kbd:[ALT]+kbd:[F4].
 
 === Saving the data
 
 Address book data is saved in the hard disk automatically after any command that changes the data. +
 There is no need for you to save manually.
 
-If you want to change the location of the save file, click on `File -> Save As` or use the keyboard shortcut `CTRL+S` and select the new location and file name for the save file in the pop-up window.
+If you want to change the location of the save file, click on `File -> Save As` or use the keyboard shortcut kbd:[CTRL]+kbd:[S] and select the new location and file name for the save file in the pop-up window.
 
-If you want to open a different save file, click on `File -> Open` or use the keyboard shortcut `CTRL+O` and select the new save file to use from the pop-up window.
+If you want to open a different save file, click on `File -> Open` or use the keyboard shortcut kbd:[CTRL]+kbd:[O] and select the new save file to use from the pop-up window.
 
 === Using the browser (To be added in V2.0)
 
@@ -592,7 +592,7 @@ If you click on a box containing a contact, an internet browser on the right sid
 
 Address book data can be exported in a number of different formats, thus allowing the data to be compatible to any device.
 
-To export data, click on `File -> Export As...` or use the keyboard shortcut `CTRL+E` and select the new location and file name for the export file in the pop-up window.
+To export data, click on `File -> Export As...` or use the keyboard shortcut kbd:[CTRL]+E` and select the new location and file name for the export file in the pop-up window.
 
 === Auto-Complete: Learning Your Typing Habits
 
@@ -601,7 +601,7 @@ The program will learn your typing habits and give autocomplete suggestions that
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. The Open command `CTRL+O` can also be used instead of manually overwriting the file if you wish to keep the original data file or store the new data file in a seperate location.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. The Open command kbd:[CTRL]+O` can also be used instead of manually overwriting the file if you wish to keep the original data file or store the new data file in a seperate location.
 
 == Command Summary and Cheat Sheet
 
@@ -655,7 +655,7 @@ e.g. `dismiss 4 1 17`
 
 == Keyboard Shortcuts
 
-* *Exit* : `ALT+F4`
-* *Help* : `F1`
-* *Open* : `CTRL+O`
-* *Save As* : `CTRL+S`
+* *Exit* : kbd:[ALT]+kbd:[F4]
+* *Help* : kbd:[[F1]
+* *Open* : kbd:[CTRL]+kbd:[O]
+* *Save As* : kbd:[CTRL]+kbd:[S]
