@@ -53,9 +53,11 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: \n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_ALL_FIELDS_PRIVATE = "At least one field to be edited must be public.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
+    private static boolean areFieldsAllPrivate = true;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -78,7 +80,12 @@ public class EditCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Person editedPerson = null;
+        try {
+            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(MESSAGE_ALL_FIELDS_PRIVATE);
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -97,7 +104,8 @@ public class EditCommand extends UndoableCommand {
      * A person with private fields cannot be edited
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+                                             EditPersonDescriptor editPersonDescriptor)
+            throws IllegalArgumentException {
         assert personToEdit != null;
 
         Name updatedName;
@@ -106,38 +114,49 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress;
         Remark updatedRemark;
 
+        areFieldsAllPrivate = true;
         if (!personToEdit.getName().isPrivate()) {
             updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+            areFieldsAllPrivate = false;
         } else {
             updatedName = personToEdit.getName();
         }
 
         if (!personToEdit.getPhone().isPrivate()) {
             updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+            areFieldsAllPrivate = false;
         } else {
             updatedPhone = personToEdit.getPhone();
         }
 
         if (!personToEdit.getEmail().isPrivate()) {
             updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+            areFieldsAllPrivate = false;
         } else {
             updatedEmail = personToEdit.getEmail();
         }
 
         if (!personToEdit.getAddress().isPrivate()) {
             updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+            areFieldsAllPrivate = false;
         } else {
             updatedAddress = personToEdit.getAddress();
         }
 
         if (!personToEdit.getRemark().isPrivate()) {
             updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+            areFieldsAllPrivate = false;
+            System.out.println("Here");
         } else {
             updatedRemark = personToEdit.getRemark();
         }
 
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Boolean updateFavourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
+
+        if (areFieldsAllPrivate) {
+            throw new IllegalArgumentException();
+        }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                           updateFavourite, updatedRemark, updatedTags);
     }

@@ -32,6 +32,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -107,7 +108,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_privateFields_success() throws Exception {
+    public void execute_privateFields_failure() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -123,25 +124,30 @@ public class EditCommandTest {
         personInFilteredList.getAddress().setPrivate(true);
         Address originalAddress = personInFilteredList.getAddress();
 
+        personInFilteredList.getRemark().setPrivate(true);
+        Remark originalRemark = personInFilteredList.getRemark();
+
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, personInFilteredList);
+        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), personInFilteredList);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editCommand, model, expectedMessage);
 
         assertEquals(personInFilteredList.getName(), originalName);
         assertEquals(personInFilteredList.getPhone(), originalPhone);
         assertEquals(personInFilteredList.getEmail(), originalEmail);
         assertEquals(personInFilteredList.getAddress(), originalAddress);
+        assertEquals(personInFilteredList.getRemark(), originalRemark);
 
         personInFilteredList.getName().setPrivate(false);
         personInFilteredList.getPhone().setPrivate(false);
         personInFilteredList.getEmail().setPrivate(false);
         personInFilteredList.getAddress().setPrivate(false);
+        personInFilteredList.getRemark().setPrivate(false);
     }
 
     @Test
