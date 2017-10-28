@@ -55,9 +55,11 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_ALL_FIELDS_PRIVATE = "At least one field to be edited must be public.";
 
+    private static boolean areFieldsAllPrivate = true;
+
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
-    private static boolean areFieldsAllPrivate = true;
+
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -80,7 +82,7 @@ public class EditCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = null;
+        Person editedPerson;
         try {
             editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
         } catch (IllegalArgumentException e) {
