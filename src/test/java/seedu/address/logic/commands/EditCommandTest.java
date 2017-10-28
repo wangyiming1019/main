@@ -79,18 +79,6 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        ReadOnlyPerson editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_filteredList_success() throws Exception {
         showFirstPersonOnly(model);
 
@@ -108,7 +96,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_privateFields_failure() throws Exception {
+    public void execute_privateFields_success() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -148,6 +136,15 @@ public class EditCommandTest {
         personInFilteredList.getEmail().setPrivate(false);
         personInFilteredList.getAddress().setPrivate(false);
         personInFilteredList.getRemark().setPrivate(false);
+    }
+
+    @Test
+    public void execute_noFieldSpecifiedUnfilteredList_failure() {
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
+
+        assertCommandFailure(editCommand, model, expectedMessage);
     }
 
     @Test
