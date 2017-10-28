@@ -206,7 +206,8 @@ public class EditCommand extends UndoableCommand {
      * @return A new (@code Address) from either the personToEdit or the editPersonDescriptor
      * depending on privacy and the input
      */
-    private static Address createUpdatedAddress(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Address createUpdatedAddress(ReadOnlyPerson personToEdit,
+                                                EditPersonDescriptor editPersonDescriptor) {
         Address updatedAddress;
         if (!personToEdit.getAddress().isPrivate()) {
             updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
@@ -259,7 +260,8 @@ public class EditCommand extends UndoableCommand {
      * @param editPersonDescriptor Edited with this editPersonDescriptor
      * @return A new (@code Favourite) from either the personToEdit or the editPersonDescriptor depending on the input
      */
-    private static Boolean createUpdatedFavourite(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Boolean createUpdatedFavourite(ReadOnlyPerson personToEdit,
+                                                  EditPersonDescriptor editPersonDescriptor) {
         Boolean updateFavourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
         if (editPersonDescriptor.getFavourite().isPresent()) {
             areFieldsAllPrivate = false;
