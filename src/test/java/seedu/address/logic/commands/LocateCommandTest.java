@@ -111,8 +111,8 @@ public class LocateCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        BrowserPanelLocateEvent lastEvent
-                = (BrowserPanelLocateEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        BrowserPanelLocateEvent lastEvent =
+                (BrowserPanelLocateEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(p, lastEvent.getNewSelection());
     }
 
