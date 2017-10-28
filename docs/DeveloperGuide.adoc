@@ -734,6 +734,7 @@ BrowserPanel will then use `handleBrowserPanelLocationEvent` to process this new
 ----
 
 The overall sequence of events is illustrated by the following sequence diagram:
+
 image::LocateSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
