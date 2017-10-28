@@ -582,8 +582,8 @@ Which results in a `Person` being saved in the xml file in the following format
 If an old save file without privacy data is loaded, then the `toModelType()` method in `XmlAdaptedPerson` will set `isPrivate` to be `false` for each field of `Person`, to keep the displayed information the same.
 
 [NOTE]
-If a private field is to be edited by `EditCommand`, `createEditedPerson()` in `EditCommand` will not modify the data of that field, even though `EditCommand` will create a new `CommandResult` with a success message. +
-Hence, a private field will remain private and the value stored by that field will remain the same as it originally was.
+If an edit command only contains fields for private commands, the command will fail with an error message. +
+However, if there contains at least one field that is public, the command will succeed, but any private fields will remain unmodified.
 
 ==== Design Considerations
 
