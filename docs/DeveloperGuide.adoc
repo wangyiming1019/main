@@ -529,22 +529,6 @@ This is illustrated by the following sequence diagram:
 
 image::AddPrivateSequenceDiagram.png[width="800"]
 
-The `isPrivate` boolean is private, however, the value can be obtained using the following getter method:
-[source,java]
-----
-public boolean isPrivate() {
-    return isPrivate;
-}
-----
-
-To change the `isPrivate` value, the following setter method is used:
-[source,java]
-----
-public void setPrivate(boolean isPrivate) {
-    this.isPrivate = isPrivate;
-}
-----
-
 If a field is private, then the `toString` method will return a string `<Private [FIELD]>`, where `[FIELD]` is the name of that field. +
 This can be seen from the `toString` method in `Name`:
 [source,java]
