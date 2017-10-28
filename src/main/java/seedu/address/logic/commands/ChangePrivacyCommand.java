@@ -158,6 +158,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         private Boolean phoneIsPrivate;
         private Boolean emailIsPrivate;
         private Boolean addressIsPrivate;
+        private Boolean remarkIsPrivate;
 
         public PersonPrivacySettings() {}
 
@@ -166,6 +167,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.phoneIsPrivate = toCopy.phoneIsPrivate;
             this.emailIsPrivate = toCopy.emailIsPrivate;
             this.addressIsPrivate = toCopy.addressIsPrivate;
+            this.remarkIsPrivate = toCopy.remarkIsPrivate;
         }
 
         /**
@@ -173,17 +175,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
          */
         public boolean isAnyFieldNonNull() {
             return CollectionUtil.isAnyNonNull(this.nameIsPrivate, this.phoneIsPrivate,
-                    this.emailIsPrivate, this.addressIsPrivate);
+                    this.emailIsPrivate, this.addressIsPrivate, this.remarkIsPrivate);
         }
 
         /**
-         * Returns the value of nameIsPrivate, returns false if null
+         * Returns the value of nameIsPrivate
          * @return the value of nameIsPrivate
          */
         public Boolean getNameIsPrivate() {
-            if (nameIsPrivate == null) {
-                return false;
-            }
             return nameIsPrivate;
         }
 
@@ -193,13 +192,10 @@ public class ChangePrivacyCommand extends UndoableCommand {
         }
 
         /**
-         * Returns the value of phoneIsPrivate, returns false if null
+         * Returns the value of phoneIsPrivate
          * @return the value of phoneIsPrivate
          */
         public Boolean getPhoneIsPrivate() {
-            if (phoneIsPrivate == null) {
-                return false;
-            }
             return phoneIsPrivate;
         }
 
@@ -209,13 +205,10 @@ public class ChangePrivacyCommand extends UndoableCommand {
         }
 
         /**
-         * Returns the value of emailIsPrivate, returns false if null
+         * Returns the value of emailIsPrivate
          * @return the value of emailIsPrivate
          */
         public Boolean getEmailIsPrivate() {
-            if (emailIsPrivate == null) {
-                return false;
-            }
             return emailIsPrivate;
         }
 
@@ -225,19 +218,29 @@ public class ChangePrivacyCommand extends UndoableCommand {
         }
 
         /**
-         * Returns the value of addressIsPrivate, returns false if null
+         * Returns the value of addressIsPrivate
          * @return the value of addressIsPrivate
          */
         public Boolean getAddressIsPrivate() {
-            if (addressIsPrivate == null) {
-                return false;
-            }
             return addressIsPrivate;
         }
 
         public void setAddressIsPrivate(boolean addressIsPrivate) {
             requireNonNull(addressIsPrivate);
             this.addressIsPrivate = addressIsPrivate;
+        }
+
+        /**
+         * Returns the value of remarkIsPrivate
+         * @return the value of remarkIsPrivate
+         */
+        public Boolean getRemarkIsPrivate() {
+            return remarkIsPrivate;
+        }
+
+        public void setRemarkIsPrivate(boolean remarkIsPrivate) {
+            requireNonNull(remarkIsPrivate);
+            this.remarkIsPrivate = remarkIsPrivate;
         }
 
         @Override
@@ -258,7 +261,8 @@ public class ChangePrivacyCommand extends UndoableCommand {
             return getNameIsPrivate().equals(c.getNameIsPrivate())
                     && getPhoneIsPrivate().equals(c.getPhoneIsPrivate())
                     && getEmailIsPrivate().equals(c.getEmailIsPrivate())
-                    && getAddressIsPrivate().equals(c.getAddressIsPrivate());
+                    && getAddressIsPrivate().equals(c.getAddressIsPrivate())
+                    && getRemarkIsPrivate().equals(c.getRemarkIsPrivate());
         }
     }
 }

@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.core.index.Index;
@@ -26,7 +27,8 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
     public ChangePrivacyCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                        PREFIX_REMARK);
 
         Index index;
 
@@ -43,6 +45,7 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
         checkPhone(argMultimap, pps);
         checkEmail(argMultimap, pps);
         checkAddress(argMultimap, pps);
+        checkRemark(argMultimap, pps);
 
         if (!pps.isAnyFieldNonNull()) {
             throw new ParseException(ChangePrivacyCommand.MESSAGE_NO_FIELDS);
@@ -121,6 +124,25 @@ public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> 
                 pps.setAddressIsPrivate(true);
             } else if (argMultimap.getValue(PREFIX_ADDRESS).toString().equals("Optional[false]")) {
                 pps.setAddressIsPrivate(false);
+            } else {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangePrivacyCommand.MESSAGE_USAGE));
+            }
+        }
+    }
+
+    /**
+     * Checks the input under the address prefix and sets the PersonPrivacySettings depending on the input
+     * @param argMultimap The input arguments of the Command
+     * @param pps The PersonPrivacySettings to modify
+     * @throws ParseException if the input is neither true nor false
+     */
+    private void checkRemark(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
+        if (argMultimap.getValue(PREFIX_REMARK).isPresent()) {
+            if (argMultimap.getValue(PREFIX_REMARK).toString().equals("Optional[true]")) {
+                pps.setRemarkIsPrivate(true);
+            } else if (argMultimap.getValue(PREFIX_REMARK).toString().equals("Optional[false]")) {
+                pps.setRemarkIsPrivate(false);
             } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         ChangePrivacyCommand.MESSAGE_USAGE));
