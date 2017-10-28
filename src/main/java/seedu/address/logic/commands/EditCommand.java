@@ -161,7 +161,13 @@ public class EditCommand extends UndoableCommand {
         }
 
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        if (editPersonDescriptor.getTags().isPresent()) {
+            areFieldsAllPrivate = false;
+        }
         Boolean updateFavourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
+        if (editPersonDescriptor.getFavourite().isPresent()) {
+            areFieldsAllPrivate = false;
+        }
 
         if (areFieldsAllPrivate) {
             throw new IllegalArgumentException();
