@@ -117,36 +117,45 @@ public class EditCommand extends UndoableCommand {
         areFieldsAllPrivate = true;
         if (!personToEdit.getName().isPrivate()) {
             updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-            areFieldsAllPrivate = false;
+            if (editPersonDescriptor.getName().isPresent()) {
+                areFieldsAllPrivate = false;
+            }
         } else {
             updatedName = personToEdit.getName();
         }
 
         if (!personToEdit.getPhone().isPrivate()) {
             updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-            areFieldsAllPrivate = false;
+            if (editPersonDescriptor.getPhone().isPresent()) {
+                areFieldsAllPrivate = false;
+            }
         } else {
             updatedPhone = personToEdit.getPhone();
         }
 
         if (!personToEdit.getEmail().isPrivate()) {
             updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-            areFieldsAllPrivate = false;
+            if (editPersonDescriptor.getEmail().isPresent()) {
+                areFieldsAllPrivate = false;
+            }
         } else {
             updatedEmail = personToEdit.getEmail();
         }
 
         if (!personToEdit.getAddress().isPrivate()) {
             updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-            areFieldsAllPrivate = false;
+            if (editPersonDescriptor.getAddress().isPresent()) {
+                areFieldsAllPrivate = false;
+            }
         } else {
             updatedAddress = personToEdit.getAddress();
         }
 
         if (!personToEdit.getRemark().isPrivate()) {
             updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
-            areFieldsAllPrivate = false;
-            System.out.println("Here");
+            if (editPersonDescriptor.getRemark().isPresent()) {
+                areFieldsAllPrivate = false;
+            }
         } else {
             updatedRemark = personToEdit.getRemark();
         }
