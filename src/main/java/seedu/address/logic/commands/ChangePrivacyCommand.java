@@ -121,6 +121,10 @@ public class ChangePrivacyCommand extends UndoableCommand {
             a.setPrivate(pps.getAddressIsPrivate());
         }
 
+        if (pps.getRemarkIsPrivate() != null) {
+            r.setPrivate(pps.getRemarkIsPrivate());
+        }
+
         return new Person(n, p, e, a, f, r, t);
     }
 
