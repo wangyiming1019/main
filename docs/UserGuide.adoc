@@ -147,6 +147,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] c/[GOO
 * When editing tags, the existing tags of the person will be removed. This means that you cannot cumulatively add tags using multiple `edit` commands.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 * A private field will not be modified by the Edit command.
+* An Edit command containing only private fields will result in a error message.
+* An Edit command with both private and public fields will only modify the public fields.
 ****
 
 Examples:
@@ -204,7 +206,7 @@ Shorthand commands: `cp`
 * If you choose to input `false`, you will set the privacy of that field for that person to be public. The data in that field will be visible in the UI.
 * If you choose to input `true`, you will set the privacy of that field for that person to be private. The data in that field cannot be modified and will not be visible in the UI.
 * Fields that do not originally contain any data will still remain empty after changing their privacy.
-* If you do not add a prefix for the field in the command, that field will default to be public.
+* If you do not add a prefix for the field in the command, that field will keep its original privacy setting.
 ****
 
 Examples:
