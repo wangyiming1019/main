@@ -26,6 +26,10 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     public static final String PRIVATE_NAME_CANNOT_SEARCH = "Cannot perform a search on that person. "
             + "Their name is private.";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://maps.google.com/?q=";
+    public static final String GOOGLE_MAPS_URL_SUFFIX  = "/";
+    public static final String PRIVATE_ADDRESS_CANNOT_SEARCH = "Cannot perform a search on that person's address. "
+            + "Their address is private.";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -57,6 +61,20 @@ public class BrowserPanel extends UiPart<Region> {
         } else {
             loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
+        }
+    }
+
+    /**
+     * Loads a google search for a person'saddress if their address is not private
+     * Prints out a message on the result display otherwise
+     * @param person The person's address we want to search for
+     */
+    private void loadMapsPage(ReadOnlyPerson person) {
+        if (person.getAddress().isPrivate()) {
+            raise(new NewResultAvailableEvent(PRIVATE_ADDRESS_CANNOT_SEARCH));
+        } else {
+            loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+            + GOOGLE_MAPS_URL_SUFFIX);
         }
     }
 
