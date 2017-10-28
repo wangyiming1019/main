@@ -132,6 +132,26 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return pps;
     }
 
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ChangePrivacyCommand)) {
+            return false;
+        }
+
+        // state check
+        ChangePrivacyCommand c = (ChangePrivacyCommand) other;
+        return index.equals(c.index)
+                && pps.equals(c.pps);
+    }
+    
+
     /**
      * Stores the privacy settings for each field of a person.
      */
@@ -220,6 +240,27 @@ public class ChangePrivacyCommand extends UndoableCommand {
         public void setAddressIsPrivate(boolean addressIsPrivate) {
             requireNonNull(addressIsPrivate);
             this.addressIsPrivate = addressIsPrivate;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof PersonPrivacySettings)) {
+                return false;
+            }
+
+            // state check
+            PersonPrivacySettings c = (PersonPrivacySettings) other;
+
+            return getNameIsPrivate().equals(c.getNameIsPrivate())
+                    && getPhoneIsPrivate().equals(c.getPhoneIsPrivate())
+                    && getEmailIsPrivate().equals(c.getEmailIsPrivate())
+                    && getAddressIsPrivate().equals(c.getAddressIsPrivate());
         }
     }
 }
