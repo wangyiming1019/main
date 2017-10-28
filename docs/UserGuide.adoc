@@ -533,57 +533,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Setting a budget : `setbudget` (To be added in V2.0)
-
-You can set the amount of money you have in your budget by using the `setbudget` command. +
-`setbudget` can be replaced by `sb` for faster input. +
-Format: `setbudget MONEY [t/TAG]`
-
-****
-* You can tag each budget to keep track of multiple budgets at the same time.
-* The input for `MONEY` must be greater than or equal to 0.
-* You can input up to 2 decimal points for `MONEY` if you would like to keep track of cents.
-****
-
-Examples:
-
-* `setbudget 42.50 t/food` +
-Sets a $42.50 food budget.
-
-* `sb 60 t/transport` +
-Sets a $60 transport budget.
-
-* `sb 2000` +
-Sets a $2000 untagged budget.
-
-=== Spending : `spend` (To be added in V2.0)
-
-You can keep track of the money from an existing budget as you spend it by using the `spend` command.
-Format: `spend MONEY [t/TAG]`
-Shorthand commands: `sp`
-
-****
-* This command stimulates the spending a certain amount of money from an existing budget.
-* The tag is used to determine which budget to spend from.
-* Your input for `MONEY` must be greater than or equal to 0.
-* You can input up to 2 decimal points for `MONEY` if you would like to keep track of cents.
-* If the expenditure is lower than the budget, the value stored by a budget will be reduced by the amount spent.
-* If the budget you chose to deduct from does not exist, a message will appear to tell you that that budget does not exist.
-* If the expenditure exceeds the budget, a message will appear in the UI warning you that you have exceeded their budget.
-The amount of money left in the budget will remain the same.
-
-****
-
-Examples:
-
-* `setbudget 42.50 t/food` +
-`spend 2.4 t/food` +
-Sets a $42.50 food budget and spends $2.40, leaving a budget of $40.10.
-
-* `sb 60` +
-`spend 0.50` +
-Sets a $60 untagged budget and spends $0.50, leaving a budget of $59.50.
-
 === Clearing all entries : `clear`
 
 If you would like to start fresh on a clean slate, you can use this command to clear all entries from the address book. +
