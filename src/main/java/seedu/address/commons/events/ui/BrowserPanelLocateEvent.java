@@ -8,7 +8,6 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class BrowserPanelLocateEvent extends BaseEvent {
 
-
     private final ReadOnlyPerson person;
 
     public BrowserPanelLocateEvent(ReadOnlyPerson person) {
