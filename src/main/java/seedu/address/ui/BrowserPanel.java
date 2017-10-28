@@ -75,7 +75,7 @@ public class BrowserPanel extends UiPart<Region> {
             raise(new NewResultAvailableEvent(PRIVATE_ADDRESS_CANNOT_SEARCH));
         } else {
             loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
-            + GOOGLE_MAPS_URL_SUFFIX);
+                + GOOGLE_MAPS_URL_SUFFIX);
         }
     }
 

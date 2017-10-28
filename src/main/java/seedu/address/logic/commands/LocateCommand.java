@@ -6,7 +6,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -24,8 +23,6 @@ public class LocateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Searching for Person: %1$s";
-    public static final String MESSAGE_LOCATE_PERSON_PRIVATE_ADDRESS_FAILURE = "That Person's Address is private.";
-    public static final String MESSAGE_LOCATE_PERSON_NO_ADDRESS_FAILURE = "That Person has no Address!";
 
     private final Index targetIndex;
 
