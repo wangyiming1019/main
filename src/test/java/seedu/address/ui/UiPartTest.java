@@ -65,11 +65,11 @@ public class UiPartTest {
         new TestUiPart<Object>(MISSING_FILE_PATH);
     }
 
-        @Test
-        public void constructorInvalidFileNameThrowsAssertionError() {
-            thrown.expect(AssertionError.class);
-            new TestUiPart<Object>(INVALID_FILE_PATH);
-        }
+    @Test
+    public void constructorInvalidFileNameThrowsAssertionError() {
+        thrown.expect(AssertionError.class);
+        new TestUiPart<Object>(INVALID_FILE_PATH);
+    }
 
     private URL getTestFileUrl(String testFilePath) {
         String testFilePathInView = "/view/" + testFilePath;
