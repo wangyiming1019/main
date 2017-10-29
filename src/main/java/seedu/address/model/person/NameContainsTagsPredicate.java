@@ -37,6 +37,11 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
                 .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagString, keyword))));
     }
 
+    /**
+     * check only unwanted tag list has elements
+     * @return a boolean value 
+     */
+
     private boolean isOnlyUnwantedTagsCheck(List<String> wantedTag,
                                             List<String> unwantedTag) {
         if (wantedTag.isEmpty() && !unwantedTag.isEmpty()) {
