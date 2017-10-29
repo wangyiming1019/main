@@ -20,7 +20,7 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        String allTagString = ConvertTagToString(person);
+        String allTagString = convertTagToString(person);
         final List<String> wantedTag = new ArrayList<>();
         final List<String> unwantedTag = new ArrayList<>();
         updateWantedTagUnwantedTag(wantedTag, unwantedTag);
@@ -46,6 +46,12 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
+    /**
+     * Update the wantedTag and unwantedTag list
+     * @param wantedTag list of tags to be searched
+     * @param unwantedTag list of tags to not be searched
+     */
+
     private void updateWantedTagUnwantedTag(List<String> wantedTag, List<String> unwantedTag) {
         for (String everyTag : tags) {
             if (!everyTag.startsWith("/not")) {
@@ -57,7 +63,11 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
     }
 
-    private String ConvertTagToString(ReadOnlyPerson person) {
+    /**
+     * Convert a set of tags to Strings 
+     */
+
+    private String convertTagToString(ReadOnlyPerson person) {
         Set<Tag> personTags = person.getTags();
         StringBuilder allTagNames = new StringBuilder();
         for (Tag tag : personTags) {
