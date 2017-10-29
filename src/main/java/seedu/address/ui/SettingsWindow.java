@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
 /**
@@ -18,6 +19,8 @@ public class SettingsWindow {
     private static final String FXML = "view/SettingsWindow.fxml";
     private static final String TITLE = "Password Settings";
 
+    private Stage stage;
+
     @FXML
     private TextField oldPassword;
 
@@ -29,6 +32,10 @@ public class SettingsWindow {
 
     public void initialize(URL url, ResourceBundle rb) {
         //TODO
+    }
+
+    public void setSettingsStage(Stage stage) {
+        this.stage = stage;
     }
 
     @FXML

@@ -317,7 +317,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleOpenPreferences() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainWindow.class.getResource("view/SettingsWindow.fxml"));
+        loader.setLocation(MainWindow.class.getResource("/view/SettingsWindow.fxml"));
         try {
             AnchorPane page = (AnchorPane) loader.load();
         } catch (IOException e) {
@@ -329,10 +329,11 @@ public class MainWindow extends UiPart<Region> {
         preferenceStage.setTitle("Edit Preferences");
         preferenceStage.initModality(Modality.WINDOW_MODAL);
         preferenceStage.initOwner(primaryStage);
-        preferenceStage.getIcons().add(new Image("images/address_book_32_alternative.png"));
+        preferenceStage.getIcons().add(new Image("/images/address_book_32_alternative.png"));
 
         // Set controller
         SettingsWindow controller = loader.getController();
+        controller.setSettingsStage(preferenceStage);
 
         preferenceStage.showAndWait();
     }
