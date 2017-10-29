@@ -64,7 +64,7 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     /**
-     * Convert a set of tags to Strings 
+     * Convert a set of tags to Strings
      */
 
     private String convertTagToString(ReadOnlyPerson person) {
