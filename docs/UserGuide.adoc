@@ -101,7 +101,7 @@ Examples:
 * `add task n/Update documentation d/Update docs for V1.1 for CS2103T t/10-10-2017 p/4`
 * `add task n/Buy new pencil p/2`
 
-=== Add a tag to persons : `addtag` (Since V1.2)
+=== Add a tag to persons : `addtag`
 You can use the `addtag` command to add tag for multiple persons in the address book. For example, you may wish to add tag `friends` to the first two persons in the address book. +
 `addtag` can be replaced by `atag` for faster input. +
 Format: `addtag INDEX... t/[TAG]` +
@@ -214,38 +214,6 @@ Sets the phone number of the 1st person to be public and their email address to 
 * `cp 2 a/false n/true e/false` +
 Sets the address and email of the 2nd person to be public and their name to be private. The 2nd person's address and email will be displayed, if available, while their name will be hidden in the UI.
 
-=== Favourite persons : `favourite` (since V1.3)
-
-You can use `favourite` command to make persons in the address book become your favourite persons. For example, you may wish to set your girlfriend as your favourite contact. +
-`favourite` can be replaced by `fav` for faster input. +
-Format: `favourite INDEX [MORE INDEX]` +
-
-Examples:
-
-* `list` +
-`favourite 1 2` +
-Favourites the 1st and 2nd person in the address book.
-* `find Betsy` +
-`favourite 1` +
-Favourite the 1st person in the results of the `find` command.
-
-****
-* Favourites the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-=== Listing all favourite persons : `showfavourite` (since V1.3)
-
-You can use the `showfavourite` command to quickly show all your favourite contacts in the address book. +
-`showfavourite` can be replaced by `sfav` for faster input. +
-Format: `showfavourite` +
-
-[NOTE]
-====
-`showfavourite` command: It will return an empty list if there is no favourite persons.
-====
-
 === Locating persons by name : `find`
 
 You can use the `find` command to quickly filter out contacts, or tasks who match your criteria. For example, you may wish to find all the tasks marked with the highest priority, or all your contacts who have a certain family name. +
@@ -281,32 +249,6 @@ Returns any task that has the word `update` in their names or descriptions
 * `find task update 4` +
 Returns all tasks that has the word `update` in their names or descriptions, and are of priority `4` or higher.
 
-=== Locating persons by tag : `findtag` (Since V1.4)
-
-You can use the `findtag` command to quickly filter out contacts who match your criteria. For example, you may wish to find contacts who are your `classmates`. +
-If you want to find contacts who are your `classmates` but not your `friends`, you just need to add `/not` in front of the `friends`. +
-`findtag` can be replaced by `ftag` for faster input. +
-Format: `findtag KEYWORD [MORE_KEYWORDS]` +
-
-Examples:
-
-* `findtag friends` +
-Returns any persons having tag `friends`
-* `findtag friends colleagues` +
-Returns any person having tags `friends` or `colleagues`
-* `findtag /notfriends` +
-Returns any persons not have tag `friends`
-* `findtag classmates /notfriends` +
-Returns any person have tags `classmates` but not have tag `friends`
-
-****
-*Important note on `findtag` criteria
-* The search is not case insensitive. e.g `friends` will match `FRIENDS`
-* The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
-* Only the tag is searched for persons.
-* Only full words will be matched e.g. `friend` will not match `friends`
-* There is no space `/not` and tag name e.g. `/not friends` will not match `/notfriends`
-****
 
 === Deleting a person : `delete`
 
@@ -341,7 +283,7 @@ Deletes the 2nd task in the address book.
 `delete task 1` +
 Deletes the 1st task in the results of the `find task` command.
 
-=== delete a tag of persons : `deletetag` (Since V1.2)
+=== delete a tag of persons : `deletetag`
 You can use `deletetag` to delete the tag of multiple persons from the address book. +
 `deletetag` can be replaced by `dtag` for faster input. +
 Format: `deletetag INDEX... t/[TAG]` +
@@ -566,28 +508,6 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-
-=== Unfavourite persons : `unfavourite` (since V1.3)
-
-You can use `unfavourite` command to set your previous favourite persons become the normal persons. For example, +
-after you break up with your girlfriend, you may wish to set your girlfriend back to normal person. +
-`unfavourite` can be replaced by `unfav` for faster input. +
-Format: `unfavourite INDEX [MORE INDEX]` +
-
-Examples:
-
-* `list` +
-`unfavourite 1 2` +
-Unfavourites the 1st and 2nd person in the address book.
-* `find Betsy` +
-`unfavourite 1` +
-Unfavourite the 1st person in the results of the `find` command.
-
-****
-* Unfavourites the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
 
 === Redoing the previously undone command : `redo`
 
