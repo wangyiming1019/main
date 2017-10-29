@@ -39,7 +39,7 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
     /**
      * check only unwanted tag list has elements
-     * @return a boolean value 
+     * @return a boolean value
      */
 
     private boolean isOnlyUnwantedTagsCheck(List<String> wantedTag,
