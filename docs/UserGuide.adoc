@@ -101,7 +101,9 @@ Examples:
 * `add task n/Update documentation d/Update docs for V1.1 for CS2103T t/10-10-2017 p/4`
 * `add task n/Buy new pencil p/2`
 
+
 === Adding a tag to persons : `addtag` (Since V1.2)
+
 You can use the `addtag` command to add tag for multiple persons in the address book. For example, you may wish to add tag `friends` to the first two persons in the address book. +
 `addtag` can be replaced by `atag` for faster input. +
 Format: `addtag INDEX... t/[TAG]` +
@@ -215,6 +217,7 @@ Examples:
 Sets the phone number of the 1st person to be public and their email address to be private. The 1st person's phone number will be displayed, if available, while their email address will be hidden in the UI.
 * `cp 2 a/false n/true e/false` +
 Sets the address and email of the 2nd person to be public and their name to be private. The 2nd person's address and email will be displayed, if available, while their name will be hidden in the UI.
+
 
 === Favouriting persons : `favourite` (since V1.3)
 
@@ -343,7 +346,9 @@ Deletes the 2nd task in the address book.
 `delete task 1` +
 Deletes the 1st task in the results of the `find task` command.
 
+
 === Deleting a tag of persons : `deletetag` (Since V1.2)
+
 You can use `deletetag` to delete the tag of multiple persons from the address book. +
 `deletetag` can be replaced by `dtag` for faster input. +
 Format: `deletetag INDEX... t/[TAG]` +
@@ -591,6 +596,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+
 
 === Unfavouriting persons : `unfavourite` (since V1.3)
 

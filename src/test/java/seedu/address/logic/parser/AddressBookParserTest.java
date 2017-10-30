@@ -6,7 +6,10 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.DELETE_TYPE_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -27,14 +30,17 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsTagsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -69,7 +75,10 @@ public class AddressBookParserTest {
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
                 ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -82,7 +91,10 @@ public class AddressBookParserTest {
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
                 ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate()));
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -91,13 +103,11 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandClear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
     @Test
     public void parseCommandAliasClear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 
     @Test
@@ -152,6 +162,24 @@ public class AddressBookParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommandFindTag() throws Exception {
+        List<String> keywords = Arrays.asList("friend", "colleague");
+        FindTagCommand command = (FindTagCommand) parser.parseCommand(
+                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagCommand(
+                new NameContainsTagsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommandAliasFindTag() throws Exception {
+        List<String> keywords = Arrays.asList("friend", "colleague");
+        FindTagCommand command = (FindTagCommand) parser.parseCommand(
+                FindTagCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagCommand(
+                new NameContainsTagsPredicate(keywords)), command);
     }
 
     @Test
@@ -210,6 +238,20 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandLocate() throws Exception {
+        LocateCommand command = (LocateCommand) parser.parseCommand(
+                LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandAliasLocate() throws Exception {
+        LocateCommand command = (LocateCommand) parser.parseCommand(
+                LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
