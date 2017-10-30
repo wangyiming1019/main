@@ -602,7 +602,7 @@ The program will learn your typing habits and give autocomplete suggestions that
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. The Open command kbd:[CTRL]+O` can also be used instead of manually overwriting the file if you wish to keep the original data file or store the new data file in a seperate location.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. The Open command kbd:[CTRL]+kbd:[O] can also be used instead of manually overwriting the file if you wish to keep the original data file or store the new data file in a seperate location.
 
 == Command Summary and Cheat Sheet
 
