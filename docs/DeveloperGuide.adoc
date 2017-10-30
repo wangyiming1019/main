@@ -524,25 +524,8 @@ These new prefixes can be found in `CliSyntax`, and `AddCommandParser` will take
 Depending on whether or not the field is supposed to be private, `ParsetUtil` will call the appropriate constructor.
 Upon obtaining all the fields anc creating a new `Person`, `AddCommandParser` will create a new `AddCommand` to handle the addition of the new `Person`.
 
-This is illustrated by the following sequence diagram:
-
 image::AddPrivateSequenceDiagram.png[width="800"]
-
-The `isPrivate` boolean is private, however, the value can be obtained using the following getter method:
-[source,java]
-----
-public boolean isPrivate() {
-    return isPrivate;
-}
-----
-
-To change the `isPrivate` value, the following setter method is used:
-[source,java]
-----
-public void setPrivate(boolean isPrivate) {
-    this.isPrivate = isPrivate;
-}
-----
+_Figure 3.5.1 : Sequence Diagram for adding a Person with private fields_
 
 If a field is private, then the `toString` method will return a string `<Private [FIELD]>`, where `[FIELD]` is the name of that field. +
 This can be seen from the `toString` method in `Name`:
@@ -650,6 +633,7 @@ Upon generation of all the fields, if `areFieldsAllPrivate` is still true, `crea
 The sequence diagram for `ChangePrivacyCommand` is illustrated below.
 
 image::ChangePrivacySequenceDiagram.png[width="800"]
+_Figure 3.6.1 : Sequence Diagram for changing the privacy of a Person's fields_
 
 Upon receiving a String containing the arguments from `AddressBookParser`, `ChangePrivacyCommandParser` will create a `PersonPrivacySettings` object.
 
@@ -668,11 +652,11 @@ This allows `isAnyFieldNonNull` to check if the user has input any field at all.
 
 ==== Design Considerations
 
-**Aspect:** How to implement changing of a person's privacy. +
+**Aspect:** Implementation of changing of a person's privacy. +
 **Alternative 1 (current choice):** Create a separate command to do so. +
 **Pros:** It is clear to users and developers that `changeprivacy` is to modify a person's privacy while `edit` changes the actual data if the relevant field is not private.  +
 **Cons:** Additional command, parser and tests must be created.  +
-**Alternative 2:** Enhance the functionality of EditCommand. +
+**Alternative 2:** Enhance the functi-onality of EditCommand. +
 **Pros:** Can make use of existing code to aid the implementation. +
 **Cons:** Increases the complexity of EditCommand for both users and developers. More ambiguous as to how editing a private field will affect the data.
 
@@ -735,6 +719,7 @@ BrowserPanel will then use `handleBrowserPanelLocationEvent` to process this new
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::LocateSequenceDiagram.png[width="800"]
+_Figure 3.7.1 : Sequence Diagram for Locating a Person's Address_
 
 ==== Design Considerations
 
