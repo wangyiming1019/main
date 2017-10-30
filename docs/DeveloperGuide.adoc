@@ -772,14 +772,12 @@ public class AddTagCommand extends UndoableCommand {
 Suppose the user enter the `addtag 1 2 t/friends` command. The following sequence diagram shows how the add tag command works:
 
 image::AddTagSdForLogic.png[width="800"]
-
+_Figure 3.8.1 : Add Tag Sequence Diagram for Logic_ +
 The `deletetag` command works the same as `addtag` command with different name only.
 
 [NOTE]
-If the input index does not exist, the `AddTagCommand` and `DeleteTagCommand` will throw an exception.
-
-If the tag to be deleted does not exist, the `DeleteTagCommand` will throw an exception.
-
+If the input index does not exist, the `AddTagCommand` and `DeleteTagCommand` will throw an exception. +
+If the tag to be deleted does not exist, the `DeleteTagCommand` will throw an exception. +
 If the tag to be added exists in every target person in the address book, the `AddTagCommand` will throw an exception.
 
 ==== Design Considerations
@@ -794,13 +792,81 @@ If the tag to be added exists in every target person in the address book, the `A
 This violates the Single Responsibility Principle.
 
 ---
-**Aspect:** Implementation of the `AddTagCommend` and `DeleteTagCommand` +
+**Aspect:** Implementation of the `AddTagCommand` and `DeleteTagCommand` +
 **Alternative 1 (current choice):** create new command `addtag` and `deletetag` +
 **Pros:** Less modification of existing command and parser +
 **Cons:** Users have to learn how to use the additional commands +
 **Alternative 2:** Modify the existing `add` and `delete` command +
 **Pros:** Users could use the same commands to achieve different purpose +
 **Cons:** Additional override the constructor for the existing command. It might not be easy for the beginner.
+
+=== Find Tag mechanism
+
+The find tag mechanism is facilitated by an ArrayList of Tags, which resides inside `LogicManager`. It supports finding persons by their tags in the address book.
+This command will not inherit from `UndoableCommand`.
+
+The `findtag` command is executed by `FindTagCommand` and is parsed through `FindTagCommandParser`.
+After parsing through `FindTagCommandParser`, it does not goes to the `FindTagCommand` straightly. The list of tags input will be processed by `NameContainsTagsPredicate` first.
+It is similar to the `find` command since find persons through their names and find persons through their tags are quite similar.
+
+Please take not that although `FindTagCommand` is similar to `FindCommand`, there are still some differences.
+`FindTagCommand` provides exclusive finding whereas `FindCommand` does not. It is achieved in the `NameContainsTagsPredicate`.
+
+This is the example of how `NameContainsTagsPredicate` is working:
+Firstly, it will convert a Set of Tag to String.
+
+[source,java]
+----
+private String convertTagToString(ReadOnlyPerson person) {
+        Set<Tag> personTags = person.getTags();
+        StringBuilder allTagNames = new StringBuilder();
+        for (Tag tag : personTags) {
+            allTagNames.append(tag.getTagName());
+            allTagNames.append(" ");
+        }
+        return allTagNames.toString().trim();
+    }
+----
+After having a list of string, it will then split strings into two ArrayList. One is for the tags we are looking for and another one
+is for the tags to be excluded.
+
+[sourcce,java]
+----
+/**
+     * Update the wantedTag and unwantedTag list
+     * @param wantedTag list of tags to be searched
+     * @param unwantedTag list of tags to not be searched
+     */
+    private void updateWantedTagUnwantedTag(List<String> wantedTag, List<String> unwantedTag) {
+        for (String everyTag : tags) {
+            if (!everyTag.startsWith("/not")) {
+                wantedTag.add(everyTag);
+            } else {
+                unwantedTag.add(everyTag.substring(4));
+            }
+        }
+    }
+----
+
+Lastly, it will return the result according to the user input. +
+Suppose the user enter `findtag friends` command. The following sequence diagram shows how the find tag command works:
+
+image::FindTagSequenceDiagram.png[width="800"]
+_Figure 3.9.1 : Find Tag Sequence Diagram for Logic_ +
+
+[NOTE]
+If the input index tags do not exist, the `FindTagCommand` will give a empty list.
+
+==== Design Considerations
+
+**Aspect:** Implementation of the `findtag` +
+**Alternative 1 (current choice):** implement a new command `findtag` +
+**Pros:** Easier to implement. `findtag` command will be similar to the `find` command. +
+**Cons:** Must create `NameContainsTagsPredicate` in model. It does not fully utilize the existing `NameContainsKeywordsPredicate`. +
+**Alternative 2:** Implement the `findtag` in `FindCommand`. +
+**Pros:** Easier for user. They do not have to memorize some many commands. +
+**Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
+and Separation of Concerns as FindCommand now needs to do two different things.
 
 === Logging
 

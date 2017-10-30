@@ -101,17 +101,19 @@ Examples:
 * `add task n/Update documentation d/Update docs for V1.1 for CS2103T t/10-10-2017 p/4`
 * `add task n/Buy new pencil p/2`
 
-=== Add a tag to persons : `addtag` (Since V1.2)
+
+=== Adding a tag to persons : `addtag` (Since V1.2)
+
 You can use the `addtag` command to add tag for multiple persons in the address book. For example, you may wish to add tag `friends` to the first two persons in the address book. +
 `addtag` can be replaced by `atag` for faster input. +
 Format: `addtag INDEX... t/[TAG]` +
 
 
 ****
-* Adds the tag of the person at the specific `INDEX`.
+* You can add the tag of the person at the specific `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* If no indexes are provided, addtag will add the tag to all contacts in the address book.
+* The index you key in *must be a positive integer* 1, 2, 3, ...
+* If you don not key in any indexes, addtag will add the tag to all contacts in the address book.
 ****
 
 Examples:
@@ -216,7 +218,8 @@ Sets the phone number of the 1st person to be public and their email address to 
 * `cp 2 a/false n/true e/false` +
 Sets the address and email of the 2nd person to be public and their name to be private. The 2nd person's address and email will be displayed, if available, while their name will be hidden in the UI.
 
-=== Favourite persons : `favourite` (since V1.3)
+
+=== Favouriting persons : `favourite` (since V1.3)
 
 You can use `favourite` command to make persons in the address book become your favourite persons. For example, you may wish to set your girlfriend as your favourite contact. +
 `favourite` can be replaced by `fav` for faster input. +
@@ -232,9 +235,9 @@ Favourites the 1st and 2nd person in the address book.
 Favourite the 1st person in the results of the `find` command.
 
 ****
-* Favourites the person at the specified `INDEX`.
+* You can set a person to be the favourite person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index you key in *must be a positive integer* 1, 2, 3, ...
 ****
 
 === Listing all favourite persons : `showfavourite` (since V1.3)
@@ -343,17 +346,19 @@ Deletes the 2nd task in the address book.
 `delete task 1` +
 Deletes the 1st task in the results of the `find task` command.
 
-=== delete a tag of persons : `deletetag` (Since V1.2)
+
+=== Deleting a tag of persons : `deletetag` (Since V1.2)
+
 You can use `deletetag` to delete the tag of multiple persons from the address book. +
 `deletetag` can be replaced by `dtag` for faster input. +
 Format: `deletetag INDEX... t/[TAG]` +
 
 
 ****
-* Delete the tag of the person at the specific `INDEX`
+* You can delete the tag of the person at the specific `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* If no indexes are provided, deletetag will delete the tag from all contacts in the address book.
+* The index you key in *must be a positive integer* 1, 2, 3, ...
+* If you do not key in any index, deletetag will delete the tag from all contacts in the address book.
 ****
 
 Examples:
@@ -592,7 +597,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Unfavourite persons : `unfavourite` (since V1.3)
+
+=== Unfavouriting persons : `unfavourite` (since V1.3)
 
 You can use `unfavourite` command to set your previous favourite persons become the normal persons. For example, +
 after you break up with your girlfriend, you may wish to set your girlfriend back to normal person. +
@@ -609,9 +615,9 @@ Unfavourites the 1st and 2nd person in the address book.
 Unfavourite the 1st person in the results of the `find` command.
 
 ****
-* Unfavourites the person at the specified `INDEX`.
+* You can unfavourites the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index you key in *must be a positive integer* 1, 2, 3, ...
 ****
 
 === Redoing the previously undone command : `redo`
