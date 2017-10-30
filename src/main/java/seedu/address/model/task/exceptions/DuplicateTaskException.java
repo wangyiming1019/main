@@ -2,6 +2,7 @@ package seedu.address.model.task.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 
+//@@author Esilocke
 /**
  * Signals that the operation will result in duplicate Person objects.
  */

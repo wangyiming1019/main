@@ -28,11 +28,13 @@ public class DeleteCommandParserTest {
         assertParseSuccess(parser, "1", new DeleteCommand(INDEX_FIRST_PERSON, DELETE_TYPE_PERSON));
     }
 
+    //@@author Esilocke
     @Test
     public void parseTaskValidArgs_returnsDeleteCommand() {
         assertParseSuccess(parser, TASK_SEPARATOR + "1",
                 new DeleteCommand(INDEX_FIRST_PERSON, DELETE_TYPE_TASK));
     }
+    //@@author
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
@@ -40,9 +42,11 @@ public class DeleteCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
     }
 
+    //@@author Esilocke
     @Test
     public void parseTaskInvalidArgs_throwsParseException() {
         assertParseFailure(parser, TASK_SEPARATOR + "a",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
     }
+    //@@author
 }

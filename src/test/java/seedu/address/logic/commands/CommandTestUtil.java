@@ -28,6 +28,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -101,6 +102,8 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditCommand.EditTaskDescriptor DESC_PENCIL;
+    public static final EditCommand.EditTaskDescriptor DESC_PAPER;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -111,6 +114,12 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withRemark(VALID_REMARK_BOB).withFavourite(VALID_FAVOURITE)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_PENCIL = new EditTaskDescriptorBuilder().withTaskName(VALID_TASK_NAME_PENCIL)
+                .withDescription(VALID_DESCRIPTION_PENCIL)
+                .withDeadline(VALID_DEADLINE_PENCIL).withPriority(VALID_PRIORITY_PENCIL).build();
+        DESC_PAPER = new EditTaskDescriptorBuilder().withTaskName(VALID_TASK_NAME_PAPER)
+                .withDescription(VALID_DESCRIPTION_PAPER)
+                .withDeadline(VALID_DEADLINE_PAPER).withPriority(VALID_PRIORITY_PAPER).build();
     }
 
     /**
