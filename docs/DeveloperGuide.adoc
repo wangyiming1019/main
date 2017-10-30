@@ -32,7 +32,7 @@ IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting up Address++ in your computer
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -332,7 +332,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
 **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
 
