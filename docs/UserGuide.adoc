@@ -580,19 +580,20 @@ If you want to change the location of the save file, click on `File -> Save As` 
 
 If you want to open a different save file, click on `File -> Open` or use the keyboard shortcut kbd:[CTRL]+kbd:[O] and select the new save file to use from the pop-up window.
 
-=== Using the browser (To be added in V2.0)
+=== Using the browser
 
 If you click on a box containing a contact, an internet browser on the right side of the window.
 ****
 * Performing a left click will allow you to perform a search on Google for the name of the contact, and is equivalent to doing a `select` on that oerson.
 * If a person's name or address is set to private, the browser will not perform a search if you click on their box.
+* Right clicking on the browser will allow you to go to the previous or next page, as well as reload the page.
 ****
 
 === Exporting the data
 
 Address book data can be exported in a number of different formats, thus allowing the data to be compatible to any device.
 
-To export data, click on `File -> Export As...` or use the keyboard shortcut kbd:[CTRL]+E` and select the new location and file name for the export file in the pop-up window.
+To export data, click on `File -> Export As...` or use the keyboard shortcut kbd:[CTRL]+kbd:[E]` and select the new location and file name for the export file in the pop-up window.
 
 === Auto-Complete: Learning Your Typing Habits
 
@@ -601,7 +602,7 @@ The program will learn your typing habits and give autocomplete suggestions that
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. The Open command kbd:[CTRL]+O` can also be used instead of manually overwriting the file if you wish to keep the original data file or store the new data file in a seperate location.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. The Open command kbd:[CTRL]+kbd:[O] can also be used instead of manually overwriting the file if you wish to keep the original data file or store the new data file in a seperate location.
 
 == Command Summary and Cheat Sheet
 
