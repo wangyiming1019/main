@@ -3,6 +3,8 @@ package seedu.address.ui;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.xml.bind.annotation.XmlType;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,6 +17,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
+
+    public static final int DEFAULT_NAME_SIZE = 25;
+    public static final int DEFAULT_TAG_SIZE = 14;
+    public static final int DEFAULT_ATTRIBUTE_SIZE = 15;
 
     private static final String FXML = "PersonListCard.fxml";
     /**
@@ -53,12 +59,16 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    private int nameSize = DEFAULT_NAME_SIZE;
+    private int attributeSize = DEFAULT_ATTRIBUTE_SIZE;
+
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        initDefaultSizes(person);
     }
 
     /**
@@ -75,6 +85,24 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+    }
+
+    /**
+     * Set default size for all attributes
+     */
+    private void initDefaultSizes(ReadOnlyPerson person) {
+        name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        email.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+    }
+
+    /**
+     * Increase size of name and all attributes by 10%
+     */
+    private void increaseAttributeSizes(ReadOnlyPerson person) {
+
     }
 
     /**
