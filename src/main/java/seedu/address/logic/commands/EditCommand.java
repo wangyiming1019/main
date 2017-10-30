@@ -154,6 +154,8 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException pnfe) {
             throw new AssertionError("The target task cannot be missing");
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(MESSAGE_ALL_FIELDS_PRIVATE);
         }
 
     }
