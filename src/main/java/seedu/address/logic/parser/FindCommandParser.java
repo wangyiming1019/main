@@ -32,12 +32,13 @@ public class FindCommandParser implements Parser<FindCommand> {
             String[] nameKeywords = trimmedArgs.split("\\s+");
             return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         } else {
-            String argsWithNoTaskPrefix = trimmedArgs.replaceFirst(PREFIX_TASK.getPrefix(), "");
-            if (argsWithNoTaskPrefix.isEmpty()) {
+            String argsWithNoTaskPrefix = args.replaceFirst(PREFIX_TASK.getPrefix(), "");
+            trimmedArgs = argsWithNoTaskPrefix.trim();
+            if (trimmedArgs.isEmpty()) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_TASK_USAGE));
             }
-            String[] nameKeywords = argsWithNoTaskPrefix.split("\\s+");
+            String[] nameKeywords = trimmedArgs.split("\\s+");
             return new FindCommand(new TaskContainsKeywordPredicate(Arrays.asList(nameKeywords)));
         }
     }
