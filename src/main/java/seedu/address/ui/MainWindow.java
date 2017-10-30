@@ -134,6 +134,9 @@ public class MainWindow extends UiPart<Region> {
         setAccelerator(openMenuItem, KeyCombination.valueOf("CTRL+O"));
         setAccelerator(saveMenuItem, KeyCombination.valueOf("CTRL+S"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("ALT+F4"));
+        setAccelerator(increaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+W"));
+        setAccelerator(decreaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+S"));
+        setAccelerator(resetSizeMenuItem, KeyCombination.valueOf("SHORTCUT+R"));
     }
 
     /**
