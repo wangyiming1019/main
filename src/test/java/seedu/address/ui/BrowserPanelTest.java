@@ -31,7 +31,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER));
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE,
+                0, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER));
         panelLocateEventStub = new BrowserPanelLocateEvent(BOB);
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
