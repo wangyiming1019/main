@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
@@ -14,6 +15,27 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonCardTest extends GuiUnitTest {
+
+    @Test
+    public void editFontSizeTests() {
+        int fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER;
+        Person testPerson = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(testPerson, 1, fontSizeMultiplier);
+        assertEquals(PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER, personCard.getFontSizeMultipler());
+        assertNotEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier + 1);
+
+        // Verify font size increase
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER + 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+
+        // Verify font size decrease
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER - 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+    }
 
     @Test
     public void display() {
