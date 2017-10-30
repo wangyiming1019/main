@@ -323,6 +323,10 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    public TaskListPanel getTaskListPanel() {
+        return this.taskListPanel;
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }
