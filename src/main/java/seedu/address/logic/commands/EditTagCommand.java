@@ -16,6 +16,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Renames and edits the specified tag in the address book.
  */
+//@@author Esilocke
 public class EditTagCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "edittag";
     public static final String COMMAND_ALIAS = "etag";
