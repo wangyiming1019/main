@@ -21,6 +21,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Panel containing the list of persons.
  */
 public class PersonListPanel extends UiPart<Region> {
+    private static final int MINIMUM_FONT_SIZE_MULTIPLIER = 0;
+    private static final int MAXIMUM_FONT_SIZE_MULTIPLIER = 20;
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
@@ -61,7 +63,7 @@ public class PersonListPanel extends UiPart<Region> {
      */
     public void increaseFontSize() {
         logger.info("PersonListPanel: Increasing font sizes");
-        fontSizeMultiplier += 1;
+        fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier + 1);
         setConnections(personList);
     }
 
@@ -70,7 +72,7 @@ public class PersonListPanel extends UiPart<Region> {
      */
     public void decreaseFontSize() {
         logger.info("PersonListPanel: Decreasing font sizes");
-        fontSizeMultiplier -= 1;
+        fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier - 1);
         setConnections(personList);
     }
 

@@ -76,9 +76,6 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem saveMenuItem;
 
     @FXML
-    private MenuItem preferencesMenuItem;
-
-    @FXML
     private MenuItem exitMenuItem;
 
     @FXML

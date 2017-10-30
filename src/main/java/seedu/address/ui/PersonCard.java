@@ -16,9 +16,9 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
-    public static final int DEFAULT_NAME_SIZE = 20;
-    // public static final int DEFAULT_TAG_SIZE = 14;
-    public static final int DEFAULT_ATTRIBUTE_SIZE = 15;
+    public static final int DEFAULT_NAME_SIZE = 15;
+    public static final int DEFAULT_ATTRIBUTE_SIZE = 10;
+    public static final int FONT_SIZE_EXTENDER = 5;
 
     private static final String FXML = "PersonListCard.fxml";
     /**
@@ -120,10 +120,12 @@ public class PersonCard extends UiPart<Region> {
      * Set default size for all attributes
      */
     public void updateAttributeSizes() {
-        nameSize += fontSizeMultipler * 5;
-        attributeSize += fontSizeMultipler * 5;
-        id.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+
+        // Set styles using set name and attribute sizes
         name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        id.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
