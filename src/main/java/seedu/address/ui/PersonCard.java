@@ -68,7 +68,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
-        initDefaultSizes(person);
+        updateAttributeSizes();
     }
 
     /**
@@ -90,7 +90,7 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Set default size for all attributes
      */
-    private void initDefaultSizes(ReadOnlyPerson person) {
+    private void updateAttributeSizes() {
         name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
         phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
@@ -101,8 +101,17 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Increase size of name and all attributes by 10%
      */
-    private void increaseAttributeSizes(ReadOnlyPerson person) {
+    private void increaseAttributeSizes() {
+        nameSize *= 1.1;
+        attributeSize *= 1.1;
+    }
 
+    /**
+     * Decrease size of name and all attributes by 10%
+     */
+    private void decreaseAttributeSizes() {
+        nameSize *= 0.9;
+        attributeSize *= 0.9;
     }
 
     /**
