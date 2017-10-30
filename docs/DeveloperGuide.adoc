@@ -848,7 +848,7 @@ is for the tags to be excluded.
     }
 ----
 
-Lastly, it will return the result according to the user input.
+Lastly, it will return the result according to the user input. +
 Suppose the user enter `findtag friends` command. The following sequence diagram shows how the find tag command works:
 
 image::FindTagSequenceDiagram.png[width="800"]
@@ -867,16 +867,6 @@ If the input index tags do not exist, the `FindTagCommand` will give a empty lis
 **Pros:** Easier for user. They do not have to memorize some many commands. +
 **Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
 and Separation of Concerns as FindCommand now needs to do two different things.
-
----
-**Aspect:** Implementation of the `AddTagCommend` and `DeleteTagCommand` +
-**Alternative 1 (current choice):** create new command `addtag` and `deletetag` +
-**Pros:** Less modification of existing command and parser +
-**Cons:** Users have to learn how to use the additional commands +
-**Alternative 2:** Modify the existing `add` and `delete` command +
-**Pros:** Users could use the same commands to achieve different purpose +
-**Cons:** Additional override the constructor for the existing command. It might not be easy for the beginner.
-
 
 === Logging
 
