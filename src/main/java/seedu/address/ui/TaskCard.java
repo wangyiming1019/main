@@ -40,10 +40,6 @@ public class TaskCard  extends UiPart<Region> {
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         this.task = task;
-        this.taskName = new Label();
-        this.description = new Label();
-        this.deadline = new Label();
-        this.priority = new Label();
         id.setText(displayedIndex + ". ");
         bindListeners(task);
     }
