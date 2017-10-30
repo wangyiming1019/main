@@ -3,8 +3,6 @@ package seedu.address.ui;
 import java.util.HashMap;
 import java.util.Random;
 
-import javax.xml.bind.annotation.XmlType;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,8 +16,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
-    public static final int DEFAULT_NAME_SIZE = 25;
-    public static final int DEFAULT_TAG_SIZE = 14;
+    public static final int DEFAULT_NAME_SIZE = 20;
+    // public static final int DEFAULT_TAG_SIZE = 14;
     public static final int DEFAULT_ATTRIBUTE_SIZE = 15;
 
     private static final String FXML = "PersonListCard.fxml";
@@ -62,9 +60,12 @@ public class PersonCard extends UiPart<Region> {
     private int nameSize = DEFAULT_NAME_SIZE;
     private int attributeSize = DEFAULT_ATTRIBUTE_SIZE;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    private int fontSizeMultipler;
+
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, int fontSizeMultiplier) {
         super(FXML);
         this.person = person;
+        this.fontSizeMultipler = fontSizeMultiplier;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -85,33 +86,6 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
-    }
-
-    /**
-     * Set default size for all attributes
-     */
-    private void updateAttributeSizes() {
-        name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
-        phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        email.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-    }
-
-    /**
-     * Increase size of name and all attributes by 10%
-     */
-    private void increaseAttributeSizes() {
-        nameSize *= 1.1;
-        attributeSize *= 1.1;
-    }
-
-    /**
-     * Decrease size of name and all attributes by 10%
-     */
-    private void decreaseAttributeSizes() {
-        nameSize *= 0.9;
-        attributeSize *= 0.9;
     }
 
     /**
@@ -142,6 +116,21 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Set default size for all attributes
+     */
+    public void updateAttributeSizes() {
+        nameSize += fontSizeMultipler * 5;
+        attributeSize += fontSizeMultipler * 5;
+        id.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        email.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+    }
+
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -158,5 +147,29 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    public Label getName() {
+        return name;
+    }
+
+    public Label getId() {
+        return id;
+    }
+
+    public Label getPhone() {
+        return phone;
+    }
+
+    public Label getAddress() {
+        return address;
+    }
+
+    public Label getRemark() {
+        return remark;
+    }
+
+    public Label getEmail() {
+        return email;
     }
 }

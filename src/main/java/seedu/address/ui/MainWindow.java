@@ -86,6 +86,15 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem exitMenuItem;
 
     @FXML
+    private MenuItem increaseSizeMenuItem;
+
+    @FXML
+    private MenuItem decreaseSizeMenuItem;
+
+    @FXML
+    private MenuItem resetSizeMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -244,6 +253,33 @@ public class MainWindow extends UiPart<Region> {
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
+    }
+
+    /**
+     * Handle increase font size command
+     */
+    @FXML
+    public void handleIncreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.increaseFontSize();
+    }
+
+    /**
+     * Handle decrease font size command
+     */
+    @FXML
+    public void handleDecreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.decreaseFontSize();
+    }
+
+    /**
+     * Handle reset font size command
+     */
+    @FXML
+    public void handleResetFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.resetFontSize();
     }
 
     /**

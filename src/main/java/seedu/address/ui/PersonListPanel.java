@@ -27,15 +27,20 @@ public class PersonListPanel extends UiPart<Region> {
     @FXML
     private ListView<PersonCard> personListView;
 
+    private int fontSizeMultiplier;
+    private ObservableList<ReadOnlyPerson> personList;
+
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+        this.personList = personList;
+        fontSizeMultiplier = 0;
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+        ObservableList<PersonCard> mappedList = EasyBind.map(personList, (person) ->
+                new PersonCard(person, personList.indexOf(person) + 1, fontSizeMultiplier));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -49,6 +54,33 @@ public class PersonListPanel extends UiPart<Region> {
                         raise(new PersonPanelSelectionChangedEvent(newValue));
                     }
                 });
+    }
+
+    /**
+     * Function to increase all person cards' font sizes in person list
+     */
+    public void increaseFontSize() {
+        logger.info("PersonListPanel: Increasing font sizes");
+        fontSizeMultiplier += 1;
+        setConnections(personList);
+    }
+
+    /**
+     * Function to decrease all person cards' font sizes in person list
+     */
+    public void decreaseFontSize() {
+        logger.info("PersonListPanel: Decreasing font sizes");
+        fontSizeMultiplier -= 1;
+        setConnections(personList);
+    }
+
+    /**
+     * Function to reset all person cards' font sizes in person list
+     */
+    public void resetFontSize() {
+        logger.info("PersonListPanel: Resetting font sizes");
+        fontSizeMultiplier = 0;
+        setConnections(personList);
     }
 
     /**
