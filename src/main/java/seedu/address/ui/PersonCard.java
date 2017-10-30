@@ -19,6 +19,7 @@ public class PersonCard extends UiPart<Region> {
     public static final int DEFAULT_NAME_SIZE = 15;
     public static final int DEFAULT_ATTRIBUTE_SIZE = 10;
     public static final int FONT_SIZE_EXTENDER = 5;
+    public static final int DEFAULT_FONT_SIZE_MULTIPLIER = 0;
 
     private static final String FXML = "PersonListCard.fxml";
     /**
@@ -29,6 +30,8 @@ public class PersonCard extends UiPart<Region> {
     }
     private static HashMap<String, String> colourHash = new HashMap<String, String>();
     private static Random randomNumber = new Random();
+    private static int nameSize = DEFAULT_NAME_SIZE;
+    private static int attributeSize = DEFAULT_ATTRIBUTE_SIZE;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -56,9 +59,6 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
-
-    private int nameSize = DEFAULT_NAME_SIZE;
-    private int attributeSize = DEFAULT_ATTRIBUTE_SIZE;
 
     private int fontSizeMultipler;
 
