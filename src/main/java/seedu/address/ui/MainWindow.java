@@ -350,33 +350,6 @@ public class MainWindow extends UiPart<Region> {
         raise(new SaveAsRequestEvent());
     }
 
-    /**
-     * Handles open preferences
-     */
-    @FXML
-    private void handleOpenPreferences() {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainWindow.class.getResource("/view/SettingsWindow.fxml"));
-        try {
-            AnchorPane page = (AnchorPane) loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Create dialog stage
-        Stage preferenceStage = new Stage();
-        preferenceStage.setTitle("Edit Preferences");
-        preferenceStage.initModality(Modality.WINDOW_MODAL);
-        preferenceStage.initOwner(primaryStage);
-        preferenceStage.getIcons().add(new Image("/images/address_book_32_alternative.png"));
-
-        // Set controller
-        SettingsWindow controller = loader.getController();
-        controller.setSettingsStage(preferenceStage);
-
-        preferenceStage.showAndWait();
-    }
-
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
