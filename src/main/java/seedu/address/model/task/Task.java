@@ -5,6 +5,7 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+//@@author Esilocke
 /**
  * Represents a task object in the address book.
  */

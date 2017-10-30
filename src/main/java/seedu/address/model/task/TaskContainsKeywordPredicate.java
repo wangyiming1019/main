@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+//@@author Esilocke
 /**
  * Tests that a {@code ReadOnlyTask}'s {@code TaskName} or {@code Description} matches any of the keywords given.
  */
@@ -13,12 +14,19 @@ public class TaskContainsKeywordPredicate  implements Predicate<ReadOnlyTask> {
 
     public TaskContainsKeywordPredicate(List<String> keywords) {
         this.keywords = keywords;
+
     }
 
     @Override
     public boolean test(ReadOnlyTask task) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getTaskName().taskName, keyword));
+        for (int i = 0; i < keywords.size(); i++) {
+            String keyword = keywords.get(i);
+            if (StringUtil.containsWordIgnoreCase(task.getTaskName().taskName, keyword)
+                    || StringUtil.containsWordIgnoreCase(task.getDescription().value, keyword)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

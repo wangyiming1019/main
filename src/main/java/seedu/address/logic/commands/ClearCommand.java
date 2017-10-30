@@ -29,7 +29,7 @@ public class ClearCommand extends UndoableCommand {
     private boolean isClearAll;
     private Prefix type;
     private String cleared;
-
+    //@@author Esilocke
     public ClearCommand() {
         isClearAll = true;
         isClearPerson = false;
@@ -37,6 +37,7 @@ public class ClearCommand extends UndoableCommand {
         type = null;
         cleared = TYPE_ALL;
     }
+    //@@author Esilocke
     public ClearCommand(Prefix type) {
         if (type.equals(PREFIX_TASK)) {
             isClearTask = true;
@@ -56,6 +57,7 @@ public class ClearCommand extends UndoableCommand {
     }
 
     @Override
+    //@@author Esilocke
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         if (isClearAll) {

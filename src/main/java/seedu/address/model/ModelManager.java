@@ -65,6 +65,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Esilocke
     @Override
     public void resetPartialData(ReadOnlyAddressBook newData, Prefix type) {
         assert(type.equals(PREFIX_TASK) || type.equals(PREFIX_PERSON));
@@ -76,6 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         }
     }
+    //@@author
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
@@ -151,6 +153,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Esilocke
     /**
      * Replaces the toChange Tag with the newTag Tag, for all Person objects denoted by the indexes.
      * Guarantees: indexes contains at least 1 person that has the toChange Tag.
@@ -174,17 +177,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.favouritePerson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
-        addressBook.addTask(toAdd);
-        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateAddressBookChanged();
     }
 
@@ -195,12 +192,22 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Esilocke
+    @Override
+    public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
+        addressBook.addTask(toAdd);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateAddressBookChanged();
+    }
+
+    //@@author Esilocke
     @Override
     public synchronized void deleteTask(ReadOnlyTask toDelete) throws TaskNotFoundException {
         addressBook.removeTask(toDelete);
         indicateAddressBookChanged();
     }
 
+    //@@author Esilocke
     @Override
     public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
             throws DuplicateTaskException, TaskNotFoundException {
@@ -209,6 +216,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateTask(target, editedTask);
         indicateAddressBookChanged();
     }
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -220,10 +228,12 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author Esilocke
     @Override
     public ObservableList<ReadOnlyTask> getFilteredTaskList() {
         return FXCollections.unmodifiableObservableList(filteredTasks);
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -231,11 +241,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author Esilocke
     @Override
     public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

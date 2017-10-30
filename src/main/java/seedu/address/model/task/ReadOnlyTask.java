@@ -2,6 +2,7 @@ package seedu.address.model.task;
 
 import javafx.beans.property.ObjectProperty;
 
+//@@author Esilocke
 /**
  * Provides an immutable interface for a Task in the address book.
  */

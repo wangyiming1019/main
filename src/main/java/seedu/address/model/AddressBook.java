@@ -91,6 +91,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
+    //@@author Esilocke
     /**
      * Resets only the existing contact or task data of this {@code AddressBook}.
      */
@@ -113,6 +114,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "Address books should not have duplicate tasks";
         }
     }
+    //@@author
     //// person-level operations
 
     /**
@@ -228,6 +230,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// task-level operations
+
+    //@@author Esilocke
     /**
      * Adds a task to the address book.
      *
@@ -238,6 +242,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.add(newTask);
     }
 
+    //@@author Esilocke
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -250,6 +255,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author Esilocke
     /**
      * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
      *
@@ -278,10 +284,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author Esilocke
     @Override
     public ObservableList<ReadOnlyTask> getTasksList() {
         return tasks.asObservableList();
     }
+    //@@author
 
     @Override
     public ObservableList<Tag> getTagList() {

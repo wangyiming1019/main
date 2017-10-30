@@ -14,6 +14,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.EditCommand.EditTaskDescriptor;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
+//@@author Esilocke
 public class EditTaskDescriptorTest {
     @Test
     public void equals() {
