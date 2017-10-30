@@ -174,4 +174,12 @@ public class PersonCard extends UiPart<Region> {
     public Label getEmail() {
         return email;
     }
+
+    public int getFontSizeMultipler() {
+        return fontSizeMultipler;
+    }
+
+    public void setFontSizeMultipler(int fontSizeMultipler) {
+        this.fontSizeMultipler = fontSizeMultipler;
+    }
 }
