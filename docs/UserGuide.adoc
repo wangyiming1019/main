@@ -62,6 +62,26 @@ adds a contact named `John Doe` to Address++.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+=== Changing Font Sizes
+
+Are the font sizes too small or too large?
+****
+
+You can change the font sizes by clicking on the Font Size button and selecting any of the following options:
+
+* Increase Size: kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
+* Decrease Size kbd:[CTRL] + kbd:[S] (kbd:[CMD] + kbd:[S] on MacOS)
+* Reset Size kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
+****
+
+Keyboard shortcuts have been provided for your convenience.
+
+[NOTE]
+====
+There is a limit to how much your font sizes can increase or decrease. Also, font sizes will increase for the
+contacts entries and the todo list's entries.
+====
+
 === Viewing help : `help`
 
 Format: `help` +
