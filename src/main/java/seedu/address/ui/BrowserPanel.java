@@ -27,7 +27,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     public static final String PRIVATE_NAME_CANNOT_SEARCH = "Cannot perform a search on that person. "
             + "Their name is private.";
-    public static final String GOOGLE_MAPS_URL_PREFIX = "https://maps.google.com/search/";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps/search/";
     public static final String GOOGLE_MAPS_URL_SUFFIX  = "/";
     public static final String PRIVATE_ADDRESS_CANNOT_SEARCH = "Cannot perform a search on that person's address. "
             + "Their address is private.";
