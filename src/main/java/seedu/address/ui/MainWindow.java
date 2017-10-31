@@ -265,6 +265,7 @@ public class MainWindow extends UiPart<Region> {
     public void handleIncreaseFontSize() {
         logger.info("Handling increase in font size");
         personListPanel.increaseFontSize();
+        taskListPanel.increaseFontSize();
     }
 
     /**
@@ -274,6 +275,7 @@ public class MainWindow extends UiPart<Region> {
     public void handleDecreaseFontSize() {
         logger.info("Handling increase in font size");
         personListPanel.decreaseFontSize();
+        taskListPanel.decreaseFontSize();
     }
 
     /**
@@ -283,6 +285,7 @@ public class MainWindow extends UiPart<Region> {
     public void handleResetFontSize() {
         logger.info("Handling increase in font size");
         personListPanel.resetFontSize();
+        taskListPanel.resetFontSize();
     }
 
     /**
