@@ -40,6 +40,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
     }
 
+    //@@author jeffreygohkw
     @Test
     public void display() throws Exception {
         // default web page
@@ -57,7 +58,8 @@ public class BrowserPanelTest extends GuiUnitTest {
         // google maps page of a person
         postNow(panelLocateEventStub);
         URL expectedMapUrl = new URL(GOOGLE_MAPS_URL_PREFIX
-                + BOB.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAPS_URL_SUFFIX);
+                + BOB.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAPS_URL_SUFFIX
+                + "?dg=dbrw&newdg=1");
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedMapUrl, browserPanelHandle.getLoadedUrl());
