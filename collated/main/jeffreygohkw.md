@@ -1072,10 +1072,8 @@ public class LocateCommandParser implements Parser<LocateCommand> {
      */
     private void loadMapsPage(ReadOnlyPerson person) {
         if (person.getAddress().isPrivate()) {
-            System.out.println("Yeah!");
             raise(new NewResultAvailableEvent(PRIVATE_ADDRESS_CANNOT_SEARCH));
         } else {
-            System.out.println("NO!");
             loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
                 + GOOGLE_MAPS_URL_SUFFIX);
         }
