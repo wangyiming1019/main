@@ -549,6 +549,7 @@ public class LocateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Searching for Person: %1$s";
+    public static final String MESSAGE_PRIVATE_ADDRESS_FAILURE = "Person %1$s has a Private Address";
 
     private final Index targetIndex;
 
@@ -564,7 +565,9 @@ public class LocateCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
+        if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().isPrivate()) {
+            throw new CommandException(String.format(MESSAGE_PRIVATE_ADDRESS_FAILURE, targetIndex.getOneBased()));
+        }
         EventsCenter.getInstance().post(new BrowserPanelLocateEvent(
                 model.getFilteredPersonList().get(targetIndex.getZeroBased())));
         return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
@@ -1101,6 +1104,9 @@ public class LocateCommandParser implements Parser<LocateCommand> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
     @Subscribe
     private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
