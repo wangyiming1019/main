@@ -87,7 +87,7 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /**
      * Locate hashed colour for tag. If not found, new colour is assigned to tag
      * @param tag
@@ -115,7 +115,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(newTagLabel);
         });
     }
-//@@author
+    //@@author
     //@@author charlesgoh
     /**
      * Set default size for all attributes
