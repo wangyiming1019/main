@@ -38,11 +38,11 @@ public class TaskCardTest extends GuiUnitTest {
         assertNotEquals(taskCard.getFontSizeMultiplier(), TaskCard.DEFAULT_FONT_SIZE_MULTIPLIER);
     }
 
-    /*
+
     @Test
     public void display() {
         // no tags
-        Task taskWithNoTags = new TaskBuilder().build(new String[0]).build();
+        Task taskWithNoTags = new TaskBuilder().build();
         TaskCard taskCard = new TaskCard(taskWithNoTags, 1, TaskCard.DEFAULT_FONT_SIZE_MULTIPLIER);
         uiPartRule.setUiPart(taskCard);
         assertCardDisplay(taskCard, taskWithNoTags, 1);
@@ -67,7 +67,7 @@ public class TaskCardTest extends GuiUnitTest {
         assertFalse(taskCard.equals(0));
 
         // different task, same index -> returns false
-        Task differentTask = new TaskBuilder().withName("differentName").build();
+        Task differentTask = new TaskBuilder().withTaskName("differentName").build();
         assertFalse(taskCard.equals(new TaskCard(differentTask, 0, TaskCard.DEFAULT_FONT_SIZE_MULTIPLIER)));
 
         // same task, different index -> returns false
@@ -77,7 +77,7 @@ public class TaskCardTest extends GuiUnitTest {
     /**
      * Asserts that {@code taskCard} displays the details of {@code expectedTask} correctly and matches
      * {@code expectedId}.
-
+     */
     private void assertCardDisplay(TaskCard taskCard, ReadOnlyTask expectedTask, int expectedId) {
         guiRobot.pauseForHuman();
 
@@ -89,5 +89,4 @@ public class TaskCardTest extends GuiUnitTest {
         // verify task details are displayed correctly
         assertCardDisplaysTask(expectedTask, taskCardHandle);
     }
-    */
 }
