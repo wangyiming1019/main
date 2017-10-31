@@ -57,7 +57,7 @@ public class TypicalTasks {
     /**
      * Returns an {@code AddressBook} with all the typical persons.
      */
-    public static AddressBook getTypicalTasksForAddressBook() {
+    public static AddressBook getTypicalTasksOnlyAddressBook() {
         AddressBook ab = new AddressBook();
         for (ReadOnlyTask task : getTypicalTasks()) {
             try {
