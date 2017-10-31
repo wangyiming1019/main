@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.favouriteFirstPerson;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class FavouriteListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         favouriteListCommand = new FavouriteListCommand();

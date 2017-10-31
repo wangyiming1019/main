@@ -30,19 +30,19 @@ public class TypicalTasks {
             .withDeadline("09-11-2018").withPriority("5").build();
     public static final ReadOnlyTask COOK = new TaskBuilder().withTaskName("Cook Paella")
             .withDescription("Cook Paella for 4 people tonight")
-            .withDeadline("11-12-2016").withPriority("5").build();
+            .withDeadline("11-04-2016").withPriority("5").build();
     public static final ReadOnlyTask DATE = new TaskBuilder().withTaskName("Date with Lucy")
             .withDescription("Sunday, 10am at Central Park")
-            .withDeadline("21.05.2015").withPriority("5").build();
+            .withDeadline("21-05-2015").withPriority("5").build();
     public static final ReadOnlyTask ESCAPE = new TaskBuilder().withTaskName("Escape dungeon")
             .withDescription("Escape dungeon group formation")
             .withDeadline("30-04-2017").withPriority("1").build();
     public static final ReadOnlyTask FREE = new TaskBuilder().withTaskName("Free memory space")
             .withDescription("Implement new version of free()")
-            .withDeadline("21.08.2019").withPriority("2").build();
+            .withDeadline("21-08-2019").withPriority("2").build();
     public static final ReadOnlyTask GRADLE = new TaskBuilder().withTaskName("Resolve gradle")
             .withDescription("Resolve gradle problems when building project")
-            .withDeadline("06.06.2016").withPriority("5").build();
+            .withDeadline("06-06-2016").withPriority("5").build();
 
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final ReadOnlyTask PENCIL = new TaskBuilder().withTaskName(VALID_TASK_NAME_PENCIL)
@@ -57,7 +57,7 @@ public class TypicalTasks {
     /**
      * Returns an {@code AddressBook} with all the typical persons.
      */
-    public static AddressBook getTypicalTasksForAddressBook() {
+    public static AddressBook getTypicalTasksOnlyAddressBook() {
         AddressBook ab = new AddressBook();
         for (ReadOnlyTask task : getTypicalTasks()) {
             try {

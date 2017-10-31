@@ -1,7 +1,9 @@
 package seedu.address.storage;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.task.Assignees;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
@@ -50,6 +52,6 @@ public class XmlAdaptedTask {
         final Description description = new Description(this.description);
         final Deadline deadline = new Deadline(this.deadline);
         final Priority priority = new Priority(this.priority);
-        return new Task(name, description, deadline, priority);
+        return new Task(name, description, deadline, priority, new Assignees());
     }
 }

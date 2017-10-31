@@ -15,16 +15,28 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<Description> description;
     private ObjectProperty<Deadline> deadline;
     private ObjectProperty<Priority> priority;
+    private ObjectProperty<Assignees> assignees;
+
+    public Task(TaskName taskName, Description description, Deadline deadline, Priority priority,
+                Assignees assignees) {
+        this.taskName = new SimpleObjectProperty<>(taskName);
+        this.description = new SimpleObjectProperty<>(description);
+        this.deadline = new SimpleObjectProperty<>(deadline);
+        this.priority = new SimpleObjectProperty<>(priority);
+        this.assignees = new SimpleObjectProperty<>(assignees);
+    }
 
     public Task(TaskName taskName, Description description, Deadline deadline, Priority priority) {
         this.taskName = new SimpleObjectProperty<>(taskName);
         this.description = new SimpleObjectProperty<>(description);
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.priority = new SimpleObjectProperty<>(priority);
+        this.assignees = new SimpleObjectProperty<>(new Assignees());
     }
 
     public Task(ReadOnlyTask task) {
-        this(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority());
+        this(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(),
+                task.getAssignees());
     }
 
     public TaskName getTaskName() {
@@ -44,6 +56,11 @@ public class Task implements ReadOnlyTask {
     @Override
     public Priority getPriority() {
         return priority.get();
+    }
+
+    @Override
+    public Assignees getAssignees() {
+        return assignees.get();
     }
 
     @Override
@@ -72,6 +89,10 @@ public class Task implements ReadOnlyTask {
         return priority;
     }
 
+    @Override
+    public ObjectProperty<Assignees> assigneeProperty() {
+        return assignees;
+    }
     // Setters for TaskBuilder testing
 
     public void setTaskName(TaskName taskName) {
@@ -90,6 +111,9 @@ public class Task implements ReadOnlyTask {
         this.priority.set(priority);
     }
 
+    public void setAssignees(Assignees assignees) {
+        this.assignees.set(assignees);
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -100,6 +124,6 @@ public class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(taskName, description, deadline, priority);
+        return Objects.hash(taskName, description, deadline, priority, assignees);
     }
 }
