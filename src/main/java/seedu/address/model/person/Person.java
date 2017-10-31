@@ -104,7 +104,7 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
-
+    //@@author wangyiming1019
     public void setFavourite(Boolean favourite) {
         this.favourite.set(requireNonNull(favourite));
     }
@@ -118,7 +118,7 @@ public class Person implements ReadOnlyPerson {
     public Boolean getFavourite() {
         return favourite.get();
     }
-
+    //@@author
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
