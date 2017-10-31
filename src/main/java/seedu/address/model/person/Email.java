@@ -32,12 +32,13 @@ public class Email {
         }
         this.value = trimmedEmail;
     }
-
+    //@@author jeffreygohkw
     public Email(String email, boolean isPrivate) throws IllegalValueException {
         this(email);
         this.setPrivate(isPrivate);
     }
 
+    //@@author
     /**
      * Returns if a given string is a valid person email.
      */
@@ -45,6 +46,7 @@ public class Email {
         return test.matches(EMAIL_VALIDATION_REGEX) || test.equals(EMAIL_PLACEHOLDER_VALUE);
     }
 
+    //@@author jeffreygohkw
     @Override
     public String toString() {
         if (isPrivate) {
@@ -53,6 +55,7 @@ public class Email {
         return value;
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -64,7 +67,7 @@ public class Email {
     public int hashCode() {
         return value.hashCode();
     }
-
+    //@@author jeffreygohkw
     public boolean isPrivate() {
         return isPrivate;
     }

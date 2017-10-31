@@ -34,11 +34,13 @@ public class Phone {
         this.value = trimmedPhone;
     }
 
+    //@@author jeffreygohkw
     public Phone(String phone, boolean isPrivate) throws IllegalValueException {
         this(phone);
         this.setPrivate(isPrivate);
     }
 
+    //@@author
     /**
      * Returns true if a given string is a valid person phone number.
      */
@@ -46,6 +48,7 @@ public class Phone {
         return test.matches(PHONE_VALIDATION_REGEX) || test.equals(PHONE_PLACEHOLDER_VALUE);
     }
 
+    //@@author jeffreygohkw
     @Override
     public String toString() {
         if (isPrivate) {
@@ -54,6 +57,7 @@ public class Phone {
         return value;
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -65,7 +69,7 @@ public class Phone {
     public int hashCode() {
         return value.hashCode();
     }
-
+    //@@author jeffreygohkw
     public boolean isPrivate() {
         return isPrivate;
     }

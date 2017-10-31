@@ -36,11 +36,13 @@ public class Name {
         this.fullName = trimmedName;
     }
 
+    //@@author jeffreygohkw
     public Name(String name, boolean isPrivate) throws IllegalValueException {
         this(name);
         this.setPrivate(isPrivate);
     }
 
+    //@@author
     /**
      * Returns true if a given string is a valid person name.
      */
@@ -48,7 +50,7 @@ public class Name {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
-
+    //@@author jeffreygohkw
     @Override
     public String toString() {
         if (isPrivate) {
@@ -57,6 +59,7 @@ public class Name {
         return fullName;
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -68,7 +71,7 @@ public class Name {
     public int hashCode() {
         return fullName.hashCode();
     }
-
+    //@@author jeffreygohkw
     public boolean isPrivate() {
         return isPrivate;
     }

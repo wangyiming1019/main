@@ -65,6 +65,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    //@@author jeffreygohkw
     /**
      * Loads a google search for a person'saddress if their address is not private
      * Prints out a message on the result display otherwise

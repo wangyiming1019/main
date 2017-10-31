@@ -161,6 +161,7 @@ public class EditCommand extends UndoableCommand {
 
     }
 
+    //@@author jeffreygohkw
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -354,6 +355,7 @@ public class EditCommand extends UndoableCommand {
         return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees);
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

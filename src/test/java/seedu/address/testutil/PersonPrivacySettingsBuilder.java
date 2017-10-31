@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+//@@author jeffreygohkw
 import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
 import seedu.address.model.person.ReadOnlyPerson;
 

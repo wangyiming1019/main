@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author jeffreygohkw
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;

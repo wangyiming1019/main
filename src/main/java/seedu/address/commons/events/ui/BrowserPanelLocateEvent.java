@@ -1,5 +1,6 @@
 package seedu.address.commons.events.ui;
 
+//@@author jeffreygohkw
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
