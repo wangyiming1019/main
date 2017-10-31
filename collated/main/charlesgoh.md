@@ -297,61 +297,6 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndDeleted;
     }
-
-    /**
-     * Favourites the equivalent person in the list.
-     *
-     * @throws PersonNotFoundException if no such person could be found in the list.
-     */
-    public void favouritePerson(ReadOnlyPerson toFavourite) throws PersonNotFoundException {
-        requireNonNull(toFavourite);
-        int index = internalList.indexOf(toFavourite);
-        if (index == -1) {
-            throw new PersonNotFoundException();
-        }
-
-        internalList.get(index).setFavourite(true);
-    }
-
-    /**
-     * Unfavourites the equivalent person from the list.
-     *
-     * @throws PersonNotFoundException if no such person could be found in the list.
-     */
-    public void unfavouritePerson(ReadOnlyPerson toUnfavourite) throws PersonNotFoundException {
-        requireNonNull(toUnfavourite);
-        int index = internalList.indexOf(toUnfavourite);
-        if (index == -1) {
-            throw new PersonNotFoundException();
-        }
-
-        internalList.get(index).setFavourite(false);
-    }
-
-    public void setPersons(UniquePersonList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
-        final UniquePersonList replacement = new UniquePersonList();
-        for (final ReadOnlyPerson person : persons) {
-            replacement.add(new Person(person));
-        }
-        setPersons(replacement);
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyPerson> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-    /**
-     * Sorts person list by all persons by any field in ascending or descending order
-     * @param field
-     * @param order
-     */
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java

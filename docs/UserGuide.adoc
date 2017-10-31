@@ -245,8 +245,8 @@ Format: `favourite INDEX [MORE INDEX]` +
 Examples:
 
 * `list` +
-`favourite 1 2` +
-Favourites the 1st and 2nd person in the address book.
+`favourite 2` +
+Favourites the 2nd person in the address book.
 * `find Betsy` +
 `favourite 1` +
 Favourite the 1st person in the results of the `find` command.
@@ -625,8 +625,8 @@ Format: `unfavourite INDEX [MORE INDEX]` +
 Examples:
 
 * `list` +
-`unfavourite 1 2` +
-Unfavourites the 1st and 2nd person in the address book.
+`unfavourite 2` +
+Unfavourites the 2nd person in the address book.
 * `find Betsy` +
 `unfavourite 1` +
 Unfavourite the 1st person in the results of the `find` command.
@@ -733,8 +733,16 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `edit task 2 p/veryhigh`
 * *Edit tag* : `edittag TAGTOCHANGE NEWTAGNAME` +
 e.g. `edittag friends enemies`
+* *Favourite persons* :`favourite INDEX` +
+e.g. `favourite 1`
+* *Unfavourite persons* :`unfavourite INDEX` +
+e.g. `unfavourite 1`
+* *Show favourite list* :`showfavourite` +
+e.g. `showfavourite`
 * *Find person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find tag* : `findtag Tag [MORE_TAGS]` +
+e.g. `findtag friends`
 * *Find task* : `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY]` +
 e.g. `find task update p/high`
 * *Help* : `help`
