@@ -87,7 +87,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndDeleted;
     }
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /**
      * Favourites the equivalent person in the list.
      *
