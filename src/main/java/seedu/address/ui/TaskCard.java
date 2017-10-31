@@ -13,7 +13,14 @@ import seedu.address.model.task.ReadOnlyTask;
  * */
 public class TaskCard  extends UiPart<Region> {
 
+    public static final int DEFAULT_NAME_SIZE = 15;
+    public static final int DEFAULT_ATTRIBUTE_SIZE = 10;
+    public static final int FONT_SIZE_EXTENDER = 5;
+    public static final int DEFAULT_FONT_SIZE_MULTIPLIER = 0;
+
     private static final String FXML = "TaskListCard.fxml";
+    private static int nameSize = DEFAULT_NAME_SIZE;
+    private static int attributeSize = DEFAULT_ATTRIBUTE_SIZE;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -40,11 +47,15 @@ public class TaskCard  extends UiPart<Region> {
     @FXML
     private Label assignCount;
 
-    public TaskCard(ReadOnlyTask task, int displayedIndex) {
+    private int fontSizeMultipler;
+
+    public TaskCard(ReadOnlyTask task, int displayedIndex, int fontSizeMultiplier) {
         super(FXML);
         this.task = task;
+        this.fontSizeMultipler = fontSizeMultiplier;
         id.setText(displayedIndex + ". ");
         bindListeners(task);
+        updateAttributeSizes();
     }
 
     /**
@@ -57,6 +68,21 @@ public class TaskCard  extends UiPart<Region> {
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
         assignCount.textProperty().bind(Bindings.convert(task.assigneeProperty()));
+    }
+
+    /**
+     * Set default size for all attributes
+     */
+    public void updateAttributeSizes() {
+        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+
+        // Set styles using set name and attribute sizes
+        taskName.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        id.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        description.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        deadline.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        priority.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
     }
 
     @Override
@@ -75,5 +101,33 @@ public class TaskCard  extends UiPart<Region> {
         TaskCard card = (TaskCard) other;
         return id.getText().equals(card.id.getText())
                 && task.equals(card.task);
+    }
+
+    public Label getTaskName() {
+        return taskName;
+    }
+
+    public Label getId() {
+        return id;
+    }
+
+    public Label getDescription() {
+        return description;
+    }
+
+    public Label getDeadline() {
+        return deadline;
+    }
+
+    public Label getPriority() {
+        return priority;
+    }
+
+    public void setFontSizeMultiplier(int fontSizeMultipler) {
+        this.fontSizeMultipler = fontSizeMultipler;
+    }
+
+    public int getFontSizeMultiplier() {
+        return this.fontSizeMultipler;
     }
 }

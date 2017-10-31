@@ -80,6 +80,15 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem exitMenuItem;
 
     @FXML
+    private MenuItem increaseSizeMenuItem;
+
+    @FXML
+    private MenuItem decreaseSizeMenuItem;
+
+    @FXML
+    private MenuItem resetSizeMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -122,6 +131,9 @@ public class MainWindow extends UiPart<Region> {
         setAccelerator(openMenuItem, KeyCombination.valueOf("CTRL+O"));
         setAccelerator(saveMenuItem, KeyCombination.valueOf("CTRL+S"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("ALT+F4"));
+        setAccelerator(increaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+W"));
+        setAccelerator(decreaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+S"));
+        setAccelerator(resetSizeMenuItem, KeyCombination.valueOf("SHORTCUT+R"));
     }
 
     /**
@@ -247,6 +259,36 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Handle increase font size command
+     */
+    @FXML
+    public void handleIncreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.increaseFontSize();
+        taskListPanel.increaseFontSize();
+    }
+
+    /**
+     * Handle decrease font size command
+     */
+    @FXML
+    public void handleDecreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.decreaseFontSize();
+        taskListPanel.decreaseFontSize();
+    }
+
+    /**
+     * Handle reset font size command
+     */
+    @FXML
+    public void handleResetFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.resetFontSize();
+        taskListPanel.resetFontSize();
+    }
+
+    /**
      * Opens the help window.
      */
     @FXML
@@ -311,9 +353,6 @@ public class MainWindow extends UiPart<Region> {
         raise(new SaveAsRequestEvent());
     }
 
-    /**
-     * Closes the application.
-     */
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());

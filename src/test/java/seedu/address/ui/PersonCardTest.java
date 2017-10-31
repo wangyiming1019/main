@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
@@ -16,16 +17,37 @@ import seedu.address.testutil.PersonBuilder;
 public class PersonCardTest extends GuiUnitTest {
 
     @Test
+    public void editFontSizeTests() {
+        int fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER;
+        Person testPerson = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(testPerson, 1, fontSizeMultiplier);
+        assertEquals(PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER, personCard.getFontSizeMultipler());
+        assertNotEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier + 1);
+
+        // Verify font size increase
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER + 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+
+        // Verify font size decrease
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER - 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+    }
+
+    @Test
     public void display() {
         // no tags
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        PersonCard personCard = new PersonCard(personWithNoTags, 1);
+        PersonCard personCard = new PersonCard(personWithNoTags, 1, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithNoTags, 1);
 
         // with tags
         Person personWithTags = new PersonBuilder().build();
-        personCard = new PersonCard(personWithTags, 2);
+        personCard = new PersonCard(personWithTags, 2, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
 
@@ -43,10 +65,10 @@ public class PersonCardTest extends GuiUnitTest {
     @Test
     public void equals() {
         Person person = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(person, 0);
+        PersonCard personCard = new PersonCard(person, 0, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
 
         // same person, same index -> returns true
-        PersonCard copy = new PersonCard(person, 0);
+        PersonCard copy = new PersonCard(person, 0, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
         assertTrue(personCard.equals(copy));
 
         // same object -> returns true
@@ -60,10 +82,10 @@ public class PersonCardTest extends GuiUnitTest {
 
         // different person, same index -> returns false
         Person differentPerson = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new PersonCard(differentPerson, 0)));
+        assertFalse(personCard.equals(new PersonCard(differentPerson, 0, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER)));
 
         // same person, different index -> returns false
-        assertFalse(personCard.equals(new PersonCard(person, 1)));
+        assertFalse(personCard.equals(new PersonCard(person, 1, PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER)));
     }
 
     /**
