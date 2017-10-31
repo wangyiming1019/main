@@ -11,7 +11,7 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,7 +32,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Contains integration tests (interaction with the Model) for {@code FindTagCommand}.
  */
 public class FindTagCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
