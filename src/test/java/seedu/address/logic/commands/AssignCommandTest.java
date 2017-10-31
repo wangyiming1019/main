@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -29,8 +27,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.task.ReadOnlyTask;
 
 public class AssignCommandTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
