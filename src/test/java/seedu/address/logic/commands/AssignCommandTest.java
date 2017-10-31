@@ -25,7 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.task.ReadOnlyTask;
-
+//@@author Esilocke
 public class AssignCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -109,7 +109,7 @@ public class AssignCommandTest {
         assertFalse(assignTwoToFirst.equals(assignTwoToSecond));
     }
     /**
-     * Generates a new AssignCommand with the details of the given person.
+     * Generates a new AssignCommand with the specified targets.
      */
     private AssignCommand prepareCommand(List<Index> personsToAssign, Index task) {
         ArrayList<Index> listIndexes = new ArrayList<>(personsToAssign);
