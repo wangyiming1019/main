@@ -1,5 +1,3 @@
-
-/* Test to be fixed in next PR
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
@@ -59,5 +57,4 @@ public class TaskListPanelTest extends GuiUnitTest {
         assertCardEquals(expectedCard, selectedCard);
     }
 }
-*/
 

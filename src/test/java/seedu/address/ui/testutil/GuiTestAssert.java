@@ -33,7 +33,7 @@ public class GuiTestAssert {
      */
     public static void assertCardEquals(TaskCardHandle expectedCard, TaskCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getTaskName(), actualCard.getId());
+        assertEquals(expectedCard.getTaskName(), actualCard.getTaskName());
         assertEquals(expectedCard.getDescription(), actualCard.getDescription());
         assertEquals(expectedCard.getDeadline(), actualCard.getDeadline());
         assertEquals(expectedCard.getPriority(), actualCard.getPriority());
