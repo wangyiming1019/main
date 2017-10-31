@@ -100,7 +100,31 @@ public class TaskCard  extends UiPart<Region> {
                 && task.equals(card.task);
     }
 
-    public void setFontSizeMultipler(int fontSizeMultipler) {
+    public Label getTaskName() {
+        return taskName;
+    }
+
+    public Label getId() {
+        return id;
+    }
+
+    public Label getDescription() {
+        return description;
+    }
+
+    public Label getDeadline() {
+        return deadline;
+    }
+
+    public Label getPriority() {
+        return priority;
+    }
+
+    public void setFontSizeMultiplier(int fontSizeMultipler) {
         this.fontSizeMultipler = fontSizeMultipler;
+    }
+
+    public int getFontSizeMultiplier() {
+        return this.fontSizeMultipler;
     }
 }
