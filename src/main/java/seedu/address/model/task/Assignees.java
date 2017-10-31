@@ -35,9 +35,6 @@ public class Assignees {
         }
     }
 
-    public void replace(ReadOnlyPerson target, ReadOnlyPerson replacement) {
-    }
-
     public boolean contains(ReadOnlyPerson toFind) {
         return assignedList.contains(toFind);
     }
