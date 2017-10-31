@@ -82,6 +82,14 @@ public interface Model {
     void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
             throws DuplicateTaskException, TaskNotFoundException;
 
+    /** Assigns all specified persons to the specified task */
+    void assignToTask(ArrayList<ReadOnlyPerson> personsToAssign, ReadOnlyTask assignedTask)
+            throws TaskNotFoundException, DuplicateTaskException;
+
+    /** Assigns all specified persons to the specified task */
+    void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask dismissedTask)
+            throws TaskNotFoundException, DuplicateTaskException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 

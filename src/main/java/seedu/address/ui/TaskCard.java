@@ -44,6 +44,8 @@ public class TaskCard  extends UiPart<Region> {
     private Label deadline;
     @FXML
     private Label priority;
+    @FXML
+    private Label assignCount;
 
     private int fontSizeMultipler;
 
@@ -65,6 +67,7 @@ public class TaskCard  extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
+        assignCount.textProperty().bind(Bindings.convert(task.assigneeProperty()));
     }
 
     /**

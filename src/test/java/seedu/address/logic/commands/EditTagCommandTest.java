@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.EditTagCommand.MESSAGE_EDIT_TAG_SUCCESS;
 import static seedu.address.logic.commands.EditTagCommand.MESSAGE_TAG_NOT_FOUND;
 import static seedu.address.testutil.TypicalPersons.getTaglessAddressBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ import seedu.address.testutil.PersonBuilder;
 
 //@@author Esilocke
 public class EditTagCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
     @Test
     public void noTagsPresent() throws IllegalValueException {
         Model taglessModel = new ModelManager(getTaglessAddressBook(), new UserPrefs());

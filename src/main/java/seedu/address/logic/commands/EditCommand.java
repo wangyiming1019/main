@@ -31,6 +31,7 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Assignees;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
@@ -341,13 +342,16 @@ public class EditCommand extends UndoableCommand {
         Description updatedDescription;
         Deadline updatedDeadline;
         Priority updatedPriority;
+        Assignees assignees;
 
         updatedTaskName = editTaskDescriptor.getTaskName().orElse(taskToEdit.getTaskName());
         updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
         updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
         updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
+        // You cannot edit assignees using edit command
+        assignees = taskToEdit.getAssignees();
 
-        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority);
+        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees);
     }
 
     @Override
@@ -496,6 +500,7 @@ public class EditCommand extends UndoableCommand {
         private Description description;
         private Deadline deadline;
         private Priority priority;
+        private Assignees assignees;
 
         public EditTaskDescriptor() {}
 
@@ -504,6 +509,7 @@ public class EditCommand extends UndoableCommand {
             this.description = toCopy.description;
             this.deadline = toCopy.deadline;
             this.priority = toCopy.priority;
+            this.assignees = toCopy.assignees;
         }
 
         /**

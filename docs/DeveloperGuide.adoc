@@ -831,7 +831,7 @@ private String convertTagToString(ReadOnlyPerson person) {
 After having a list of string, it will then split strings into two ArrayList. One is for the tags we are looking for and another one
 is for the tags to be excluded.
 
-[sourcce,java]
+[source,java]
 ----
 /**
      * Update the wantedTag and unwantedTag list

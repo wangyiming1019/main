@@ -243,6 +243,18 @@ public class AddCommandTest {
         public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask) throws DuplicateTaskException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void assignToTask(ArrayList<ReadOnlyPerson> personsToAssign, ReadOnlyTask taskToAssign)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask taskToDismiss)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
     }
 
     /**

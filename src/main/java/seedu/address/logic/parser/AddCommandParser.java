@@ -183,6 +183,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
             priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get();
 
+
             ReadOnlyTask task = new Task(name, description, deadline, priority);
             return task;
         } catch (IllegalValueException ive) {
