@@ -19,6 +19,16 @@ public class TaskCardHandle extends NodeHandle<Node> {
     private final Label deadlineLabel;
     private final Label priorityLabel;
 
+    public TaskCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.taskNameLabel = getChildNode(TASK_NAME_ID);
+        this.descriptionLabel = getChildNode(DESCRIPTION_ID);
+        this.priorityLabel = getChildNode(PRIORITY_ID);
+        this.deadlineLabel = getChildNode(DEADLINE_ID);
+    }
+
     public String getId() {
         return idLabel.getText();
     }
@@ -38,16 +48,4 @@ public class TaskCardHandle extends NodeHandle<Node> {
     public String getPriority() {
         return priorityLabel.getText();
     }
-
-    public TaskCardHandle(Node cardNode) {
-        super(cardNode);
-
-        this.idLabel = getChildNode(ID_FIELD_ID);
-        this.taskNameLabel = getChildNode(TASK_NAME_ID);
-        this.descriptionLabel = getChildNode(DESCRIPTION_ID);
-        this.priorityLabel = getChildNode(PRIORITY_ID);
-        this.deadlineLabel = getChildNode(DEADLINE_ID);
-    }
-
-
 }
