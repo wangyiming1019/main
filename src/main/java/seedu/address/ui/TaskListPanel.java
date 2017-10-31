@@ -43,7 +43,7 @@ public class TaskListPanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<ReadOnlyTask> taskList) {
         ObservableList<TaskCard> mappedList = EasyBind.map(
-                taskList, (task) -> new TaskCard(task, taskList.indexOf(task) + 1));
+                taskList, (task) -> new TaskCard(task, taskList.indexOf(task) + 1, fontSizeMultiplier));
         taskListView.setItems(mappedList);
         taskListView.setCellFactory(listView -> new TaskListViewCell());
         setEventHandlerForSelectionChangeEvent();
