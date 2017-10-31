@@ -100,7 +100,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /**
      * Delete input tag from the specific persons shown in the last list.
      */
@@ -125,7 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /**
      * Adds input tag to the specific persons shown in the last list.
      */
@@ -184,7 +184,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
     //@@author
-//@@author wangyiming1019
+    //@@author wangyiming1019
     @Override
     public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.favouritePerson(target);
