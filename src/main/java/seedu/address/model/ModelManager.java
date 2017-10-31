@@ -26,7 +26,13 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Assignees;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskName;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
@@ -216,6 +222,37 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateTask(target, editedTask);
         indicateAddressBookChanged();
     }
+
+    //@@author Esilocke
+    @Override
+    public void assignToTask(ArrayList<ReadOnlyPerson> personsToAssign, ReadOnlyTask taskToAssignTo)
+            throws TaskNotFoundException, DuplicateTaskException {
+        TaskName taskName = taskToAssignTo.getTaskName();
+        Description description = taskToAssignTo.getDescription();
+        Deadline deadline = taskToAssignTo.getDeadline();
+        Priority priority = taskToAssignTo.getPriority();
+        Assignees assignees = taskToAssignTo.getAssignees();
+
+        assignees.assign(personsToAssign);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees);
+        updateTask(taskToAssignTo, updatedTask);
+    }
+
+    //@@author Esilocke
+    @Override
+    public void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask taskToDismissFrom)
+            throws TaskNotFoundException, DuplicateTaskException {
+        TaskName taskName = taskToDismissFrom.getTaskName();
+        Description description = taskToDismissFrom.getDescription();
+        Deadline deadline = taskToDismissFrom.getDeadline();
+        Priority priority = taskToDismissFrom.getPriority();
+        Assignees assignees = taskToDismissFrom.getAssignees();
+
+        assignees.dismiss(personsToDismiss);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees);
+        updateTask(taskToDismissFrom, updatedTask);
+    }
+
     //@@author
     //=========== Filtered Person List Accessors =============================================================
 
