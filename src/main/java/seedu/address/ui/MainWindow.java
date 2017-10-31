@@ -126,6 +126,7 @@ public class MainWindow extends UiPart<Region> {
         return primaryStage;
     }
 
+    //@@author jeffreygohkw
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(openMenuItem, KeyCombination.valueOf("CTRL+O"));
@@ -301,6 +302,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author jeffreygohkw
     /**
      * Opens the data from a desired location
      */
@@ -353,6 +355,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new SaveAsRequestEvent());
     }
 
+    //@@author
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());

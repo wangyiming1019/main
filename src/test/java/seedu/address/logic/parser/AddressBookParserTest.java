@@ -68,6 +68,7 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author jeffreygohkw
     @Test
     public void parseCommandChangePrivacy() throws Exception {
         Person person = new PersonBuilder().build();
@@ -100,6 +101,7 @@ public class AddressBookParserTest {
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
     }
 
+    //@@author
     @Test
     public void parseCommandClear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -240,6 +242,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author jeffreygohkw
     @Test
     public void parseCommandLocate() throws Exception {
         LocateCommand command = (LocateCommand) parser.parseCommand(
@@ -254,6 +257,7 @@ public class AddressBookParserTest {
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author
     @Test
     public void parseCommandBackupWord() throws Exception {
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
@@ -300,6 +304,7 @@ public class AddressBookParserTest {
         parser.parseCommand("unknownCommand");
     }
 
+    //@@author jeffreygohkw
     /**
      * Checks if 2 ChangePrivacyCommands are equal
      * @param command the expected command

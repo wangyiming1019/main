@@ -26,6 +26,7 @@ public class NameTest {
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
     }
 
+    //@@author jeffreygohkw
     @Test
     public void privateNameIsHidden_success() throws IllegalValueException {
         Name n = new Name("Any Name", true);
