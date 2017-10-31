@@ -9,6 +9,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskName;
 
+//@@author Esilocke
 /** JAXB-friendly version of a Task */
 public class XmlAdaptedTask {
     @XmlElement(required = true)

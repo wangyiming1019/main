@@ -1,8 +1,11 @@
 package seedu.address.model.task;
 
+import java.util.Objects;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+//@@author Esilocke
 /**
  * Represents a task object in the address book.
  */
@@ -48,6 +51,27 @@ public class Task implements ReadOnlyTask {
         return getAsText();
     }
 
+    // JavaFX property functions
+    @Override
+    public ObjectProperty<TaskName> taskNameProperty() {
+        return taskName;
+    }
+
+    @Override
+    public ObjectProperty<Description> descriptionProperty() {
+        return description;
+    }
+
+    @Override
+    public ObjectProperty<Deadline> deadlineProperty() {
+        return deadline;
+    }
+
+    @Override
+    public ObjectProperty<Priority> priorityProperty() {
+        return priority;
+    }
+
     // Setters for TaskBuilder testing
 
     public void setTaskName(TaskName taskName) {
@@ -71,5 +95,11 @@ public class Task implements ReadOnlyTask {
         return other == this // short circuit if same object
             || (other instanceof ReadOnlyTask // instanceof handles nulls
             && this.isSameStateAs((ReadOnlyTask) other));
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(taskName, description, deadline, priority);
     }
 }

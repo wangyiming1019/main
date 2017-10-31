@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.NameContainsFavouritePredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -61,6 +64,20 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
     }
+
+    //@@author Esilocke
+    @Override
+    public void resetPartialData(ReadOnlyAddressBook newData, Prefix type) {
+        assert(type.equals(PREFIX_TASK) || type.equals(PREFIX_PERSON));
+        if (type.equals(PREFIX_TASK)) {
+            addressBook.resetPartialData(newData, PREFIX_TASK);
+            indicateAddressBookChanged();
+        } else {
+            addressBook.resetPartialData(newData, PREFIX_PERSON);
+            indicateAddressBookChanged();
+        }
+    }
+    //@@author
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
@@ -136,6 +153,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Esilocke
     /**
      * Replaces the toChange Tag with the newTag Tag, for all Person objects denoted by the indexes.
      * Guarantees: indexes contains at least 1 person that has the toChange Tag.
@@ -159,17 +177,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.favouritePerson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
-        addressBook.addTask(toAdd);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -180,12 +192,31 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Esilocke
+    @Override
+    public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
+        addressBook.addTask(toAdd);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateAddressBookChanged();
+    }
+
+    //@@author Esilocke
     @Override
     public synchronized void deleteTask(ReadOnlyTask toDelete) throws TaskNotFoundException {
         addressBook.removeTask(toDelete);
         indicateAddressBookChanged();
     }
 
+    //@@author Esilocke
+    @Override
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(target, editedTask);
+
+        addressBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -197,16 +228,26 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    //@@author Esilocke
     @Override
     public ObservableList<ReadOnlyTask> getFilteredTaskList() {
         return FXCollections.unmodifiableObservableList(filteredTasks);
     }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //@@author Esilocke
+    @Override
+    public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+        requireNonNull(predicate);
+        filteredTasks.setPredicate(predicate);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
@@ -223,7 +264,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredTasks.equals(other.filteredTasks);
     }
 
 }
