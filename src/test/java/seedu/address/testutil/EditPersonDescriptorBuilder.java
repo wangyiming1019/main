@@ -108,7 +108,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /**
      * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
      */
