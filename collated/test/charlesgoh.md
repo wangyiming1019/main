@@ -1,28 +1,5 @@
 # charlesgoh
-###### /java/seedu/address/ui/PersonCardTest.java
-``` java
-    @Test
-    public void editFontSizeTests() {
-        int fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER;
-        Person testPerson = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(testPerson, 1, fontSizeMultiplier);
-        assertEquals(PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER, personCard.getFontSizeMultipler());
-        assertNotEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier + 1);
-
-        // Verify font size increase
-        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER + 1;
-        personCard.setFontSizeMultipler(fontSizeMultiplier);
-        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
-        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
-
-        // Verify font size decrease
-        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER - 1;
-        personCard.setFontSizeMultipler(fontSizeMultiplier);
-        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
-        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
-    }
-```
-###### /java/guitests/guihandles/TaskCardHandle.java
+###### \java\guitests\guihandles\TaskCardHandle.java
 ``` java
 public class TaskCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
@@ -68,7 +45,7 @@ public class TaskCardHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### /java/guitests/guihandles/TaskListPanelHandle.java
+###### \java\guitests\guihandles\TaskListPanelHandle.java
 ``` java
 public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     public static final String TASK_LIST_VIEW_ID = "#taskListView";
@@ -192,4 +169,27 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
         return getRootNode().getItems().size();
     }
 }
+```
+###### \java\seedu\address\ui\PersonCardTest.java
+``` java
+    @Test
+    public void editFontSizeTests() {
+        int fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER;
+        Person testPerson = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(testPerson, 1, fontSizeMultiplier);
+        assertEquals(PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER, personCard.getFontSizeMultipler());
+        assertNotEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier + 1);
+
+        // Verify font size increase
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER + 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+
+        // Verify font size decrease
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER - 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+    }
 ```
