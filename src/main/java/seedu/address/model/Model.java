@@ -34,28 +34,28 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /** Deletes given tag from specific persons */
     void deleteTag(Tag toDelete, ArrayList<Index> targetIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
-//@@author
+    //@@author
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /** Adds given tag to specific persons */
     void addTag(Tag toAdd, ArrayList<Index> targetIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
-//@@author
+    //@@author
     /** Edits the specified tag, and updates all instances in the address book */
     void editTag(Tag toChange, Tag newTag, ArrayList<Index> affectedIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
-//@@author wangyiming1019
+    //@@author wangyiming1019
     /** Favourites the given person */
     void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Unfavourites the given person */
     void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-//@@author
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
