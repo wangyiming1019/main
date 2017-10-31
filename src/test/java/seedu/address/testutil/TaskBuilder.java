@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.task.Assignees;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
@@ -26,7 +27,9 @@ public class TaskBuilder {
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
             Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
             Priority defaultPriority = new Priority(DEFAULT_PRIORITY);
-            this.task = new Task(defaultTaskName, defaultDescription, defaultDeadline, defaultPriority);
+            Assignees defaultAssignees = new Assignees();
+            this.task = new Task(defaultTaskName, defaultDescription, defaultDeadline, defaultPriority,
+                    defaultAssignees);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default task's values are invalid.");
         }
