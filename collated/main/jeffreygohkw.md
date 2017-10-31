@@ -1242,49 +1242,6 @@ public class LocateCommandParser implements Parser<LocateCommand> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    /**
-     * Handle increase font size command
-     */
-    @FXML
-    public void handleIncreaseFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.increaseFontSize();
-        taskListPanel.increaseFontSize();
-    }
-
-    /**
-     * Handle decrease font size command
-     */
-    @FXML
-    public void handleDecreaseFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.decreaseFontSize();
-        taskListPanel.decreaseFontSize();
-    }
-
-    /**
-     * Handle reset font size command
-     */
-    @FXML
-    public void handleResetFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.resetFontSize();
-        taskListPanel.resetFontSize();
-    }
-
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
-    }
-
-    void show() {
-        primaryStage.show();
-    }
-
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
