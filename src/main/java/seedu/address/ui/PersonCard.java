@@ -125,7 +125,7 @@ public class PersonCard extends UiPart<Region> {
 
         // Set styles using set name and attribute sizes
         name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
-        id.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        id.setStyle("-fx-font-size: " + Integer.toString(nameSize));
         phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));

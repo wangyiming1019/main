@@ -76,7 +76,7 @@ public class TaskCard  extends UiPart<Region> {
 
         // Set styles using set name and attribute sizes
         taskName.setStyle("-fx-font-size: " + Integer.toString(nameSize));
-        id.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        id.setStyle("-fx-font-size: " + Integer.toString(nameSize));
         description.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         deadline.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         priority.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
