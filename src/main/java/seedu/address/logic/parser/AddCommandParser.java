@@ -32,6 +32,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Assignees;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
@@ -177,13 +178,15 @@ public class AddCommandParser implements Parser<AddCommand> {
             Description description;
             Deadline deadline;
             Priority priority;
+            Assignees assignees = new Assignees();
 
             name = ParserUtil.parseTaskName(argMultimap.getValue(PREFIX_NAME)).get();
             description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
             deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
             priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get();
 
-            ReadOnlyTask task = new Task(name, description, deadline, priority);
+
+            ReadOnlyTask task = new Task(name, description, deadline, priority, assignees);
             return task;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
