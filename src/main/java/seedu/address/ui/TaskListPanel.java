@@ -22,14 +22,21 @@ import seedu.address.model.task.ReadOnlyTask;
  * Panel containing the list of tasks.
  */
 public class TaskListPanel extends UiPart<Region> {
+    private static final int MINIMUM_FONT_SIZE_MULTIPLIER = 0;
+    private static final int MAXIMUM_FONT_SIZE_MULTIPLIER = 20;
     private static final String FXML = "TaskListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 
     @FXML
     private ListView<TaskCard> taskListView;
 
+    private int fontSizeMultiplier;
+    private ObservableList<ReadOnlyTask> taskList;
+
     public TaskListPanel(ObservableList<ReadOnlyTask> taskList) {
         super(FXML);
+        this.taskList = taskList;
+        fontSizeMultiplier = 0;
         setConnections(taskList);
         registerAsAnEventHandler(this);
     }
@@ -50,6 +57,33 @@ public class TaskListPanel extends UiPart<Region> {
                         raise(new TaskPanelSelectionChangedEvent(newValue));
                     }
                 });
+    }
+
+    /**
+     * Increases all task cards' font sizes in person list
+     */
+    public void increaseFontSize() {
+        logger.info("TaskListPanel: Increasing font sizes");
+        fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier + 1);
+        setConnections(taskList);
+    }
+
+    /**
+     * Decreases all task cards' font sizes in person list
+     */
+    public void decreaseFontSize() {
+        logger.info("TaskListPanel: Decreasing font sizes");
+        fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier - 1);
+        setConnections(taskList);
+    }
+
+    /**
+     * Resets all task cards' font sizes in person list
+     */
+    public void resetFontSize() {
+        logger.info("TaskListPanel: Resetting font sizes");
+        fontSizeMultiplier = 0;
+        setConnections(taskList);
     }
 
     /**
