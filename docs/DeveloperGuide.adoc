@@ -439,7 +439,7 @@ The sort enhancement utilises the Java Collections Sort API by passing it a cust
 The sort command is parsed through `SortCommandParser`, which passes control over to the `SortCommand`
 class. The actual sorting happens via the UniquePersonList class.
 
-The UML outline diagram for this sort command implementation is shown below:
+The UML Class diagram for this sort command implementation is shown below:
 
 image::SortCommandDiagram.png[width="800"]
 

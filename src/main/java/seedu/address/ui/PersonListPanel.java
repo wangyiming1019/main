@@ -59,7 +59,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Function to increase all person cards' font sizes in person list
+     * Increases all person cards' font sizes in person list
      */
     public void increaseFontSize() {
         logger.info("PersonListPanel: Increasing font sizes");
@@ -68,7 +68,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Function to decrease all person cards' font sizes in person list
+     * Decreases all person cards' font sizes in person list
      */
     public void decreaseFontSize() {
         logger.info("PersonListPanel: Decreasing font sizes");
@@ -77,7 +77,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
-     * Function to reset all person cards' font sizes in person list
+     * Resets all person cards' font sizes in person list
      */
     public void resetFontSize() {
         logger.info("PersonListPanel: Resetting font sizes");
