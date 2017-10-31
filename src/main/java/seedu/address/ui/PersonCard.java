@@ -116,6 +116,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    //@@author charlesgoh
     /**
      * Set default size for all attributes
      */
@@ -131,6 +132,7 @@ public class PersonCard extends UiPart<Region> {
         remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         email.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
     }
+    //@@author
 
 
     @Override

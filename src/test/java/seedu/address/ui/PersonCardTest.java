@@ -16,6 +16,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class PersonCardTest extends GuiUnitTest {
 
+    //@@author charlesgoh
     @Test
     public void editFontSizeTests() {
         int fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER;
@@ -36,6 +37,7 @@ public class PersonCardTest extends GuiUnitTest {
         assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
         assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
     }
+    //@@author
 
     @Test
     public void display() {

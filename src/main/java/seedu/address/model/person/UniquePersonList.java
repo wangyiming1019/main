@@ -24,6 +24,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see Person#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
+//@@author charlesgoh
 public class UniquePersonList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
@@ -141,6 +142,7 @@ public class UniquePersonList implements Iterable<Person> {
      * @param field
      * @param order
      */
+    //@@author charlesgoh
     public void sortBy(String field, String order) {
         //sortyBy first chooses the right comparator
         Comparator<Person> comparator = null;

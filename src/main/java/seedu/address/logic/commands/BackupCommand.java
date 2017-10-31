@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Backs up current addressbook into a user input location.
  */
+//@@author charlesgoh
 public class BackupCommand extends Command {
     public static final String COMMAND_WORD = "backup";
     public static final String COMMAND_ALIAS = "bk";
@@ -24,6 +25,7 @@ public class BackupCommand extends Command {
 
     private String args;
 
+    //@@author charlesgoh
     public BackupCommand(String trimmedArgs) {
         super();
         this.args = trimmedArgs;

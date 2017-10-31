@@ -59,6 +59,7 @@ public class TaskListPanel extends UiPart<Region> {
                 });
     }
 
+    //@@author charlesgoh
     /**
      * Increases all task cards' font sizes in person list
      */
@@ -85,6 +86,7 @@ public class TaskListPanel extends UiPart<Region> {
         fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
         setConnections(taskList);
     }
+    //@@author
 
     /**
      * Scrolls to the {@code TaskCard} at the {@code index} and selects it.

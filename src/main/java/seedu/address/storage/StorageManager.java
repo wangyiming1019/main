@@ -79,6 +79,7 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author charlesgoh
     /**
      * Backs up data to a remote location.
      * @param addressBook
@@ -99,6 +100,7 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.fine("Attempting to write to backup data file");
         this.saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
+    //@@author
 
     @Override
     @Subscribe

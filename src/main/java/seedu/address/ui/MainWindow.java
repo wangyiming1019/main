@@ -258,6 +258,7 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author charlesgoh
     /**
      * Handle increase font size command
      */
@@ -287,6 +288,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel.resetFontSize();
         taskListPanel.resetFontSize();
     }
+    //@@author
 
     /**
      * Opens the help window.
