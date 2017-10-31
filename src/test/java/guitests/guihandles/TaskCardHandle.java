@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 /**
  * Provides a handle to a task card in the task list panel.
  */
+//@@author charlesgoh
 public class TaskCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String TASK_NAME_ID = "#taskName";

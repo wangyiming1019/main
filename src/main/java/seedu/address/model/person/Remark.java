@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidRemark(String)}
  */
+//@@author charlesgoh
 public class Remark {
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
             "Person remarks can take any values, and it should not be blank";

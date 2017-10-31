@@ -70,6 +70,7 @@ public class TaskCard  extends UiPart<Region> {
         assignCount.textProperty().bind(Bindings.convert(task.assigneeProperty()));
     }
 
+    //@@author charlesgoh
     /**
      * Set default size for all attributes
      */
@@ -84,6 +85,7 @@ public class TaskCard  extends UiPart<Region> {
         deadline.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         priority.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
     }
+    //@@author charlesgoh
 
     @Override
     public boolean equals(Object other) {

@@ -58,6 +58,7 @@ public class PersonListPanel extends UiPart<Region> {
                 });
     }
 
+    //@@author charlesgoh
     /**
      * Increases all person cards' font sizes in person list
      */
@@ -84,6 +85,7 @@ public class PersonListPanel extends UiPart<Region> {
         fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
         setConnections(personList);
     }
+    //@@author
 
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.

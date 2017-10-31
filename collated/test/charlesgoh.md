@@ -1,16 +1,75 @@
-package guitests.guihandles;
+# charlesgoh
+###### /java/seedu/address/ui/PersonCardTest.java
+``` java
+    @Test
+    public void editFontSizeTests() {
+        int fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER;
+        Person testPerson = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(testPerson, 1, fontSizeMultiplier);
+        assertEquals(PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER, personCard.getFontSizeMultipler());
+        assertNotEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier + 1);
 
-import java.util.List;
-import java.util.Optional;
+        // Verify font size increase
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER + 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
 
-import javafx.scene.control.ListView;
-import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.ui.TaskCard;
+        // Verify font size decrease
+        fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER - 1;
+        personCard.setFontSizeMultipler(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+    }
+```
+###### /java/guitests/guihandles/TaskCardHandle.java
+``` java
+public class TaskCardHandle extends NodeHandle<Node> {
+    private static final String ID_FIELD_ID = "#id";
+    private static final String TASK_NAME_ID = "#taskName";
+    private static final String DESCRIPTION_ID = "#description";
+    private static final String DEADLINE_ID = "#deadline";
+    private static final String PRIORITY_ID = "#priority";
 
-/**
- * Provides a handle for {@code TaskListPanel} containing the list of {@code TaskCard}.
- */
-//@@author charlesgoh
+    private final Label idLabel;
+    private final Label taskNameLabel;
+    private final Label descriptionLabel;
+    private final Label deadlineLabel;
+    private final Label priorityLabel;
+
+    public TaskCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.taskNameLabel = getChildNode(TASK_NAME_ID);
+        this.descriptionLabel = getChildNode(DESCRIPTION_ID);
+        this.priorityLabel = getChildNode(PRIORITY_ID);
+        this.deadlineLabel = getChildNode(DEADLINE_ID);
+    }
+
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getTaskName() {
+        return taskNameLabel.getText();
+    }
+
+    public String getDescription() {
+        return descriptionLabel.getText();
+    }
+
+    public String getDeadline() {
+        return deadlineLabel.getText();
+    }
+
+    public String getPriority() {
+        return priorityLabel.getText();
+    }
+}
+```
+###### /java/guitests/guihandles/TaskListPanelHandle.java
+``` java
 public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     public static final String TASK_LIST_VIEW_ID = "#taskListView";
 
@@ -133,3 +192,4 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
         return getRootNode().getItems().size();
     }
 }
+```

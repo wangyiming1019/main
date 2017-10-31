@@ -56,6 +56,7 @@
                </ImageView>
             </graphic></MenuItem>
     </Menu>
+      <!-- @@author charlesgoh -->
       <Menu mnemonicParsing="false" text="Font Size">
         <items>
           <MenuItem fx:id="increaseSizeMenuItem" mnemonicParsing="false" onAction="#handleIncreaseFontSize" text="Increase +" />
@@ -63,6 +64,7 @@
             <MenuItem fx:id="resetSizeMenuItem" mnemonicParsing="false" onAction="#handleResetFontSize" text="Reset" />
         </items>
       </Menu>
+      <!-- @@author -->
   </MenuBar>
 
   <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">

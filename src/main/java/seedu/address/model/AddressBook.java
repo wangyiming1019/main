@@ -155,6 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author charlesgoh
     /**
      * Sorts persons in person list by any field, in either ascending or descending order
      *
@@ -164,6 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortPersonsBy(String field, String order) {
         persons.sortBy(field, order);
     }
+    //@@author
 
     /**
      * Favourites the given person {@code target} to this {@code AddressBook}.
