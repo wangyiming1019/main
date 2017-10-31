@@ -26,6 +26,14 @@ public class Task implements ReadOnlyTask {
         this.assignees = new SimpleObjectProperty<>(assignees);
     }
 
+    public Task(TaskName taskName, Description description, Deadline deadline, Priority priority) {
+        this.taskName = new SimpleObjectProperty<>(taskName);
+        this.description = new SimpleObjectProperty<>(description);
+        this.deadline = new SimpleObjectProperty<>(deadline);
+        this.priority = new SimpleObjectProperty<>(priority);
+        this.assignees = new SimpleObjectProperty<>(new Assignees());
+    }
+
     public Task(ReadOnlyTask task) {
         this(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(),
                 task.getAssignees());
