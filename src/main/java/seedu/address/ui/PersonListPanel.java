@@ -81,7 +81,7 @@ public class PersonListPanel extends UiPart<Region> {
      */
     public void resetFontSize() {
         logger.info("PersonListPanel: Resetting font sizes");
-        fontSizeMultiplier = 0;
+        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
         setConnections(personList);
     }
 

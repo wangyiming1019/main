@@ -82,7 +82,7 @@ public class TaskListPanel extends UiPart<Region> {
      */
     public void resetFontSize() {
         logger.info("TaskListPanel: Resetting font sizes");
-        fontSizeMultiplier = 0;
+        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
         setConnections(taskList);
     }
 
