@@ -57,6 +57,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private TaskListPanel taskListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -79,7 +80,19 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem exitMenuItem;
 
     @FXML
+    private MenuItem increaseSizeMenuItem;
+
+    @FXML
+    private MenuItem decreaseSizeMenuItem;
+
+    @FXML
+    private MenuItem resetSizeMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane taskListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -113,11 +126,15 @@ public class MainWindow extends UiPart<Region> {
         return primaryStage;
     }
 
+    //@@author jeffreygohkw
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(openMenuItem, KeyCombination.valueOf("CTRL+O"));
         setAccelerator(saveMenuItem, KeyCombination.valueOf("CTRL+S"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("ALT+F4"));
+        setAccelerator(increaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+W"));
+        setAccelerator(decreaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+S"));
+        setAccelerator(resetSizeMenuItem, KeyCombination.valueOf("SHORTCUT+R"));
     }
 
     /**
@@ -187,6 +204,9 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -239,6 +259,38 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author charlesgoh
+    /**
+     * Handle increase font size command
+     */
+    @FXML
+    public void handleIncreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.increaseFontSize();
+        taskListPanel.increaseFontSize();
+    }
+
+    /**
+     * Handle decrease font size command
+     */
+    @FXML
+    public void handleDecreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.decreaseFontSize();
+        taskListPanel.decreaseFontSize();
+    }
+
+    /**
+     * Handle reset font size command
+     */
+    @FXML
+    public void handleResetFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.resetFontSize();
+        taskListPanel.resetFontSize();
+    }
+    //@@author
+
     /**
      * Opens the help window.
      */
@@ -252,6 +304,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author jeffreygohkw
     /**
      * Opens the data from a desired location
      */
@@ -304,9 +357,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new SaveAsRequestEvent());
     }
 
-    /**
-     * Closes the application.
-     */
+    //@@author
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
@@ -314,6 +365,10 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
+    }
+
+    public TaskListPanel getTaskListPanel() {
+        return this.taskListPanel;
     }
 
     void releaseResources() {

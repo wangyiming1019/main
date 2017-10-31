@@ -40,6 +40,7 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
     }
 
+    //@@author jeffreygohkw
     @Test
     public void privateEmailIsHidden_success() throws IllegalValueException {
         Email e = new Email("AnyEmail@example.com", true);

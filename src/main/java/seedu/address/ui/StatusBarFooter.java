@@ -17,6 +17,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 /**
  * A ui for the status bar that is displayed at the footer of the application.
  */
+//@@author charlesgoh-reused
 public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";

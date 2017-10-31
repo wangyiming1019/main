@@ -37,11 +37,13 @@ public class Address {
         this.value = address;
     }
 
+    //@@author jeffreygohkw
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         this(address);
         this.setPrivate(isPrivate);
     }
 
+    //@@author
     /**
      * Returns true if a given string is a valid person email.
      */
@@ -49,6 +51,7 @@ public class Address {
         return test.matches(ADDRESS_VALIDATION_REGEX) || test.equals(ADDRESS_PLACEHOLDER_VALUE);
     }
 
+    //@@author jeffreygohkw
     @Override
     public String toString() {
         if (isPrivate) {
@@ -57,6 +60,7 @@ public class Address {
         return value;
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -68,7 +72,7 @@ public class Address {
     public int hashCode() {
         return value.hashCode();
     }
-
+    //@@author jeffreygohkw
     public boolean isPrivate() {
         return isPrivate;
     }

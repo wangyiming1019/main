@@ -1,10 +1,12 @@
 package seedu.address.logic.commands;
 
+//@@author jeffreygohkw
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
 
 import org.junit.Test;
 
@@ -22,7 +24,7 @@ import seedu.address.testutil.PersonPrivacySettingsBuilder;
 
 public class ChangePrivacyCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
 
     @Test
     public void personPrivacySettingsTests() {
@@ -45,11 +47,11 @@ public class ChangePrivacyCommandTest {
         assertEquals(ppsByBuilder.isAnyFieldNonNull(), pps.isAnyFieldNonNull());
     }
 
-    /*
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Person newPerson = new PersonBuilder().withEmail("alice@example.com").build();
         newPerson.getEmail().setPrivate(true);
+        newPerson.setRemark(model.getFilteredPersonList().get(0).getRemark());
 
         PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("false")
                 .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("false").build();
@@ -63,8 +65,21 @@ public class ChangePrivacyCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), newPerson);
 
         assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
+
+        PersonPrivacySettings ppsPublic = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("false")
+                .setPhonePrivate("false").setEmailPrivate("false").setAddressPrivate("false").build();
+
+        newPerson.getEmail().setPrivate(false);
+
+        ChangePrivacyCommand changePrivacyCommandPublic = new ChangePrivacyCommand(INDEX_FIRST_PERSON, ppsPublic);
+        changePrivacyCommandPublic.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        String expectedMessagePublic = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson);
+
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), newPerson);
+
+        assertCommandSuccess(changePrivacyCommandPublic, model, expectedMessagePublic, expectedModel);
     }
-    */
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {

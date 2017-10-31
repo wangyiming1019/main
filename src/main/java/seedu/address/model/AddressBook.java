@@ -1,6 +1,8 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -19,7 +22,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.UniqueTasksList;
+import seedu.address.model.task.UniqueTaskList;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
@@ -31,7 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private final UniqueTasksList tasks;
+    private final UniqueTaskList tasks;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -43,7 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        tasks = new UniqueTasksList();
+        tasks = new UniqueTaskList();
     }
 
     public AddressBook() {}
@@ -66,6 +69,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
+        this.tasks.setTasks(tasks);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -73,14 +80,41 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setTasks(newData.getTasksList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateTaskException e) {
+            assert false : "AddressBooks should not have duplicate tasks";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
 
+    //@@author Esilocke
+    /**
+     * Resets only the existing contact or task data of this {@code AddressBook}.
+     */
+    public void resetPartialData(ReadOnlyAddressBook newData, Prefix type) {
+        requireNonNull(newData);
+        requireNonNull(type);
+        try {
+            if (type.equals(PREFIX_TASK)) {
+                setTasks(newData.getTasksList());
+            } else if (type.equals(PREFIX_PERSON)) {
+                setPersons(newData.getPersonList());
+                setTags(new HashSet<>(newData.getTagList()));
+                syncMasterTagListWith(persons);
+            } else {
+                throw new AssertionError("Type must either be persons or tasks");
+            }
+        } catch (DuplicatePersonException e) {
+            assert false : "Address books should not have duplicate persons";
+        } catch (DuplicateTaskException e) {
+            assert false : "Address books should not have duplicate tasks";
+        }
+    }
+    //@@author
     //// person-level operations
 
     /**
@@ -121,6 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author charlesgoh
     /**
      * Sorts persons in person list by any field, in either ascending or descending order
      *
@@ -130,6 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortPersonsBy(String field, String order) {
         persons.sortBy(field, order);
     }
+    //@@author
 
     /**
      * Favourites the given person {@code target} to this {@code AddressBook}.
@@ -196,6 +232,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// task-level operations
+
+    //@@author Esilocke
     /**
      * Adds a task to the address book.
      *
@@ -206,6 +244,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.add(newTask);
     }
 
+    //@@author Esilocke
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -217,11 +256,28 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TaskNotFoundException();
         }
     }
+
+    //@@author Esilocke
+    /**
+     * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
+     *
+     * @throws DuplicateTaskException if updating the task's details causes the task to be equivalent to
+     *      another existing task in the list.
+     * @throws TaskNotFoundException if {@code target} could not be found in the list.
+     */
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireNonNull(editedReadOnlyTask);
+
+        Task editedTask = new Task(editedReadOnlyTask);
+        tasks.setTask(target, editedTask);
+    }
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags"
+                + tasks.asObservableList().size() +  " tasks";
         // TODO: refine later
     }
 
@@ -230,10 +286,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author Esilocke
     @Override
     public ObservableList<ReadOnlyTask> getTasksList() {
         return tasks.asObservableList();
     }
+    //@@author
 
     @Override
     public ObservableList<Tag> getTagList() {
@@ -245,12 +303,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.tasks.equals(((AddressBook) other).tasks);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, tasks);
     }
 }

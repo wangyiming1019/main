@@ -11,7 +11,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a person or task identified using its last displayed index from the address book.
  */
 public class DeleteCommand extends UndoableCommand {
 
@@ -19,13 +19,12 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Deletes the person or task identified by the index number used in the last listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
-    public static final String MESSAGE_UNHANDLED_ADD_EXCEPTION = "Unhandled exception occurred during add operation.";
     public static final int DELETE_TYPE_PERSON = 0;
     public static final int DELETE_TYPE_TASK = 1;
 
@@ -61,11 +60,10 @@ public class DeleteCommand extends UndoableCommand {
                 return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
             }
         } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
+            throw new AssertionError("The target person cannot be missing");
         } catch (TaskNotFoundException tnfe) {
-            assert false : "The target task cannot be missing";
+            throw new AssertionError("The target task cannot be missing");
         }
-        throw new CommandException(MESSAGE_UNHANDLED_ADD_EXCEPTION);
     }
 
     @Override

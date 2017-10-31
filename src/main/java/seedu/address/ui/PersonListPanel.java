@@ -21,21 +21,28 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Panel containing the list of persons.
  */
 public class PersonListPanel extends UiPart<Region> {
+    private static final int MINIMUM_FONT_SIZE_MULTIPLIER = 0;
+    private static final int MAXIMUM_FONT_SIZE_MULTIPLIER = 20;
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
     private ListView<PersonCard> personListView;
 
+    private int fontSizeMultiplier;
+    private ObservableList<ReadOnlyPerson> personList;
+
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+        this.personList = personList;
+        fontSizeMultiplier = 0;
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+        ObservableList<PersonCard> mappedList = EasyBind.map(personList, (person) ->
+                new PersonCard(person, personList.indexOf(person) + 1, fontSizeMultiplier));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -50,6 +57,35 @@ public class PersonListPanel extends UiPart<Region> {
                     }
                 });
     }
+
+    //@@author charlesgoh
+    /**
+     * Increases all person cards' font sizes in person list
+     */
+    public void increaseFontSize() {
+        logger.info("PersonListPanel: Increasing font sizes");
+        fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier + 1);
+        setConnections(personList);
+    }
+
+    /**
+     * Decreases all person cards' font sizes in person list
+     */
+    public void decreaseFontSize() {
+        logger.info("PersonListPanel: Decreasing font sizes");
+        fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier - 1);
+        setConnections(personList);
+    }
+
+    /**
+     * Resets all person cards' font sizes in person list
+     */
+    public void resetFontSize() {
+        logger.info("PersonListPanel: Resetting font sizes");
+        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
+        setConnections(personList);
+    }
+    //@@author
 
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.

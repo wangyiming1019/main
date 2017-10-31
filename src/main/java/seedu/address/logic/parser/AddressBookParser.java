@@ -8,21 +8,25 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
+import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ChangePrivacyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteTagCommand;
+import seedu.address.logic.commands.DismissCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditTagCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FavouriteListCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -65,6 +69,14 @@ public class AddressBookParser {
         case AddTagCommand.COMMAND_ALIAS:
             return new AddTagCommandParser().parse(arguments);
 
+        case AssignCommand.COMMAND_WORD:
+        case AssignCommand.COMMAND_ALIAS:
+            return new AssignTaskCommandParser().parse(arguments);
+
+        case DismissCommand.COMMAND_WORD:
+        case DismissCommand.COMMAND_ALIAS:
+            return new DismissTaskCommandParser().parse(arguments);
+
         case ChangePrivacyCommand.COMMAND_WORD:
         case ChangePrivacyCommand.COMMAND_ALIAS:
             return new ChangePrivacyCommandParser().parse(arguments);
@@ -81,6 +93,10 @@ public class AddressBookParser {
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
+        case LocateCommand.COMMAND_WORD:
+        case LocateCommand.COMMAND_ALIAS:
+            return new LocateCommandParser().parse(arguments);
+
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
@@ -91,11 +107,15 @@ public class AddressBookParser {
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
+            return new ClearCommandParser().parse(arguments);
 
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
+
+        case FindTagCommand.COMMAND_WORD:
+        case FindTagCommand.COMMAND_ALIAS:
+            return new FindTagCommandParser().parse(arguments);
 
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:

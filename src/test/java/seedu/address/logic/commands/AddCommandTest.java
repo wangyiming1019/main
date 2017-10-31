@@ -18,6 +18,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -159,6 +160,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void resetPartialData(ReadOnlyAddressBook newData, Prefix prefix) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
             return null;
@@ -198,6 +204,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void sortPersons(String field, String order) {
             fail("This method should not be called.");
         }
@@ -226,6 +237,23 @@ public class AddCommandTest {
         public ObservableList<ReadOnlyTask> getFilteredTaskList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void assignToTask(ArrayList<ReadOnlyPerson> personsToAssign, ReadOnlyTask taskToAssign)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask taskToDismiss)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
         }
     }
 

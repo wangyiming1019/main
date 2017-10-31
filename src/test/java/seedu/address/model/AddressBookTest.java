@@ -2,8 +2,8 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +45,7 @@ public class AddressBookTest {
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
+        AddressBook newData = getTypicalPersonsAddressBook();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
     }
@@ -75,7 +75,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_name_asc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("name", "asc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 
@@ -89,7 +89,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_name_desc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("name", "desc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 
@@ -103,7 +103,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_phone_asc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("phone", "asc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 
@@ -117,7 +117,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_phone_desc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("phone", "desc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 
@@ -131,7 +131,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_email_asc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("email", "asc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 
@@ -145,7 +145,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_email_desc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("email", "desc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 
@@ -159,7 +159,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_address_asc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("address", "asc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 
@@ -173,7 +173,7 @@ public class AddressBookTest {
 
     @Test
     public void sortCommandLogic_address_desc() {
-        AddressBook testBook = getTypicalAddressBook();
+        AddressBook testBook = getTypicalPersonsAddressBook();
         testBook.sortPersonsBy("address", "desc");
         ObservableList<ReadOnlyPerson> sortedTestList = testBook.getPersonList();
 

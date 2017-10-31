@@ -21,6 +21,7 @@ public class AddressTest {
         assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
     }
 
+    //@@author jeffreygohkw
     @Test
     public void privateAddressIsHidden_success() throws IllegalValueException {
         Address a = new Address("Any Address", true);

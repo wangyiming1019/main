@@ -8,6 +8,7 @@ import java.util.Arrays;
 /**
  * Sorts all persons in address book by any field. Sorting can be done in ascending or descending order
  */
+//@@author charlesgoh
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
@@ -33,6 +34,7 @@ public class SortCommand extends UndoableCommand {
     private final String field;
     private final String order;
 
+    //@@author charlesgoh
     public SortCommand(String field, String order) {
         this.field = field;
         this.order = order;

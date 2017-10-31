@@ -1,5 +1,8 @@
 package seedu.address.model.task;
 
+import javafx.beans.property.ObjectProperty;
+
+//@@author Esilocke
 /**
  * Provides an immutable interface for a Task in the address book.
  */
@@ -9,6 +12,12 @@ public interface ReadOnlyTask {
     Description getDescription();
     Deadline getDeadline();
     Priority getPriority();
+    Assignees getAssignees();
+    ObjectProperty<TaskName> taskNameProperty();
+    ObjectProperty<Description> descriptionProperty();
+    ObjectProperty<Deadline> deadlineProperty();
+    ObjectProperty<Priority> priorityProperty();
+    ObjectProperty<Assignees> assigneeProperty();
 
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
@@ -31,6 +40,7 @@ public interface ReadOnlyTask {
                 && other.getTaskName().equals(this.getTaskName()) // state checks here onwards
                 && other.getDescription().equals(this.getDescription())
                 && other.getDeadline().equals(this.getDeadline())
-                && other.getPriority().equals(this.getPriority()));
+                && other.getPriority().equals(this.getPriority()))
+                && other.getAssignees().equals(this.getAssignees());
     }
 }

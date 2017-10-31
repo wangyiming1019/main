@@ -8,14 +8,16 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TaskCardHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
     /**
-     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard} for person cards.
      */
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
@@ -24,6 +26,17 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard} for task cards.
+     */
+    public static void assertCardEquals(TaskCardHandle expectedCard, TaskCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getTaskName(), actualCard.getTaskName());
+        assertEquals(expectedCard.getDescription(), actualCard.getDescription());
+        assertEquals(expectedCard.getDeadline(), actualCard.getDeadline());
+        assertEquals(expectedCard.getPriority(), actualCard.getPriority());
     }
 
     /**
@@ -36,6 +49,16 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
+     */
+    public static void assertCardDisplaysTask(ReadOnlyTask expectedTask, TaskCardHandle actualCard) {
+        assertEquals(expectedTask.getTaskName().taskName, actualCard.getTaskName());
+        assertEquals(expectedTask.getDescription().value, actualCard.getDescription());
+        assertEquals(expectedTask.getDeadline().value, actualCard.getDeadline());
+        assertEquals(expectedTask.getPriority().value, actualCard.getPriority());
     }
 
     /**
