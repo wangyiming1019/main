@@ -36,7 +36,6 @@ public class Assignees {
     }
 
     public void replace(ReadOnlyPerson target, ReadOnlyPerson replacement) {
-        return;
     }
 
     public boolean contains(ReadOnlyPerson toFind) {
