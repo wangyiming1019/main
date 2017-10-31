@@ -8,14 +8,14 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
-import seedu.address.logic.commands.AssignTaskCommand;
+import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ChangePrivacyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteTagCommand;
-import seedu.address.logic.commands.DismissTaskCommand;
+import seedu.address.logic.commands.DismissCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditTagCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -69,12 +69,12 @@ public class AddressBookParser {
         case AddTagCommand.COMMAND_ALIAS:
             return new AddTagCommandParser().parse(arguments);
 
-        case AssignTaskCommand.COMMAND_WORD:
-        case AssignTaskCommand.COMMAND_ALIAS:
+        case AssignCommand.COMMAND_WORD:
+        case AssignCommand.COMMAND_ALIAS:
             return new AssignTaskCommandParser().parse(arguments);
 
-        case DismissTaskCommand.COMMAND_WORD:
-        case DismissTaskCommand.COMMAND_ALIAS:
+        case DismissCommand.COMMAND_WORD:
+        case DismissCommand.COMMAND_ALIAS:
             return new DismissTaskCommandParser().parse(arguments);
 
         case ChangePrivacyCommand.COMMAND_WORD:
