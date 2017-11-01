@@ -13,11 +13,14 @@ public interface ReadOnlyTask {
     Deadline getDeadline();
     Priority getPriority();
     Assignees getAssignees();
+    boolean getCompleteState();
+    String getPrintableState();
     ObjectProperty<TaskName> taskNameProperty();
     ObjectProperty<Description> descriptionProperty();
     ObjectProperty<Deadline> deadlineProperty();
     ObjectProperty<Priority> priorityProperty();
     ObjectProperty<Assignees> assigneeProperty();
+    ObjectProperty<String> stateProperty();
 
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
@@ -27,7 +30,8 @@ public interface ReadOnlyTask {
                 .append(" Deadline: ")
                 .append(getDeadline())
                 .append(" Priority: ")
-                .append(getPriority());
+                .append(getPriority())
+                .append(getPrintableState());
         return builder.toString();
     }
 
