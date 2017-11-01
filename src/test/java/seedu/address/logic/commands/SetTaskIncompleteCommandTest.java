@@ -46,8 +46,6 @@ public class SetTaskIncompleteCommandTest {
 
     @Test
     public void execute_changeCompletedTask_failure() throws Exception {
-        ReadOnlyTask taskToChange = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         SetTaskIncompleteCommand setIncompleteCommand = new SetTaskIncompleteCommand(INDEX_FIRST_TASK);
         setIncompleteCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
