@@ -20,13 +20,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.task.ReadOnlyTask;
 
-public class SetTaskIncompleteCommandTest {
+public class SetIncompleteCommandTest {
     private Model model = new ModelManager(getTypicalTasksOnlyAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validTaskIndex_success() throws Exception {
         ReadOnlyTask taskToChange = model.getFilteredTaskList().get(INDEX_THIRD_TASK.getZeroBased());
-        SetTaskIncompleteCommand setIncompleteCommand = prepareCommand(INDEX_THIRD_TASK);
+        SetIncompleteCommand setIncompleteCommand = prepareCommand(INDEX_THIRD_TASK);
 
         String expectedMessage = String.format(setIncompleteCommand.MESSAGE_SUCCESS, taskToChange);
 
@@ -39,7 +39,7 @@ public class SetTaskIncompleteCommandTest {
     @Test
     public void execute_invalidTaskIndex_failure() throws Exception {
         Index outOfRangeIndex = Index.fromZeroBased(model.getFilteredTaskList().size());
-        SetTaskIncompleteCommand setIncompleteCommand = prepareCommand(outOfRangeIndex);
+        SetIncompleteCommand setIncompleteCommand = prepareCommand(outOfRangeIndex);
 
         assertCommandFailure(setIncompleteCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
@@ -47,7 +47,7 @@ public class SetTaskIncompleteCommandTest {
     @Test
     public void execute_changeCompletedTask_failure() throws Exception {
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        SetTaskIncompleteCommand setIncompleteCommand = new SetTaskIncompleteCommand(INDEX_FIRST_TASK);
+        SetIncompleteCommand setIncompleteCommand = new SetIncompleteCommand(INDEX_FIRST_TASK);
         setIncompleteCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
 
         assertCommandFailure(setIncompleteCommand, expectedModel, setIncompleteCommand.MESSAGE_TASK_ALREADY_COMPLETE);
@@ -55,14 +55,14 @@ public class SetTaskIncompleteCommandTest {
 
     @Test
     public void equals() {
-        SetTaskIncompleteCommand setFirstCommand = new SetTaskIncompleteCommand(INDEX_FIRST_TASK);
-        SetTaskIncompleteCommand setSecondCommand = new SetTaskIncompleteCommand(INDEX_SECOND_TASK);
+        SetIncompleteCommand setFirstCommand = new SetIncompleteCommand(INDEX_FIRST_TASK);
+        SetIncompleteCommand setSecondCommand = new SetIncompleteCommand(INDEX_SECOND_TASK);
 
         // same object -> returns true
         assertTrue(setFirstCommand.equals(setFirstCommand));
 
         // same values -> returns true
-        SetTaskIncompleteCommand setFirstCommandCopy = new SetTaskIncompleteCommand(INDEX_FIRST_TASK);
+        SetIncompleteCommand setFirstCommandCopy = new SetIncompleteCommand(INDEX_FIRST_TASK);
         assertTrue(setFirstCommand.equals(setFirstCommandCopy));
 
         // different types -> returns false
@@ -76,10 +76,10 @@ public class SetTaskIncompleteCommandTest {
     }
 
     /**
-     * Returns a {@code SetTaskIncompleteCommand} with the parameter {@code index}.
+     * Returns a {@code SetIncompleteCommand} with the parameter {@code index}.
      */
-    public SetTaskIncompleteCommand prepareCommand(Index taskIndex) {
-        SetTaskIncompleteCommand command = new SetTaskIncompleteCommand(taskIndex);
+    public SetIncompleteCommand prepareCommand(Index taskIndex) {
+        SetIncompleteCommand command = new SetIncompleteCommand(taskIndex);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

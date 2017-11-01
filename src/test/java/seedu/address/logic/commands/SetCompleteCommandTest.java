@@ -19,13 +19,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.task.ReadOnlyTask;
 
-public class SetTaskCompleteCommandTest {
+public class SetCompleteCommandTest {
     private Model model = new ModelManager(getTypicalTasksOnlyAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validTaskIndex_success() throws Exception {
         ReadOnlyTask taskToChange = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
-        SetTaskCompleteCommand setCompleteCommand = prepareCommand(INDEX_FIRST_TASK);
+        SetCompleteCommand setCompleteCommand = prepareCommand(INDEX_FIRST_TASK);
 
         String expectedMessage = String.format(setCompleteCommand.MESSAGE_SUCCESS, taskToChange);
 
@@ -38,7 +38,7 @@ public class SetTaskCompleteCommandTest {
     @Test
     public void execute_invalidTaskIndex_failure() throws Exception {
         Index outOfRangeIndex = Index.fromZeroBased(model.getFilteredTaskList().size());
-        SetTaskCompleteCommand setCompleteCommand = prepareCommand(outOfRangeIndex);
+        SetCompleteCommand setCompleteCommand = prepareCommand(outOfRangeIndex);
 
         assertCommandFailure(setCompleteCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
@@ -49,7 +49,7 @@ public class SetTaskCompleteCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.setAsComplete(taskToChange, true);
-        SetTaskCompleteCommand setCompleteCommand = new SetTaskCompleteCommand(INDEX_FIRST_TASK);
+        SetCompleteCommand setCompleteCommand = new SetCompleteCommand(INDEX_FIRST_TASK);
         setCompleteCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
 
         assertCommandFailure(setCompleteCommand, expectedModel, setCompleteCommand.MESSAGE_TASK_ALREADY_COMPLETE);
@@ -57,14 +57,14 @@ public class SetTaskCompleteCommandTest {
 
     @Test
     public void equals() {
-        SetTaskCompleteCommand setFirstCommand = new SetTaskCompleteCommand(INDEX_FIRST_TASK);
-        SetTaskCompleteCommand setSecondCommand = new SetTaskCompleteCommand(INDEX_SECOND_TASK);
+        SetCompleteCommand setFirstCommand = new SetCompleteCommand(INDEX_FIRST_TASK);
+        SetCompleteCommand setSecondCommand = new SetCompleteCommand(INDEX_SECOND_TASK);
 
         // same object -> returns true
         assertTrue(setFirstCommand.equals(setFirstCommand));
 
         // same values -> returns true
-        SetTaskCompleteCommand setFirstCommandCopy = new SetTaskCompleteCommand(INDEX_FIRST_TASK);
+        SetCompleteCommand setFirstCommandCopy = new SetCompleteCommand(INDEX_FIRST_TASK);
         assertTrue(setFirstCommand.equals(setFirstCommandCopy));
 
         // different types -> returns false
@@ -78,10 +78,10 @@ public class SetTaskCompleteCommandTest {
     }
 
     /**
-     * Returns a {@code SetTaskCompleteCommand} with the parameter {@code index}.
+     * Returns a {@code SetCompleteCommand} with the parameter {@code index}.
      */
-    public SetTaskCompleteCommand prepareCommand(Index taskIndex) {
-        SetTaskCompleteCommand command = new SetTaskCompleteCommand(taskIndex);
+    public SetCompleteCommand prepareCommand(Index taskIndex) {
+        SetCompleteCommand command = new SetCompleteCommand(taskIndex);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
