@@ -36,7 +36,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address++.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui.png[width="800"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -771,3 +771,8 @@ e.g. `dismiss 4 1 from/17`
 * *Help* : kbd:[[F1]
 * *Open* : kbd:[CTRL]+kbd:[O]
 * *Save As* : kbd:[CTRL]+kbd:[S]
+
+== v2.0 UI Concept
+This is the concept design of our v2.0 end product. Actual design may vary.
+
+image::v2UIMockup.png[width="800"]
