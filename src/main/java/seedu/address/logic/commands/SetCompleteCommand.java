@@ -11,22 +11,22 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 //@@author Esilocke
 
-/** Marks the specified {@Code task} as incomplete */
-public class SetTaskIncompleteCommand extends Command {
-    public static final String COMMAND_WORD = "setincomplete";
-    public static final String COMMAND_ALIAS = "sti";
+/** Marks the specified {@Code task} as complete */
+public class SetCompleteCommand extends Command {
+    public static final String COMMAND_WORD = "setcomplete";
+    public static final String COMMAND_ALIAS = "stc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Marks the task at the specified index as <Incomplete>\n"
+            + ": Marks the task at the specified index as <Completed>\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "Marked Task as incomplete: %1$s";
-    public static final String MESSAGE_TASK_ALREADY_COMPLETE = "The specified task is already incomplete";
+    public static final String MESSAGE_SUCCESS = "Marked Task as completed: %1$s";
+    public static final String MESSAGE_TASK_ALREADY_COMPLETE = "The specified task is already completed";
 
     private final Index targetIndex;
 
-    public SetTaskIncompleteCommand(Index targetIndex) {
+    public SetCompleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -40,8 +40,7 @@ public class SetTaskIncompleteCommand extends Command {
         }
         ReadOnlyTask taskToComplete = lastShownList.get(targetIndex.getZeroBased());
         try {
-
-            model.setAsComplete(taskToComplete, false);
+            model.setAsComplete(taskToComplete, true);
         } catch (DuplicateTaskException dte) {
             throw new CommandException(MESSAGE_TASK_ALREADY_COMPLETE);
         } catch (TaskNotFoundException tnfe) {
@@ -54,7 +53,7 @@ public class SetTaskIncompleteCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SetTaskIncompleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((SetTaskIncompleteCommand) other).targetIndex)); // state check
+                || (other instanceof SetCompleteCommand // instanceof handles nulls
+                && this.targetIndex.equals(((SetCompleteCommand) other).targetIndex)); // state check
     }
 }

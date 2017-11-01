@@ -29,8 +29,8 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.SetTaskCompleteCommand;
-import seedu.address.logic.commands.SetTaskIncompleteCommand;
+import seedu.address.logic.commands.SetCompleteCommand;
+import seedu.address.logic.commands.SetIncompleteCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
@@ -91,12 +91,12 @@ public class AddressBookParser {
         case EditTagCommand.COMMAND_ALIAS:
             return new EditTagCommandParser().parse(arguments);
 
-        case SetTaskCompleteCommand.COMMAND_WORD:
-        case SetTaskCompleteCommand.COMMAND_ALIAS:
+        case SetCompleteCommand.COMMAND_WORD:
+        case SetCompleteCommand.COMMAND_ALIAS:
             return new SetTaskCompleteCommandParser().parse(arguments);
 
-        case SetTaskIncompleteCommand.COMMAND_WORD:
-        case SetTaskIncompleteCommand.COMMAND_ALIAS:
+        case SetIncompleteCommand.COMMAND_WORD:
+        case SetIncompleteCommand.COMMAND_ALIAS:
             return new SetTaskIncompleteCommandParser().parse(arguments);
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
