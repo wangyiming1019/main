@@ -22,6 +22,8 @@ public class XmlAdaptedTask {
     private String deadline;
     @XmlElement(required = true)
     private String priority;
+    @XmlElement(required = true)
+    private String state;
 
     /**
      * Constructs an XmlAdaptedTask.
@@ -52,6 +54,7 @@ public class XmlAdaptedTask {
         final Description description = new Description(this.description);
         final Deadline deadline = new Deadline(this.deadline);
         final Priority priority = new Priority(this.priority);
-        return new Task(name, description, deadline, priority, new Assignees());
+        final Boolean state = new Boolean(this.state);
+        return new Task(name, description, deadline, priority, new Assignees(), state);
     }
 }

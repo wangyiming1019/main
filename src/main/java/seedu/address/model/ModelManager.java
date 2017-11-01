@@ -232,9 +232,10 @@ public class ModelManager extends ComponentManager implements Model {
         Deadline deadline = taskToAssignTo.getDeadline();
         Priority priority = taskToAssignTo.getPriority();
         Assignees assignees = taskToAssignTo.getAssignees();
+        Boolean state = taskToAssignTo.getCompleteState();
 
         assignees.assign(personsToAssign);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
         updateTask(taskToAssignTo, updatedTask);
     }
 
@@ -247,9 +248,10 @@ public class ModelManager extends ComponentManager implements Model {
         Deadline deadline = taskToDismissFrom.getDeadline();
         Priority priority = taskToDismissFrom.getPriority();
         Assignees assignees = taskToDismissFrom.getAssignees();
+        Boolean state = taskToDismissFrom.getCompleteState();
 
         assignees.dismiss(personsToDismiss);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
         updateTask(taskToDismissFrom, updatedTask);
     }
 
