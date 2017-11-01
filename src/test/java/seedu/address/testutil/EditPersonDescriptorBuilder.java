@@ -108,7 +108,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-
+    //@@author wangyiming1019
     /**
      * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -116,7 +116,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setFavourite(new Boolean(favourite));
         return this;
     }
-
+    //@@author
     public EditPersonDescriptor build() {
         return descriptor;
     }
