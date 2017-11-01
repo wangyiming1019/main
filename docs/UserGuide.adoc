@@ -69,6 +69,8 @@ Are the font sizes too small or too large?
 
 You can change the font sizes by clicking on the Font Size button and selecting any of the following options:
 
+image::FontSizeUI.png[width="540"]
+
 * *Increase Size:* kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
 * *Decrease Size:* kbd:[CTRL] + kbd:[E] (kbd:[CMD] + kbd:[E] on MacOS)
 * *Reset Size:* kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
