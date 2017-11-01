@@ -129,8 +129,8 @@ public class MainWindow extends UiPart<Region> {
     //@@author jeffreygohkw
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-        setAccelerator(openMenuItem, KeyCombination.valueOf("CTRL+O"));
-        setAccelerator(saveMenuItem, KeyCombination.valueOf("CTRL+S"));
+        setAccelerator(openMenuItem, KeyCombination.valueOf("SHORTCUT+O"));
+        setAccelerator(saveMenuItem, KeyCombination.valueOf("SHORTCUT+S"));
         setAccelerator(exitMenuItem, KeyCombination.valueOf("ALT+F4"));
         setAccelerator(increaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+W"));
         setAccelerator(decreaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+E"));
