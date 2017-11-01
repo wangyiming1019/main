@@ -9,6 +9,8 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
+//@@author Esilocke
+
 /** Marks the specified {@Code task} as incomplete */
 public class SetTaskIncompleteCommand extends Command {
     public static final String COMMAND_WORD = "setincomplete";
