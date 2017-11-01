@@ -55,7 +55,7 @@ public class XmlAdaptedTask {
         final Description description = new Description(this.description);
         final Deadline deadline = new Deadline(this.deadline);
         final Priority priority = new Priority(this.priority);
-        final Boolean state = new Boolean(this.state);
+        final Boolean state = Boolean.valueOf(this.state);
         return new Task(name, description, deadline, priority, new Assignees(), state);
     }
 }
