@@ -45,6 +45,7 @@ public interface ReadOnlyTask {
                 && other.getDescription().equals(this.getDescription())
                 && other.getDeadline().equals(this.getDeadline())
                 && other.getPriority().equals(this.getPriority()))
-                && other.getAssignees().equals(this.getAssignees());
+                && other.getAssignees().equals(this.getAssignees())
+                && other.getCompleteState() == this.getCompleteState();
     }
 }
