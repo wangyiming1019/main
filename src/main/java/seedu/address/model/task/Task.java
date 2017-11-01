@@ -137,6 +137,9 @@ public class Task implements ReadOnlyTask {
         this.assignees.set(assignees);
     }
 
+    public void setState(boolean state) {
+        this.state.set(state);
+    }
     public String getPrintableState() {
         String printableState;
         if (state.get()) {
