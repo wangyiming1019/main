@@ -91,6 +91,13 @@ public class TaskBuilder {
         return this;
     }
 
+    /**
+     * Sets the state of the {@code Task} that we are building.
+     */
+    public TaskBuilder withState(boolean state) {
+        this.task.setState(state);
+        return this;
+    }
     public Task build() {
         return this.task;
     }
