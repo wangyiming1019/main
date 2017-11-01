@@ -69,9 +69,9 @@ Are the font sizes too small or too large?
 
 You can change the font sizes by clicking on the Font Size button and selecting any of the following options:
 
-* Increase Size: kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
-* Decrease Size kbd:[CTRL] + kbd:[S] (kbd:[CMD] + kbd:[S] on MacOS)
-* Reset Size kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
+* *Increase Size:* kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
+* *Decrease Size:* kbd:[CTRL] + kbd:[E] (kbd:[CMD] + kbd:[E] on MacOS)
+* *Reset Size:* kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
 ****
 
 Keyboard shortcuts have been provided for your convenience.
@@ -771,6 +771,9 @@ e.g. `dismiss 4 1 from/17`
 * *Help* : kbd:[[F1]
 * *Open* : kbd:[CTRL]+kbd:[O]
 * *Save As* : kbd:[CTRL]+kbd:[S]
+* *Increase Size:* kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
+* *Decrease Size:* kbd:[CTRL] + kbd:[E] (kbd:[CMD] + kbd:[E] on MacOS)
+* *Reset Size:* kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
 
 == v2.0 UI Concept
 This is the concept design of our v2.0 end product. Actual design may vary.
