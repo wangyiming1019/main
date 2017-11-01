@@ -39,6 +39,8 @@ public class TaskCard  extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label state;
+    @FXML
     private Label description;
     @FXML
     private Label deadline;
@@ -68,6 +70,7 @@ public class TaskCard  extends UiPart<Region> {
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
         assignCount.textProperty().bind(Bindings.convert(task.assigneeProperty()));
+        state.textProperty().bind(Bindings.convert(task.stateProperty()));
     }
 
     //@@author charlesgoh
