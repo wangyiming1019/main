@@ -38,15 +38,15 @@ public class SetTaskCompleteCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
+        ReadOnlyTask taskToComplete = lastShownList.get(targetIndex.getZeroBased());
         try {
-            ReadOnlyTask taskToComplete = lastShownList.get(targetIndex.getZeroBased());
             model.setAsComplete(taskToComplete, true);
         } catch (DuplicateTaskException dte) {
             throw new CommandException(MESSAGE_TASK_ALREADY_COMPLETE);
         } catch (TaskNotFoundException tnfe) {
             throw new AssertionError("This task cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, taskToComplete));
 
     }
 
