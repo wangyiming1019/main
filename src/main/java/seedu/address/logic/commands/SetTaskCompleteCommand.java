@@ -21,7 +21,7 @@ public class SetTaskCompleteCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Marked Task as completed: %1$s";
+    public static final String MESSAGE_SUCCESS = "Marked Task as completed: %1$s";
     public static final String MESSAGE_TASK_ALREADY_COMPLETE = "The specified task is already completed";
 
     private final Index targetIndex;
@@ -46,7 +46,7 @@ public class SetTaskCompleteCommand extends Command {
         } catch (TaskNotFoundException tnfe) {
             throw new AssertionError("This task cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
 
     }
 
