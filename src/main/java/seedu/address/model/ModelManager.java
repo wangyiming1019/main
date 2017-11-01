@@ -264,6 +264,9 @@ public class ModelManager extends ComponentManager implements Model {
         Priority priority = toSet.getPriority();
         Assignees assignees = toSet.getAssignees();
         Boolean state = isComplete;
+        if (state == toSet.getCompleteState()) {
+            throw new DuplicateTaskException();
+        }
 
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
         updateTask(toSet, updatedTask);
