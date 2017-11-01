@@ -255,6 +255,18 @@ public class ModelManager extends ComponentManager implements Model {
         updateTask(taskToDismissFrom, updatedTask);
     }
 
+    public void setAsComplete(ReadOnlyTask toSet, boolean isComplete)
+            throws TaskNotFoundException, DuplicateTaskException {
+        TaskName taskName = toSet.getTaskName();
+        Description description = toSet.getDescription();
+        Deadline deadline = toSet.getDeadline();
+        Priority priority = toSet.getPriority();
+        Assignees assignees = toSet.getAssignees();
+        Boolean state = isComplete;
+
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
+        updateTask(toSet, updatedTask);
+    }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
 
