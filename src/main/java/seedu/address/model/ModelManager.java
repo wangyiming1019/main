@@ -255,6 +255,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateTask(taskToDismissFrom, updatedTask);
     }
 
+    //@@author Esilocke
     public void setAsComplete(ReadOnlyTask toSet, boolean isComplete)
             throws TaskNotFoundException, DuplicateTaskException {
         TaskName taskName = toSet.getTaskName();
