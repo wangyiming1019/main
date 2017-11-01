@@ -42,6 +42,7 @@ public class XmlAdaptedTask {
         description = source.getDescription().value;
         deadline = source.getDeadline().value;
         priority = source.getPriority().value;
+        state = String.valueOf(source.getCompleteState());
     }
 
     /**
