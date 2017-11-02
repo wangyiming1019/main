@@ -27,6 +27,7 @@
                 </Label>
                 <Label fx:id="taskName" text="\$first" styleClass="cell_big_label" />
             </HBox>
+            <Label fx:id="state" styleClass="cell_small_label" text="\$state" />
             <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
             <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
             <Label fx:id="priority" styleClass="cell_small_label" text="\$priority" />

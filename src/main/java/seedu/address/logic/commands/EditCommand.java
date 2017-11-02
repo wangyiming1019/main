@@ -344,15 +344,17 @@ public class EditCommand extends UndoableCommand {
         Deadline updatedDeadline;
         Priority updatedPriority;
         Assignees assignees;
+        Boolean updatedState;
 
         updatedTaskName = editTaskDescriptor.getTaskName().orElse(taskToEdit.getTaskName());
         updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
         updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
         updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
-        // You cannot edit assignees using edit command
+        // You cannot edit assignees or state using edit command
         assignees = taskToEdit.getAssignees();
+        updatedState = taskToEdit.getCompleteState();
 
-        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees);
+        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees, updatedState);
     }
 
     //@@author

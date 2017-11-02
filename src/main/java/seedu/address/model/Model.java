@@ -90,6 +90,9 @@ public interface Model {
     void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask dismissedTask)
             throws TaskNotFoundException, DuplicateTaskException;
 
+    /** Changes the state of the specified task */
+    void setAsComplete(ReadOnlyTask toSet, boolean isComplete) throws TaskNotFoundException, DuplicateTaskException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 

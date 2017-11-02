@@ -11,32 +11,43 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class Task implements ReadOnlyTask {
 
+    public static final String TASK_INCOMPLETE = "<Incomplete>";
+    public static final String TASK_COMPLETE = "<Complete>";
+
     private ObjectProperty<TaskName> taskName;
     private ObjectProperty<Description> description;
     private ObjectProperty<Deadline> deadline;
     private ObjectProperty<Priority> priority;
     private ObjectProperty<Assignees> assignees;
+    private ObjectProperty<Boolean> state;
 
     public Task(TaskName taskName, Description description, Deadline deadline, Priority priority,
-                Assignees assignees) {
+                Assignees assignees, boolean isComplete) {
         this.taskName = new SimpleObjectProperty<>(taskName);
         this.description = new SimpleObjectProperty<>(description);
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.priority = new SimpleObjectProperty<>(priority);
         this.assignees = new SimpleObjectProperty<>(assignees);
+        this.state = new SimpleObjectProperty<>(isComplete);
     }
 
+    /**
+     * Creates a new Task object from the given arguments
+     * New tasks will not have anyone assigned to them by default, and will be marked as incomplete
+     * by default.
+     */
     public Task(TaskName taskName, Description description, Deadline deadline, Priority priority) {
         this.taskName = new SimpleObjectProperty<>(taskName);
         this.description = new SimpleObjectProperty<>(description);
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.priority = new SimpleObjectProperty<>(priority);
         this.assignees = new SimpleObjectProperty<>(new Assignees());
+        this.state = new SimpleObjectProperty<>(false);
     }
 
     public Task(ReadOnlyTask task) {
         this(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(),
-                task.getAssignees());
+                task.getAssignees(), task.getCompleteState());
     }
 
     public TaskName getTaskName() {
@@ -61,6 +72,11 @@ public class Task implements ReadOnlyTask {
     @Override
     public Assignees getAssignees() {
         return assignees.get();
+    }
+
+    @Override
+    public boolean getCompleteState() {
+        return state.get();
     }
 
     @Override
@@ -93,6 +109,12 @@ public class Task implements ReadOnlyTask {
     public ObjectProperty<Assignees> assigneeProperty() {
         return assignees;
     }
+
+    @Override
+    public ObjectProperty<String> stateProperty() {
+        String printableState = getPrintableState();
+        return new SimpleObjectProperty<>(printableState);
+    }
     // Setters for TaskBuilder testing
 
     public void setTaskName(TaskName taskName) {
@@ -114,6 +136,19 @@ public class Task implements ReadOnlyTask {
     public void setAssignees(Assignees assignees) {
         this.assignees.set(assignees);
     }
+
+    public void setState(boolean state) {
+        this.state.set(state);
+    }
+    public String getPrintableState() {
+        String printableState;
+        if (state.get()) {
+            printableState = TASK_COMPLETE;
+        } else {
+            printableState = TASK_INCOMPLETE;
+        }
+        return printableState;
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -124,6 +159,6 @@ public class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(taskName, description, deadline, priority, assignees);
+        return Objects.hash(taskName, description, deadline, priority, assignees, state);
     }
 }
