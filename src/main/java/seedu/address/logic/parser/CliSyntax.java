@@ -18,13 +18,13 @@ public class CliSyntax {
     public static final Prefix PREFIX_PHONE_PRIVATE = new Prefix("pp/");
     public static final Prefix PREFIX_EMAIL_PRIVATE = new Prefix("pe/");
     public static final Prefix PREFIX_ADDRESS_PRIVATE = new Prefix("pa/");
-    public static final Prefix PREFIX_REMARK_PRIVATE = new Prefix("ra/");
+    public static final Prefix PREFIX_REMARK_PRIVATE = new Prefix("pr/");
     public static final Prefix PREFIX_TAG_PRIVATE = new Prefix("pt/");
 
     public static final Prefix PREFIX_TASK = new Prefix("task");
     public static final Prefix PREFIX_DEADLINE = new Prefix("by/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
-    public static final Prefix PREFIX_PRIORITY = new Prefix("pr/");
+    public static final Prefix PREFIX_PRIORITY = new Prefix("pri/");
     public static final Prefix PREFIX_TARGET = new Prefix("to/");
     public static final Prefix PREFIX_FROM = new Prefix("from/");
 }

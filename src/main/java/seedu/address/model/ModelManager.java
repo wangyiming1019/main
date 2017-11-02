@@ -100,7 +100,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
-
+    //@@author wangyiming1019
     /**
      * Delete input tag from the specific persons shown in the last list.
      */
@@ -118,14 +118,14 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         }
     }
-
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-
+    //@@author wangyiming1019
     /**
      * Adds input tag to the specific persons shown in the last list.
      */
@@ -143,7 +143,7 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         }
     }
-
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -184,13 +184,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
     //@@author
-
+    //@@author wangyiming1019
     @Override
     public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.favouritePerson(target);
         indicateAddressBookChanged();
     }
-
+    //@@author wangyiming1019
     @Override
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.unfavouritePerson(target);
@@ -232,9 +232,10 @@ public class ModelManager extends ComponentManager implements Model {
         Deadline deadline = taskToAssignTo.getDeadline();
         Priority priority = taskToAssignTo.getPriority();
         Assignees assignees = taskToAssignTo.getAssignees();
+        Boolean state = taskToAssignTo.getCompleteState();
 
         assignees.assign(personsToAssign);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
         updateTask(taskToAssignTo, updatedTask);
     }
 
@@ -247,12 +248,29 @@ public class ModelManager extends ComponentManager implements Model {
         Deadline deadline = taskToDismissFrom.getDeadline();
         Priority priority = taskToDismissFrom.getPriority();
         Assignees assignees = taskToDismissFrom.getAssignees();
+        Boolean state = taskToDismissFrom.getCompleteState();
 
         assignees.dismiss(personsToDismiss);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
         updateTask(taskToDismissFrom, updatedTask);
     }
 
+    //@@author Esilocke
+    public void setAsComplete(ReadOnlyTask toSet, boolean isComplete)
+            throws TaskNotFoundException, DuplicateTaskException {
+        TaskName taskName = toSet.getTaskName();
+        Description description = toSet.getDescription();
+        Deadline deadline = toSet.getDeadline();
+        Priority priority = toSet.getPriority();
+        Assignees assignees = toSet.getAssignees();
+        Boolean state = isComplete;
+        if (state == toSet.getCompleteState()) {
+            throw new DuplicateTaskException();
+        }
+
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
+        updateTask(toSet, updatedTask);
+    }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
 

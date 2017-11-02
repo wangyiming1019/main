@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author wangyiming1019
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.favouriteFirstPerson;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;

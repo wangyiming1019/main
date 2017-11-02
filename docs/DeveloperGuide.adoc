@@ -218,6 +218,44 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Increase/Decrease/Reset Font Size
+
+On some screens, the text appear to be too small. The aim of the increase/decrease/reset font size feature is to allow
+users to customize the application's font size quickly on the go.
+
+image::FontSizeUI.png[width="540"]
+
+There are two methods of calling changes in font size. The first way is through the UI. The Class Diagram for this
+procedure is shown below:
+
+Image Placeholder
+
+The other method of calling changes in font size is through a CLI command. When the relevant command is entered,
+the Command class calls MainWindow. The rest of the process flow is identical to that of the UI triggered font size
+command.
+
+Image Placeholder
+
+==== Design Considerations
+
+**Aspect:** Implementation of Task-related commands +
+**Alternative 1 (current choice):** Use polymorphism to allow existing commands to implement the new commands +
+**Pros:** Under this scheme, any command can be extended to allow addition of new commands of any type, without affecting the architecture significantly +
+**Cons:** SRP may be violated as each Command class may now need to handle 2 different types of objects. +
+**Alternative 2:** Create new classes for all new commands +
+**Pros:** Simpler to implement. +
+**Cons:** Code duplication occurs as the commands for Person and Tasks objects share the same structure.
+
+---
+
+**Aspect:** Storage of Task objects +
+**Alternative 1 (current choice):** Store Tasks objects in a separate XML file +
+**Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa.
+**Cons:** All existing save/load functions will require an additional method to handle Task storage.
+**Alternative 2:** Store Task objects together in the default XML storage file +
+**Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
+**Cons** Any changes to the Person or Task
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 

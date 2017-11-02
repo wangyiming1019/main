@@ -28,8 +28,9 @@ public class TaskBuilder {
             Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
             Priority defaultPriority = new Priority(DEFAULT_PRIORITY);
             Assignees defaultAssignees = new Assignees();
+            Boolean defaultState = false;
             this.task = new Task(defaultTaskName, defaultDescription, defaultDeadline, defaultPriority,
-                    defaultAssignees);
+                    defaultAssignees, defaultState);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default task's values are invalid.");
         }
@@ -90,6 +91,13 @@ public class TaskBuilder {
         return this;
     }
 
+    /**
+     * Sets the state of the {@code Task} that we are building.
+     */
+    public TaskBuilder withState(boolean state) {
+        this.task.setState(state);
+        return this;
+    }
     public Task build() {
         return this.task;
     }

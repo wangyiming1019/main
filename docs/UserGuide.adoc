@@ -36,7 +36,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address++.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui.png[width="800"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -69,9 +69,11 @@ Are the font sizes too small or too large?
 
 You can change the font sizes by clicking on the Font Size button and selecting any of the following options:
 
-* Increase Size: kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
-* Decrease Size kbd:[CTRL] + kbd:[S] (kbd:[CMD] + kbd:[S] on MacOS)
-* Reset Size kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
+image::FontSizeUI.png[width="540"]
+
+* *Increase Size:* kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
+* *Decrease Size:* kbd:[CTRL] + kbd:[E] (kbd:[CMD] + kbd:[E] on MacOS)
+* *Reset Size:* kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
 ****
 
 Keyboard shortcuts have been provided for your convenience.
@@ -245,8 +247,8 @@ Format: `favourite INDEX [MORE INDEX]` +
 Examples:
 
 * `list` +
-`favourite 1 2` +
-Favourites the 1st and 2nd person in the address book.
+`favourite 2` +
+Favourites the 2nd person in the address book.
 * `find Betsy` +
 `favourite 1` +
 Favourite the 1st person in the results of the `find` command.
@@ -485,7 +487,7 @@ Locates the address of the 1st person in the results of the `find` command on Go
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-=== Mark task as complete : `setcomplete` (To be coming in V2.0)
+=== Mark task as complete : `setcomplete` (Since V1.5)
 
 Have you finally completed a task in the address book? You can use `setcomplete` to mark the specified task as complete. +
 `setcomplete` can be replaced by `stc` for faster input. +
@@ -506,7 +508,7 @@ Sets the 2nd task in the address book as completed.
 `setcomplete 1` +
 Sets the 1st task in the results of the `find task` command as completed.
 
-=== Mark task as incomplete : `setincomplete` (To be coming in V2.0)
+=== Mark task as incomplete : `setincomplete` (Since V1.5)
 
 Did you accidentally mark a task as completed? You can use `setincomplete` to mark the specified task as incomplete. +
 `setincomplete` can be replaced by `sti` for faster input. +
@@ -625,8 +627,8 @@ Format: `unfavourite INDEX [MORE INDEX]` +
 Examples:
 
 * `list` +
-`unfavourite 1 2` +
-Unfavourites the 1st and 2nd person in the address book.
+`unfavourite 2` +
+Unfavourites the 2nd person in the address book.
 * `find Betsy` +
 `unfavourite 1` +
 Unfavourite the 1st person in the results of the `find` command.
@@ -733,8 +735,16 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `edit task 2 p/veryhigh`
 * *Edit tag* : `edittag TAGTOCHANGE NEWTAGNAME` +
 e.g. `edittag friends enemies`
+* *Favourite persons* :`favourite INDEX` +
+e.g. `favourite 1`
+* *Unfavourite persons* :`unfavourite INDEX` +
+e.g. `unfavourite 1`
+* *Show favourite list* :`showfavourite` +
+e.g. `showfavourite`
 * *Find person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find tag* : `findtag Tag [MORE_TAGS]` +
+e.g. `findtag friends`
 * *Find task* : `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY]` +
 e.g. `find task update p/high`
 * *Help* : `help`
@@ -763,3 +773,11 @@ e.g. `dismiss 4 1 from/17`
 * *Help* : kbd:[[F1]
 * *Open* : kbd:[CTRL]+kbd:[O]
 * *Save As* : kbd:[CTRL]+kbd:[S]
+* *Increase Size:* kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
+* *Decrease Size:* kbd:[CTRL] + kbd:[E] (kbd:[CMD] + kbd:[E] on MacOS)
+* *Reset Size:* kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
+
+== v2.0 UI Concept
+This is the concept design of our v2.0 end product. Actual design may vary.
+
+image::v2UIMockup.png[width="800"]
