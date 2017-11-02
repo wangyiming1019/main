@@ -29,7 +29,7 @@ public class UniquePersonListTest {
 
     //@@author charlesgoh
     @Test
-    public void sort_ByName_bothOrders() {
+    public void sortPerson_byName_bothOrders() {
         // Set up expected result
         List<ReadOnlyPerson> personList = TypicalPersons.getTypicalPersons();
         Comparator<ReadOnlyPerson> nameComparator = new Comparator<ReadOnlyPerson>() {
@@ -60,7 +60,7 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void sort_ByPhone_bothOrders() {
+    public void sortPerson_byPhone_bothOrders() {
         // Set up expected result
         List<ReadOnlyPerson> personList = TypicalPersons.getTypicalPersons();
         Comparator<ReadOnlyPerson> phoneComparator = new Comparator<ReadOnlyPerson>() {
@@ -91,7 +91,7 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void sort_ByEmail_bothOrders() {
+    public void sortPerson_byEmail_bothOrders() {
         // Set up expected result
         List<ReadOnlyPerson> personList = TypicalPersons.getTypicalPersons();
         Comparator<ReadOnlyPerson> emailComparator = new Comparator<ReadOnlyPerson>() {
@@ -122,7 +122,7 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void sort_ByAddress_bothOrders() {
+    public void sortPerson_byAddress_bothOrders() {
         // Set up expected result
         List<ReadOnlyPerson> personList = TypicalPersons.getTypicalPersons();
         Comparator<ReadOnlyPerson> addressComparator = new Comparator<ReadOnlyPerson>() {

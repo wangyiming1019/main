@@ -29,7 +29,7 @@ public class UniqueTaskListTest {
     }
 
     @Test
-    public void sortTasks_ByDeadline_bothOrders() {
+    public void sortTasks_byDeadline_bothOrders() {
         // Set up expected result
         List<ReadOnlyTask> taskList = TypicalTasks.getTypicalTasks();
         Comparator<ReadOnlyTask> deadlineComparator = new Comparator<ReadOnlyTask>() {
@@ -60,7 +60,7 @@ public class UniqueTaskListTest {
     }
 
     @Test
-    public void sortTasks_ByPriority_bothOrders() {
+    public void sortTasks_byPriority_bothOrders() {
         // Set up expected result
         List<ReadOnlyTask> taskList = TypicalTasks.getTypicalTasks();
         Comparator<ReadOnlyTask> deadlineComparator = new Comparator<ReadOnlyTask>() {

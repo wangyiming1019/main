@@ -56,7 +56,9 @@ public class SortCommand extends UndoableCommand {
         return this.order;
     }
 
-    public String getList() { return this.list; }
+    public String getList() {
+        return this.list;
+    }
 
     @Override
     public CommandResult executeUndoableCommand() {
