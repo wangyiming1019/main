@@ -469,31 +469,39 @@ Tasks objects are stored in the same level of hierarchy as Person objects, and d
 
 === Sort Command
 
-The sort command is facilitated by the `sortBy` method in UniquePersonList. It supports
+The sort command is facilitated by the `sortBy` methods in UniquePersonList and UniqueTaskList. It supports
 sort by ascending or by descending order in any field.
 
 The sort enhancement utilises the Java Collections Sort API by passing it a custom Comparator.
 
 The sort command is parsed through `SortCommandParser`, which passes control over to the `SortCommand`
-class. The actual sorting happens via the UniquePersonList class.
+class. The actual sorting happens via the UniquePersonList class or the UniqueTaskList class.
 
-The UML Class diagram for this sort command implementation is shown below:
+The UML Class diagram for sort commands that trigger sorting in person listings is shown below:
 
-image::SortCommandDiagram.png[width="800"]
+image::SortCommandPersonDiagram.png[width="800"]
+
+Likewise, the UML Class diagram for sort commands that trigger sorting in person listings is shown below:
+
+image::SortCommandTaskDiagram.png[width="800"]
+
+We can deduce from the UML diagrams diagrams above that the only difference between the implementation
+of the sorting for persons and tasks lies in the location where the sorting is actually executed.
 
 Suppose a user enters a new command `sort name desc`. The following sequence diagram
 demonstrates how the sort command works.
 
 image::SortSequenceDiagram.png[width="800]
 
-Note that the execution of the sort methods result in the actual person list being sorted. The resulting list
+Note that the execution of the sort methods result in the actual person or task list being sorted. The resulting list
 is not returned, but will be reflected in the application's storage and graphical user interface.
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `sort Command` +
-**Alternative 1 (current choice):** Implement sorting functionality in `UniquePersonList` class. +
-**Pros:** Delegates the concern of sorting to the class that is responsible for the core of most operations done to the person lists. Future changes to the implementation will be easier as a consequence. +
+**Alternative 1 (current choice):** Implement sorting functionality in `UniquePersonList` and `UniqueTaskList` class. +
+**Pros:** Delegates the concern of sorting to the class that is responsible for the core of most operations done to the lists.
+Future changes to the implementation will be easier as a consequence. +
 **Cons:** Hard for new developers to understand the flow of control passed between classes at first. +
 **Alternative 2:** Implement the sorting functionality within other classes like `AddressBook` or `SortCommand`. +
 **Pros:** May be more intuitive for new developers and it is easier to trace function calls between lesser classes involved. +
@@ -503,7 +511,7 @@ is not returned, but will be reflected in the application's storage and graphica
 
 **Aspect:** Temporary Sort Implementation vs. Persistent Sort Implementation +
 **Alternative 1 (current choice):** Saves the entire address book after sorting. +
-**Pros:** More intuitive for both user and developer and reduced complexity in implementation. +
+**Pros:** More intuitive and reduces complexity in implementation. +
 **Cons:** Old order of contact instances in the address book will be lost +
 **Alternative 2:** Duplicate a temporary version of the list and sort it for viewing (i.e. the actual list is not sorted) +
 **Pros:** Old order of contact instances remains intact. +
