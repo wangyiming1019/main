@@ -487,7 +487,7 @@ Locates the address of the 1st person in the results of the `find` command on Go
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-=== Mark task as complete : `setcomplete` (To be coming in V2.0)
+=== Mark task as complete : `setcomplete` (Since V1.5)
 
 Have you finally completed a task in the address book? You can use `setcomplete` to mark the specified task as complete. +
 `setcomplete` can be replaced by `stc` for faster input. +
@@ -508,7 +508,7 @@ Sets the 2nd task in the address book as completed.
 `setcomplete 1` +
 Sets the 1st task in the results of the `find task` command as completed.
 
-=== Mark task as incomplete : `setincomplete` (To be coming in V2.0)
+=== Mark task as incomplete : `setincomplete` (Since V1.5)
 
 Did you accidentally mark a task as completed? You can use `setincomplete` to mark the specified task as incomplete. +
 `setincomplete` can be replaced by `sti` for faster input. +
