@@ -15,7 +15,7 @@ public class Priority {
     public static final int PRIORITY_LOWER_BOUND = 1;
     public static final int PRIORITY_UPPER_BOUND = 5;
     public static final String PRIORITY_VALIDATION_REGEX = "[\\d].*";
-    public static final String PRIORITY_PLACEHOLDER_VALUE = "";
+    public static final String PRIORITY_PLACEHOLDER_VALUE = "0";
     public final int value;
 
     /**
