@@ -1,16 +1,19 @@
 package seedu.address.model.task;
 
-import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-
 //@@author Esilocke
 /**
  * Represents the deadline of a task in the address book.
  */
 public class Deadline {
-    public static final String MESSAGE_DEADLINE_CONSTRAINTS =
-            "Task deadlines must be in the format DD-MM-YYYY, with '-', '.', '.' as separators";
+    public static final String MESSAGE_INVALID_DATE =
+            "The specified date is invalid.";
     public static final String DEADLINE_PLACEHOLDER_VALUE = "";
     /*
     Deadline format: DDSMMSYYYY, in DAY-MONTH-YEAR format.
@@ -28,7 +31,7 @@ public class Deadline {
     private static final int DEADLINE_MONTH_INDEX = 1;
     private static final int DEADLINE_YEAR_INDEX = 2;
 
-    public final Calendar calendar;
+    public final Date date;
     public final String value;
 
     /**
@@ -39,79 +42,50 @@ public class Deadline {
     public Deadline(String deadline) throws IllegalValueException {
         if (deadline == null) {
             this.value = DEADLINE_PLACEHOLDER_VALUE;
-            this.calendar = null;
+            this.date = null;
             return;
         } else if (deadline.equals(DEADLINE_PLACEHOLDER_VALUE)) {
             this.value = DEADLINE_PLACEHOLDER_VALUE;
-            this.calendar = null;
+            this.date = null;
             return;
         }
-        String trimmedDeadline = deadline.trim();
-        if (!isValidDeadline(trimmedDeadline)) {
-            throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
-        }
-        this.value = trimmedDeadline;
-        this.calendar = Calendar.getInstance();
-        calendar.clear();
-        char separator = trimmedDeadline.charAt(DEADLINE_SEPARATOR_INDEX_1);
-        String[] splitTest = trimmedDeadline.split(Character.toString(separator));
-        int day = Integer.parseInt(splitTest[DEADLINE_DAY_INDEX]);
-        int month = Integer.parseInt(splitTest[DEADLINE_MONTH_INDEX]);
-        int year = Integer.parseInt(splitTest[DEADLINE_YEAR_INDEX]);
-
-        this.calendar.set(year, month, day);
-    }
-
-    /**
-     * Returns true if a given string is in valid deadline format.
-     */
-    public static boolean isValidDeadline(String test) {
-        if (test.equals(DEADLINE_PLACEHOLDER_VALUE)) {
-            return true;
-        } else if (!test.matches(DEADLINE_VALIDATION_REGEX)) {
-            return false;
-        } else if (test.charAt(DEADLINE_SEPARATOR_INDEX_1) != test.charAt(DEADLINE_SEPARATOR_INDEX_2)) {
-            return false;
-        } else {
-            return isValidDate(test);
-        }
+        this.date = setDateFromArgs(deadline);
+        this.value = date.toString();
     }
 
     /**
      * Returns true if the given string is a valid date.
      * Guarantees: given string format is valid
      */
-    public static boolean isValidDate(String test) {
-        Calendar testCalendar = setCalendar(test);
-        try {
-            testCalendar.setLenient(false);
-            testCalendar.getTime();
+    public static boolean isValidDeadline(String test) {
+        if (test.equals(DEADLINE_PLACEHOLDER_VALUE)) {
             return true;
-        } catch (IllegalArgumentException e) {
+        }
+        try {
+            Date testDate = setDateFromArgs(test);
+            return true;
+        } catch (IllegalValueException e) {
             return false;
         }
     }
 
     /**
-     * Returns a Calendar object that represents the given date string.
+     * Returns a Date object that represents the given date string.
      */
-    private static Calendar setCalendar(String date) {
-        Calendar result = Calendar.getInstance();
-        result.clear();
-        String separator = Character.toString(date.charAt(DEADLINE_SEPARATOR_INDEX_1));
-        if (separator.equals(DEADLINE_PERIOD_DELIMITER)) {
-            separator = "\\.";
+    private static Date setDateFromArgs(String date) throws IllegalValueException {
+        Parser deadlineParser = new Parser();
+        List<DateGroup> groups = deadlineParser.parse(date);
+        List<Date> dates = null;
+        for (DateGroup group : groups) {
+            dates = group.getDates();
         }
-
-        String[] splitTest = date.split(separator);
-
-        int day = Integer.parseInt(splitTest[DEADLINE_DAY_INDEX]);
-        int month = Integer.parseInt(splitTest[DEADLINE_MONTH_INDEX]);
-        int year = Integer.parseInt(splitTest[DEADLINE_YEAR_INDEX]);
-
-        result.set(year, month, day);
-        return result;
+        if (dates == null) {
+            throw new IllegalValueException(MESSAGE_INVALID_DATE);
+        } else {
+            return dates.get(0);
+        }
     }
+
     @Override
     public String toString() {
         return value;
