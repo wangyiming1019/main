@@ -221,7 +221,7 @@ public class AddCommandParserTest {
         // invalid deadline
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + INVALID_DEADLINE_DESC
-                + PRIORITY_DESC_PENCIL, Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
+                + PRIORITY_DESC_PENCIL, Deadline.MESSAGE_INVALID_DATE);
 
         // invalid priority
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
@@ -231,6 +231,6 @@ public class AddCommandParserTest {
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + INVALID_DEADLINE_DESC
-                + INVALID_PRIORITY_DESC, Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
+                + INVALID_PRIORITY_DESC, Deadline.MESSAGE_INVALID_DATE);
     }
 }
