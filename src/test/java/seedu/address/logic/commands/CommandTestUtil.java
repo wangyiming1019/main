@@ -95,7 +95,7 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "20-20-20000"; // bad date format
+    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "TIMELESS AGES"; // not a date
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "6"; // priority is out of bounds
 
     public static final String TASK_SEPARATOR = " " + PREFIX_TASK + " ";
