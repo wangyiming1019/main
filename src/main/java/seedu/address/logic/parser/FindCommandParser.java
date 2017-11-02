@@ -1,13 +1,17 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.Arrays;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.task.Priority;
 import seedu.address.model.task.TaskContainsKeywordPredicate;
 
 /**
@@ -21,7 +25,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_PRIORITY, PREFIX_STATE);
         String trimmedArgs = args.trim();
 
         if (!argMultimap.getValue(PREFIX_TASK).isPresent()) {
@@ -33,13 +37,57 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         } else {
             String argsWithNoTaskPrefix = args.replaceFirst(PREFIX_TASK.getPrefix(), "");
-            trimmedArgs = argsWithNoTaskPrefix.trim();
+            argMultimap = ArgumentTokenizer.tokenize(argsWithNoTaskPrefix, PREFIX_PRIORITY, PREFIX_STATE);
+            String keywords = argMultimap.getPreamble();
+            trimmedArgs = keywords.trim();
+            boolean isPriorityFindRequired = argMultimap.getValue(PREFIX_PRIORITY).isPresent();
+            boolean isStateFindRequired = argMultimap.getValue(PREFIX_STATE).isPresent();
+            int minPriority = 0;
+            boolean isComplete = false;
+            if (isPriorityFindRequired) {
+                minPriority = parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get());
+            }
+            if (isStateFindRequired) {
+                isComplete = parseState(argMultimap.getValue(PREFIX_STATE).get());
+            }
             if (trimmedArgs.isEmpty()) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_TASK_USAGE));
             }
             String[] nameKeywords = trimmedArgs.split("\\s+");
-            return new FindCommand(new TaskContainsKeywordPredicate(Arrays.asList(nameKeywords)));
+
+            return new FindCommand(new TaskContainsKeywordPredicate(Arrays.asList(nameKeywords), isStateFindRequired,
+                    isPriorityFindRequired, isComplete, minPriority));
         }
+    }
+
+    /**
+     * Parses the given string, and returns an integer corresponding to its value
+     * Guarantees: The specified value is valid as a priority value
+     */
+    public int parsePriority(String args) throws ParseException {
+        if (args == null) {
+            throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+        }
+        try {
+            Priority priority = new Priority(args);
+            return priority.value;
+        } catch (IllegalValueException ive) {
+            throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Parses the given string, and returns a boolean value corresponding to its value
+     */
+    public boolean parseState(String args) throws ParseException {
+        if (args == null || args.trim().equals("")) {
+            throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+        }
+        String trimmed = args.trim();
+        if (trimmed.equals("true") || trimmed.equals("false")) {
+            return Boolean.valueOf(trimmed);
+        }
+        throw new ParseException(FindCommand.MESSAGE_INVALID_COMPLETE_VALUE);
     }
 }
