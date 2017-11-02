@@ -153,11 +153,19 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author charlesgoh
     @Override
     public void sortPersons(String field, String order) {
         addressBook.sortPersonsBy(field, order);
         indicateAddressBookChanged();
     }
+
+    @Override
+    public void sortTasks(String field, String order) {
+        addressBook.sortTasksBy(field, order);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     //@@author Esilocke
     /**

@@ -50,50 +50,50 @@ public class SortCommandParserTest {
         SortCommand expectedCommand;
         SortCommand actualCommand;
 
-        expectedCommand = new SortCommand("name", "asc");
-        actualCommand = parser.parse("name asc");
+        expectedCommand = new SortCommand("person","name", "asc");
+        actualCommand = parser.parse("person name asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("name", "desc");
-        actualCommand = parser.parse("name desc");
+        expectedCommand = new SortCommand("person","name", "desc");
+        actualCommand = parser.parse("person name desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("phone", "asc");
-        actualCommand = parser.parse("phone asc");
+        expectedCommand = new SortCommand("person","phone", "asc");
+        actualCommand = parser.parse("person phone asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("phone", "desc");
-        actualCommand = parser.parse("phone desc");
+        expectedCommand = new SortCommand("person","phone", "desc");
+        actualCommand = parser.parse("person phone desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("email", "asc");
-        actualCommand = parser.parse("email asc");
+        expectedCommand = new SortCommand("person","email", "asc");
+        actualCommand = parser.parse("person email asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("email", "desc");
-        actualCommand = parser.parse("email desc");
+        expectedCommand = new SortCommand("person","email", "desc");
+        actualCommand = parser.parse("person email desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("address", "asc");
-        actualCommand = parser.parse("address asc");
+        expectedCommand = new SortCommand("person","address", "asc");
+        actualCommand = parser.parse("person address asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("address", "desc");
-        actualCommand = parser.parse("address desc");
+        expectedCommand = new SortCommand("person","address", "desc");
+        actualCommand = parser.parse("person address desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());

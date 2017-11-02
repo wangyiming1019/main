@@ -112,9 +112,16 @@ public interface Model {
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
     /**
-     * Sorts all persons in person list by field in ascending (asc) or descending (desc) order
+     * Sorts all persons in person list by chosen field in ascending (asc) or descending (desc) order
      * @param field
      * @param order
      */
     void sortPersons(String field, String order);
+
+    /**
+     * Sorts all tasks in task list by chosen field in ascending (asc) or descending (desc) order
+     * @param field
+     * @param order
+     */
+    void sortTasks(String field, String order);
 }

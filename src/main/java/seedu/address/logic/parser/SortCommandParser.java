@@ -12,8 +12,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 //@@author charlesgoh
 public class SortCommandParser implements Parser<SortCommand> {
 
-    public static final int FIELD_ARG_POSITION = 0;
-    public static final int ORDER_ARG_POSITION = 1;
+    public static final int LIST_ARG_POSITION = 0;
+    public static final int FIELD_ARG_POSITION = 1;
+    public static final int ORDER_ARG_POSITION = 2;
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
@@ -33,17 +34,19 @@ public class SortCommandParser implements Parser<SortCommand> {
             argKeywords[i] = argKeywords[i].toLowerCase();
         }
 
-        if (argKeywords.length != 2) {
+        if (argKeywords.length != 3) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
         if (!SortCommand.ACCEPTED_FIELD_PARAMETERS.contains(argKeywords[FIELD_ARG_POSITION])
-                    || !SortCommand.ACCEPTED_ORDER_PARAMETERS.contains(argKeywords[ORDER_ARG_POSITION])) {
+                    || !SortCommand.ACCEPTED_ORDER_PARAMETERS.contains(argKeywords[ORDER_ARG_POSITION])
+                    || !SortCommand.ACCEPTED_LIST_PARAMETERS.contains(argKeywords[LIST_ARG_POSITION])) {
             throw new ParseException(String.format(MESSAGE_INVALID_INPUT, SortCommand.MESSAGE_USAGE));
         }
 
         // If there are no problems with the input, return a new instance of SortCommand
-        return new SortCommand(argKeywords[FIELD_ARG_POSITION], argKeywords[ORDER_ARG_POSITION]);
+        return new SortCommand(argKeywords[LIST_ARG_POSITION],
+                argKeywords[FIELD_ARG_POSITION], argKeywords[ORDER_ARG_POSITION]);
 
     }
 
