@@ -35,7 +35,7 @@ public class UniqueTaskListTest {
         Comparator<ReadOnlyTask> deadlineComparator = new Comparator<ReadOnlyTask>() {
             @Override
             public int compare(ReadOnlyTask o1, ReadOnlyTask o2) {
-                return o1.getDeadline().value.compareTo(o2.getDeadline().value);
+                return o1.getDeadline().date.compareTo(o2.getDeadline().date);
             }
         };
         Collections.sort(taskList, deadlineComparator);
