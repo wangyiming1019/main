@@ -25,11 +25,7 @@ public class Deadline {
      * @throws IllegalValueException if given deadline string is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
-        if (deadline == null) {
-            this.value = DEADLINE_PLACEHOLDER_VALUE;
-            this.date = null;
-            return;
-        } else if (deadline.equals(DEADLINE_PLACEHOLDER_VALUE)) {
+        if (deadline == null || deadline.equals(DEADLINE_PLACEHOLDER_VALUE)) {
             this.value = DEADLINE_PLACEHOLDER_VALUE;
             this.date = null;
             return;
