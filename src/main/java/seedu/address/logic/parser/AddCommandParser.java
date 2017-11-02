@@ -51,10 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
-                        PREFIX_REMARK_PRIVATE, PREFIX_TAG, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE,
-                        PREFIX_EMAIL_PRIVATE, PREFIX_ADDRESS_PRIVATE, PREFIX_TAG_PRIVATE, PREFIX_DEADLINE,
-                        PREFIX_DESCRIPTION, PREFIX_PRIORITY, PREFIX_TASK);
+                ArgumentTokenizer.tokenize(args, PREFIX_TASK);
         if (arePrefixesPresent(argMultimap, PREFIX_TASK)) {
             ReadOnlyTask taskToAdd = constructTask(args);
             return new AddCommand(taskToAdd);
