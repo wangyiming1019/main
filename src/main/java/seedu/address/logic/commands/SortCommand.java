@@ -31,7 +31,7 @@ public class SortCommand extends UndoableCommand {
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n"
             + "Accepted Person Field Values: NAME, PHONE, EMAIL, ADDRESS, TASK \n"
-            + "Accepted Task Field Values: DEADLINE, PRIORITY"
+            + "Accepted Task Field Values: DEADLINE, PRIORITY\n"
             + "Accepted Order Values: ASC, DESC";
 
     public static final String MESSAGE_SUCCESS_PERSONS = "All persons in address book successfully sorted";
