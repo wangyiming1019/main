@@ -80,8 +80,7 @@ public class Deadline {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Deadline // instanceof handles nulls
-                && this.value.equals(((Deadline) other).value)
-                && this.date.equals(((Deadline) other).date)); // state check
+                && this.value.equals(((Deadline) other).value)); // state check
     }
 
     @Override
