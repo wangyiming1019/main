@@ -15,21 +15,6 @@ public class Deadline {
     public static final String MESSAGE_INVALID_DATE =
             "The specified date is invalid.";
     public static final String DEADLINE_PLACEHOLDER_VALUE = "";
-    /*
-    Deadline format: DDSMMSYYYY, in DAY-MONTH-YEAR format.
-    S represents the separators, and can be any of these characters: - . /
-     */
-    public static final String DEADLINE_VALIDATION_REGEX = "\\d\\d[-./]\\d\\d[-./]\\d\\d\\d\\d.*";
-    private static final String DEADLINE_PERIOD_DELIMITER = ".";
-
-    /*
-    Expected indexes for the separator characters
-     */
-    private static final int DEADLINE_SEPARATOR_INDEX_1 = 2;
-    private static final int DEADLINE_SEPARATOR_INDEX_2 = 5;
-    private static final int DEADLINE_DAY_INDEX = 0;
-    private static final int DEADLINE_MONTH_INDEX = 1;
-    private static final int DEADLINE_YEAR_INDEX = 2;
 
     public final Date date;
     public final String value;
@@ -62,7 +47,7 @@ public class Deadline {
             return true;
         }
         try {
-            Date testDate = setDateFromArgs(test);
+            setDateFromArgs(test);
             return true;
         } catch (IllegalValueException e) {
             return false;
@@ -95,7 +80,8 @@ public class Deadline {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Deadline // instanceof handles nulls
-                && this.value.equals(((Deadline) other).value)); // state check
+                && this.value.equals(((Deadline) other).value)
+                && this.date.equals(((Deadline) other).date)); // state check
     }
 
     @Override
