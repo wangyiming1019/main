@@ -59,4 +59,35 @@ public class UniqueTaskListTest {
         // Check descending order sort
         assertEquals(expectedTaskList, actualTaskList);
     }
+
+    @Test
+    public void sortTasks_ByPriority_bothOrders() {
+        // Set up expected result
+        List<ReadOnlyTask> taskList = TypicalTasks.getTypicalTasks();
+        Comparator<ReadOnlyTask> deadlineComparator = new Comparator<ReadOnlyTask>() {
+            @Override
+            public int compare(ReadOnlyTask o1, ReadOnlyTask o2) {
+                return o1.getPriority().value.compareTo(o2.getPriority().value);
+            }
+        };
+        Collections.sort(taskList, deadlineComparator);
+        ObservableList<ReadOnlyTask> expectedTaskList = FXCollections.observableList(taskList);
+
+        // Set up actual result
+        AddressBook addressBook = TypicalTasks.getTypicalTasksOnlyAddressBook();
+        addressBook.sortTasksBy("priority", "asc");
+        ObservableList<ReadOnlyTask> actualTaskList = addressBook.getTasksList();
+
+        // Check ascending order sort
+        assertEquals(expectedTaskList, actualTaskList);
+
+        // Set up descending order sort
+        Collections.sort(taskList, Collections.reverseOrder(deadlineComparator));
+        expectedTaskList = FXCollections.observableList(taskList);
+        addressBook.sortTasksBy("priority", "desc");
+        actualTaskList = addressBook.getTasksList();
+
+        // Check descending order sort
+        assertEquals(expectedTaskList, actualTaskList);
+    }
 }
