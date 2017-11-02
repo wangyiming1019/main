@@ -1,190 +1,100 @@
 # charlesgoh
-###### /resources/view/MainWindow.fxml
-``` fxml
-      <Menu mnemonicParsing="false" text="Font Size">
-        <items>
-          <MenuItem fx:id="increaseSizeMenuItem" mnemonicParsing="false" onAction="#handleIncreaseFontSize" text="Increase +" />
-            <MenuItem fx:id="decreaseSizeMenuItem" mnemonicParsing="false" onAction="#handleDecreaseFontSize" text="Decrease -" />
-            <MenuItem fx:id="resetSizeMenuItem" mnemonicParsing="false" onAction="#handleResetFontSize" text="Reset" />
-        </items>
-      </Menu>
-```
-###### /java/seedu/address/ui/TaskCard.java
+###### \java\seedu\address\logic\commands\BackupCommand.java
 ``` java
-    /**
-     * Set default size for all attributes
-     */
-    public void updateAttributeSizes() {
-        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
-        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+public class BackupCommand extends Command {
+    public static final String COMMAND_WORD = "backup";
+    public static final String COMMAND_ALIAS = "bk";
 
-        // Set styles using set name and attribute sizes
-        taskName.setStyle("-fx-font-size: " + Integer.toString(nameSize));
-        id.setStyle("-fx-font-size: " + Integer.toString(nameSize));
-        description.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        deadline.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        priority.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-    }
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Backs up data to a user input "
+            + "location field [FILEPATH]\n"
+            + "Parameter: KEYWORD [FILEPATH]\n"
+            + "Example: " + COMMAND_WORD + " ~/Desktop";
+
+    public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n";
+
+    public static final String MESSAGE_SUCCESS = "AddressBook++ data backed up successfully.";
+
+    private String args;
+
 ```
-###### /java/seedu/address/ui/TaskCard.java
+###### \java\seedu\address\logic\commands\BackupCommand.java
 ``` java
+    public BackupCommand(String trimmedArgs) {
+        super();
+        this.args = trimmedArgs;
+    }
 
     @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        requireNonNull(model.getAddressBook());
+        requireNonNull(storage);
+        try {
+            if (args.equals("")) {
+                storage.backupAddressBookDefault(model.getAddressBook());
+            } else {
+                storage.backupAddressBook(model.getAddressBook(), args);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        // instanceof handles nulls
-        if (!(other instanceof TaskCard)) {
-            return false;
-        }
-
-        // state check
-        TaskCard card = (TaskCard) other;
-        return id.getText().equals(card.id.getText())
-                && task.equals(card.task);
-    }
-
-    public Label getTaskName() {
-        return taskName;
-    }
-
-    public Label getId() {
-        return id;
-    }
-
-    public Label getDescription() {
-        return description;
-    }
-
-    public Label getDeadline() {
-        return deadline;
-    }
-
-    public Label getPriority() {
-        return priority;
-    }
-
-    public void setFontSizeMultiplier(int fontSizeMultipler) {
-        this.fontSizeMultipler = fontSizeMultipler;
-    }
-
-    public int getFontSizeMultiplier() {
-        return this.fontSizeMultipler;
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }
 ```
-###### /java/seedu/address/ui/TaskListPanel.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
-    /**
-     * Increases all task cards' font sizes in person list
-     */
-    public void increaseFontSize() {
-        logger.info("TaskListPanel: Increasing font sizes");
-        fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier + 1);
-        setConnections(taskList);
-    }
+public class SortCommand extends UndoableCommand {
 
-    /**
-     * Decreases all task cards' font sizes in person list
-     */
-    public void decreaseFontSize() {
-        logger.info("TaskListPanel: Decreasing font sizes");
-        fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier - 1);
-        setConnections(taskList);
-    }
+    public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "so";
 
-    /**
-     * Resets all task cards' font sizes in person list
-     */
-    public void resetFontSize() {
-        logger.info("TaskListPanel: Resetting font sizes");
-        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
-        setConnections(taskList);
-    }
+    public static final ArrayList<String> ACCEPTED_FIELD_PARAMETERS = new ArrayList<>(Arrays.asList(
+            "name", "phone", "email", "address"));
+
+    public static final ArrayList<String> ACCEPTED_ORDER_PARAMETERS = new ArrayList<>(Arrays.asList(
+            "asc", "desc"));
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons by chosen "
+                + "field [NAME/PHONE/EMAIL/ADDRESS] and by order [ASC/DESC]. Case insensitive\n"
+                + "Parameters: KEYWORD [FIELD] [ORDER]\n"
+                + "Example: " + COMMAND_WORD + " email desc";
+
+    public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n"
+            + "Accepted Field Values: NAME, PHONE, EMAIL, ADDRESS \n"
+            + "Accepted Order Values: ASC, DESC";
+
+    public static final String MESSAGE_SUCCESS = "All persons in address book successfully sorted";
+
+    private final String field;
+    private final String order;
+
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
-    /**
-     * Handle increase font size command
-     */
-    @FXML
-    public void handleIncreaseFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.increaseFontSize();
-        taskListPanel.increaseFontSize();
+    public SortCommand(String field, String order) {
+        this.field = field;
+        this.order = order;
     }
 
-    /**
-     * Handle decrease font size command
-     */
-    @FXML
-    public void handleDecreaseFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.decreaseFontSize();
-        taskListPanel.decreaseFontSize();
+    public String getField() {
+        return this.field;
     }
 
-    /**
-     * Handle reset font size command
-     */
-    @FXML
-    public void handleResetFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.resetFontSize();
-        taskListPanel.resetFontSize();
+    public String getOrder() {
+        return this.order;
     }
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(model);
+        model.sortPersons(getField(), getOrder());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+}
 ```
-###### /java/seedu/address/ui/PersonListPanel.java
-``` java
-    /**
-     * Increases all person cards' font sizes in person list
-     */
-    public void increaseFontSize() {
-        logger.info("PersonListPanel: Increasing font sizes");
-        fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier + 1);
-        setConnections(personList);
-    }
-
-    /**
-     * Decreases all person cards' font sizes in person list
-     */
-    public void decreaseFontSize() {
-        logger.info("PersonListPanel: Decreasing font sizes");
-        fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier - 1);
-        setConnections(personList);
-    }
-
-    /**
-     * Resets all person cards' font sizes in person list
-     */
-    public void resetFontSize() {
-        logger.info("PersonListPanel: Resetting font sizes");
-        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
-        setConnections(personList);
-    }
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    /**
-     * Set default size for all attributes
-     */
-    public void updateAttributeSizes() {
-        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
-        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
-
-        // Set styles using set name and attribute sizes
-        name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
-        id.setStyle("-fx-font-size: " + Integer.toString(nameSize));
-        phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-        email.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
-    }
-```
-###### /java/seedu/address/logic/parser/BackupCommandParser.java
+###### \java\seedu\address\logic\parser\BackupCommandParser.java
 ``` java
 public class BackupCommandParser implements Parser<BackupCommand> {
 
@@ -195,7 +105,7 @@ public class BackupCommandParser implements Parser<BackupCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/SortCommandParser.java
+###### \java\seedu\address\logic\parser\SortCommandParser.java
 ``` java
 public class SortCommandParser implements Parser<SortCommand> {
 
@@ -208,7 +118,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
 ```
-###### /java/seedu/address/logic/parser/SortCommandParser.java
+###### \java\seedu\address\logic\parser\SortCommandParser.java
 ``` java
     public SortCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
@@ -238,147 +148,92 @@ public class SortCommandParser implements Parser<SortCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/commands/BackupCommand.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
-public class BackupCommand extends Command {
-    public static final String COMMAND_WORD = "backup";
-    public static final String COMMAND_ALIAS = "bk";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Backs up data to a user input "
-            + "location field [FILEPATH]\n"
-            + "Parameter: KEYWORD [FILEPATH]\n"
-            + "Example: " + COMMAND_WORD + " ~/Desktop";
-
-    public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n";
-
-    public static final String MESSAGE_SUCCESS = "AddressBook++ data backed up successfully.";
-
-    private String args;
-
-```
-###### /java/seedu/address/logic/commands/BackupCommand.java
-``` java
-    public BackupCommand(String trimmedArgs) {
-        super();
-        this.args = trimmedArgs;
+    /**
+     * Sorts persons in person list by any field, in either ascending or descending order
+     *
+     * @param field
+     * @param order
+     */
+    public void sortPersonsBy(String field, String order) {
+        persons.sortBy(field, order);
     }
+```
+###### \java\seedu\address\model\person\Remark.java
+``` java
+public class Remark {
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
+            "Person remarks can take any values, and it should not be blank";
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        requireNonNull(model);
-        requireNonNull(model.getAddressBook());
-        requireNonNull(storage);
-        try {
-            if (args.equals("")) {
-                storage.backupAddressBookDefault(model.getAddressBook());
-            } else {
-                storage.backupAddressBook(model.getAddressBook(), args);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    /*
+     * The first character of the remark must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String REMARK_VALIDATION_REGEX = "[^\\s].*";
+    public static final String REMARK_PLACEHOLDER_VALUE = "";
+
+    public final String value;
+    private boolean isPrivate = false;
+
+    /**
+     * Validates given remark.
+     *
+     * @throws IllegalValueException if given remark string is invalid.
+     */
+    public Remark(String remark) throws IllegalValueException {
+        if (remark == null) {
+            this.value = REMARK_PLACEHOLDER_VALUE;
+            return;
         }
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-}
-```
-###### /java/seedu/address/logic/commands/SortCommand.java
-``` java
-public class SortCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "sort";
-    public static final String COMMAND_ALIAS = "so";
-
-    public static final ArrayList<String> ACCEPTED_FIELD_PARAMETERS = new ArrayList<>(Arrays.asList(
-            "name", "phone", "email", "address"));
-
-    public static final ArrayList<String> ACCEPTED_ORDER_PARAMETERS = new ArrayList<>(Arrays.asList(
-            "asc", "desc"));
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons by chosen "
-                + "field [NAME/PHONE/EMAIL/ADDRESS] and by order [ASC/DESC]. Case insensitive\n"
-                + "Parameters: KEYWORD [FIELD] [ORDER]\n"
-                + "Example: " + COMMAND_WORD + " email desc";
-
-    public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n"
-            + "Accepted Field Values: NAME, PHONE, EMAIL, ADDRESS \n"
-            + "Accepted Order Values: ASC, DESC";
-
-    public static final String MESSAGE_SUCCESS = "All persons in address book successfully sorted";
-
-    private final String field;
-    private final String order;
-
-```
-###### /java/seedu/address/logic/commands/SortCommand.java
-``` java
-    public SortCommand(String field, String order) {
-        this.field = field;
-        this.order = order;
+        if (!isValidRemark(remark)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        this.value = remark;
     }
 
-    public String getField() {
-        return this.field;
+    public Remark(String remark, boolean isPrivate) throws IllegalValueException {
+        this(remark);
+        this.setPrivate(isPrivate);
     }
 
-    public String getOrder() {
-        return this.order;
+    /**
+     * Returns true if a given string is a valid person email.
+     */
+    public static boolean isValidRemark(String test) {
+        return test.matches(REMARK_VALIDATION_REGEX) || test.equals(REMARK_PLACEHOLDER_VALUE);
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
-        requireNonNull(model);
-        model.sortPersons(getField(), getOrder());
-        return new CommandResult(MESSAGE_SUCCESS);
+    public String toString() {
+        if (isPrivate) {
+            return "<Private Remark>";
+        }
+        return value;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Remark // instanceof handles nulls
+                && this.value.equals(((Remark) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
 }
 ```
-###### /java/seedu/address/storage/AddressBookStorage.java
-``` java
-    /**
-     * Saves the given {@link ReadOnlyAddressBook} to the storage.
-     * @param addressBook cannot be null.
-     * @throws IOException if there was any problem writing to the file.
-     */
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
-
-    /**
-     * @see #saveAddressBook(ReadOnlyAddressBook)
-     */
-    void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
-
-    void backupAddressBook(ReadOnlyAddressBook addressBook, String args) throws IOException;
-
-    void backupAddressBookDefault(ReadOnlyAddressBook addressBook) throws IOException;
-
-    void changeFilePath(String fp, UserPrefs u);
-    //@author
-}
-```
-###### /java/seedu/address/storage/StorageManager.java
-``` java
-    /**
-     * Backs up data to a remote location.
-     * @param addressBook
-     * @param filePath
-     * @throws IOException
-     */
-    public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-        logger.fine("Attempting to write to backup data file in custom location");
-        this.saveAddressBook(addressBook, filePath);
-    }
-
-    /**
-     * Default back up data which saves file in the same directory as the main save file
-     * @param addressBook
-     * @throws IOException
-     */
-    public void backupAddressBookDefault(ReadOnlyAddressBook addressBook) throws IOException {
-        logger.fine("Attempting to write to backup data file");
-        this.saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
-    }
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
 public class UniquePersonList implements Iterable<Person> {
 
@@ -442,63 +297,8 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndDeleted;
     }
-
-    /**
-     * Favourites the equivalent person in the list.
-     *
-     * @throws PersonNotFoundException if no such person could be found in the list.
-     */
-    public void favouritePerson(ReadOnlyPerson toFavourite) throws PersonNotFoundException {
-        requireNonNull(toFavourite);
-        int index = internalList.indexOf(toFavourite);
-        if (index == -1) {
-            throw new PersonNotFoundException();
-        }
-
-        internalList.get(index).setFavourite(true);
-    }
-
-    /**
-     * Unfavourites the equivalent person from the list.
-     *
-     * @throws PersonNotFoundException if no such person could be found in the list.
-     */
-    public void unfavouritePerson(ReadOnlyPerson toUnfavourite) throws PersonNotFoundException {
-        requireNonNull(toUnfavourite);
-        int index = internalList.indexOf(toUnfavourite);
-        if (index == -1) {
-            throw new PersonNotFoundException();
-        }
-
-        internalList.get(index).setFavourite(false);
-    }
-
-    public void setPersons(UniquePersonList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
-        final UniquePersonList replacement = new UniquePersonList();
-        for (final ReadOnlyPerson person : persons) {
-            replacement.add(new Person(person));
-        }
-        setPersons(replacement);
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyPerson> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-    /**
-     * Sorts person list by all persons by any field in ascending or descending order
-     * @param field
-     * @param order
-     */
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     public void sortBy(String field, String order) {
         //sortyBy first chooses the right comparator
@@ -600,88 +400,233 @@ public class UniquePersonList implements Iterable<Person> {
     }
 }
 ```
-###### /java/seedu/address/model/person/Remark.java
+###### \java\seedu\address\storage\AddressBookStorage.java
 ``` java
-public class Remark {
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person remarks can take any values, and it should not be blank";
-
-    /*
-     * The first character of the remark must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+    /**
+     * Saves the given {@link ReadOnlyAddressBook} to the storage.
+     * @param addressBook cannot be null.
+     * @throws IOException if there was any problem writing to the file.
      */
-    public static final String REMARK_VALIDATION_REGEX = "[^\\s].*";
-    public static final String REMARK_PLACEHOLDER_VALUE = "";
-
-    public final String value;
-    private boolean isPrivate = false;
+    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
     /**
-     * Validates given remark.
-     *
-     * @throws IllegalValueException if given remark string is invalid.
+     * @see #saveAddressBook(ReadOnlyAddressBook)
      */
-    public Remark(String remark) throws IllegalValueException {
-        if (remark == null) {
-            this.value = REMARK_PLACEHOLDER_VALUE;
-            return;
-        }
-        if (!isValidRemark(remark)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
-        }
-        this.value = remark;
-    }
+    void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
-    public Remark(String remark, boolean isPrivate) throws IllegalValueException {
-        this(remark);
-        this.setPrivate(isPrivate);
+    void backupAddressBook(ReadOnlyAddressBook addressBook, String args) throws IOException;
+
+    void backupAddressBookDefault(ReadOnlyAddressBook addressBook) throws IOException;
+
+    void changeFilePath(String fp, UserPrefs u);
+    //@author
+}
+```
+###### \java\seedu\address\storage\StorageManager.java
+``` java
+    /**
+     * Backs up data to a remote location.
+     * @param addressBook
+     * @param filePath
+     * @throws IOException
+     */
+    public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        logger.fine("Attempting to write to backup data file in custom location");
+        this.saveAddressBook(addressBook, filePath);
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Default back up data which saves file in the same directory as the main save file
+     * @param addressBook
+     * @throws IOException
      */
-    public static boolean isValidRemark(String test) {
-        return test.matches(REMARK_VALIDATION_REGEX) || test.equals(REMARK_PLACEHOLDER_VALUE);
+    public void backupAddressBookDefault(ReadOnlyAddressBook addressBook) throws IOException {
+        logger.fine("Attempting to write to backup data file");
+        this.saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
+    }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Handle increase font size command
+     */
+    @FXML
+    public void handleIncreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.increaseFontSize();
+        taskListPanel.increaseFontSize();
     }
 
-    @Override
-    public String toString() {
-        if (isPrivate) {
-            return "<Private Remark>";
-        }
-        return value;
+    /**
+     * Handle decrease font size command
+     */
+    @FXML
+    public void handleDecreaseFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.decreaseFontSize();
+        taskListPanel.decreaseFontSize();
     }
+
+    /**
+     * Handle reset font size command
+     */
+    @FXML
+    public void handleResetFontSize() {
+        logger.info("Handling increase in font size");
+        personListPanel.resetFontSize();
+        taskListPanel.resetFontSize();
+    }
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Set default size for all attributes
+     */
+    public void updateAttributeSizes() {
+        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+
+        // Set styles using set name and attribute sizes
+        name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        id.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        phone.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        address.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        remark.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        email.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+    }
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    /**
+     * Increases all person cards' font sizes in person list
+     */
+    public void increaseFontSize() {
+        logger.info("PersonListPanel: Increasing font sizes");
+        fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier + 1);
+        setConnections(personList);
+    }
+
+    /**
+     * Decreases all person cards' font sizes in person list
+     */
+    public void decreaseFontSize() {
+        logger.info("PersonListPanel: Decreasing font sizes");
+        fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier - 1);
+        setConnections(personList);
+    }
+
+    /**
+     * Resets all person cards' font sizes in person list
+     */
+    public void resetFontSize() {
+        logger.info("PersonListPanel: Resetting font sizes");
+        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
+        setConnections(personList);
+    }
+```
+###### \java\seedu\address\ui\TaskCard.java
+``` java
+    /**
+     * Set default size for all attributes
+     */
+    public void updateAttributeSizes() {
+        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+
+        // Set styles using set name and attribute sizes
+        taskName.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        id.setStyle("-fx-font-size: " + Integer.toString(nameSize));
+        description.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        deadline.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        priority.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+    }
+```
+###### \java\seedu\address\ui\TaskCard.java
+``` java
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Remark // instanceof handles nulls
-                && this.value.equals(((Remark) other).value)); // state check
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof TaskCard)) {
+            return false;
+        }
+
+        // state check
+        TaskCard card = (TaskCard) other;
+        return id.getText().equals(card.id.getText())
+                && task.equals(card.task);
     }
 
-    @Override
-    public int hashCode() {
-        return value.hashCode();
+    public Label getTaskName() {
+        return taskName;
     }
 
-    public boolean isPrivate() {
-        return isPrivate;
+    public Label getId() {
+        return id;
     }
 
-    public void setPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
+    public Label getDescription() {
+        return description;
+    }
+
+    public Label getDeadline() {
+        return deadline;
+    }
+
+    public Label getPriority() {
+        return priority;
+    }
+
+    public void setFontSizeMultiplier(int fontSizeMultipler) {
+        this.fontSizeMultipler = fontSizeMultipler;
+    }
+
+    public int getFontSizeMultiplier() {
+        return this.fontSizeMultipler;
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\ui\TaskListPanel.java
 ``` java
     /**
-     * Sorts persons in person list by any field, in either ascending or descending order
-     *
-     * @param field
-     * @param order
+     * Increases all task cards' font sizes in person list
      */
-    public void sortPersonsBy(String field, String order) {
-        persons.sortBy(field, order);
+    public void increaseFontSize() {
+        logger.info("TaskListPanel: Increasing font sizes");
+        fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier + 1);
+        setConnections(taskList);
     }
+
+    /**
+     * Decreases all task cards' font sizes in person list
+     */
+    public void decreaseFontSize() {
+        logger.info("TaskListPanel: Decreasing font sizes");
+        fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier - 1);
+        setConnections(taskList);
+    }
+
+    /**
+     * Resets all task cards' font sizes in person list
+     */
+    public void resetFontSize() {
+        logger.info("TaskListPanel: Resetting font sizes");
+        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
+        setConnections(taskList);
+    }
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+      <Menu mnemonicParsing="false" text="Font Size">
+        <items>
+          <MenuItem fx:id="increaseSizeMenuItem" mnemonicParsing="false" onAction="#handleIncreaseFontSize" text="Increase +" />
+            <MenuItem fx:id="decreaseSizeMenuItem" mnemonicParsing="false" onAction="#handleDecreaseFontSize" text="Decrease -" />
+            <MenuItem fx:id="resetSizeMenuItem" mnemonicParsing="false" onAction="#handleResetFontSize" text="Reset" />
+        </items>
+      </Menu>
 ```

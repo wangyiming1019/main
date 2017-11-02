@@ -34,28 +34,28 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-
+    //@@author wangyiming1019
     /** Deletes given tag from specific persons */
     void deleteTag(Tag toDelete, ArrayList<Index> targetIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
-
+    //@@author
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
-
+    //@@author wangyiming1019
     /** Adds given tag to specific persons */
     void addTag(Tag toAdd, ArrayList<Index> targetIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
-
+    //@@author
     /** Edits the specified tag, and updates all instances in the address book */
     void editTag(Tag toChange, Tag newTag, ArrayList<Index> affectedIndexes) throws PersonNotFoundException,
             DuplicatePersonException;
-
+    //@@author wangyiming1019
     /** Favourites the given person */
     void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Unfavourites the given person */
     void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-
+    //@@author
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -89,6 +89,9 @@ public interface Model {
     /** Assigns all specified persons to the specified task */
     void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask dismissedTask)
             throws TaskNotFoundException, DuplicateTaskException;
+
+    /** Changes the state of the specified task */
+    void setAsComplete(ReadOnlyTask toSet, boolean isComplete) throws TaskNotFoundException, DuplicateTaskException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

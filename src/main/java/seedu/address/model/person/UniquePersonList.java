@@ -87,7 +87,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndDeleted;
     }
-
+    //@@author wangyiming1019
     /**
      * Favourites the equivalent person in the list.
      *
@@ -117,7 +117,7 @@ public class UniquePersonList implements Iterable<Person> {
 
         internalList.get(index).setFavourite(false);
     }
-
+    //@@author
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

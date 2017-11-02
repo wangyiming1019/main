@@ -549,6 +549,7 @@ public class LocateCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Searching for Person: %1$s";
+    public static final String MESSAGE_PRIVATE_ADDRESS_FAILURE = "Person %1$s has a Private Address";
 
     private final Index targetIndex;
 
@@ -564,7 +565,9 @@ public class LocateCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
+        if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().isPrivate()) {
+            throw new CommandException(String.format(MESSAGE_PRIVATE_ADDRESS_FAILURE, targetIndex.getOneBased()));
+        }
         EventsCenter.getInstance().post(new BrowserPanelLocateEvent(
                 model.getFilteredPersonList().get(targetIndex.getZeroBased())));
         return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
@@ -1101,6 +1104,9 @@ public class LocateCommandParser implements Parser<LocateCommand> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
     @Subscribe
     private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -1240,49 +1246,6 @@ public class LocateCommandParser implements Parser<LocateCommand> {
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
-    }
-
-    /**
-     * Handle increase font size command
-     */
-    @FXML
-    public void handleIncreaseFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.increaseFontSize();
-        taskListPanel.increaseFontSize();
-    }
-
-    /**
-     * Handle decrease font size command
-     */
-    @FXML
-    public void handleDecreaseFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.decreaseFontSize();
-        taskListPanel.decreaseFontSize();
-    }
-
-    /**
-     * Handle reset font size command
-     */
-    @FXML
-    public void handleResetFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.resetFontSize();
-        taskListPanel.resetFontSize();
-    }
-
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
-    }
-
-    void show() {
-        primaryStage.show();
     }
 
 ```

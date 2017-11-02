@@ -255,6 +255,12 @@ public class AddCommandTest {
                 throws TaskNotFoundException, DuplicateTaskException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void setAsComplete(ReadOnlyTask toSet, boolean isComplete)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
     }
 
     /**
