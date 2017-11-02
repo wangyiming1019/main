@@ -165,6 +165,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortPersonsBy(String field, String order) {
         persons.sortBy(field, order);
     }
+
+    /**
+     * Sorts persons in person list by any field, in either ascending or descending order
+     *
+     * @param field
+     * @param order
+     */
+    public void sortTasksBy(String field, String order) {
+        tasks.sortBy(field, order);
+    }
     //@@author
     //@@author wangyiming1019
     /**

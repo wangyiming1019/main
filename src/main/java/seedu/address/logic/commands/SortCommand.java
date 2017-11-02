@@ -14,30 +14,38 @@ public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "so";
 
+    public static final ArrayList<String> ACCEPTED_LIST_PARAMETERS = new ArrayList<>(Arrays.asList(
+            "person", "task"));
+
     public static final ArrayList<String> ACCEPTED_FIELD_PARAMETERS = new ArrayList<>(Arrays.asList(
-            "name", "phone", "email", "address"));
+            "name", "phone", "email", "address", "priority", "deadline"));
 
     public static final ArrayList<String> ACCEPTED_ORDER_PARAMETERS = new ArrayList<>(Arrays.asList(
             "asc", "desc"));
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons by chosen "
-                + "field [NAME/PHONE/EMAIL/ADDRESS] and by order [ASC/DESC]. Case insensitive\n"
-                + "Parameters: KEYWORD [FIELD] [ORDER]\n"
-                + "Example: " + COMMAND_WORD + " email desc";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons or all tasks by chosen "
+                + "field [NAME/PHONE/EMAIL/ADDRESS -- PRIORITY/DEADLINE] by [ASC/DESC] order. Case insensitive\n"
+                + "Parameters: KEYWORD [LIST] [FIELD] [ORDER]\n"
+                + "Example: " + COMMAND_WORD + " person email desc\n"
+                + "Example 2: " + COMMAND_WORD + " task deadline desc\n";
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n"
-            + "Accepted Field Values: NAME, PHONE, EMAIL, ADDRESS \n"
+            + "Accepted Person Field Values: NAME, PHONE, EMAIL, ADDRESS, TASK \n"
+            + "Accepted Task Field Values: DEADLINE, PRIORITY\n"
             + "Accepted Order Values: ASC, DESC";
 
-    public static final String MESSAGE_SUCCESS = "All persons in address book successfully sorted";
+    public static final String MESSAGE_SUCCESS_PERSONS = "All persons in address book successfully sorted";
+    public static final String MESSAGE_SUCCESS_TASKS = "All tasks in address book successfully sorted";
 
+    private final String list;
     private final String field;
     private final String order;
 
     //@@author charlesgoh
-    public SortCommand(String field, String order) {
+    public SortCommand(String list, String field, String order) {
         this.field = field;
         this.order = order;
+        this.list = list;
     }
 
     public String getField() {
@@ -48,11 +56,20 @@ public class SortCommand extends UndoableCommand {
         return this.order;
     }
 
+    public String getList() {
+        return this.list;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
-        model.sortPersons(getField(), getOrder());
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (this.list.equals(ACCEPTED_LIST_PARAMETERS.get(0))) {
+            model.sortPersons(getField(), getOrder());
+            return new CommandResult(MESSAGE_SUCCESS_PERSONS);
+        } else {
+            model.sortTasks(getField(), getOrder());
+            return new CommandResult(MESSAGE_SUCCESS_TASKS);
+        }
     }
 
 }

@@ -214,6 +214,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortTasks(String field, String order) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
