@@ -3,8 +3,6 @@ package seedu.address.logic.parser;
 //@@author jeffreygohkw
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_INPUT;
-import static seedu.address.logic.commands.SortCommand.MESSAGE_USAGE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
@@ -45,55 +43,54 @@ public class SortCommandParserTest {
 
     }
 
-
     @Test
     public void parse_validArguments_success() throws ParseException {
         SortCommand expectedCommand;
         SortCommand actualCommand;
 
-        expectedCommand = new SortCommand("person","name", "asc");
+        expectedCommand = new SortCommand("person", "name", "asc");
         actualCommand = parser.parse("person name asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person","name", "desc");
+        expectedCommand = new SortCommand("person", "name", "desc");
         actualCommand = parser.parse("person name desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person","phone", "asc");
+        expectedCommand = new SortCommand("person", "phone", "asc");
         actualCommand = parser.parse("person phone asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person","phone", "desc");
+        expectedCommand = new SortCommand("person", "phone", "desc");
         actualCommand = parser.parse("person phone desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person","email", "asc");
+        expectedCommand = new SortCommand("person", "email", "asc");
         actualCommand = parser.parse("person email asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person","email", "desc");
+        expectedCommand = new SortCommand("person", "email", "desc");
         actualCommand = parser.parse("person email desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person","address", "asc");
+        expectedCommand = new SortCommand("person", "address", "asc");
         actualCommand = parser.parse("person address asc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
         assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person","address", "desc");
+        expectedCommand = new SortCommand("person", "address", "desc");
         actualCommand = parser.parse("person address desc");
 
         assertEquals(expectedCommand.getField(), actualCommand.getField());
