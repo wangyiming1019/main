@@ -10,12 +10,13 @@ public class Priority {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
             "Task priorities must be an integer from 1 to 5, inclusive, where 1 represents the lowest priority";
+    public static final String[] PRIORITY_TEXT_STRINGS = {"", "Lowest", "Low", "Medium", "High", "Highest"};
 
     public static final int PRIORITY_LOWER_BOUND = 1;
     public static final int PRIORITY_UPPER_BOUND = 5;
     public static final String PRIORITY_VALIDATION_REGEX = "[\\d].*";
     public static final String PRIORITY_PLACEHOLDER_VALUE = "";
-    public final String value;
+    public final int value;
 
     /**
      * Validates given priority.
@@ -23,23 +24,19 @@ public class Priority {
      * @throws IllegalValueException if given priority string is invalid.
      */
     public Priority(String priority) throws IllegalValueException {
-        if (priority == null) {
-            this.value = PRIORITY_PLACEHOLDER_VALUE;
-            return;
-        } else if (priority.equals(PRIORITY_PLACEHOLDER_VALUE)) {
-            this.value = PRIORITY_PLACEHOLDER_VALUE;
+        if (priority == null || priority.equals(PRIORITY_PLACEHOLDER_VALUE)) {
+            this.value = 0;
             return;
         }
         String trimmedPriority = priority.trim();
         try {
-            Integer.parseInt(trimmedPriority);
+            this.value = Integer.parseInt(trimmedPriority);
         } catch (NumberFormatException e) {
             throw new IllegalValueException(MESSAGE_PRIORITY_CONSTRAINTS);
         }
         if (!isValidPriority(trimmedPriority)) {
             throw new IllegalValueException(MESSAGE_PRIORITY_CONSTRAINTS);
         }
-        this.value = trimmedPriority;
     }
 
     /**
@@ -65,19 +62,13 @@ public class Priority {
 
     @Override
     public String toString() {
-        return value;
+        return PRIORITY_TEXT_STRINGS[value];
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Priority // instanceof handles nulls
-                && this.value.equals(((Priority) other).value)); // state check
+                && this.value == ((Priority) other).value); // state check
     }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
 }
