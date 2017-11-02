@@ -83,8 +83,4 @@ public class Deadline {
     public int hashCode() {
         return value.hashCode();
     }
-
-    public Calendar getCalendar() {
-        return calendar;
-    }
 }

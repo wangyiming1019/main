@@ -414,7 +414,7 @@ This allows you to sort all persons in the address book in descending order by t
 Examples for sorting tasks:
 
 * `sort task deadline asc` +
-This allows you to sort all tasks in ascending order by the deadline field (i.e. closer deadlines are listed on top).
+This allows you to sort all tasks in ascending order by the deadline field (i.e. closer deadlines are at the bottom).
 * `sort task priority desc` +
 This allows you to sort all tasks in descending order by the priority field (i.e. higher priority tasks
 are listed on top).
