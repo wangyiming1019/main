@@ -70,7 +70,6 @@
                   <MenuItem fx:id="resetSizeMenuItem" mnemonicParsing="false" onAction="#handleResetFontSize" text="Reset" />
               </items>
             </Menu>
-            <!-- @@author -->
         </MenuBar>
          <AnchorPane prefHeight="33.0" prefWidth="269.0">
             <children>
@@ -79,6 +78,7 @@
                <Button fx:id="resetFontSizeButton" defaultButton="true" layoutX="113.0" mnemonicParsing="false" onAction="#handleResetFontSizeButton" text="R" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </children>
          </AnchorPane>
+         <!-- @@author -->
      </items>
    </SplitPane>
 

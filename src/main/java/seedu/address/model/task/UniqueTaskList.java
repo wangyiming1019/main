@@ -172,6 +172,7 @@ public class UniqueTaskList implements Iterable<Task> {
         }
 
     }
+    //@@author
 
     @Override
     public Iterator<Task> iterator() {
