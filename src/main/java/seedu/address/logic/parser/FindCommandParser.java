@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.Arrays;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -69,11 +68,16 @@ public class FindCommandParser implements Parser<FindCommand> {
         if (args == null) {
             throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
         }
+        int priority;
         try {
-            Priority priority = new Priority(args);
-            return priority.value;
-        } catch (IllegalValueException ive) {
-            throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+            priority = Integer.parseInt(args.trim());
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(FindCommand.MESSAGE_INVALID_PRIORITY);
+        }
+        if (priority < 1 || priority > 5) {
+            throw new ParseException(FindCommand.MESSAGE_INVALID_PRIORITY);
+        } else {
+            return priority;
         }
     }
 
@@ -81,13 +85,11 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Parses the given string, and returns a boolean value corresponding to its value
      */
     public boolean parseState(String args) throws ParseException {
-        if (args == null || args.trim().equals("")) {
-            throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
-        }
         String trimmed = args.trim();
-        if (trimmed.equals("true") || trimmed.equals("false")) {
+        if ("true".equals(trimmed) || "false".equals(trimmed)) {
             return Boolean.valueOf(trimmed);
+        } else {
+            throw new ParseException(FindCommand.MESSAGE_INVALID_COMPLETE_VALUE);
         }
-        throw new ParseException(FindCommand.MESSAGE_INVALID_COMPLETE_VALUE);
     }
 }
