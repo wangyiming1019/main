@@ -297,6 +297,7 @@ Format: `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY] [done/ISTASKDONE]` +
 * You can only search for names in Address++
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* *You must include at least 1 search keyword*, in order to filter the results by their priority, and whether or not it is completed.
 * The `PRIORITY` must be an integer from 1 to 5, inclusive.
 * `ISTASKDONE` must be either `true` or `false`. If it is `true`, you will only see tasks that have been marked as complete, and if it is `false, you will only see tasks that are not complete, in addition to all other search criteria.
 ****
