@@ -12,10 +12,10 @@ public class Priority {
             "Task priorities must be an integer from 1 to 5, inclusive, where 1 represents the lowest priority";
     public static final String[] PRIORITY_TEXT_STRINGS = {"", "Lowest", "Low", "Medium", "High", "Highest"};
 
-    public static final int PRIORITY_LOWER_BOUND = 1;
+    public static final int PRIORITY_LOWER_BOUND = 0;
     public static final int PRIORITY_UPPER_BOUND = 5;
     public static final String PRIORITY_VALIDATION_REGEX = "[\\d].*";
-    public static final String PRIORITY_PLACEHOLDER_VALUE = "0";
+    public static final String PRIORITY_PLACEHOLDER_VALUE = "";
     public final int value;
 
     /**
