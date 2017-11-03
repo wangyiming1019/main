@@ -25,6 +25,14 @@ public class TaskContainsKeywordPredicate  implements Predicate<ReadOnlyTask> {
         this.basePriority = basePriority;
     }
 
+    public TaskContainsKeywordPredicate(List<String> keywords) {
+        this.keywords = keywords;
+        this.needFilterByPriority = false;
+        this.needFilterByState = false;
+        this.isComplete = false;
+        this.basePriority = 0;
+    }
+
     @Override
     public boolean test(ReadOnlyTask task) {
         for (int i = 0; i < keywords.size(); i++) {
@@ -45,6 +53,10 @@ public class TaskContainsKeywordPredicate  implements Predicate<ReadOnlyTask> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TaskContainsKeywordPredicate // instanceof handles nulls
-                && this.keywords.equals(((TaskContainsKeywordPredicate) other).keywords)); // state check
+                && this.keywords.equals(((TaskContainsKeywordPredicate) other).keywords)
+                && this.needFilterByPriority == ((TaskContainsKeywordPredicate) other).needFilterByPriority
+                && this.needFilterByState == ((TaskContainsKeywordPredicate) other).needFilterByState
+                && this.isComplete == ((TaskContainsKeywordPredicate) other).isComplete
+                && this.basePriority == ((TaskContainsKeywordPredicate) other).basePriority); // state check
     }
 }
