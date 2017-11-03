@@ -14,15 +14,15 @@ import guitests.guihandles.TaskCardHandle;
 import guitests.guihandles.TaskListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestTaskEvent;
 import seedu.address.model.task.ReadOnlyTask;
 
 public class TaskListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyTask> TYPICAL_TASKS =
             FXCollections.observableList(getTypicalTasks());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new
-            JumpToListRequestEvent(INDEX_SECOND_PERSON);
+    private static final JumpToListRequestTaskEvent JUMP_TO_SECOND_EVENT = new
+            JumpToListRequestTaskEvent(INDEX_SECOND_PERSON);
 
     private TaskListPanelHandle taskListPanelHandle;
 
@@ -48,7 +48,7 @@ public class TaskListPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleJumpToListRequestEvent() {
+    public void handleJumpToListRequestTaskEvent() {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
