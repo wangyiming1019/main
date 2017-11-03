@@ -26,7 +26,7 @@ public class PersonCard extends UiPart<Region> {
      * Preset values for random selection later.
      */
     private enum Colours {
-        blue, green, brown, purple, navy, crimson, firebrick, maroon, red
+        blue, green, brown, purple, navy, crimson, firebrick, maroon, red, black
     }
     private static HashMap<String, String> colourHash = new HashMap<String, String>();
     private static Random randomNumber = new Random();
