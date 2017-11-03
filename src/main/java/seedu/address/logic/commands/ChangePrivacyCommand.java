@@ -133,6 +133,11 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return new Person(n, p, e, a, f, r, t);
     }
 
+    /**
+     * Creates a new (@code Name) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Name) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
     private static Name createNameWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Name n;
         try {
@@ -152,6 +157,12 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return n;
     }
 
+
+    /**
+     * Creates a new (@code Phone) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Phone) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
     private static Phone createPhoneWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Phone p;
         try {
@@ -171,6 +182,12 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return p;
     }
 
+
+    /**
+     * Creates a new (@code Email) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Email) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
     private static Email createEmailWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Email em;
         try {
@@ -190,7 +207,11 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return em;
     }
 
-
+    /**
+     * Creates a new (@code Address) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Address) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
     private static Address createAddressWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Address a;
         try {
@@ -210,6 +231,11 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return a;
     }
 
+    /**
+     * Creates a new (@code Remark) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Remark) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
     private static Remark createRemarkWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Remark r;
         try {
