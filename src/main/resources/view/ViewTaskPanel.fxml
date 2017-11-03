@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="taskName" prefHeight="107.0" prefWidth="472.0" text="\$title" wrapText="true" />
+                  <Label fx:id="priority" alignment="CENTER" prefHeight="135.0" prefWidth="231.0" text="\$priority" />
+                  <ImageView fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <SplitPane dividerPositions="0.7205513784461153" prefHeight="419.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+              <items>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="description" prefHeight="499.0" prefWidth="571.0" text="\$description" wrapText="true" />
+                        <Label fx:id="deadline" prefHeight="206.0" prefWidth="571.0" text="\$deadline" />
+                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="130.0" text="\$setState" />
+                     </children>
+                  </VBox>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+              </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
