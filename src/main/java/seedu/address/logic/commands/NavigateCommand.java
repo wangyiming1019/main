@@ -7,7 +7,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 
 /**
- * Locates a person's address on Google Maps identified using it's last displayed index from the address book.
+ * Navigates from one address to another with the help of Google Maps
  */
 public class NavigateCommand extends Command {
 
