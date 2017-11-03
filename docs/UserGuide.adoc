@@ -285,8 +285,9 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 Adding `task` after `find` will allow you to sieve through your tasks, instead of your contacts. +
 In addition to searching the name and description of tasks, you can also opt to filter your tasks by their priority. Simply include `p/PRIORITY` after all your other criteria to do so. +
+You can also opt to find all tasks that are either complete or incomplete by including an optional `done/ISTASKDONE` in the command.
 All tasks with a priority higher than or equal to the value provided will be shown. +
-Format: `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY]` (Priority search to be coming in v2.0) +
+Format: `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY] [done/ISTASKDONE]` +
 
 ****
 *Important note on `find` criteria*
@@ -296,6 +297,9 @@ Format: `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY]` (Priority search to be 
 * You can only search for names in Address++
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* *You must include at least 1 search keyword*, in order to filter the results by their priority, and whether or not it is completed.
+* The `PRIORITY` must be an integer from 1 to 5, inclusive.
+* `ISTASKDONE` must be either `true` or `false`. If it is `true`, you will only see tasks that have been marked as complete, and if it is `false, you will only see tasks that are not complete, in addition to all other search criteria.
 ****
 
 Examples:

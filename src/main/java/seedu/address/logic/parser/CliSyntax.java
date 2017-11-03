@@ -24,7 +24,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_TASK = new Prefix("task");
     public static final Prefix PREFIX_DEADLINE = new Prefix("by/");
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
-    public static final Prefix PREFIX_PRIORITY = new Prefix("pri/");
+    public static final Prefix PREFIX_PRIORITY = new Prefix("p/");
     public static final Prefix PREFIX_TARGET = new Prefix("to/");
     public static final Prefix PREFIX_FROM = new Prefix("from/");
+    public static final Prefix PREFIX_STATE = new Prefix("done/");
 }

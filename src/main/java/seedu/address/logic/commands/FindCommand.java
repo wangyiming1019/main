@@ -20,6 +20,8 @@ public class FindCommand extends Command {
             + "contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " task make";
+    public static final String MESSAGE_INVALID_COMPLETE_VALUE = "The task status should either be 'true' or 'false'";
+    public static final String MESSAGE_INVALID_PRIORITY = "The specified priority should be an integer from 1 to 5";
 
     private final NameContainsKeywordsPredicate personPredicate;
     private final TaskContainsKeywordPredicate taskPredicate;

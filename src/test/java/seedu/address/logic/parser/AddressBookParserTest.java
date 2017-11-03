@@ -269,7 +269,7 @@ public class AddressBookParserTest {
         command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + PREFIX_TASK +  " "
                         + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new TaskContainsKeywordPredicate(keywords)), command);
+        assertEquals(new FindCommand(new TaskContainsKeywordPredicate(keywords, false, false, false, 0)), command);
     }
 
     @Test
@@ -282,7 +282,7 @@ public class AddressBookParserTest {
         command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_ALIAS + " " + PREFIX_TASK +  " "
                         + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new TaskContainsKeywordPredicate(keywords)), command);
+        assertEquals(new FindCommand(new TaskContainsKeywordPredicate(keywords, false, false, false, 0)), command);
     }
     //@@author wangyiming1019
     @Test
