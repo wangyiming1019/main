@@ -123,7 +123,7 @@ public class UniqueTaskList implements Iterable<Task> {
         Comparator<Task> priorityComparator = new Comparator<Task>() {
             @Override
             public int compare(Task o1, Task o2) {
-                return o1.getPriority().value.compareTo(o2.getPriority().value);
+                return Integer.compare(o1.getPriority().value, o2.getPriority().value);
             }
         };
 

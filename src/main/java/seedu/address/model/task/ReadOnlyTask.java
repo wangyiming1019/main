@@ -31,6 +31,7 @@ public interface ReadOnlyTask {
                 .append(getDeadline())
                 .append(" Priority: ")
                 .append(getPriority())
+                .append(" ")
                 .append(getPrintableState());
         return builder.toString();
     }

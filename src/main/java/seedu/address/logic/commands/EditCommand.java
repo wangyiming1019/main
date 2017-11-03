@@ -123,13 +123,9 @@ public class EditCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         List<ReadOnlyTask> lastShownTaskList = model.getFilteredTaskList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
         try {
             if (isTask) {
-                if (index.getZeroBased() >= lastShownList.size()) {
+                if (index.getZeroBased() >= lastShownTaskList.size()) {
                     throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
                 }
                 ReadOnlyTask taskToEdit = lastShownTaskList.get(index.getZeroBased());
