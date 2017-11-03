@@ -33,11 +33,8 @@ public class ViewTaskPanel extends UiPart<Region> {
 
     public ViewTaskPanel(ReadOnlyTask task) {
         super(FXML);
-
-        if (task == null) {
+        if (task != null) {
             this.task = task;
-            initializeWithBlankValues();
-        } else {
             initializeWithTask(task);
         }
         registerAsAnEventHandler(this);
@@ -45,7 +42,6 @@ public class ViewTaskPanel extends UiPart<Region> {
 
     public ViewTaskPanel() {
         super(FXML);
-        initializeWithBlankValues();
         registerAsAnEventHandler(this);
     }
 
@@ -58,13 +54,6 @@ public class ViewTaskPanel extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
-    }
-
-    /**
-     * Initializes an empty Task Panel
-     */
-    private void initializeWithBlankValues() {
-
     }
 
     @Subscribe
