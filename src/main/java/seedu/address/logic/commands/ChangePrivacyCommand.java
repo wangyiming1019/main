@@ -106,17 +106,14 @@ public class ChangePrivacyCommand extends UndoableCommand {
             throws IllegalValueException {
         assert person != null;
 
-        Name n = new Name(person.getName().toString());
-        Phone p = new Phone(person.getPhone().toString());
-        Email e = new Email(person.getEmail().toString());
-        Address a = new Address(person.getAddress().toString());
-        Remark r = new Remark(person.getRemark().toString());
+        Name n = createNameWithPrivacy(person, pps);
+        Phone p = createPhoneWithPrivacy(person, pps);
+        Email e = createEmailWithPrivacy(person, pps);
+        Address a = createAddressWithPrivacy(person, pps);
+        Remark r = createRemarkWithPrivacy(person, pps);
         Boolean f = person.getFavourite();
         Set<Tag> t = person.getTags();
 
-        if (pps.getNameIsPrivate() != null) {
-            n.setPrivate(pps.getNameIsPrivate());
-        }
         if (pps.getPhoneIsPrivate() != null) {
             p.setPrivate(pps.getPhoneIsPrivate());
         }
@@ -134,6 +131,102 @@ public class ChangePrivacyCommand extends UndoableCommand {
         }
 
         return new Person(n, p, e, a, f, r, t);
+    }
+
+    private static Name createNameWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Name n;
+        try {
+            if (person.getName().isPrivate()) {
+                person.getName().setPrivate(false);
+                n = new Name(person.getName().toString());
+                person.getName().setPrivate(true);
+            } else {
+                n = new Name(person.getName().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Name");
+        }
+        if (pps.getNameIsPrivate() != null) {
+            n.setPrivate(pps.getNameIsPrivate());
+        }
+        return n;
+    }
+
+    private static Phone createPhoneWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Phone p;
+        try {
+            if (person.getPhone().isPrivate()) {
+                person.getPhone().setPrivate(false);
+                p = new Phone(person.getPhone().toString());
+                person.getPhone().setPrivate(true);
+            } else {
+                p = new Phone(person.getPhone().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Phone");
+        }
+        if (pps.getPhoneIsPrivate() != null) {
+            p.setPrivate(pps.getPhoneIsPrivate());
+        }
+        return p;
+    }
+
+    private static Email createEmailWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Email em;
+        try {
+            if (person.getEmail().isPrivate()) {
+                person.getEmail().setPrivate(false);
+                em = new Email(person.getEmail().toString());
+                person.getEmail().setPrivate(true);
+            } else {
+                em = new Email(person.getEmail().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Email");
+        }
+        if (pps.getEmailIsPrivate() != null) {
+            em.setPrivate(pps.getEmailIsPrivate());
+        }
+        return em;
+    }
+
+
+    private static Address createAddressWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Address a;
+        try {
+            if (person.getAddress().isPrivate()) {
+                person.getAddress().setPrivate(false);
+                a = new Address(person.getAddress().toString());
+                person.getAddress().setPrivate(true);
+            } else {
+                a = new Address(person.getAddress().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Address");
+        }
+        if (pps.getAddressIsPrivate() != null) {
+            a.setPrivate(pps.getAddressIsPrivate());
+        }
+        return a;
+    }
+
+    private static Remark createRemarkWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Remark r;
+        try {
+            if (person.getRemark().isPrivate()) {
+                person.getRemark().setPrivate(false);
+                r = new Remark(person.getRemark().toString());
+                person.getRemark().setPrivate(true);
+            } else {
+                r = new Remark(person.getRemark().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Remark");
+        }
+        if (pps.getRemarkIsPrivate() != null) {
+            r.setPrivate(pps.getRemarkIsPrivate());
+        }
+        return r;
     }
 
     public Index getIndex() {
