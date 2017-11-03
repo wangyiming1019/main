@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -87,6 +88,15 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private MenuItem resetSizeMenuItem;
+
+    @FXML
+    private Button increaseFontSizeButton;
+
+    @FXML
+    private Button decreaseFontSizeButton;
+
+    @FXML
+    private Button resetFontSizeButton;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -261,20 +271,50 @@ public class MainWindow extends UiPart<Region> {
 
     //@@author charlesgoh
     /**
-     * Handle increase font size command
+     * Handle increase font size command for menu item
      */
     @FXML
     public void handleIncreaseFontSize() {
+        increaseFontSize();
+    }
+
+    /**
+     * Handle increase font size command for button
+     */
+    @FXML
+    public void handleIncreaseFontSizeButton() {
+        increaseFontSize();
+    }
+
+    /**
+     * Calls method to increase font size
+     */
+    public void increaseFontSize() {
         logger.info("Handling increase in font size");
         personListPanel.increaseFontSize();
         taskListPanel.increaseFontSize();
     }
 
     /**
-     * Handle decrease font size command
+     * Handle decrease font size command for menu item
      */
     @FXML
     public void handleDecreaseFontSize() {
+        decreaseFontSize();
+    }
+
+    /**
+     * Handle decrease font size command for button
+     */
+    @FXML
+    public void handleDecreaseFontSizeButton() {
+        decreaseFontSize();
+    }
+
+    /**
+     * Calls method to decrease font size
+     */
+    public void decreaseFontSize() {
         logger.info("Handling increase in font size");
         personListPanel.decreaseFontSize();
         taskListPanel.decreaseFontSize();
@@ -285,7 +325,22 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleResetFontSize() {
-        logger.info("Handling increase in font size");
+        resetFontSize();
+    }
+
+    /**
+     * Handle reset font size command for button
+     */
+    @FXML
+    public void handleResetFontSizeButton() {
+        resetFontSize();
+    }
+
+    /**
+     * Calls method to reset font size
+     */
+    public void resetFontSize() {
+        logger.info("Handling reset in font size");
         personListPanel.resetFontSize();
         taskListPanel.resetFontSize();
     }
