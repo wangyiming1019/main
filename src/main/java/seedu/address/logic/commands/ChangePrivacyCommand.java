@@ -13,6 +13,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -77,17 +78,22 @@ public class ChangePrivacyCommand extends UndoableCommand {
 
         ReadOnlyPerson personToChange = lastShownList.get(index.getZeroBased());
 
-        Person newPerson = createPersonWithChangedPrivacy(personToChange, pps);
+        Person newPerson = null;
+        try {
+            newPerson = createPersonWithChangedPrivacy(personToChange, pps);
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Person must have all fields initialised.");
+        }
 
         try {
             model.updatePerson(personToChange, newPerson);
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson));
     }
 
@@ -96,14 +102,15 @@ public class ChangePrivacyCommand extends UndoableCommand {
      * @param person the person whose privacy we would like to change
      * @param pps the settings of privacy for each field
      */
-    private static Person createPersonWithChangedPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+    private static Person createPersonWithChangedPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps)
+            throws IllegalValueException {
         assert person != null;
 
-        Name n = person.getName();
-        Phone p = person.getPhone();
-        Email e = person.getEmail();
-        Address a = person.getAddress();
-        Remark r = person.getRemark();
+        Name n = new Name(person.getName().toString());
+        Phone p = new Phone(person.getPhone().toString());
+        Email e = new Email(person.getEmail().toString());
+        Address a = new Address(person.getAddress().toString());
+        Remark r = new Remark(person.getRemark().toString());
         Boolean f = person.getFavourite();
         Set<Tag> t = person.getTags();
 
