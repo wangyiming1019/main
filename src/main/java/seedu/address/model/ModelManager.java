@@ -35,6 +35,8 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskName;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.ui.MainWindow;
+import sun.applet.Main;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -46,6 +48,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyTask> filteredTasks;
+
+    private MainWindow mainWindow;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -309,6 +313,45 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
+    }
+    //@@author
+
+    //@@author charlesgoh
+    /**
+     * Sets main window attribute in model for use in various commands
+     * @param mainWindow
+     */
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+    }
+
+    /**
+     * Retrieves and passes MainWindow attribute to caller
+     * @return
+     */
+    public MainWindow getMainWindow() {
+        return this.mainWindow;
+    }
+
+    /**
+     * Model method for increasing font size. Passes control over to MainWindow
+     */
+    public void increaseFontSize() {
+        mainWindow.increaseFontSize();
+    }
+
+    /**
+     * Model method for decreasing font size. Passes control over to MainWindow
+     */
+    public void decreaseFontSize() {
+        mainWindow.decreaseFontSize();
+    }
+
+    /**
+     * Model method for resetting font size. Passes control over to MainWindow
+     */
+    public void resetFontSize() {
+        mainWindow.resetFontSize();
     }
     //@@author
 

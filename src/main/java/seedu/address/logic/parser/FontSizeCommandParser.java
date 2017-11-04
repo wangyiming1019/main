@@ -6,10 +6,10 @@ import static seedu.address.logic.commands.FontSizeCommand.MESSAGE_INVALID_INPUT
 import seedu.address.logic.commands.FontSizeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author charlesgoh
 /**
  * Parses input arguments and creates a new SortCommand object based on the field and order parameters provided
  */
-//@@author charlesgoh
 public class FontSizeCommandParser implements Parser<FontSizeCommand> {
     public static final int PARAMETER_POSITION = 0;
 
@@ -18,7 +18,6 @@ public class FontSizeCommandParser implements Parser<FontSizeCommand> {
      * and returns a FontSizeCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    //@@author charlesgoh
     public FontSizeCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {

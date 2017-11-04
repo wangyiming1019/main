@@ -188,6 +188,7 @@ public class MainApp extends Application {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
         MainWindow mw = ui.getMainWindow();
+        model.setMainWindow(mw);
         mw.setMainApp(this);
         mw.setStorage(storage);
         mw.setModel(model);
