@@ -32,15 +32,10 @@ public class NavigateCommand extends Command {
     private final Location locationTo;
 
     public NavigateCommand(Location locationFrom, Location locationTo, Index fromIndex, Index toIndex,
-                           boolean fromIsTask, boolean toIsTask) throws Exception {
+                           boolean fromIsTask, boolean toIsTask) throws IllegalValueException {
         Location from = null;
         Location to = null;
-        if (locationFrom != null && fromIndex != null) {
-            throw new IllegalArgumentException(MESSAGE_MULTIPLE_FROM_ERROR);
-        }
-        if (locationTo != null && toIndex != null) {
-            throw new IllegalArgumentException(MESSAGE_MULTIPLE_TO_ERROR);
-        }
+        checkDuplicateFromAndToLocation(locationFrom, locationTo, fromIndex, toIndex);
 
         if (locationFrom != null) {
             from = locationFrom;
@@ -61,6 +56,20 @@ public class NavigateCommand extends Command {
         this.locationTo = to;
     }
 
+    /**
+     * Throws an IllegalArgumentException if there is both locationFrom and fromIndex are not null,
+     * or if both locationTo and toIndex are not null.
+     */
+    private void checkDuplicateFromAndToLocation(Location locationFrom, Location locationTo,
+                                                 Index fromIndex, Index toIndex) throws IllegalArgumentException {
+        if (locationFrom != null && fromIndex != null) {
+            throw new IllegalArgumentException(MESSAGE_MULTIPLE_FROM_ERROR);
+        }
+        if (locationTo != null && toIndex != null) {
+            throw new IllegalArgumentException(MESSAGE_MULTIPLE_TO_ERROR);
+        }
+    }
+
     private Location setLocationByIndex(Index index, boolean isTask) throws IllegalValueException {
         if (isTask) {
             return new Location(model.getFilteredTaskList().get(index.getZeroBased()).getTaskAddress().toString());
@@ -73,8 +82,6 @@ public class NavigateCommand extends Command {
             }
         }
     }
-
-
     @Override
     public CommandResult execute() throws CommandException {
 
