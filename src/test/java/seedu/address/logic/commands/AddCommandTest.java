@@ -34,7 +34,6 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.ui.MainWindow;
-import sun.applet.Main;
 
 
 public class AddCommandTest {
