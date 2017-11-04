@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
@@ -18,6 +17,7 @@
                <children>
                   <Label fx:id="taskName" prefHeight="107.0" prefWidth="472.0" text="\$title" wrapText="true" />
                   <Label fx:id="priority" alignment="CENTER" prefHeight="135.0" prefWidth="231.0" text="\$priority" />
+                  <Label fx:id="state" alignment="CENTER" prefHeight="135.0" prefWidth="231.0" text="\$state" />
                   <ImageView fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
@@ -27,7 +27,7 @@
                      <children>
                         <Label fx:id="description" prefHeight="499.0" prefWidth="571.0" text="\$description" wrapText="true" />
                         <Label fx:id="deadline" prefHeight="206.0" prefWidth="571.0" text="\$deadline" />
-                        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="130.0" text="\$setState" />
+                        <Button fx:id="markState" mnemonicParsing="false" prefHeight="31.0" prefWidth="315.0" text="Mark as $state" />
                      </children>
                   </VBox>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
