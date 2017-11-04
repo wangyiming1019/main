@@ -63,7 +63,7 @@ public class SelectCommandTest {
         Index taskOutOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, IS_TYPE_PERSON, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        assertExecutionFailure(outOfBoundsIndex, IS_TYPE_TASK, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertExecutionFailure(taskOutOfBoundsIndex, IS_TYPE_TASK, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
