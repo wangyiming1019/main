@@ -51,6 +51,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -375,8 +376,32 @@ public class AddressBookParserTest {
                 LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
     }
-
     //@@author
+    //@@author charlesgoh
+    @Test
+    public void parseSortCommand() throws Exception {
+        for (String listType: SortCommand.ACCEPTED_LIST_PARAMETERS) {
+            for (String fieldType: SortCommand.ACCEPTED_FIELD_PARAMETERS) {
+                for (String orderType: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+                    assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD
+                            + " " + listType + " " + fieldType + " " + orderType) instanceof SortCommand);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void parseSortCommandAlias() throws Exception {
+        for (String listType: SortCommand.ACCEPTED_LIST_PARAMETERS) {
+            for (String fieldType: SortCommand.ACCEPTED_FIELD_PARAMETERS) {
+                for (String orderType: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+                    assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS
+                            + " " + listType + " " + fieldType + " " + orderType) instanceof SortCommand);
+                }
+            }
+        }
+    }
+
     @Test
     public void parseCommandBackupWord() throws Exception {
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
@@ -402,7 +427,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
-
+    //@@author
     //@@author Esilocke
     @Test
     public void  parseCommandSetComplete() throws Exception {
