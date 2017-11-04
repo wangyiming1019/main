@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -175,6 +177,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortTasksBy(String field, String order) {
         tasks.sortBy(field, order);
     }
+
+    /**
+     * Returns an array list of {@code Index} corresponding to the index of {@code ReadOnlyPerson} specified
+     */
+    public ArrayList<Index> extractPersonIndexes(ArrayList<ReadOnlyPerson> personsToExtract) {
+        return persons.extractIndexes(personsToExtract);
+    }
+
     //@@author
     //@@author wangyiming1019
     /**
