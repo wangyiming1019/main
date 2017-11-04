@@ -19,25 +19,34 @@ public class SortCommandParserTest {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }
 
+    //author charlesgoh
     @Test
     public void parse_wrongArguments_failure() {
+        // no list specified
+        for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS) {
+            for (String order: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+                assertParseFailure(parser, field + " " + order,
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+            }
+        }
+
         // no field specified
-        assertParseFailure(parser, "asc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "desc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        for (String list: SortCommand.ACCEPTED_LIST_PARAMETERS) {
+            for (String order: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+                assertParseFailure(parser, list + " " + order,
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+            }
+        }
 
         // no order specified
-        assertParseFailure(parser, "name",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "phone",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "email",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "address",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        for (String list: SortCommand.ACCEPTED_LIST_PARAMETERS) {
+            for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS) {
+                assertParseFailure(parser, list + " " + field,
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+            }
+        }
 
-        // no field or order
+        // Incorrect test
         assertParseFailure(parser, "random text",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
 
@@ -48,52 +57,45 @@ public class SortCommandParserTest {
         SortCommand expectedCommand;
         SortCommand actualCommand;
 
-        expectedCommand = new SortCommand("person", "name", "asc");
-        actualCommand = parser.parse("person name asc");
+        // For person sorts
+        String list = SortCommand.ACCEPTED_LIST_PARAMETERS.get(0);
+        for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS.subList(0, 4)) {
+            for (String order : SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+                expectedCommand = new SortCommand(list, field, order);
 
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
+                // Commands for full sort command word
+                actualCommand = parser.parse(list + " " + field + " " + order);
+                assertEquals(expectedCommand.getList(), actualCommand.getList());
+                assertEquals(expectedCommand.getField(), actualCommand.getField());
+                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        expectedCommand = new SortCommand("person", "name", "desc");
-        actualCommand = parser.parse("person name desc");
+                // Commands for sort command alias
+                actualCommand = parser.parse(list + " " + field + " " + order);
+                assertEquals(expectedCommand.getList(), actualCommand.getList());
+                assertEquals(expectedCommand.getField(), actualCommand.getField());
+                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
+            }
+        }
 
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
+        // For task sorts
+        list = SortCommand.ACCEPTED_LIST_PARAMETERS.get(1);
+        for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS.subList(4, 6)) {
+            for (String order: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+                expectedCommand = new SortCommand(list, field, order);
 
-        expectedCommand = new SortCommand("person", "phone", "asc");
-        actualCommand = parser.parse("person phone asc");
+                // Commands for full sort command word
+                actualCommand = parser.parse(list + " " + field + " " +  order);
+                assertEquals(expectedCommand.getList(), actualCommand.getList());
+                assertEquals(expectedCommand.getField(), actualCommand.getField());
+                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
 
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("person", "phone", "desc");
-        actualCommand = parser.parse("person phone desc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("person", "email", "asc");
-        actualCommand = parser.parse("person email asc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("person", "email", "desc");
-        actualCommand = parser.parse("person email desc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("person", "address", "asc");
-        actualCommand = parser.parse("person address asc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("person", "address", "desc");
-        actualCommand = parser.parse("person address desc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
+                // Commands for sort command alias
+                actualCommand = parser.parse(list + " " + field + " " +  order);
+                assertEquals(expectedCommand.getList(), actualCommand.getList());
+                assertEquals(expectedCommand.getField(), actualCommand.getField());
+                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
+            }
+        }
     }
+    //@@author charlesgoh
 }

@@ -15,6 +15,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     public static final int LIST_ARG_POSITION = 0;
     public static final int FIELD_ARG_POSITION = 1;
     public static final int ORDER_ARG_POSITION = 2;
+    public static final int SIZE_OF_ARG_ARRAY = 3;
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
@@ -29,11 +30,14 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         // Converts arg arrays to lower case to account for caps entries
         String[] argKeywords = trimmedArgs.split("\\s");
+
+        // Eliminate the sort keyword
         for (int i = 0; i < argKeywords.length; i++) {
             argKeywords[i] = argKeywords[i].toLowerCase();
+            // System.out.println(argKeywords[i] + " " + Integer.toString(i));
         }
 
-        if (argKeywords.length != 3) {
+        if (argKeywords.length != SIZE_OF_ARG_ARRAY) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
