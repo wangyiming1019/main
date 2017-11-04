@@ -55,6 +55,7 @@ public class FontSizeCommand extends Command {
             break;
         default:
             System.err.println("Parameter is invalid");
+            break;
         }
 
         return new CommandResult(MESSAGE_SUCCESS_FONT);

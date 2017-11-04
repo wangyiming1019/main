@@ -92,6 +92,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + REMARK_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+    }
+
+    @Test
+    public void addSecondTest() throws Exception {
+        Model model = getModel();
+        ReadOnlyPerson toAdd;
+        String command;
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
@@ -113,6 +120,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
                 + REMARK_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
+    }
+
+    @Test
+    public void addThirdTest() throws Exception {
+        Model model = getModel();
+        ReadOnlyPerson toAdd;
+        String command;
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
@@ -133,6 +147,13 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assert getModel().getFilteredPersonList().size()
                 < getModel().getAddressBook().getPersonList().size();
         assertCommandSuccess(IDA);
+    }
+
+    @Test
+    public void addFourthTest() throws Exception {
+        Model model = getModel();
+        ReadOnlyPerson toAdd;
+        String command;
 
         /* Case: add to empty address book -> added */
         executeCommand(ClearCommand.COMMAND_WORD);
@@ -175,17 +196,17 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid name -> rejected */
         command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY
-                    + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY
-                    + ADDRESS_DESC_AMY + REMARK_DESC_AMY;
+                + ADDRESS_DESC_AMY + REMARK_DESC_AMY;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC
-                    + ADDRESS_DESC_AMY + REMARK_DESC_AMY;
+                + ADDRESS_DESC_AMY + REMARK_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
