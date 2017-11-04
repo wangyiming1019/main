@@ -9,6 +9,7 @@ import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
 import seedu.address.model.task.TaskName;
 
 //@@author Esilocke
@@ -24,6 +25,8 @@ public class XmlAdaptedTask {
     private String priority;
     @XmlElement(required = true)
     private String state;
+    @XmlElement(required = true)
+    private String address;
 
     /**
      * Constructs an XmlAdaptedTask.
@@ -43,6 +46,7 @@ public class XmlAdaptedTask {
         deadline = source.getDeadline().value;
         priority = Integer.toString(source.getPriority().value);
         state = String.valueOf(source.getCompleteState());
+        address = source.getTaskAddress().taskAddress;
     }
 
     /**
@@ -56,6 +60,7 @@ public class XmlAdaptedTask {
         final Deadline deadline = new Deadline(this.deadline);
         final Priority priority = new Priority(this.priority);
         final Boolean state = Boolean.valueOf(this.state);
-        return new Task(name, description, deadline, priority, new Assignees(), state);
+        final TaskAddress address = new TaskAddress(this.address);
+        return new Task(name, description, deadline, priority, new Assignees(), state, address);
     }
 }

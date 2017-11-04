@@ -37,6 +37,7 @@ import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
 import seedu.address.model.task.TaskName;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
@@ -341,6 +342,7 @@ public class EditCommand extends UndoableCommand {
         Priority updatedPriority;
         Assignees assignees;
         Boolean updatedState;
+        TaskAddress updatedTaskAddress;
 
         updatedTaskName = editTaskDescriptor.getTaskName().orElse(taskToEdit.getTaskName());
         updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
@@ -349,8 +351,10 @@ public class EditCommand extends UndoableCommand {
         // You cannot edit assignees or state using edit command
         assignees = taskToEdit.getAssignees();
         updatedState = taskToEdit.getCompleteState();
+        updatedTaskAddress = editTaskDescriptor.getTaskAddress().orElse(taskToEdit.getTaskAddress());
 
-        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees, updatedState);
+        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees, updatedState,
+                updatedTaskAddress);
     }
 
     //@@author
@@ -501,6 +505,7 @@ public class EditCommand extends UndoableCommand {
         private Deadline deadline;
         private Priority priority;
         private Assignees assignees;
+        private TaskAddress taskAddress;
 
         public EditTaskDescriptor() {}
 
@@ -510,13 +515,15 @@ public class EditCommand extends UndoableCommand {
             this.deadline = toCopy.deadline;
             this.priority = toCopy.priority;
             this.assignees = toCopy.assignees;
+            this.taskAddress = toCopy.taskAddress;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.taskName, this.description, this.deadline, this.priority);
+            return CollectionUtil.isAnyNonNull(this.taskName, this.description, this.deadline, this.priority,
+                    this.taskAddress);
         }
 
         public void setTaskName(TaskName taskName) {
@@ -549,6 +556,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Priority> getPriority() {
             return Optional.ofNullable(priority);
+        }
+
+        public void setTaskAddress(TaskAddress taskAddress) {
+            this.taskAddress = taskAddress;
+        }
+
+        public Optional<TaskAddress> getTaskAddress() {
+            return Optional.ofNullable(taskAddress);
         }
 
         @Override

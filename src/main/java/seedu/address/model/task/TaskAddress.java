@@ -17,7 +17,7 @@ public class TaskAddress {
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
     public static final String ADDRESS_PLACEHOLDER_VALUE = "";
 
-    public final String value;
+    public final String taskAddress;
     /**
      * Validates given address.
      *
@@ -25,13 +25,13 @@ public class TaskAddress {
      */
     public TaskAddress(String address) throws IllegalValueException {
         if (address == null) {
-            this.value = ADDRESS_PLACEHOLDER_VALUE;
+            this.taskAddress = ADDRESS_PLACEHOLDER_VALUE;
             return;
         }
         if (!isValidTaskAddress(address)) {
             throw new IllegalValueException(MESSAGE_TASK_ADDRESS_CONSTRAINTS);
         }
-        this.value = address;
+        this.taskAddress = address;
     }
 
     /**
@@ -43,19 +43,19 @@ public class TaskAddress {
 
     @Override
     public String toString() {
-        return value;
+        return taskAddress;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TaskAddress // instanceof handles nulls
-                && this.value.equals(((TaskAddress) other).value)); // state check
+                && this.taskAddress.equals(((TaskAddress) other).taskAddress)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return taskAddress.hashCode();
     }
 }
 

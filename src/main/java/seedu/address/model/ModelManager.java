@@ -32,6 +32,7 @@ import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
 import seedu.address.model.task.TaskName;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
@@ -241,9 +242,10 @@ public class ModelManager extends ComponentManager implements Model {
         Priority priority = taskToAssignTo.getPriority();
         Assignees assignees = taskToAssignTo.getAssignees();
         Boolean state = taskToAssignTo.getCompleteState();
+        TaskAddress taskAddress = taskToAssignTo.getTaskAddress();
 
         assignees.assign(personsToAssign);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
         updateTask(taskToAssignTo, updatedTask);
     }
 
@@ -257,9 +259,10 @@ public class ModelManager extends ComponentManager implements Model {
         Priority priority = taskToDismissFrom.getPriority();
         Assignees assignees = taskToDismissFrom.getAssignees();
         Boolean state = taskToDismissFrom.getCompleteState();
+        TaskAddress taskAddress = taskToDismissFrom.getTaskAddress();
 
         assignees.dismiss(personsToDismiss);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
         updateTask(taskToDismissFrom, updatedTask);
     }
 
@@ -275,8 +278,8 @@ public class ModelManager extends ComponentManager implements Model {
         if (state == toSet.getCompleteState()) {
             throw new DuplicateTaskException();
         }
-
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
+        TaskAddress taskAddress = toSet.getTaskAddress();
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
         updateTask(toSet, updatedTask);
     }
     //@@author

@@ -100,6 +100,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editTaskDescriptor::setDescription);
             ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).ifPresent(editTaskDescriptor::setDeadline);
             ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editTaskDescriptor::setPriority);
+            ParserUtil.parseTaskAddress(argMultimap.getValue(PREFIX_ADDRESS))
+                    .ifPresent(editTaskDescriptor::setTaskAddress);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
