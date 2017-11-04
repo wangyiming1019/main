@@ -241,8 +241,9 @@ public class ModelManager extends ComponentManager implements Model {
         Priority priority = taskToAssignTo.getPriority();
         Assignees assignees = taskToAssignTo.getAssignees();
         Boolean state = taskToAssignTo.getCompleteState();
+        ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToAssign);
 
-        assignees.assign(personsToAssign);
+        assignees.assign(positions);
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
         updateTask(taskToAssignTo, updatedTask);
     }
@@ -257,8 +258,9 @@ public class ModelManager extends ComponentManager implements Model {
         Priority priority = taskToDismissFrom.getPriority();
         Assignees assignees = taskToDismissFrom.getAssignees();
         Boolean state = taskToDismissFrom.getCompleteState();
+        ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToDismiss);
 
-        assignees.dismiss(personsToDismiss);
+        assignees.dismiss(positions);
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
         updateTask(taskToDismissFrom, updatedTask);
     }
