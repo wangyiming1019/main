@@ -2,10 +2,9 @@ package seedu.address.logic.commands;
 
 //@@author Esilocke
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FROM;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -24,7 +23,7 @@ public class DismissCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Dismisses people from a task in the Address Book. "
             + "Parameters: "
             + "PERSON INDEXES... "
-            + PREFIX_TARGET + "TASK ";
+            + PREFIX_FROM + "TASK ";
 
     public static final String MESSAGE_SUCCESS = "Dismissed %1$s people from task \n%2$s";
     public static final String MESSAGE_INVALID_TARGET_ARGS = "Only 1 task index should be specified";
@@ -72,14 +71,12 @@ public class DismissCommand extends Command {
      * @throws CommandException if the specified Index is out of range
      */
     public ArrayList<ReadOnlyPerson> createPersonsToDismiss (ArrayList<Index> indexes)  throws CommandException {
-        HashSet<ReadOnlyPerson> addedPersons = new HashSet<>();
         ArrayList<ReadOnlyPerson> personsToDismiss = new ArrayList<>();
         List<ReadOnlyPerson> personsList = model.getFilteredPersonList();
         try {
-            for (Index i : personIndexes) {
+            for (Index i : indexes) {
                 ReadOnlyPerson toDismiss = personsList.get(i.getZeroBased());
-                if (!addedPersons.contains(toDismiss)) {
-                    addedPersons.add(toDismiss);
+                if (!personsToDismiss.contains(toDismiss)) {
                     personsToDismiss.add(toDismiss);
                 }
             }
