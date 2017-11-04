@@ -20,8 +20,7 @@
   </stylesheets>
    <SplitPane dividerPositions="0.29797979797979796" prefHeight="17.0" prefWidth="692.0">
      <items>
-      
-                    <MenuBar fx:id="menuBar" minWidth="240.0" prefHeight="33.0" prefWidth="513.0" SplitPane.resizableWithParent="false">
+        <MenuBar fx:id="menuBar" minWidth="240.0" prefHeight="33.0" prefWidth="513.0" SplitPane.resizableWithParent="false">
           <Menu mnemonicParsing="false" text="File">
             <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#handleOpen" text="Open">
                   <graphic>

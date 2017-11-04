@@ -66,6 +66,7 @@ public class PersonCard extends UiPart<Region> {
     private ImageView avatarImage;
     @FXML
     private Button browseAvatarButton;
+    //@@author
 
     private int fontSizeMultipler;
     public PersonCard(ReadOnlyPerson person, int displayedIndex, int fontSizeMultiplier) {
@@ -77,7 +78,6 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
         updateAttributeSizes();
     }
-    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
