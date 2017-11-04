@@ -46,7 +46,6 @@ public class TaskAddress {
         return value;
     }
 
-    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

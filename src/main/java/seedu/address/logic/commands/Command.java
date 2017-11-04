@@ -14,7 +14,6 @@ import seedu.address.ui.MainWindow;
 public abstract class Command {
     protected Model model;
     protected Storage storage;
-    protected MainWindow mainWindow;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
 
