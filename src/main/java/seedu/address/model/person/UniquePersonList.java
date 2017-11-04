@@ -146,6 +146,7 @@ public class UniquePersonList implements Iterable<Person> {
     public ArrayList<Index> extractIndexes(ArrayList<ReadOnlyPerson> persons) {
         ArrayList<Index> indexes = new ArrayList<>();
         for (ReadOnlyPerson p : persons) {
+            assert(internalList.contains(p));
             int position = internalList.indexOf(p);
             indexes.add(Index.fromZeroBased(position));
         }
