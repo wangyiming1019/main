@@ -228,33 +228,23 @@ image::FontSizeUI.png[width="540"]
 There are two methods of calling changes in font size. The first way is through the UI. The Class Diagram for this
 procedure is shown below:
 
-Image Placeholder
+image::FontSizeUMLViaUI.png[width="540"]
 
 The other method of calling changes in font size is through a CLI command. When the relevant command is entered,
 the Command class calls MainWindow. The rest of the process flow is identical to that of the UI triggered font size
 command.
 
-Image Placeholder
+image::FontSizeUMLViaCLI.png[width="700"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of Task-related commands +
-**Alternative 1 (current choice):** Use polymorphism to allow existing commands to implement the new commands +
-**Pros:** Under this scheme, any command can be extended to allow addition of new commands of any type, without affecting the architecture significantly +
-**Cons:** SRP may be violated as each Command class may now need to handle 2 different types of objects. +
-**Alternative 2:** Create new classes for all new commands +
-**Pros:** Simpler to implement. +
-**Cons:** Code duplication occurs as the commands for Person and Tasks objects share the same structure.
-
----
-
-**Aspect:** Storage of Task objects +
-**Alternative 1 (current choice):** Store Tasks objects in a separate XML file +
-**Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa.
-**Cons:** All existing save/load functions will require an additional method to handle Task storage.
-**Alternative 2:** Store Task objects together in the default XML storage file +
-**Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
-**Cons** Any changes to the Person or Task
+**Aspect:** Use either UI or CLI based implementations +
+**Alternative 1 (current choice):** Implementing both UI and CLI functionality +
+**Pros:** More options for the user. The was also not much increase in complexity when implementing the CLI version  +
+**Cons:** This implementation required passing information between classes, which may cause unnecessary coupling. +
+**Alternative 2:** Implementing only UI functionality +
+**Pros:** Less tedious to implement and very intuitive for the user +
+**Cons:** Users who prefer typing commands will not have the option of editing their font sizes using the CLI
 
 // tag::undoredo[]
 === Undo/Redo mechanism
