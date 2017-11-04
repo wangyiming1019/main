@@ -62,6 +62,7 @@ public class SelectCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof SelectCommand // instanceof handles nulls
-                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+                && this.targetIndex.equals(((SelectCommand) other).targetIndex))
+                && this.isTask == ((SelectCommand) other).isTask; // state check
     }
 }
