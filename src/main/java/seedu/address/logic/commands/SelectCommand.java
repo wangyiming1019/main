@@ -25,6 +25,7 @@ public class SelectCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String MESSAGE_SELECT_TASK_SUCCESS = "Selected Task: %1$s";
 
     private final Index targetIndex;
     private boolean isTask;
@@ -48,10 +49,12 @@ public class SelectCommand extends Command {
 
         if (isTask) {
             EventsCenter.getInstance().post(new JumpToListRequestTaskEvent(targetIndex));
+            return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex.getOneBased()));
         } else {
             EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+            return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
         }
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
 
     }
 
