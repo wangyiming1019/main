@@ -36,7 +36,6 @@ import seedu.address.model.task.TaskName;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.ui.MainWindow;
-import sun.applet.Main;
 
 /**
  * Represents the in-memory model of the address book data.
