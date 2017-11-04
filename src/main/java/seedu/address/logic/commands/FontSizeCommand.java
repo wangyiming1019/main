@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.SortCommand.MESSAGE_SUCCESS_TASKS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +28,6 @@ public class FontSizeCommand extends Command {
 
     private final String option;
 
-    //@@author charlesgoh
     public FontSizeCommand(String option) {
         this.option = option;
     }
@@ -47,7 +45,7 @@ public class FontSizeCommand extends Command {
             mainWindow.increaseFontSize();
         } else if (getOption().equals(ACCEPTED_PARAMETERS.get(1))) {
             mainWindow.decreaseFontSize();
-        } else if (getOption().equals(ACCEPTED_PARAMETERS.get(2))){
+        } else if (getOption().equals(ACCEPTED_PARAMETERS.get(2))) {
             mainWindow.resetFontSize();
         }
 
