@@ -3,16 +3,17 @@ package seedu.address.commons.events.ui;
 //@@author jeffreygohkw
 
 import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.Location;
 
 /**
  * Represents a selection change in the Person List Panel
  */
 public class BrowserPanelNavigateEvent extends BaseEvent {
 
-    private final String fromLocation;
-    private final String toLocation;
+    private final Location fromLocation;
+    private final Location toLocation;
 
-    public BrowserPanelNavigateEvent(String fromLocation, String toLocation) {
+    public BrowserPanelNavigateEvent(Location fromLocation, Location toLocation) {
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
     }
@@ -22,11 +23,11 @@ public class BrowserPanelNavigateEvent extends BaseEvent {
         return this.getClass().getSimpleName();
     }
 
-    public String getFromLocation() {
+    public Location getFromLocation() {
         return fromLocation;
     }
 
-    public String getToLocation() {
+    public Location getToLocation() {
         return toLocation;
     }
 }

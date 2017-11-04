@@ -129,6 +129,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleBrowserPanelNavigateEvent(BrowserPanelNavigateEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadDirectionsPage(event.getFromLocation(), event.getToLocation());
+        loadDirectionsPage(event.getFromLocation().toString(), event.getToLocation().toString());
     }
 }
