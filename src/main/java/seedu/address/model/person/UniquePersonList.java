@@ -139,6 +139,7 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author Esilocke
     /**
      * Returns an array list of {@code Index} corresponding to the {@code ReadOnlyPerson} specified
      */
@@ -150,6 +151,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return indexes;
     }
+    //@@author
 
     /**
      * Sorts person list by all persons by any field in ascending or descending order
