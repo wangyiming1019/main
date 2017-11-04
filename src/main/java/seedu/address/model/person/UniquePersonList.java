@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,6 +13,7 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -135,6 +137,18 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * Returns an array list of {@code Index} corresponding to the {@code ReadOnlyPerson} specified
+     */
+    public ArrayList<Index> extractIndexes(ArrayList<ReadOnlyPerson> persons) {
+        ArrayList<Index> indexes = new ArrayList<>();
+        for (ReadOnlyPerson p : persons) {
+            int position = internalList.indexOf(p);
+            indexes.add(Index.fromZeroBased(position));
+        }
+        return indexes;
     }
 
     /**
