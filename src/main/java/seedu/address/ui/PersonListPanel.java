@@ -22,7 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonListPanel extends UiPart<Region> {
     private static final int MINIMUM_FONT_SIZE_MULTIPLIER = 0;
-    private static final int MAXIMUM_FONT_SIZE_MULTIPLIER = 20;
+    private static final int MAXIMUM_FONT_SIZE_MULTIPLIER = 7;
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
