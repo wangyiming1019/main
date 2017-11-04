@@ -1,7 +1,11 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.task.Assignees;
 import seedu.address.model.task.Deadline;
@@ -24,6 +28,8 @@ public class XmlAdaptedTask {
     private String priority;
     @XmlElement(required = true)
     private String state;
+    @XmlElement
+    private List<XmlAdaptedIndex> assignees = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedTask.
@@ -43,6 +49,10 @@ public class XmlAdaptedTask {
         deadline = source.getDeadline().value;
         priority = Integer.toString(source.getPriority().value);
         state = String.valueOf(source.getCompleteState());
+        assignees = new ArrayList<>();
+        for (Index i : source.getAssignees().getList()) {
+            assignees.add(new XmlAdaptedIndex(i));
+        }
     }
 
     /**
@@ -56,6 +66,11 @@ public class XmlAdaptedTask {
         final Deadline deadline = new Deadline(this.deadline);
         final Priority priority = new Priority(this.priority);
         final Boolean state = Boolean.valueOf(this.state);
-        return new Task(name, description, deadline, priority, new Assignees(), state);
+        final ArrayList<Index> assigneeIndexes = new ArrayList<>();
+        for (XmlAdaptedIndex index : assignees) {
+            assigneeIndexes.add(index.toModelType());
+        }
+        final Assignees assignees = new Assignees(assigneeIndexes);
+        return new Task(name, description, deadline, priority, assignees, state);
     }
 }
