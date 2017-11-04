@@ -5,12 +5,17 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.TaskStateChangeEvent;
 import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
 
 /**
  * The Browser Panel of the App.
@@ -28,6 +33,10 @@ public class ViewTaskPanel extends UiPart<Region> {
     private Label deadline;
     @FXML
     private Label priority;
+    @FXML
+    private Label state;
+    @FXML
+    private Button markState;
 
     private ReadOnlyTask task;
 
@@ -54,6 +63,16 @@ public class ViewTaskPanel extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
+        state.textProperty().bind(Bindings.convert(task.stateProperty()));
+        markState.textProperty().bind(Bindings.convert(task.changeStateProperty()));
+        markState.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReadOnlyTask updatedTask = new Task(task);
+                updatedTask.changeState();
+                raise(new TaskStateChangeEvent(task, updatedTask));
+            }
+        });
     }
 
     @Subscribe
