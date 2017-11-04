@@ -25,7 +25,6 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.UniqueTaskList;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-import seedu.address.ui.MainWindow;
 
 /**
  * Wraps all data at the address-book level
