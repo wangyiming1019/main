@@ -18,6 +18,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +44,7 @@ import seedu.address.logic.commands.EditTagCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.FontSizeCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -423,11 +425,30 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommandFontSizeWord() throws Exception {
+        for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
+            assertTrue(parser.
+                    parseCommand(FontSizeCommand.COMMAND_WORD + " " + arg) instanceof FontSizeCommand);
+        }
+
+    }
+
+    @Test
+    public void parseCommandFontSizeAlias() throws Exception {
+        for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
+            assertTrue(parser.
+                    parseCommand(FontSizeCommand.COMMAND_ALIAS + " " + arg) instanceof FontSizeCommand);
+        }
+
+    }
+
+    //@@author
+    @Test
     public void parseCommandRedoCommandWordReturnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
-    //@@author
+
     //@@author Esilocke
     @Test
     public void  parseCommandSetComplete() throws Exception {
