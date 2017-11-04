@@ -21,6 +21,8 @@ public interface ReadOnlyTask {
     ObjectProperty<Priority> priorityProperty();
     ObjectProperty<Assignees> assigneeProperty();
     ObjectProperty<String> stateProperty();
+    ObjectProperty<String> changeStateProperty();
+    void changeState();
 
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
