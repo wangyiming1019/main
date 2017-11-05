@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 //@@author jeffreygohkw
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.SortCommand.ACCEPTED_FIELD_PARAMETERS;
 import static seedu.address.logic.commands.SortCommand.ACCEPTED_LIST_PARAMETERS;
@@ -63,43 +64,21 @@ public class SortCommandParserTest {
 
         // For person sorts
         String list = ACCEPTED_LIST_PARAMETERS.get(0);
-        for (String field: ACCEPTED_FIELD_PARAMETERS.subList(0, 4)) {
-            for (String order : ACCEPTED_ORDER_PARAMETERS) {
-                expectedCommand = new SortCommand(list, field, order);
+        String field = ACCEPTED_FIELD_PARAMETERS.get(0);
+        String order = ACCEPTED_ORDER_PARAMETERS.get(0);
 
-                // Commands for full sort command word
-                actualCommand = parser.parse(list + " " + field + " " + order);
-                assertEquals(expectedCommand.getList(), actualCommand.getList());
-                assertEquals(expectedCommand.getField(), actualCommand.getField());
-                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-                // Commands for sort command alias
-                actualCommand = parser.parse(list + " " + field + " " + order);
-                assertEquals(expectedCommand.getList(), actualCommand.getList());
-                assertEquals(expectedCommand.getField(), actualCommand.getField());
-                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-            }
-        }
+        expectedCommand = new SortCommand(list, field, order);
+        actualCommand = parser.parse(list + " " + field + " " + order);
+        assertEquals(true, expectedCommand.sameCommandAs(actualCommand));
 
         // For task sorts
         list = ACCEPTED_LIST_PARAMETERS.get(1);
-        for (String field: ACCEPTED_FIELD_PARAMETERS.subList(4, 6)) {
-            for (String order: ACCEPTED_ORDER_PARAMETERS) {
-                expectedCommand = new SortCommand(list, field, order);
+        field = ACCEPTED_FIELD_PARAMETERS.get(5);
+        order = ACCEPTED_ORDER_PARAMETERS.get(1);
 
-                // Commands for full sort command word
-                actualCommand = parser.parse(list + " " + field + " " +  order);
-                assertEquals(expectedCommand.getList(), actualCommand.getList());
-                assertEquals(expectedCommand.getField(), actualCommand.getField());
-                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-                // Commands for sort command alias
-                actualCommand = parser.parse(list + " " + field + " " +  order);
-                assertEquals(expectedCommand.getList(), actualCommand.getList());
-                assertEquals(expectedCommand.getField(), actualCommand.getField());
-                assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-            }
-        }
+        expectedCommand = new SortCommand(list, field, order);
+        actualCommand = parser.parse(list + " " + field + " " + order);
+        assertEquals(true, expectedCommand.sameCommandAs(actualCommand));
     }
     //@@author charlesgoh
 }

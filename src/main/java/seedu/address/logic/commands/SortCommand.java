@@ -41,11 +41,19 @@ public class SortCommand extends UndoableCommand {
     private final String field;
     private final String order;
 
-    //@@author charlesgoh
     public SortCommand(String list, String field, String order) {
         this.field = field;
         this.order = order;
         this.list = list;
+    }
+
+    /**
+     * Checks if argument command has the same parameter properties
+     * @param commandB
+     */
+    public boolean sameCommandAs(SortCommand commandB) {
+       return commandB.getList().equals(this.list) && commandB.getField()
+                .equals(this.field) && commandB.getOrder().equals(this.order);
     }
 
     public String getField() {

@@ -23,6 +23,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public SortCommand parse(String args) throws ParseException {
+        System.out.println(args);
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
@@ -30,6 +31,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         // Converts arg arrays to lower case to account for caps entries
         String[] argKeywords = trimmedArgs.split("\\s");
+        System.out.println(Integer.toString(argKeywords.length));
 
         // Eliminate the sort keyword
         for (int i = 0; i < argKeywords.length; i++) {
