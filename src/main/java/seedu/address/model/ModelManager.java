@@ -194,7 +194,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.unfavouritePerson(target);
-        updateFilteredPersonList(new NameContainsFavouritePredicate());
         indicateAddressBookChanged();
     }
 
