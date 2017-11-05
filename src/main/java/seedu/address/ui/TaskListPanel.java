@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.FontSizeCommand.MAXIMUM_FONT_SIZE_MULTIPLIER;
+import static seedu.address.logic.commands.FontSizeCommand.MINIMUM_FONT_SIZE_MULTIPLIER;
+
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -22,8 +25,6 @@ import seedu.address.model.task.ReadOnlyTask;
  * Panel containing the list of tasks.
  */
 public class TaskListPanel extends UiPart<Region> {
-    private static final int MINIMUM_FONT_SIZE_MULTIPLIER = 0;
-    private static final int MAXIMUM_FONT_SIZE_MULTIPLIER = 7;
     private static final String FXML = "TaskListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 
@@ -85,6 +86,24 @@ public class TaskListPanel extends UiPart<Region> {
         logger.info("TaskListPanel: Resetting font sizes");
         fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
         setConnections(taskList);
+    }
+
+    /**
+     * Gets integer value of font size multiplier
+     */
+    public int getFontSizeMultiplier() {
+        return fontSizeMultiplier;
+    }
+
+    /**
+     * Set integer value of font size multiplier
+     */
+    public void setFontSizeMultiplier(int fontSizeMultiplier) {
+        // Restrict from minimum
+        this.fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier);
+
+        // Restrict from maximum
+        this.fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier);
     }
     //@@author
 

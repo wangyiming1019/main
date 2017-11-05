@@ -10,7 +10,8 @@ import java.util.Arrays;
  * Sorts all persons in address book by any field. Sorting can be done in ascending or descending order
  */
 public class FontSizeCommand extends Command {
-
+    public static final int MINIMUM_FONT_SIZE_MULTIPLIER = 0;
+    public static final int MAXIMUM_FONT_SIZE_MULTIPLIER = 7;
     public static final String COMMAND_WORD = "fontsize";
     public static final String COMMAND_ALIAS = "fs";
     public static final String INCREASE_SIZE_PARAMETER = "increase";

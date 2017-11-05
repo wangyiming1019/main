@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.FontSizeCommand.MAXIMUM_FONT_SIZE_MULTIPLIER;
+import static seedu.address.logic.commands.FontSizeCommand.MINIMUM_FONT_SIZE_MULTIPLIER;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
