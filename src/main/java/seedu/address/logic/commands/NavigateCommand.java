@@ -105,7 +105,30 @@ public class NavigateCommand extends Command {
         }
         EventsCenter.getInstance().post(new BrowserPanelNavigateEvent(from, to));
         return new CommandResult(String.format(MESSAGE_NAVIGATE_SUCCESS, from, to));
+    }
 
+    public Location getLocationFrom() {
+        return locationFrom;
+    }
+
+    public Location getLocationTo() {
+        return locationTo;
+    }
+
+    public Index getFromIndex() {
+        return fromIndex;
+    }
+
+    public Index getToIndex() {
+        return toIndex;
+    }
+
+    public boolean isFromIsTask() {
+        return fromIsTask;
+    }
+
+    public boolean isToIsTask() {
+        return toIsTask;
     }
 
     @Override
