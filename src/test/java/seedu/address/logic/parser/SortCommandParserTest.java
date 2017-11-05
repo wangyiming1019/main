@@ -28,28 +28,24 @@ public class SortCommandParserTest {
     @Test
     public void parse_wrongArguments_failure() {
         // no list specified
-        for (String field: ACCEPTED_FIELD_PARAMETERS) {
-            for (String order: ACCEPTED_ORDER_PARAMETERS) {
-                assertParseFailure(parser, field + " " + order,
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-            }
-        }
+        assertParseFailure(parser,  ACCEPTED_FIELD_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
         // no field specified
-        for (String list: ACCEPTED_LIST_PARAMETERS) {
-            for (String order: ACCEPTED_ORDER_PARAMETERS) {
-                assertParseFailure(parser, list + " " + order,
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-            }
-        }
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
         // no order specified
-        for (String list: ACCEPTED_LIST_PARAMETERS) {
-            for (String field: ACCEPTED_FIELD_PARAMETERS) {
-                assertParseFailure(parser, list + " " + field,
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-            }
-        }
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // list is person but field is for tasks
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(5)
+                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // list is task but field is for person
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(1) + " " + ACCEPTED_FIELD_PARAMETERS.get(0)
+                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
         // Incorrect test
         assertParseFailure(parser, "random text",
