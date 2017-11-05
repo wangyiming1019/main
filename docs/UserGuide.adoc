@@ -169,7 +169,7 @@ task into the Address++ application.
 ****
 ****
 **Example Scenario 2** +
-You suddenly realize that you have run out of pencils. You decide to add a task into Address++ to remind you to get some
+You realize that you have run out of pencils. You decide to add a task into Address++ to remind you to get some
 new ones later.
 
 `add task n/Buy new pencil p/2`
@@ -183,9 +183,10 @@ Format: `addtag INDEX... t/[TAG]` +
 
 
 ****
-* You can add the tag of the person at the specific `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index you key in *must be a positive integer* 1, 2, 3, ...
+**Things To Note** +
+* You can add the tag of the person at the specific `INDEX`. +
+* The index refers to the index number shown in the most recent listing. +
+* The index you key in *must be a positive integer* 1, 2, 3, ... +
 * If you don not key in any indexes, addtag will add the tag to all contacts in the address book.
 ****
 
