@@ -16,7 +16,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /** Dismisses at least 1 person from a specified task in the Address Book**/
-public class DismissCommand extends Command {
+public class DismissCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "dismiss";
     public static final String COMMAND_ALIAS = "ds";
 
@@ -40,7 +40,7 @@ public class DismissCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyTask> tasksList = model.getFilteredTaskList();
         ArrayList<ReadOnlyPerson> personIndexes = createPersonsToDismiss(this.personIndexes);
 
