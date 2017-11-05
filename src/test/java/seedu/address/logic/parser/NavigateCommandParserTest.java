@@ -1,12 +1,14 @@
 package seedu.address.logic.parser;
 //@@autho jeffreygohkw
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_FROM_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_FROM_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_FROM_TASK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_TO_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_TO_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_TO_TASK;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
@@ -16,6 +18,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 
 import org.junit.Test;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.model.Location;
@@ -78,5 +81,59 @@ public class NavigateCommandParserTest {
                 INDEX_THIRD_TASK, INDEX_FIRST_TASK, true, true);
         assertParseSuccess(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_TASK + "3"
                 + " " + PREFIX_NAVIGATE_TO_TASK + "1", fttt);
+    }
+
+    @Test
+    public void parse_repeatedFromAndTos_failure() {
+        //Multiple Froms
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                + " " + PREFIX_NAVIGATE_FROM_PERSON + "1" + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa",
+                NavigateCommand.MESSAGE_MULTIPLE_FROM_ERROR);
+
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + " " + PREFIX_NAVIGATE_FROM_TASK + "1" + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa",
+                NavigateCommand.MESSAGE_MULTIPLE_FROM_ERROR);
+
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_TASK + "1"
+                + " " + PREFIX_NAVIGATE_FROM_PERSON + "1" + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa",
+                NavigateCommand.MESSAGE_MULTIPLE_FROM_ERROR);
+
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_TASK + "1"
+                + " " + PREFIX_NAVIGATE_FROM_PERSON + "1" + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa", NavigateCommand.MESSAGE_MULTIPLE_FROM_ERROR);
+
+        //Multiple Tos
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                + " " + PREFIX_NAVIGATE_TO_PERSON + "1" + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa",
+                NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
+
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                + " " + PREFIX_NAVIGATE_TO_TASK + "1" + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa",
+                NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
+
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                + " " + PREFIX_NAVIGATE_TO_PERSON + "1" + " " + PREFIX_NAVIGATE_TO_TASK + "2",
+                NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
+
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                + " "  + PREFIX_NAVIGATE_TO_TASK + "1" + " " + PREFIX_NAVIGATE_TO_PERSON + "1"
+                + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa", NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
+    }
+
+    @Test
+    public void parse_missingFromOrTo_failure() {
+        //No To
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, NavigateCommand.MESSAGE_USAGE));
+        //No From
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_TO_ADDRESS + "NUS",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, NavigateCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgs_failure() {
+        //Non positive indices
+        assertParseFailure(parser, NavigateCommand.COMMAND_WORD + " "  + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                + " " + PREFIX_NAVIGATE_TO_PERSON + "-1", ParserUtil.MESSAGE_INVALID_INDEX);
     }
 }
