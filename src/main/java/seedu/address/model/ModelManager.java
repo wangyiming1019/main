@@ -19,7 +19,6 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.NameContainsFavouritePredicate;
 import seedu.address.model.person.Person;
