@@ -96,7 +96,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        ArrayList<ReadOnlyPerson> persons = new ArrayList<>();
+        persons.add(target);
+        ArrayList<Index> personIndexes = addressBook.extractPersonIndexes(persons);
+        Index personIndex = personIndexes.get(0);
         addressBook.removePerson(target);
+        addressBook.removePersonFromAssignees(personIndex);
         indicateAddressBookChanged();
     }
     //@@author wangyiming1019
@@ -233,34 +238,28 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void assignToTask(ArrayList<ReadOnlyPerson> personsToAssign, ReadOnlyTask taskToAssignTo)
             throws TaskNotFoundException, DuplicateTaskException {
-        TaskName taskName = taskToAssignTo.getTaskName();
-        Description description = taskToAssignTo.getDescription();
-        Deadline deadline = taskToAssignTo.getDeadline();
-        Priority priority = taskToAssignTo.getPriority();
         Assignees assignees = taskToAssignTo.getAssignees();
-        Boolean state = taskToAssignTo.getCompleteState();
+        Assignees newAssignees = new Assignees(assignees);
         ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToAssign);
 
-        assignees.assign(positions);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
-        updateTask(taskToAssignTo, updatedTask);
+        newAssignees.assign(positions);
+        ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToAssignTo, newAssignees);
+        addressBook.updateTask(taskToAssignTo, updatedTask);
+        indicateAddressBookChanged();
     }
 
     //@@author Esilocke
     @Override
     public void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask taskToDismissFrom)
             throws TaskNotFoundException, DuplicateTaskException {
-        TaskName taskName = taskToDismissFrom.getTaskName();
-        Description description = taskToDismissFrom.getDescription();
-        Deadline deadline = taskToDismissFrom.getDeadline();
-        Priority priority = taskToDismissFrom.getPriority();
         Assignees assignees = taskToDismissFrom.getAssignees();
-        Boolean state = taskToDismissFrom.getCompleteState();
+        Assignees newAssignees = new Assignees(assignees);
         ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToDismiss);
 
-        assignees.dismiss(positions);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
-        updateTask(taskToDismissFrom, updatedTask);
+        newAssignees.dismiss(positions);
+        ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToDismissFrom, newAssignees);
+        addressBook.updateTask(taskToDismissFrom, updatedTask);
+        indicateAddressBookChanged();
     }
 
     //@@author Esilocke
@@ -277,7 +276,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
-        updateTask(toSet, updatedTask);
+        addressBook.updateTask(toSet, updatedTask);
+        indicateAddressBookChanged();
     }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
@@ -331,4 +331,19 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredTasks.equals(other.filteredTasks);
     }
 
+    //=========== Utility methods =============================================================
+
+    /**
+     * Constructs a new {@code ReadOnlyTask} from an existing ReadOnlyTask, with the specified assignees list.
+     */
+    public ReadOnlyTask constructTaskWithNewAssignee(ReadOnlyTask originalTask, Assignees updatedAssignees) {
+        TaskName taskName = originalTask.getTaskName();
+        Description description = originalTask.getDescription();
+        Deadline deadline = originalTask.getDeadline();
+        Priority priority = originalTask.getPriority();
+        Boolean state = originalTask.getCompleteState();
+
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, updatedAssignees, state);
+        return updatedTask;
+    }
 }
