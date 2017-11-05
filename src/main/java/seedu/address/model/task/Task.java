@@ -120,6 +120,9 @@ public class Task implements ReadOnlyTask {
     }
 
     @Override
+    public ObjectProperty<TaskAddress> taskAddressProperty() { return taskAddress; }
+
+    @Override
     public ObjectProperty<String> stateProperty() {
         String printableState = getPrintableState();
         return new SimpleObjectProperty<>(printableState);

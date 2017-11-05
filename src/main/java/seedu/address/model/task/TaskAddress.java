@@ -38,7 +38,7 @@ public class TaskAddress {
      * Returns true if a given string is a valid task address.
      */
     public static boolean isValidTaskAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX) || test.equals(MESSAGE_TASK_ADDRESS_CONSTRAINTS);
+        return test.matches(ADDRESS_VALIDATION_REGEX) || test.equals(ADDRESS_PLACEHOLDER_VALUE);
     }
 
     @Override
