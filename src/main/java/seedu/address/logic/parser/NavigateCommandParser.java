@@ -32,6 +32,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public NavigateCommand parse(String args) throws ParseException {
+        resetValues();
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAVIGATE_FROM_PERSON,
                 PREFIX_NAVIGATE_FROM_TASK, PREFIX_NAVIGATE_FROM_ADDRESS, PREFIX_NAVIGATE_TO_PERSON,
                 PREFIX_NAVIGATE_TO_TASK, PREFIX_NAVIGATE_TO_ADDRESS);
@@ -54,6 +55,17 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
             throw new ParseException(e.getMessage(), e);
         }
     }
+
+    /**
+     * Resets the values stored in NavigateCommandParser object to null
+     */
+    private void resetValues() {
+        from = null;
+        to = null;
+        fromIndex = null;
+        toIndex = null;
+    }
+
     /**
      * Checksif only 1 To argument is provided
      * @throws ParseException if there are no To arguments or there are more than 1 To arguements
@@ -63,8 +75,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
         if (!(toAddress || toPerson || toTask)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NavigateCommand.MESSAGE_USAGE));
         } else if ((toAddress && (toPerson || toTask)) || (toPerson && toTask)) {
-            // If 2 or more to prefixes are present
-            throw new ParseException(NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
+            // If 2 or more to prefixes are presentthrow new ParseException(NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
         } else {
             try {
                 setArgsForNavigateCommand(argumentMultimap, toAddress, toPerson, false);

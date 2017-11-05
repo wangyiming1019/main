@@ -134,8 +134,82 @@ public class NavigateCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof LocateCommand // instanceof handles nulls
-                && this.locationFrom.equals(((NavigateCommand) other).locationFrom)
-                && this.locationTo.equals(((NavigateCommand) other).locationTo)); // state check
+                || (other instanceof NavigateCommand // instanceof handles nulls
+                && equalsLocationFrom(other)
+                && equalsLocationTo(other)
+                && equalsFromIndex(other)
+                && equalsToIndex(other)
+                && equalsFromIsTask(other)
+                && equalsToIsTask(other)); // state check
+    }
+
+    /**
+     * Checks if the (@codde locationFrom) of this object is equal to that of the other Object
+     * @param other The other Object we are comparing against
+     * @return True if both are null or both have the same value
+     */
+    private boolean equalsLocationFrom(Object other) {
+        if (this.locationFrom == null) {
+            return ((NavigateCommand) other).locationFrom == null;
+        } else {
+            return this.locationFrom.equals(((NavigateCommand) other).locationFrom);
+        }
+    }
+
+    /**
+     * Checks if the (@codde locationTo) of this object is equal to that of the other Object
+     * @param other The other Object we are comparing against
+     * @return True if both are null or both have the same value
+     */
+    private boolean equalsLocationTo(Object other) {
+        if (this.locationTo == null) {
+            return ((NavigateCommand) other).locationTo == null;
+        } else {
+            return this.locationTo.equals(((NavigateCommand) other).locationTo);
+        }
+    }
+
+    /**
+     * Checks if the (@codde fromIndex) of this object is equal to that of the other Object
+     * @param other The other Object we are comparing against
+     * @return True if both are null or both have the same value
+     */
+    private boolean equalsFromIndex(Object other) {
+        if (this.fromIndex == null) {
+            return ((NavigateCommand) other).fromIndex == null;
+        } else {
+            return this.fromIndex.equals(((NavigateCommand) other).fromIndex);
+        }
+    }
+
+    /**
+     * Checks if the (@codde toIndex) of this object is equal to that of the other Object
+     * @param other The other Object we are comparing against
+     * @return True if both are null or both have the same value
+     */
+    private boolean equalsToIndex(Object other) {
+        if (this.toIndex == null) {
+            return ((NavigateCommand) other).toIndex == null;
+        } else {
+            return this.toIndex.equals(((NavigateCommand) other).toIndex);
+        }
+    }
+
+    /**
+     * Checks if the (@codde fromIsTask) of this object is equal to that of the other Object
+     * @param other The other Object we are comparing against
+     * @return True if both are null or both have the same value
+     */
+    private boolean equalsFromIsTask(Object other) {
+        return this.fromIsTask == (((NavigateCommand) other).fromIsTask);
+    }
+
+    /**
+     * Checks if the (@codde toIsTask) of this object is equal to that of the other Object
+     * @param other The other Object we are comparing against
+     * @return True if both are null or both have the same value
+     */
+    private boolean equalsToIsTask(Object other) {
+        return this.toIsTask == (((NavigateCommand) other).toIsTask);
     }
 }
