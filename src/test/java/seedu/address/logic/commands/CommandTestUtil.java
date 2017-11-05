@@ -58,6 +58,8 @@ public class CommandTestUtil {
     public static final String VALID_DEADLINE_PAPER = "05-04-2017";
     public static final String VALID_PRIORITY_PENCIL = "1";
     public static final String VALID_PRIORITY_PAPER = "3";
+    public static final String VALID_TASK_ADDRESS_PENCIL = "12 Kent Ridge Cres";
+    public static final String VALID_TASK_ADDRESS_PAPER = "Bedok Mall";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -71,16 +73,6 @@ public class CommandTestUtil {
     public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String NAME_DESC_AMY_PRIVATE = " " + PREFIX_NAME_PRIVATE + VALID_NAME_AMY;
-    public static final String NAME_DESC_BOB_PRIVATE = " " + PREFIX_NAME_PRIVATE + VALID_NAME_BOB;
-    public static final String PHONE_DESC_AMY_PRIVATE = " " + PREFIX_PHONE_PRIVATE + VALID_PHONE_AMY;
-    public static final String PHONE_DESC_BOB_PRIVATE = " " + PREFIX_PHONE_PRIVATE + VALID_PHONE_BOB;
-    public static final String EMAIL_DESC_AMY_PRIVATE = " " + PREFIX_EMAIL_PRIVATE + VALID_EMAIL_AMY;
-    public static final String EMAIL_DESC_BOB_PRIVATE = " " + PREFIX_EMAIL_PRIVATE + VALID_EMAIL_BOB;
-    public static final String ADDRESS_DESC_AMY_PRIVATE = " " + PREFIX_ADDRESS_PRIVATE + VALID_ADDRESS_AMY;
-    public static final String ADDRESS_DESC_BOB_PRIVATE = " " + PREFIX_ADDRESS_PRIVATE + VALID_ADDRESS_BOB;
-    public static final String REMARK_DESC_AMY_PRIVATE = " " + PREFIX_ADDRESS_PRIVATE + VALID_REMARK_AMY;
-    public static final String REMARK_DESC_BOB_PRIVATE = " " + PREFIX_ADDRESS_PRIVATE + VALID_REMARK_BOB;
 
     public static final String TASK_NAME_DESC_PENCIL = " " + PREFIX_NAME + VALID_TASK_NAME_PENCIL;
     public static final String TASK_NAME_DESC_PAPER = " " + PREFIX_NAME + VALID_TASK_NAME_PAPER;
@@ -90,6 +82,8 @@ public class CommandTestUtil {
     public static final String DEADLINE_DESC_PAPER = " " + PREFIX_DEADLINE + VALID_DEADLINE_PAPER;
     public static final String PRIORITY_DESC_PENCIL = " " + PREFIX_PRIORITY + VALID_PRIORITY_PENCIL;
     public static final String PRIORITY_DESC_PAPER = " " + PREFIX_PRIORITY + VALID_PRIORITY_PAPER;
+    public static final String TASK_ADDRESS_DESC_PENCIL = " " + PREFIX_ADDRESS + VALID_TASK_ADDRESS_PENCIL;
+    public static final String TASK_ADDRESS_DESC_PAPER = " " + PREFIX_ADDRESS + VALID_TASK_ADDRESS_PAPER;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

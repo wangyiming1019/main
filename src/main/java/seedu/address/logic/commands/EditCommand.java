@@ -584,7 +584,8 @@ public class EditCommand extends UndoableCommand {
             return getTaskName().equals(e.getTaskName())
                     && getDescription().equals(e.getDescription())
                     && getDeadline().equals(e.getDeadline())
-                    && getPriority().equals(e.getPriority());
+                    && getPriority().equals(e.getPriority())
+                    && getTaskAddress().equals(e.getTaskAddress());
         }
     }
 }

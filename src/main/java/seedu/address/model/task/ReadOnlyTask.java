@@ -32,7 +32,7 @@ public interface ReadOnlyTask {
                 .append(getDeadline())
                 .append(" Priority: ")
                 .append(getPriority())
-                .append(" Location: ")
+                .append(" Address: ")
                 .append(getTaskAddress())
                 .append(" ")
                 .append(getPrintableState());
@@ -51,6 +51,6 @@ public interface ReadOnlyTask {
                 && other.getPriority().equals(this.getPriority()))
                 && other.getAssignees().equals(this.getAssignees())
                 && other.getCompleteState() == this.getCompleteState()
-                && other.getTaskAddress() == this.getTaskAddress();
+                && other.getTaskAddress().equals(this.getTaskAddress());
     }
 }

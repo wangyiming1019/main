@@ -19,7 +19,7 @@ public class TaskBuilder {
     public static final String DEFAULT_DESCRIPTION = "Buy a pencil from ABS by tomorrow";
     public static final String DEFAULT_DEADLINE = "04-04-2017";
     public static final String DEFAULT_PRIORITY = "4";
-    public static final String DEFAULT_ADDRESS = "12 Kent Ridge Crescent, 119275\n";
+    public static final String DEFAULT_ADDRESS = "12 Kent Ridge Crescent, 119275";
 
     private Task task;
 
