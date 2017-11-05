@@ -22,8 +22,8 @@ public class FontSizeCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Increases, decreases or resets font sizes \n"
                 + "Parameters: KEYWORD [OPTION]\n"
-                + "Example: " + COMMAND_WORD + " fontsize +\n"
-                + "Example 2: " + COMMAND_WORD + " fs reset\n";
+                + "Example: " + COMMAND_WORD + " increase\n"
+                + "Example 2: " + COMMAND_ALIAS + " reset\n";
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n" + MESSAGE_USAGE;
 
