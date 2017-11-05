@@ -84,7 +84,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     private EditCommand constructTaskDescriptor(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_NAME, PREFIX_DESCRIPTION,
-                        PREFIX_DEADLINE, PREFIX_PRIORITY);
+                        PREFIX_DEADLINE, PREFIX_PRIORITY, PREFIX_ADDRESS);
         Index index;
 
         try {
@@ -100,6 +100,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editTaskDescriptor::setDescription);
             ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).ifPresent(editTaskDescriptor::setDeadline);
             ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editTaskDescriptor::setPriority);
+            ParserUtil.parseTaskAddress(argMultimap.getValue(PREFIX_ADDRESS))
+                    .ifPresent(editTaskDescriptor::setTaskAddress);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

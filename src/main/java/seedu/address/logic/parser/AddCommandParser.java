@@ -37,6 +37,7 @@ import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
 import seedu.address.model.task.TaskName;
 
 /**
@@ -137,11 +138,12 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
     //@@author Esilocke
     /**
-     * Constructs a ReadOnlyPerson from the arguments provided.
+     * Constructs a ReadOnlyTask from the arguments provided.
      */
     private static ReadOnlyTask constructTask(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE, PREFIX_PRIORITY);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE, PREFIX_PRIORITY,
+                        PREFIX_ADDRESS);
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME))) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_TASK_USAGE));
@@ -152,6 +154,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Description description;
             Deadline deadline;
             Priority priority;
+            TaskAddress address;
 
             name = arePrefixesPresent(argMultimap, PREFIX_NAME)
                     ? ParserUtil.parseTaskName(argMultimap.getValue(PREFIX_NAME)).get()
@@ -169,8 +172,11 @@ public class AddCommandParser implements Parser<AddCommand> {
                     ? ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get()
                     : new Priority(null);
 
+            address = arePrefixesPresent(argMultimap, PREFIX_ADDRESS)
+                    ? ParserUtil.parseTaskAddress(argMultimap.getValue(PREFIX_ADDRESS)).get()
+                    : new TaskAddress(null);
 
-            ReadOnlyTask task = new Task(name, description, deadline, priority);
+            ReadOnlyTask task = new Task(name, description, deadline, priority, address);
             return task;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
