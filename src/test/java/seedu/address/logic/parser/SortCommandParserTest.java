@@ -3,6 +3,10 @@ package seedu.address.logic.parser;
 //@@author jeffreygohkw
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_FIELD_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_LIST_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_ORDER_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_USAGE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
@@ -16,39 +20,39 @@ public class SortCommandParserTest {
 
     @Test
     public void no_arguments_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
     }
 
     //author charlesgoh
     @Test
     public void parse_wrongArguments_failure() {
         // no list specified
-        for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS) {
-            for (String order: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+        for (String field: ACCEPTED_FIELD_PARAMETERS) {
+            for (String order: ACCEPTED_ORDER_PARAMETERS) {
                 assertParseFailure(parser, field + " " + order,
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
             }
         }
 
         // no field specified
-        for (String list: SortCommand.ACCEPTED_LIST_PARAMETERS) {
-            for (String order: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+        for (String list: ACCEPTED_LIST_PARAMETERS) {
+            for (String order: ACCEPTED_ORDER_PARAMETERS) {
                 assertParseFailure(parser, list + " " + order,
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
             }
         }
 
         // no order specified
-        for (String list: SortCommand.ACCEPTED_LIST_PARAMETERS) {
-            for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS) {
+        for (String list: ACCEPTED_LIST_PARAMETERS) {
+            for (String field: ACCEPTED_FIELD_PARAMETERS) {
                 assertParseFailure(parser, list + " " + field,
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
             }
         }
 
         // Incorrect test
         assertParseFailure(parser, "random text",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
     }
 
@@ -58,9 +62,9 @@ public class SortCommandParserTest {
         SortCommand actualCommand;
 
         // For person sorts
-        String list = SortCommand.ACCEPTED_LIST_PARAMETERS.get(0);
-        for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS.subList(0, 4)) {
-            for (String order : SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+        String list = ACCEPTED_LIST_PARAMETERS.get(0);
+        for (String field: ACCEPTED_FIELD_PARAMETERS.subList(0, 4)) {
+            for (String order : ACCEPTED_ORDER_PARAMETERS) {
                 expectedCommand = new SortCommand(list, field, order);
 
                 // Commands for full sort command word
@@ -78,9 +82,9 @@ public class SortCommandParserTest {
         }
 
         // For task sorts
-        list = SortCommand.ACCEPTED_LIST_PARAMETERS.get(1);
-        for (String field: SortCommand.ACCEPTED_FIELD_PARAMETERS.subList(4, 6)) {
-            for (String order: SortCommand.ACCEPTED_ORDER_PARAMETERS) {
+        list = ACCEPTED_LIST_PARAMETERS.get(1);
+        for (String field: ACCEPTED_FIELD_PARAMETERS.subList(4, 6)) {
+            for (String order: ACCEPTED_ORDER_PARAMETERS) {
                 expectedCommand = new SortCommand(list, field, order);
 
                 // Commands for full sort command word
