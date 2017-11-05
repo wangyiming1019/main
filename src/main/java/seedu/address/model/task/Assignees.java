@@ -33,6 +33,17 @@ public class Assignees {
         }
     }
 
+    /** Updates the internal assignedList with the correct Index values after a sort operation */
+    public void updateList(Index[] mappings) {
+        ArrayList<Index> updatedList = new ArrayList<>();
+        for (Index i : assignedList) {
+            Index updatedPosition = mappings[i.getZeroBased()];
+            updatedList.add(updatedPosition);
+        }
+        assignedList.clear();
+        assignedList.addAll(updatedList);
+    }
+
     /** Removes all {@code ReadOnlyPerson} from the specified list */
     public void dismiss(ArrayList<Index> personsToDismiss) {
         assignedList.removeAll(personsToDismiss);
