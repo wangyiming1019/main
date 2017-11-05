@@ -21,6 +21,7 @@ public interface ReadOnlyTask {
     ObjectProperty<Deadline> deadlineProperty();
     ObjectProperty<Priority> priorityProperty();
     ObjectProperty<Assignees> assigneeProperty();
+    ObjectProperty<TaskAddress> taskAddressProperty();
     ObjectProperty<String> stateProperty();
 
     default String getAsText() {
