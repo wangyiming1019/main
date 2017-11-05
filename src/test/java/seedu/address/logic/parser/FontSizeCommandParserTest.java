@@ -13,7 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //author charlesgoh
 public class FontSizeCommandParserTest {
-    FontSizeCommandParser parser = new FontSizeCommandParser();
+    private FontSizeCommandParser parser = new FontSizeCommandParser();
 
     @Test
     public void parse_wrongArguments_failure() {
