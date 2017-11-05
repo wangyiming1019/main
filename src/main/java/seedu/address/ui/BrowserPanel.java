@@ -32,7 +32,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String GOOGLE_MAPS_URL_SUFFIX  = "/";
     public static final String PRIVATE_ADDRESS_CANNOT_SEARCH = "Cannot perform a search on that person's address. "
             + "Their address is private.";
-    public static final String GOOGLE_MAPS_DIRECTIONS_PREFIX = "https://www.google.com.sg/maps/dir/";
+    public static final String GOOGLE_MAPS_DIRECTIONS_PREFIX = "https://www.google.com.sg/maps/dir/?api=1";
     public static final String GOOGLE_MAPS_DIRECTIONS_SUFFIX  = "/";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -89,8 +89,13 @@ public class BrowserPanel extends UiPart<Region> {
      * @param toLocation The location we want to reach
      */
     private void loadDirectionsPage(String fromLocation, String toLocation) {
-        loadPage(GOOGLE_MAPS_DIRECTIONS_PREFIX + fromLocation.replaceAll(" ", "+")
-            + toLocation.replaceAll(" ", "+") + GOOGLE_MAPS_DIRECTIONS_SUFFIX);
+        loadPage(GOOGLE_MAPS_DIRECTIONS_PREFIX + "&origin="
+                + fromLocation.replaceAll("#(\\w+)\\s*", "").replaceAll(" ", "+")
+                .replaceAll("-(\\w+)\\s*", "")
+                + "&destination="
+                + toLocation.replaceAll("#(\\w+)\\s*", "").replaceAll(" ", "+")
+                .replaceAll("-(\\w+)\\s*", "")
+                + GOOGLE_MAPS_DIRECTIONS_SUFFIX);
     }
 
     //@@author
