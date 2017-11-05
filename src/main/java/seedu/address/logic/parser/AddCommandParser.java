@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -76,8 +78,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static ReadOnlyPerson constructPerson(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
-                        PREFIX_TAG, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE,
-                        PREFIX_ADDRESS_PRIVATE, PREFIX_REMARK_PRIVATE, PREFIX_TAG_PRIVATE);
+                        PREFIX_TAG, PREFIX_AVATAR, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE,
+                        PREFIX_ADDRESS_PRIVATE, PREFIX_REMARK_PRIVATE, PREFIX_TAG_PRIVATE, PREFIX_AVATAR_PRIVATE);
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || (arePrefixesPresent(argMultimap, PREFIX_NAME_PRIVATE)))) {
@@ -90,6 +92,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email;
             Address address;
             Remark remark;
+            Avatar avatar;
 
             if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
                 name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
@@ -128,6 +131,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 remark = new Remark(null);
             }
+
+            // TODO: Same as above
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, tagList);
