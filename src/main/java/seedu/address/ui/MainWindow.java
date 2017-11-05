@@ -22,6 +22,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.OpenRequestEvent;
 import seedu.address.commons.events.ui.SaveAsRequestEvent;
@@ -343,6 +344,31 @@ public class MainWindow extends UiPart<Region> {
         logger.info("Handling reset in font size");
         personListPanel.resetFontSize();
         taskListPanel.resetFontSize();
+    }
+
+    /**
+     * Handles command induced change font size event
+     * @param event
+     */
+    @Subscribe
+    private void handleChangeFontSizeEvent (ChangeFontSizeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switch (event.getTriggerOption()) {
+        case 0:
+            logger.info("Attempting to increase font size");
+            increaseFontSize();
+            break;
+        case 1:
+            decreaseFontSize();
+            logger.info("Attempting to decrease font size");
+            break;
+        case 2:
+            resetFontSize();
+            logger.info("Attempting to reset font size");
+            break;
+        default:
+            logger.info("Unable to handle change font size event. Stopping execution now");
+        }
     }
     //@@author
 
