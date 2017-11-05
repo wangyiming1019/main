@@ -30,6 +30,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class UniquePersonList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Person> internalCopy = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
@@ -152,6 +153,23 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return indexes;
     }
+
+    /**
+     * Returns an array containing:
+     * Index - The old index of each person in the internalList before sorting
+     * Value - The new index of each person after a sort operation
+     */
+    public Index[] getMappings() {
+        Index[] mappings = new Index[internalCopy.size()];
+        int count = 0;
+        for (Person p : internalCopy) {
+            assert(internalList.contains(p));
+            int index =  internalList.indexOf(p);
+            mappings[count] = Index.fromZeroBased(index);
+            count++;
+        }
+        return mappings;
+    }
     //@@author
 
     /**
@@ -162,6 +180,12 @@ public class UniquePersonList implements Iterable<Person> {
     //@@author charlesgoh
     public void sortBy(String field, String order) {
         //sortyBy first chooses the right comparator
+        System.out.println(internalList.size());
+        internalCopy.clear();
+        for (Person p : internalList) {
+            internalCopy.add(p);
+        }
+        System.out.println(internalCopy.size());
         Comparator<Person> comparator = null;
 
         /**
