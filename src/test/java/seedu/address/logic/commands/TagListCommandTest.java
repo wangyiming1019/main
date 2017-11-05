@@ -26,18 +26,14 @@ import seedu.address.model.tag.Tag;
 public class TagListCommandTest {
     private Model model;
     private Model expectedModel;
-    private Model expectedModelWithNoTags;
     private TagListCommand listTagsCommand;
-    private List<Tag> tagList;
     private String expectedMessage;
-    private String expectedMessageWithNoTags;
-
 
     @Before
     public void setUp() {
         model = new ModelManager(getTaglessAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        tagList = new ArrayList<Tag>();
+        List<Tag> tagList = new ArrayList<Tag>();
 
         listTagsCommand = new TagListCommand();
         listTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -61,8 +57,8 @@ public class TagListCommandTest {
 
     @Test
     public void executeEmptyTagListShowNothing() throws DuplicatePersonException {
-        expectedModelWithNoTags = new ModelManager();
-        expectedMessageWithNoTags = listTagsCommand.MESSAGE_FAILURE;
+        Model expectedModelWithNoTags = new ModelManager();
+        String expectedMessageWithNoTags = listTagsCommand.MESSAGE_FAILURE;
         TagListCommand tagListCommandWithNoTags = new TagListCommand();
         tagListCommandWithNoTags.setData(expectedModelWithNoTags, new CommandHistory(),
                 new UndoRedoStack());
