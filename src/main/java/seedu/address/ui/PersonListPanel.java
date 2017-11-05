@@ -103,10 +103,12 @@ public class PersonListPanel extends UiPart<Region> {
         this.fontSizeMultiplier = fontSizeMultiplier;
 
         // Restrict from minimum
-        this.fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier);
+        this.fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, this.fontSizeMultiplier);
 
         // Restrict from maximum
-        this.fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier);
+        this.fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, this.fontSizeMultiplier);
+
+        logger.info("New person font size multiplier: " + Integer.toString(this.fontSizeMultiplier));
     }
 
     /**

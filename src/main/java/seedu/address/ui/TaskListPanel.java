@@ -38,7 +38,7 @@ public class TaskListPanel extends UiPart<Region> {
     public TaskListPanel(ObservableList<ReadOnlyTask> taskList) {
         super(FXML);
         this.taskList = taskList;
-        fontSizeMultiplier = 0;
+        fontSizeMultiplier = MINIMUM_FONT_SIZE_MULTIPLIER;
         setConnections(taskList);
         registerAsAnEventHandler(this);
     }
@@ -104,10 +104,12 @@ public class TaskListPanel extends UiPart<Region> {
         this.fontSizeMultiplier = fontSizeMultiplier;
 
         // Restrict from minimum
-        this.fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier);
+        this.fontSizeMultiplier = Math.max(MINIMUM_FONT_SIZE_MULTIPLIER, this.fontSizeMultiplier);
 
         // Restrict from maximum
-        this.fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, fontSizeMultiplier);
+        this.fontSizeMultiplier = Math.min(MAXIMUM_FONT_SIZE_MULTIPLIER, this.fontSizeMultiplier);
+
+        logger.info("New task font size multiplier: " + Integer.toString(this.fontSizeMultiplier));
     }
 
     /**
