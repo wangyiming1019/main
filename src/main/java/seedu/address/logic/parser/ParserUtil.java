@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.Location;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -113,8 +114,31 @@ public class ParserUtil {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get(), isPrivate)) : Optional.empty();
     }
+    //author charlesgoh
+    /**
+     * Parses a {@code Optional<String> avatar} into an {@code Optional<Address>} if {@code avatar} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Avatar> parseAvatar(Optional<String> avatar) throws IllegalValueException {
+        requireNonNull(avatar);
+        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get())) : Optional.empty();
+    }
 
+<<<<<<< HEAD
     //@@author
+=======
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Avatar> parseAvatar(Optional<String> avatar, boolean isPrivate)
+            throws IllegalValueException {
+        requireNonNull(avatar);
+        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), isPrivate)) : Optional.empty();
+    }
+
+>>>>>>> [AVATAR] Set up classes for avatar
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

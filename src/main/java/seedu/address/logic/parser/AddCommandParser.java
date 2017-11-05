@@ -27,6 +27,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -124,6 +125,14 @@ public class AddCommandParser implements Parser<AddCommand> {
                 address = new Address(null);
             }
 
+            if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
+                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+            } else if (arePrefixesPresent(argMultimap, PREFIX_AVATAR_PRIVATE)) {
+                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR_PRIVATE), true).get();
+            } else {
+                avatar = new Avatar(null);
+            }
+
             if ((arePrefixesPresent(argMultimap, PREFIX_REMARK))) {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             } else if (arePrefixesPresent(argMultimap, PREFIX_REMARK_PRIVATE)) {
@@ -132,10 +141,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 remark = new Remark(null);
             }
 
-            // TODO: Same as above
-
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, tagList, avatar);
             return person;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
