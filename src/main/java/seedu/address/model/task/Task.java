@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.core.index.Index;
 
 //@@author Esilocke
 /**
@@ -115,12 +114,6 @@ public class Task implements ReadOnlyTask {
         this.assignees = new SimpleObjectProperty<>(new Assignees());
     }
 
-    /** Removes the specified person from the assignees list */
-    public void removeAssignee(Index personIndex) {
-        Assignees assignees = this.assignees.get();
-        assignees.decrementIndex(personIndex);
-        this.assignees = new SimpleObjectProperty<>(assignees);
-    }
     @Override
     public ObjectProperty<String> stateProperty() {
         String printableState = getPrintableState();
