@@ -13,7 +13,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-import seedu.address.ui.MainWindow;
 
 /**
  * The API of the Model component.
