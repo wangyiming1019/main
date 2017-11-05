@@ -19,6 +19,11 @@ public class Assignees {
         this.assignedList = new ArrayList<>();
     }
 
+    public Assignees(Assignees toCopy) {
+        this.assignedList = new ArrayList<>();
+        assignedList.addAll(toCopy.getList());
+    }
+
     /** Assigns all {@code ReadOnlyPerson} in the specified list */
     public void assign(ArrayList<Index> personsToAssign) {
         for (Index i : personsToAssign) {
@@ -41,6 +46,23 @@ public class Assignees {
         return this.assignedList;
     }
 
+    /**
+     * Deletes the specified index from the internal list, and decrements all other indexes in the assigned list
+     * that have a value lower than the deleted index by 1.
+     */
+    public void decrementIndex(Index deletedIndex) {
+        assignedList.remove(deletedIndex);
+        for (int i = 0; i < assignedList.size(); i++) {
+            Index current = assignedList.get(i);
+            if (current.getZeroBased() > deletedIndex.getZeroBased()) {
+                int indexValue = current.getZeroBased() - 1;
+                Index decrementedIndex = Index.fromZeroBased(indexValue);
+                assignedList.set(i, decrementedIndex);
+                continue;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return assignedList.size() + " persons assigned";
@@ -51,5 +73,10 @@ public class Assignees {
         return other == this // short circuit if same object
                 || (other instanceof Assignees // instanceof handles nulls
                 && this.assignedList.equals(((Assignees) other).assignedList)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return assignedList.hashCode();
     }
 }
