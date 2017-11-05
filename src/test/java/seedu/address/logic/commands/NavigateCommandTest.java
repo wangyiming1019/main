@@ -45,10 +45,9 @@ public class NavigateCommandTest {
     public void execute_fromAddress_success() throws IllegalValueException {
         Location from = new Location("NUS");
         Location to = new Location("Sentosa");
-        NavigateCommand navi = prepareCommand(from, to,
-            null, null, false, false);
+        NavigateCommand navi = prepareCommand(from, to, null, null, false, false);
         assertExecutionSuccess(navi);
-   }
+    }
 
     @Test
     public void execute_fromPersons_success() throws IllegalValueException {
