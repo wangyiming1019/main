@@ -61,13 +61,13 @@ public class TagListCommand extends Command {
      * @return String tags
      */
     private String convertTagToString(ArrayList<Tag> tagList) {
-        ArrayList<String> TagNameList = new ArrayList<String>();
+        ArrayList<String> tagNameList = new ArrayList<String>();
         for (Tag tag : tagList) {
-            TagNameList.add(tag.getTagName());
+            tagNameList.add(tag.getTagName());
         }
-        Collections.sort(TagNameList);
+        Collections.sort(tagNameList);
         StringBuilder tagNameString = new StringBuilder();
-        for (String tagName : TagNameList) {
+        for (String tagName : tagNameList) {
             tagNameString.append("<").append(tagName).append("> ");
         }
         return tagNameString.toString().trim();
