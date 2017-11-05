@@ -112,9 +112,43 @@ public class UniqueTaskList implements Iterable<Task> {
 
     /** Removes the specified assignee from all tasks **/
     public void removeAssignee(Index personIndex) {
+        ObservableList<Task> internalListCopy = FXCollections.observableArrayList();
         for (Task t : internalList) {
-            t.removeAssignee(personIndex);
+            TaskName name = t.getTaskName();
+            Description description = t.getDescription();
+            Deadline deadline = t.getDeadline();
+            Priority priority = t.getPriority();
+            boolean state = t.getCompleteState();
+            Assignees assignees = t.getAssignees();
+
+            Assignees updated = new Assignees(assignees);
+            updated.decrementIndex(personIndex);
+            internalListCopy.add(new Task(name, description, deadline, priority, updated, state));
         }
+        internalList.clear();
+        internalList.addAll(internalListCopy);
+    }
+
+    /**
+     * Updates the assignee list within each task to match that of the newPersonIndexes.
+     * This method is called after a sort persons operation due to the order change
+     */
+    public void updateAssignees(Index[] newPersonIndexes) {
+        ObservableList<Task> internalListCopy = FXCollections.observableArrayList();
+        for (Task t : internalList) {
+            TaskName name = t.getTaskName();
+            Description description = t.getDescription();
+            Deadline deadline = t.getDeadline();
+            Priority priority = t.getPriority();
+            boolean state = t.getCompleteState();
+            Assignees assignees = t.getAssignees();
+
+            Assignees updated = new Assignees(assignees);
+            updated.updateList(newPersonIndexes);
+            internalListCopy.add(new Task(name, description, deadline, priority, updated, state));
+        }
+        internalList.clear();
+        internalList.addAll(internalListCopy);
     }
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
