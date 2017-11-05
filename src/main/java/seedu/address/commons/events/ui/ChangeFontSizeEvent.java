@@ -8,9 +8,9 @@ import seedu.address.commons.events.BaseEvent;
 //author charlesgoh
 public class ChangeFontSizeEvent extends BaseEvent {
 
-    private static int INCREASE_SIZE_EVENT_INDEX = 0;
-    private static int DECREASE_SIZE_EVENT_INDEX = 1;
-    private static int RESET_SIZE_EVENT_INDEX = 2;
+    private static int increaseSizeEventIndex = 0;
+    private static int decreaseSizeEventIndex = 1;
+    private static int resetSizeEventIndex = 2;
 
     private int triggerOption;
 
@@ -24,15 +24,15 @@ public class ChangeFontSizeEvent extends BaseEvent {
     }
 
     public static int getIncreaseSizeEventIndex() {
-        return INCREASE_SIZE_EVENT_INDEX;
+        return increaseSizeEventIndex;
     }
 
     public static int getDecreaseSizeEventIndex() {
-        return DECREASE_SIZE_EVENT_INDEX;
+        return decreaseSizeEventIndex;
     }
 
     public static int getResetSizeEventIndex() {
-        return RESET_SIZE_EVENT_INDEX;
+        return resetSizeEventIndex;
     }
 
     public int getTriggerOption() {
