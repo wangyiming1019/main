@@ -62,7 +62,7 @@ adds a contact named `John Doe` to Address++.
 
 === Changing Font Sizes
 
-Are the font sizes too small or too big? Address++ allows your to change your font sizes at will. Here are some of the
+Are the font sizes too small or too big? Address++ allows you to change your font sizes at will. Here are some of the
 ways of triggering a change in font sizes:
 ****
 
@@ -97,7 +97,7 @@ image::FontSizeCLI.png[width="540"]
 
 === Viewing help : `help`
 If you have trouble figuring out how to do something, or would like to find out about more features, you can click
-on the **help** menu button
+on the **help** menu button. You can also enter the command `help` to access the help window.
 
 image::HelpButtonUI.png[width="540"]
 
