@@ -11,6 +11,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_FROM_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_TO_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
@@ -47,12 +49,14 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Location;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsTagsPredicate;
 import seedu.address.model.person.Person;
@@ -374,6 +378,30 @@ public class AddressBookParserTest {
         LocateCommand command = (LocateCommand) parser.parseCommand(
                 LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandNavigate() throws Exception {
+        NavigateCommand command = (NavigateCommand) parser.parseCommand(
+                NavigateCommand.COMMAND_WORD + " "
+                        + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+        assertEquals(new NavigateCommand(from, to, null, null, false, false),
+                command);
+    }
+
+    @Test
+    public void parseCommandAliasNavigate() throws Exception {
+        NavigateCommand command = (NavigateCommand) parser.parseCommand(
+                NavigateCommand.COMMAND_ALIAS + " "
+                        + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+        assertEquals(new NavigateCommand(from, to, null, null, false, false),
+                command);
     }
 
     //@@author
