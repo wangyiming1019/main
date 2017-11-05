@@ -30,8 +30,8 @@ public class TaskUtil {
         sb.append(PREFIX_NAME + task.getTaskName().taskName + " ");
         sb.append(PREFIX_DESCRIPTION + task.getDescription().value + " ");
         sb.append(PREFIX_DEADLINE + task.getDeadline().value + " ");
-        sb.append(PREFIX_ADDRESS + task.getTaskAddress().taskAddress + " ");
         sb.append(PREFIX_PRIORITY + Integer.toString(task.getPriority().value) + " ");
+        sb.append(PREFIX_ADDRESS + task.getTaskAddress().taskAddress + " ");
 
         return sb.toString();
     }
