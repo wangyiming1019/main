@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+
 //@@author charlesgoh
 /**
  * Sorts all persons in address book by any field. Sorting can be done in ascending or descending order

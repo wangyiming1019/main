@@ -128,12 +128,6 @@ public interface Model {
     void sortTasks(String field, String order);
 
     /**
-     * Sets main window attribute in model for use in various commands
-     * @param mainWindow
-     */
-    void setMainWindow(MainWindow mainWindow);
-
-    /**
      * Model method for increasing font size. Passes control over to MainWindow
      */
     void increaseFontSize();
