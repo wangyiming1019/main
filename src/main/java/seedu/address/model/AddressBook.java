@@ -104,6 +104,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             if (type.equals(PREFIX_TASK)) {
                 setTasks(newData.getTasksList());
             } else if (type.equals(PREFIX_PERSON)) {
+                tasks.clearAssignees();
                 setPersons(newData.getPersonList());
                 setTags(new HashSet<>(newData.getTagList()));
                 syncMasterTagListWith(persons);
@@ -277,6 +278,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /** Removes the specified person from all assignment lists for every task **/
+    public void removePersonFromAssignees(Index target) {
+        tasks.removeAssignee(target);
+    }
     //@@author Esilocke
     /**
      * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
@@ -292,6 +297,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         Task editedTask = new Task(editedReadOnlyTask);
         tasks.setTask(target, editedTask);
     }
+    //@@author
     //// util methods
 
     @Override
