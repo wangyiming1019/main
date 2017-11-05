@@ -12,6 +12,7 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
@@ -100,6 +101,21 @@ public class UniqueTaskList implements Iterable<Task> {
         setTasks(replacement);
     }
 
+    /**
+     * Removes all assignees from all tasks.
+     */
+    public void clearAssignees() {
+        for (Task t : internalList) {
+            t.clearAssignees();
+        }
+    }
+
+    /** Removes the specified assignee from all tasks **/
+    public void removeAssignee(Index personIndex) {
+        for (Task t : internalList) {
+            t.removeAssignee(personIndex);
+        }
+    }
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
