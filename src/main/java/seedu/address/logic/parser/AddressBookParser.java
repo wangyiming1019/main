@@ -23,6 +23,7 @@ import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FavouriteListCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.FontSizeCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -164,7 +165,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-
+        //@@author charlesgoh
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -173,6 +174,10 @@ public class AddressBookParser {
         case BackupCommand.COMMAND_ALIAS:
             return new BackupCommandParser().parse(arguments);
 
+        case FontSizeCommand.COMMAND_WORD:
+        case FontSizeCommand.COMMAND_ALIAS:
+            return new FontSizeCommandParser().parse(arguments);
+        //author charlesgoh
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

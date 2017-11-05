@@ -33,6 +33,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TaskBuilder;
+import seedu.address.ui.MainWindow;
 
 
 public class AddCommandTest {
@@ -169,6 +170,24 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        //@@author charlesgoh
+        public void increaseFontSize() {
+            fail("This method should not be called.");
+        }
+
+        public void decreaseFontSize() {
+            fail("This method should not be called.");
+        }
+
+        public void resetFontSize() {
+            fail("This method should not be called.");
+        }
+
+        public void setMainWindow(MainWindow mainWindow) {
+            fail("This method should not be called.");
+        }
+        //@@author
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {

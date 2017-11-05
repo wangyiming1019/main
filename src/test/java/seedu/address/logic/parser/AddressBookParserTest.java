@@ -43,6 +43,7 @@ import seedu.address.logic.commands.EditTagCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.FontSizeCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -51,6 +52,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -375,8 +377,22 @@ public class AddressBookParserTest {
                 LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
     }
-
     //@@author
+    //@@author charlesgoh
+    @Test
+    public void parseSortCommandWord() throws Exception {
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " "
+                + SortCommand.ACCEPTED_LIST_PARAMETERS.get(0) + " " + SortCommand.ACCEPTED_FIELD_PARAMETERS.get(0)
+                + " " + SortCommand.ACCEPTED_ORDER_PARAMETERS.get(0)) instanceof SortCommand);
+    }
+
+    @Test
+    public void parseSortCommandAlias() throws Exception {
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS + " "
+                + SortCommand.ACCEPTED_LIST_PARAMETERS.get(0) + " " + SortCommand.ACCEPTED_FIELD_PARAMETERS.get(0)
+                + " " + SortCommand.ACCEPTED_ORDER_PARAMETERS.get(0)) instanceof SortCommand);
+    }
+
     @Test
     public void parseCommandBackupWord() throws Exception {
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
@@ -397,6 +413,25 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(BackupCommand.COMMAND_ALIAS + " test.xml") instanceof BackupCommand);
     }
 
+    @Test
+    public void parseCommandFontSizeWord() throws Exception {
+        for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
+            assertTrue(parser
+                    .parseCommand(FontSizeCommand.COMMAND_WORD + " " + arg) instanceof FontSizeCommand);
+        }
+
+    }
+
+    @Test
+    public void parseCommandFontSizeAlias() throws Exception {
+        for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
+            assertTrue(parser
+                    .parseCommand(FontSizeCommand.COMMAND_ALIAS + " " + arg) instanceof FontSizeCommand);
+        }
+
+    }
+
+    //@@author
     @Test
     public void parseCommandRedoCommandWordReturnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
