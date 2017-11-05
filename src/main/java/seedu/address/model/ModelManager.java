@@ -161,6 +161,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortPersons(String field, String order) {
         addressBook.sortPersonsBy(field, order);
+        Index[] updatedIndexes = addressBook.getMappings();
+        System.out.println(updatedIndexes.length);
+        addressBook.updateTaskAssigneeMappings(updatedIndexes);
         indicateAddressBookChanged();
     }
 
