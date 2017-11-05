@@ -75,7 +75,8 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
         if (!(toAddress || toPerson || toTask)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NavigateCommand.MESSAGE_USAGE));
         } else if ((toAddress && (toPerson || toTask)) || (toPerson && toTask)) {
-            // If 2 or more to prefixes are presentthrow new ParseException(NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
+            // If 2 or more to prefixes are present
+            throw new ParseException(NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
         } else {
             try {
                 setArgsForNavigateCommand(argumentMultimap, toAddress, toPerson, false);
