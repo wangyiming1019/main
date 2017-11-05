@@ -246,6 +246,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Returns an array containing:
+     * Index - The old index of each person in the UniquePersonList
+     * Value - The new index of each person after a sort operation
+     */
+    public Index[] getMappings() {
+        return persons.getMappings();
+    }
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -282,6 +290,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removePersonFromAssignees(Index target) {
         tasks.removeAssignee(target);
     }
+
+    /**
+     * Updates the Assignees for all tasks in the internal tasks list with their new mappings
+     */
+    public void updateTaskAssigneeMappings(Index[] mappings) {
+        tasks.updateAssignees(mappings);
+    }
+
     //@@author Esilocke
     /**
      * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
