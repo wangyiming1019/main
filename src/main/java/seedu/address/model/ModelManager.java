@@ -313,29 +313,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
-    //@@author charlesgoh
-    /**
-     * Model method for increasing font size. Passes control over to MainWindow
-     */
-    public void increaseFontSize() {
-        raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getIncreaseSizeEventIndex()));
-    }
-
-    /**
-     * Model method for decreasing font size. Passes control over to MainWindow
-     */
-    public void decreaseFontSize() {
-        raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getDecreaseSizeEventIndex()));
-    }
-
-    /**
-     * Model method for resetting font size. Passes control over to MainWindow
-     */
-    public void resetFontSize() {
-        raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getResetSizeEventIndex()));
-    }
-    //@@author
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

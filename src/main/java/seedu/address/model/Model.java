@@ -126,20 +126,5 @@ public interface Model {
      * @param order
      */
     void sortTasks(String field, String order);
-
-    /**
-     * Model method for increasing font size. Passes control over to MainWindow
-     */
-    void increaseFontSize();
-
-    /**
-     * Model method for decreasing font size. Passes control over to MainWindow
-     */
-    void decreaseFontSize();
-
-    /**
-     * Model method for resetting font size. Passes control over to MainWindow
-     */
-    void resetFontSize();
     //@@author
 }
