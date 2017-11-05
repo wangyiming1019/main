@@ -383,9 +383,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandNavigate() throws Exception {
         NavigateCommand command = (NavigateCommand) parser.parseCommand(
-                NavigateCommand.COMMAND_WORD + " "
-                        + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
-                        + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+                NavigateCommand.COMMAND_WORD + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
         Location from = new Location("NUS");
         Location to = new Location("Sentosa");
         assertEquals(new NavigateCommand(from, to, null, null, false, false),
@@ -395,9 +394,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandAliasNavigate() throws Exception {
         NavigateCommand command = (NavigateCommand) parser.parseCommand(
-                NavigateCommand.COMMAND_ALIAS + " "
-                        + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
-                        + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+                NavigateCommand.COMMAND_ALIAS + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
         Location from = new Location("NUS");
         Location to = new Location("Sentosa");
         assertEquals(new NavigateCommand(from, to, null, null, false, false),
