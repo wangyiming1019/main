@@ -17,8 +17,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_CHRIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CHRISTAG;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,11 +67,13 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
             .withFavourite(VALID_FAVOURITE).withRemark(VALID_REMARK_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-    public static final ReadOnlyPerson CHRIS = new PersonBuilder().withName(VALID_NAME_CHRIS).withPhone(VALID_PHONE_CHRIS)
-            .withEmail(VALID_EMAIL_CHRIS).withAddress(VALID_ADDRESS_CHRIS)
-            .withFavourite(VALID_FAVOURITE).withRemark(VALID_REMARK_CHRIS)
+    public static final ReadOnlyPerson CHRIS = new PersonBuilder().withName(VALID_NAME_CHRIS)
+            .withPhone(VALID_PHONE_CHRIS).withEmail(VALID_EMAIL_CHRIS)
+            .withAddress(VALID_ADDRESS_CHRIS).withFavourite(VALID_FAVOURITE)
+            .withRemark(VALID_REMARK_CHRIS)
             .withTags(VALID_TAG_CHRISTAG).build();
-    public static final ReadOnlyPerson CHRIS_WITH_NEW_TAG = new PersonBuilder().withName(VALID_NAME_CHRIS).withPhone(VALID_PHONE_CHRIS)
+    public static final ReadOnlyPerson CHRIS_WITH_NEW_TAG = new PersonBuilder().withName(VALID_NAME_CHRIS)
+            .withPhone(VALID_PHONE_CHRIS)
             .withEmail(VALID_EMAIL_CHRIS).withAddress(VALID_ADDRESS_CHRIS)
             .withFavourite(VALID_FAVOURITE).withRemark(VALID_REMARK_CHRIS)
             .withTags("friends").build();
