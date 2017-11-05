@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.BrowserPanelNavigateEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -45,8 +46,7 @@ public class NavigateCommandTest {
         Location from = new Location("NUS");
         Location to = new Location("Sentosa");
         NavigateCommand navi = prepareCommand(from, to,
-                null, null, false, false);
-
+            null, null, false, false);
         assertExecutionSuccess(navi);
    }
 
