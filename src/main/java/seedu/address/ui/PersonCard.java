@@ -61,12 +61,6 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
-    //@@author charlesgoh
-    @FXML
-    private ImageView avatarImage;
-    @FXML
-    private Button browseAvatarButton;
-    //@@author
 
     private int fontSizeMultipler;
     public PersonCard(ReadOnlyPerson person, int displayedIndex, int fontSizeMultiplier) {
