@@ -117,6 +117,10 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Boolean favourite = person.getFavourite();
         Set<Tag> tag = person.getTags();
 
+        if (pps.getAvatarIsPrivate() != null) {
+            avatar.setPrivate(pps.getAvatarIsPrivate());
+        }
+
         return new Person(name, phone, email, address, favourite, remark, avatar, tag);
     }
 
