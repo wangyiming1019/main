@@ -396,7 +396,8 @@ public class ChangePrivacyCommand extends UndoableCommand {
                     && getPhoneIsPrivate().equals(c.getPhoneIsPrivate())
                     && getEmailIsPrivate().equals(c.getEmailIsPrivate())
                     && getAddressIsPrivate().equals(c.getAddressIsPrivate())
-                    && getRemarkIsPrivate().equals(c.getRemarkIsPrivate());
+                    && getRemarkIsPrivate().equals(c.getRemarkIsPrivate())
+                    && getAvatarIsPrivate().equals(c.getAvatarIsPrivate());
         }
     }
 }
