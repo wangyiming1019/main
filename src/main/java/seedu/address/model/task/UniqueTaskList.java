@@ -118,12 +118,13 @@ public class UniqueTaskList implements Iterable<Task> {
             Description description = t.getDescription();
             Deadline deadline = t.getDeadline();
             Priority priority = t.getPriority();
+            TaskAddress taskAddress = t.getTaskAddress();
             boolean state = t.getCompleteState();
             Assignees assignees = t.getAssignees();
 
             Assignees updated = new Assignees(assignees);
             updated.decrementIndex(personIndex);
-            internalListCopy.add(new Task(name, description, deadline, priority, updated, state));
+            internalListCopy.add(new Task(name, description, deadline, priority, updated, state, taskAddress));
         }
         internalList.clear();
         internalList.addAll(internalListCopy);
@@ -140,12 +141,13 @@ public class UniqueTaskList implements Iterable<Task> {
             Description description = t.getDescription();
             Deadline deadline = t.getDeadline();
             Priority priority = t.getPriority();
+            TaskAddress taskAddress = t.getTaskAddress();
             boolean state = t.getCompleteState();
             Assignees assignees = t.getAssignees();
 
             Assignees updated = new Assignees(assignees);
             updated.updateList(newPersonIndexes);
-            internalListCopy.add(new Task(name, description, deadline, priority, updated, state));
+            internalListCopy.add(new Task(name, description, deadline, priority, updated, state, taskAddress));
         }
         internalList.clear();
         internalList.addAll(internalListCopy);
