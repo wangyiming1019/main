@@ -31,7 +31,7 @@ public class Person implements ReadOnlyPerson {
      */
 
     public Person(Name name, Phone phone, Email email, Address address,
-                  Boolean favourite, Remark remark, Set<Tag> tags, Avatar avatar) {
+                  Boolean favourite, Remark remark, Avatar avatar, Set<Tag> tags) {
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -48,7 +48,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavourite(),
-             source.getRemark(), source.getTags(), source.getAvatar());
+             source.getRemark(), source.getAvatar(), source.getTags());
     }
 
     public void setName(Name name) {
