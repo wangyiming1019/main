@@ -13,7 +13,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
-    public static final Prefix PREFIX_AVATAR = new Prefix("a/");
+    public static final Prefix PREFIX_AVATAR = new Prefix("v/");
 
     public static final Prefix PREFIX_NAME_PRIVATE = new Prefix("pn/");
     public static final Prefix PREFIX_PHONE_PRIVATE = new Prefix("pp/");

@@ -201,7 +201,7 @@ public class EditCommand extends UndoableCommand {
             throw new IllegalArgumentException();
         }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                          updateFavourite, updatedRemark, updatedTags, updatedAvatar);
+                          updateFavourite, updatedRemark, updatedAvatar, updatedTags);
     }
 
     /**

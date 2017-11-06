@@ -16,6 +16,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -104,6 +105,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Email e = person.getEmail();
         Address a = person.getAddress();
         Remark r = person.getRemark();
+        Avatar v = person.getAvatar();
         Boolean f = person.getFavourite();
         Set<Tag> t = person.getTags();
 
@@ -126,7 +128,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             r.setPrivate(pps.getRemarkIsPrivate());
         }
 
-        return new Person(n, p, e, a, f, r, t);
+        return new Person(n, p, e, a, f, r, v, t);
     }
 
     public Index getIndex() {
@@ -164,6 +166,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         private Boolean emailIsPrivate;
         private Boolean addressIsPrivate;
         private Boolean remarkIsPrivate;
+        private Boolean avatarIsPrivate;
 
         public PersonPrivacySettings() {}
 
@@ -173,6 +176,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.emailIsPrivate = toCopy.emailIsPrivate;
             this.addressIsPrivate = toCopy.addressIsPrivate;
             this.remarkIsPrivate = toCopy.remarkIsPrivate;
+            this.avatarIsPrivate = toCopy.avatarIsPrivate;
         }
 
         /**
@@ -180,7 +184,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
          */
         public boolean isAnyFieldNonNull() {
             return CollectionUtil.isAnyNonNull(this.nameIsPrivate, this.phoneIsPrivate,
-                    this.emailIsPrivate, this.addressIsPrivate, this.remarkIsPrivate);
+                    this.emailIsPrivate, this.addressIsPrivate, this.remarkIsPrivate, this.avatarIsPrivate);
         }
 
         /**
@@ -234,7 +238,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             requireNonNull(addressIsPrivate);
             this.addressIsPrivate = addressIsPrivate;
         }
-
+        //@@author charlesgoh
         /**
          * Returns the value of remarkIsPrivate
          * @return the value of remarkIsPrivate
@@ -247,6 +251,20 @@ public class ChangePrivacyCommand extends UndoableCommand {
             requireNonNull(remarkIsPrivate);
             this.remarkIsPrivate = remarkIsPrivate;
         }
+
+        /**
+         * Returns the value of avatarIsPrivate
+         * @return the value of avatarIsPrivate
+         */
+        public Boolean getAvatarIsPrivate() {
+            return avatarIsPrivate;
+        }
+
+        public void setAvatarIsPrivate(boolean AvatarIsPrivate) {
+            requireNonNull(avatarIsPrivate);
+            this.avatarIsPrivate = avatarIsPrivate;
+        }
+        //@@author
 
         @Override
         public boolean equals(Object other) {
