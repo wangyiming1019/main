@@ -419,7 +419,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             return avatarIsPrivate;
         }
 
-        public void setAvatarIsPrivate(boolean AvatarIsPrivate) {
+        public void setAvatarIsPrivate(boolean avatarIsPrivate) {
             requireNonNull(avatarIsPrivate);
             this.avatarIsPrivate = avatarIsPrivate;
         }

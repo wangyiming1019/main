@@ -134,7 +134,7 @@ public class ParserUtil {
         requireNonNull(avatar);
         return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), isPrivate)) : Optional.empty();
     }
- 
+
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
