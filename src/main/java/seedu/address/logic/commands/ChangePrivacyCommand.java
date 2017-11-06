@@ -17,6 +17,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -106,31 +107,17 @@ public class ChangePrivacyCommand extends UndoableCommand {
             throws IllegalValueException {
         assert person != null;
 
-        Name n = createNameWithPrivacy(person, pps);
-        Phone p = createPhoneWithPrivacy(person, pps);
-        Email e = createEmailWithPrivacy(person, pps);
-        Address a = createAddressWithPrivacy(person, pps);
-        Remark r = createRemarkWithPrivacy(person, pps);
-        Boolean f = person.getFavourite();
-        Set<Tag> t = person.getTags();
+        Name name = createNameWithPrivacy(person, pps);
+        Phone phone = createPhoneWithPrivacy(person, pps);
+        Email email = createEmailWithPrivacy(person, pps);
+        Address address = createAddressWithPrivacy(person, pps);
+        Remark remark = createRemarkWithPrivacy(person, pps);
+        Avatar avatar = person.getAvatar();
 
-        if (pps.getPhoneIsPrivate() != null) {
-            p.setPrivate(pps.getPhoneIsPrivate());
-        }
+        Boolean favourite = person.getFavourite();
+        Set<Tag> tag = person.getTags();
 
-        if (pps.getEmailIsPrivate() != null) {
-            e.setPrivate(pps.getEmailIsPrivate());
-        }
-
-        if (pps.getAddressIsPrivate() != null) {
-            a.setPrivate(pps.getAddressIsPrivate());
-        }
-
-        if (pps.getRemarkIsPrivate() != null) {
-            r.setPrivate(pps.getRemarkIsPrivate());
-        }
-
-        return new Person(n, p, e, a, f, r, t);
+        return new Person(name, phone, email, address, favourite, remark, avatar, tag);
     }
 
     /**
@@ -290,6 +277,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         private Boolean emailIsPrivate;
         private Boolean addressIsPrivate;
         private Boolean remarkIsPrivate;
+        private Boolean avatarIsPrivate;
 
         public PersonPrivacySettings() {}
 
@@ -299,6 +287,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             this.emailIsPrivate = toCopy.emailIsPrivate;
             this.addressIsPrivate = toCopy.addressIsPrivate;
             this.remarkIsPrivate = toCopy.remarkIsPrivate;
+            this.avatarIsPrivate = toCopy.avatarIsPrivate;
         }
 
         /**
@@ -306,7 +295,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
          */
         public boolean isAnyFieldNonNull() {
             return CollectionUtil.isAnyNonNull(this.nameIsPrivate, this.phoneIsPrivate,
-                    this.emailIsPrivate, this.addressIsPrivate, this.remarkIsPrivate);
+                    this.emailIsPrivate, this.addressIsPrivate, this.remarkIsPrivate, this.avatarIsPrivate);
         }
 
         /**
@@ -360,7 +349,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             requireNonNull(addressIsPrivate);
             this.addressIsPrivate = addressIsPrivate;
         }
-
+        //@@author charlesgoh
         /**
          * Returns the value of remarkIsPrivate
          * @return the value of remarkIsPrivate
@@ -373,6 +362,20 @@ public class ChangePrivacyCommand extends UndoableCommand {
             requireNonNull(remarkIsPrivate);
             this.remarkIsPrivate = remarkIsPrivate;
         }
+
+        /**
+         * Returns the value of avatarIsPrivate
+         * @return the value of avatarIsPrivate
+         */
+        public Boolean getAvatarIsPrivate() {
+            return avatarIsPrivate;
+        }
+
+        public void setAvatarIsPrivate(boolean AvatarIsPrivate) {
+            requireNonNull(avatarIsPrivate);
+            this.avatarIsPrivate = avatarIsPrivate;
+        }
+        //@@author
 
         @Override
         public boolean equals(Object other) {

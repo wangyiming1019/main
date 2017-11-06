@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -43,6 +44,10 @@ public class XmlAdaptedPerson {
     private String remark;
     @XmlElement(required = true)
     private Boolean remarkIsPrivate;
+    @XmlElement(required = true)
+    private String avatar;
+    @XmlElement(required = true)
+    private Boolean avatarIsPrivate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -66,12 +71,14 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         favourite = source.getFavourite().toString();
         remark = source.getRemark().value;
+        avatar = source.getAvatar().value;
 
         nameIsPrivate = source.getName().isPrivate();
         phoneIsPrivate = source.getPhone().isPrivate();
         emailIsPrivate = source.getEmail().isPrivate();
         addressIsPrivate = source.getAddress().isPrivate();
         remarkIsPrivate = source.getRemark().isPrivate();
+        avatarIsPrivate = source.getAvatar().isPrivate();
 
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -110,7 +117,8 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address, this.addressIsPrivate);
         final Boolean favourite = new Boolean(this.favourite);
         final Remark remark = new Remark(this.remark, this.remarkIsPrivate);
+        final Avatar avatar = new Avatar(this.avatar, this.remarkIsPrivate);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, favourite, remark, tags);
+        return new Person(name, phone, email, address, favourite, remark, avatar, tags);
     }
 }
