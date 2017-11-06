@@ -120,7 +120,7 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address, this.addressIsPrivate);
         final Boolean favourite = new Boolean(this.favourite);
         final Remark remark = new Remark(this.remark, this.remarkIsPrivate);
-        final Avatar avatar = new Avatar(this.avatar, this.remarkIsPrivate);
+        final Avatar avatar = new Avatar(this.avatar, this.avatarIsPrivate);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, favourite, remark, avatar, tags);
     }
