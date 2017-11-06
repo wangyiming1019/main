@@ -111,6 +111,9 @@ public class XmlAdaptedPerson {
         if (remarkIsPrivate == null) {
             remarkIsPrivate = false;
         }
+        if (avatarIsPrivate == null) {
+            avatarIsPrivate = false;
+        }
         final Name name = new Name(this.name, this.nameIsPrivate);
         final Phone phone = new Phone(this.phone, this.phoneIsPrivate);
         final Email email = new Email(this.email, this.emailIsPrivate);
