@@ -249,6 +249,32 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return r;
     }
 
+    //@@author charlesgoh
+    /**
+     * Creates a new (@code Avatar) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Avatar) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
+    private static Avatar createAvatarWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Avatar v;
+        try {
+            if (person.getAvatar().isPrivate()) {
+                person.getAvatar().setPrivate(false);
+                v = new Avatar(person.getAvatar().toString());
+                person.getAvatar().setPrivate(true);
+            } else {
+                v = new Avatar(person.getAvatar().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Avatar");
+        }
+        if (pps.getAvatarIsPrivate() != null) {
+            v.setPrivate(pps.getAvatarIsPrivate());
+        }
+        return v;
+    }
+    //@@author
+
     public Index getIndex() {
         return index;
     }
@@ -378,7 +404,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             return avatarIsPrivate;
         }
 
-        public void setAvatarIsPrivate(boolean AvatarIsPrivate) {
+        public void setAvatarIsPrivate(boolean avatarIsPrivate) {
             requireNonNull(avatarIsPrivate);
             this.avatarIsPrivate = avatarIsPrivate;
         }
