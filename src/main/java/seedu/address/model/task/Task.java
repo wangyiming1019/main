@@ -120,7 +120,9 @@ public class Task implements ReadOnlyTask {
     }
 
     @Override
-    public ObjectProperty<TaskAddress> taskAddressProperty() { return taskAddress; }
+    public ObjectProperty<TaskAddress> taskAddressProperty() {
+        return taskAddress;
+    }
 
     @Override
     public ObjectProperty<String> stateProperty() {
