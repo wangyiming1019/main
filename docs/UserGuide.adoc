@@ -556,10 +556,38 @@ Locates the address of the 1st person in the results of the `find` command on Go
 
 ****
 * Depending on the stored value of the address, Google Maps may be unable to find the correct address or may display multiple addresses of the same name. +
-** It is up to you to provide a specific and valid address.
+** It is up to you to provide specific and valid addresses.
 * A person with a private address cannot be searched on Google Maps.
+* A person with no address will open Google Maps, but it will not search for an address as there is no address to search for.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1, 2, 3, ...` and must be within the range of people in the most recent listing.
+****
+
+===Navigating from one address to another : `navigate` (Since V1.5)
+
+Although `locate` shows you where a person's address is, it does not tell you how to get there. The `navigate` command will provide directions, with the help of Google Maps, on how to get from one address to another. +
+`navigate` can be replaced by `nav` for faster input. +
+Format (person): `navigate [fp/INDEX] [ft/INDEX] [fa/ADDRESS] (Must have only one of three) [tp/INDEX] [tt/INDEX] [ta/ADDRESS] (Must have only one of three)` +
+
+Examples:
+
+* `navigate fa/NUS tp/1` +
+Opens Google Maps to provide directions on how to navigate from NUS to the address of the first person in the address book.
+* `navigate  fp/3 tt/2` +
+Opens Google Maps to provide directions on how to navigate from the address of the third person in the address book to the address of the second task in the address book.
+* `navigate  ft/1 ta/Changi Airport` +
+Opens Google Maps to provide directions on how to navigate from the address of the first task in the address book to Changi Airport.
+
+****
+* Depending on the stored value of the address, Google Maps may be unable to find the correct address or may display multiple addresses of the same name. +
+** It is up to you to provide specific and valid addresses.
+* A person with a private address or a person with no address cannot be navigated from or navigated to.
+* A task with no address cannot be navigated from or navigated to.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...` and must be within the range of people in the most recent listing.
+* You may only input exactly one of the 3 prefixes from `fp/` `ft/` and `fa/` to indicate the address to navigate from, and exactly one of the 3 prefixes from `tp/` `tt/` and `ta/` to indicate the address to navigate to.
+** If you input any less or any more than 1 of the 3 prefixes from each group, the command will fail.
+** There is no need to match the type of prefixes. You can navigate with any combination of prefixes as long as there is only one prefix to indicate the address to navigate from and only one prefix to indicate the address to navigate to.
 ****
 
 === Mark task as complete : `setcomplete` (Since V1.5)
