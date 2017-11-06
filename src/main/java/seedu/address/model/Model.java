@@ -111,6 +111,7 @@ public interface Model {
      */
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
+    //@@author charlesgoh
     /**
      * Sorts all persons in person list by chosen field in ascending (asc) or descending (desc) order
      * @param field
@@ -124,4 +125,5 @@ public interface Model {
      * @param order
      */
     void sortTasks(String field, String order);
+    //@@author
 }

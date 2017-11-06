@@ -101,6 +101,17 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedPerson = new PersonBuilder(personToEdit).withTags().withRemark(VALID_REMARK_BOB).build();
         assertCommandSuccess(command, index, editedPerson);
 
+
+    }
+
+    @Test
+    public void editThree() throws Exception {
+        Model model = getModel();
+        Index index;
+        String command;
+        ReadOnlyPerson personToEdit;
+        ReadOnlyPerson editedPerson;
+
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered person list, edit index within bounds of address book and person list -> edited */
@@ -119,6 +130,16 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void editFourth() throws Exception {
+        Model model = getModel();
+        Index index;
+        int invalidIndex;
+        String command;
+        ReadOnlyPerson personToEdit;
+        ReadOnlyPerson editedPerson;
 
         /* --------------------- Performing edit operation while a person card is selected -------------------------- */
 
@@ -148,6 +169,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         invalidIndex = getModel().getFilteredPersonList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void editFive() throws Exception {
+        Model model = getModel();
+        Index index;
+        String command;
+        ReadOnlyPerson personToEdit;
+        ReadOnlyPerson editedPerson;
 
         /* Case: missing index -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + NAME_DESC_BOB,
@@ -168,6 +198,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid email -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC,
                 Email.MESSAGE_EMAIL_CONSTRAINTS);
+    }
+
+    @Test
+    public void editSix() throws Exception {
+        Model model = getModel();
+        Index index;
+        String command;
+        ReadOnlyPerson personToEdit;
+        ReadOnlyPerson editedPerson;
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,

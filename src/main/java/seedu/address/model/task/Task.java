@@ -20,15 +20,17 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<Priority> priority;
     private ObjectProperty<Assignees> assignees;
     private ObjectProperty<Boolean> state;
+    private ObjectProperty<TaskAddress> taskAddress;
 
     public Task(TaskName taskName, Description description, Deadline deadline, Priority priority,
-                Assignees assignees, boolean isComplete) {
+                Assignees assignees, boolean isComplete, TaskAddress taskAddress) {
         this.taskName = new SimpleObjectProperty<>(taskName);
         this.description = new SimpleObjectProperty<>(description);
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.priority = new SimpleObjectProperty<>(priority);
         this.assignees = new SimpleObjectProperty<>(assignees);
         this.state = new SimpleObjectProperty<>(isComplete);
+        this.taskAddress = new SimpleObjectProperty<>(taskAddress);
     }
 
     /**
@@ -36,18 +38,20 @@ public class Task implements ReadOnlyTask {
      * New tasks will not have anyone assigned to them by default, and will be marked as incomplete
      * by default.
      */
-    public Task(TaskName taskName, Description description, Deadline deadline, Priority priority) {
+    public Task(TaskName taskName, Description description, Deadline deadline, Priority priority,
+                TaskAddress taskAddress) {
         this.taskName = new SimpleObjectProperty<>(taskName);
         this.description = new SimpleObjectProperty<>(description);
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.priority = new SimpleObjectProperty<>(priority);
         this.assignees = new SimpleObjectProperty<>(new Assignees());
         this.state = new SimpleObjectProperty<>(false);
+        this.taskAddress = new SimpleObjectProperty<>(taskAddress);
     }
 
     public Task(ReadOnlyTask task) {
         this(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(),
-                task.getAssignees(), task.getCompleteState());
+                task.getAssignees(), task.getCompleteState(), task.getTaskAddress());
     }
 
     public TaskName getTaskName() {
@@ -80,6 +84,11 @@ public class Task implements ReadOnlyTask {
     }
 
     @Override
+    public TaskAddress getTaskAddress() {
+        return taskAddress.get();
+    }
+
+    @Override
     public String toString() {
         return getAsText();
     }
@@ -108,6 +117,15 @@ public class Task implements ReadOnlyTask {
     @Override
     public ObjectProperty<Assignees> assigneeProperty() {
         return assignees;
+    }
+
+    public void clearAssignees() {
+        this.assignees = new SimpleObjectProperty<>(new Assignees());
+    }
+
+    @Override
+    public ObjectProperty<TaskAddress> taskAddressProperty() {
+        return taskAddress;
     }
 
     @Override
@@ -153,6 +171,10 @@ public class Task implements ReadOnlyTask {
 
     public void changeState() {
         this.setState(!this.getCompleteState());
+    }
+
+    public void setTaskAddress(TaskAddress taskAddress) {
+        this.taskAddress.set(taskAddress);
     }
 
     public String getPrintableState() {

@@ -15,11 +15,13 @@ public interface ReadOnlyTask {
     Assignees getAssignees();
     boolean getCompleteState();
     String getPrintableState();
+    TaskAddress getTaskAddress();
     ObjectProperty<TaskName> taskNameProperty();
     ObjectProperty<Description> descriptionProperty();
     ObjectProperty<Deadline> deadlineProperty();
     ObjectProperty<Priority> priorityProperty();
     ObjectProperty<Assignees> assigneeProperty();
+    ObjectProperty<TaskAddress> taskAddressProperty();
     ObjectProperty<String> stateProperty();
     ObjectProperty<String> changeStateProperty();
     void changeState();
@@ -33,6 +35,8 @@ public interface ReadOnlyTask {
                 .append(getDeadline())
                 .append(" Priority: ")
                 .append(getPriority())
+                .append(" Address: ")
+                .append(getTaskAddress())
                 .append(" ")
                 .append(getPrintableState());
         return builder.toString();
@@ -49,6 +53,7 @@ public interface ReadOnlyTask {
                 && other.getDeadline().equals(this.getDeadline())
                 && other.getPriority().equals(this.getPriority()))
                 && other.getAssignees().equals(this.getAssignees())
-                && other.getCompleteState() == this.getCompleteState();
+                && other.getCompleteState() == this.getCompleteState()
+                && other.getTaskAddress().equals(this.getTaskAddress());
     }
 }

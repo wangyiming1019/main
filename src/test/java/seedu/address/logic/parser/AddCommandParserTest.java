@@ -25,6 +25,8 @@ import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TASK_ADDRESS_DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.TASK_ADDRESS_DESC_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.TASK_NAME_DESC_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.TASK_NAME_DESC_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.TASK_SEPARATOR;
@@ -43,6 +45,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PENCIL;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -105,27 +108,32 @@ public class AddCommandParserTest {
     public void parseTasksAllFieldsPresent_success() {
         Task expectedTask = new TaskBuilder().withTaskName(VALID_TASK_NAME_PENCIL)
                 .withDescription(VALID_DESCRIPTION_PENCIL).withDeadline(VALID_DEADLINE_PENCIL)
-                .withPriority(VALID_PRIORITY_PENCIL).build();
+                .withPriority(VALID_PRIORITY_PENCIL).withTaskAddress(VALID_TASK_ADDRESS_PENCIL).build();
 
         // multiple names - last name accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PAPER
                 + TASK_NAME_DESC_PENCIL + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL
-                + PRIORITY_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
 
         // multiple descriptions - last description accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PAPER + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL
-                + PRIORITY_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
 
         // multiple deadlines - last deadline accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PAPER + DEADLINE_DESC_PENCIL
-                + PRIORITY_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
 
         // multiple priorities - last priority accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL + PRIORITY_DESC_PAPER
-                + PRIORITY_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
+
+        // multiple addresses - last address accepted
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
+                + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL + PRIORITY_DESC_PENCIL
+                + TASK_ADDRESS_DESC_PAPER + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
     }
     //@@author
 
@@ -147,18 +155,6 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
 
-        // missing phone prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
-
-        // missing email prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
-
-        // missing address prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_ADDRESS_BOB, expectedMessage);
-
         // all prefixes missing
         assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
                 + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
@@ -171,18 +167,6 @@ public class AddCommandParserTest {
         // missing task name prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + VALID_TASK_NAME_PAPER
                 + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL + PRIORITY_DESC_PENCIL, expectedMessage);
-
-        // missing description prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
-                + VALID_DESCRIPTION_PENCIL + DEADLINE_DESC_PENCIL + PRIORITY_DESC_PENCIL, expectedMessage);
-
-        // missing deadline prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
-                + DESCRIPTION_DESC_PENCIL + VALID_DEADLINE_PENCIL + PRIORITY_DESC_PENCIL, expectedMessage);
-
-        // missing priority prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
-                + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL + VALID_PRIORITY_PENCIL, expectedMessage);
 
         // all prefixes missing
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + VALID_TASK_NAME_PENCIL
@@ -221,16 +205,16 @@ public class AddCommandParserTest {
         // invalid deadline
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + INVALID_DEADLINE_DESC
-                + PRIORITY_DESC_PENCIL, Deadline.MESSAGE_INVALID_DATE);
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, Deadline.MESSAGE_INVALID_DATE);
 
         // invalid priority
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL
-                + INVALID_PRIORITY_DESC, Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+                + INVALID_PRIORITY_DESC + TASK_ADDRESS_DESC_PENCIL, Priority.MESSAGE_PRIORITY_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + INVALID_DEADLINE_DESC
-                + INVALID_PRIORITY_DESC, Deadline.MESSAGE_INVALID_DATE);
+                + INVALID_PRIORITY_DESC + TASK_ADDRESS_DESC_PENCIL, Deadline.MESSAGE_INVALID_DATE);
     }
 }
