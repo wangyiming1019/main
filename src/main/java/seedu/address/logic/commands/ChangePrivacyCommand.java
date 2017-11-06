@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 //@@author jeffreygohkw
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -45,11 +46,13 @@ public class ChangePrivacyCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + TRUE_WORD + " OR " + FALSE_WORD + "]"
             + "[" + PREFIX_EMAIL + TRUE_WORD + " OR " + FALSE_WORD + "]"
             + "[" + PREFIX_ADDRESS + TRUE_WORD + " OR " + FALSE_WORD + "]\n"
+            + "[" + PREFIX_AVATAR + TRUE_WORD + " OR " + FALSE_WORD + "]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + TRUE_WORD + " "
             + PREFIX_PHONE + FALSE_WORD + " "
             + PREFIX_EMAIL + TRUE_WORD + " "
-            + PREFIX_ADDRESS + FALSE_WORD;
+            + PREFIX_ADDRESS + FALSE_WORD + " "
+            + PREFIX_AVATAR + FALSE_WORD;
 
     public static final String MESSAGE_CHANGE_PRIVACY_SUCCESS = "Changed the Privacy of the Person: %1$s";
     public static final String MESSAGE_NO_FIELDS = "At least one field to change must be provided.";
