@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -46,6 +47,9 @@ public class CommandTestUtil {
     public static final String VALID_REMARK_AMY = "She sells sea shells on the sea shore";
     public static final String VALID_REMARK_BOB = "He eats, shoots and leaves";
     public static final String VALID_REMARK_CHRIS = "He likes swimming";
+    public static final String VALID_AVATAR_AMY = "";
+    public static final String VALID_AVATAR_BOB = "";
+    public static final String VALID_AVATAR_CHRIS = "";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_FAVOURITE = "false";
@@ -78,6 +82,11 @@ public class CommandTestUtil {
     public static final String REMARK_DESC_AMY = " " + PREFIX_REMARK + VALID_REMARK_AMY;
     public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK_BOB;
     public static final String REMARK_DESC_CHRIS = " " + PREFIX_REMARK + VALID_REMARK_CHRIS;
+
+    public static final String AVATAR_DESC_AMY = " " + PREFIX_AVATAR + VALID_REMARK_AMY;
+    public static final String AVATAR_DESC_BOB = " " + PREFIX_AVATAR + VALID_REMARK_BOB;
+    public static final String AVATAR_DESC_CHRIS = " " + PREFIX_AVATAR + VALID_REMARK_CHRIS;
+
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -107,13 +116,14 @@ public class CommandTestUtil {
     public static final EditCommand.EditTaskDescriptor DESC_PAPER;
 
     static {
+        //TODO: Change avatar filename to a real filename
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withRemark(VALID_REMARK_AMY).withFavourite(VALID_FAVOURITE)
+                .withRemark(VALID_REMARK_AMY).withAvatar("").withFavourite(VALID_FAVOURITE)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withRemark(VALID_REMARK_BOB).withFavourite(VALID_FAVOURITE)
+                .withRemark(VALID_REMARK_BOB).withAvatar("").withFavourite(VALID_FAVOURITE)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         DESC_PENCIL = new EditTaskDescriptorBuilder().withTaskName(VALID_TASK_NAME_PENCIL)
                 .withDescription(VALID_DESCRIPTION_PENCIL)
