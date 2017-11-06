@@ -901,7 +901,7 @@ private void loadDirectionsPage(String fromLocation, String toLocation) {
 ----
 The overall sequence of events is illustrated by the following sequence diagram:
 
-image::LocateSequenceDiagram.png[width="800"]
+image::NavigateSequenceDiagram.png[width="800"]
 _Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another
 
 
@@ -921,7 +921,7 @@ _Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another
 **Cons:** A new class has to be created and Strings, Addresses and TaskAddresses will need to be converted to Locations first.  +
 **Alternative 2:** Simply pass on a String containing the address from class to class +
 **Pros:** Easy to read and transfer information, lower overhead +
-**Cons:** It is eaiser for stray Strings to pollute the information, and the Strings can be unintentionally modified.
+**Cons:** It is easier for stray Strings to pollute the information, and the Strings can be unintentionally modified.
 
 === Add/Delete Tag mechanism
 
