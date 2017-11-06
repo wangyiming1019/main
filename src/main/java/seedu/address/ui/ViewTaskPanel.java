@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,13 +63,10 @@ public class ViewTaskPanel extends UiPart<Region> {
         priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
         state.textProperty().bind(Bindings.convert(task.stateProperty()));
         markState.textProperty().bind(Bindings.convert(task.changeStateProperty()));
-        markState.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ReadOnlyTask updatedTask = new Task(task);
-                updatedTask.changeState();
-                raise(new TaskStateChangeEvent(task, updatedTask));
-            }
+        markState.setOnAction(event -> {
+            ReadOnlyTask updatedTask = new Task(task);
+            updatedTask.changeState();
+            raise(new TaskStateChangeEvent(task, updatedTask));
         });
     }
 
