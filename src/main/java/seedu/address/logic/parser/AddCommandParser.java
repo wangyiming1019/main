@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR_PRIVATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -25,6 +27,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -76,8 +79,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static ReadOnlyPerson constructPerson(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
-                        PREFIX_TAG, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE,
-                        PREFIX_ADDRESS_PRIVATE, PREFIX_REMARK_PRIVATE, PREFIX_TAG_PRIVATE);
+                        PREFIX_TAG, PREFIX_AVATAR, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE,
+                        PREFIX_ADDRESS_PRIVATE, PREFIX_REMARK_PRIVATE, PREFIX_TAG_PRIVATE, PREFIX_AVATAR_PRIVATE);
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || (arePrefixesPresent(argMultimap, PREFIX_NAME_PRIVATE)))) {
@@ -90,6 +93,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email;
             Address address;
             Remark remark;
+            Avatar avatar;
 
             if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
                 name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
@@ -121,6 +125,14 @@ public class AddCommandParser implements Parser<AddCommand> {
                 address = new Address(null);
             }
 
+            if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
+                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+            } else if (arePrefixesPresent(argMultimap, PREFIX_AVATAR_PRIVATE)) {
+                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR_PRIVATE), true).get();
+            } else {
+                avatar = new Avatar(null);
+            }
+
             if ((arePrefixesPresent(argMultimap, PREFIX_REMARK))) {
                 remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             } else if (arePrefixesPresent(argMultimap, PREFIX_REMARK_PRIVATE)) {
@@ -130,7 +142,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, avatar, tagList);
             return person;
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
