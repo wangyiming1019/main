@@ -97,7 +97,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        ArrayList<ReadOnlyPerson> persons = new ArrayList<>();
+        persons.add(target);
+        ArrayList<Index> personIndexes = addressBook.extractPersonIndexes(persons);
+        Index personIndex = personIndexes.get(0);
         addressBook.removePerson(target);
+        addressBook.removePersonFromAssignees(personIndex);
         indicateAddressBookChanged();
     }
     //@@author wangyiming1019
@@ -157,6 +162,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortPersons(String field, String order) {
         addressBook.sortPersonsBy(field, order);
+        Index[] updatedIndexes = addressBook.getMappings();
+        System.out.println(updatedIndexes.length);
+        addressBook.updateTaskAssigneeMappings(updatedIndexes);
         indicateAddressBookChanged();
     }
 
@@ -234,34 +242,28 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void assignToTask(ArrayList<ReadOnlyPerson> personsToAssign, ReadOnlyTask taskToAssignTo)
             throws TaskNotFoundException, DuplicateTaskException {
-        TaskName taskName = taskToAssignTo.getTaskName();
-        Description description = taskToAssignTo.getDescription();
-        Deadline deadline = taskToAssignTo.getDeadline();
-        Priority priority = taskToAssignTo.getPriority();
         Assignees assignees = taskToAssignTo.getAssignees();
-        Boolean state = taskToAssignTo.getCompleteState();
-        TaskAddress taskAddress = taskToAssignTo.getTaskAddress();
+        Assignees newAssignees = new Assignees(assignees);
+        ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToAssign);
 
-        assignees.assign(personsToAssign);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
-        updateTask(taskToAssignTo, updatedTask);
+        newAssignees.assign(positions);
+        ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToAssignTo, newAssignees);
+        addressBook.updateTask(taskToAssignTo, updatedTask);
+        indicateAddressBookChanged();
     }
 
     //@@author Esilocke
     @Override
     public void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask taskToDismissFrom)
             throws TaskNotFoundException, DuplicateTaskException {
-        TaskName taskName = taskToDismissFrom.getTaskName();
-        Description description = taskToDismissFrom.getDescription();
-        Deadline deadline = taskToDismissFrom.getDeadline();
-        Priority priority = taskToDismissFrom.getPriority();
         Assignees assignees = taskToDismissFrom.getAssignees();
-        Boolean state = taskToDismissFrom.getCompleteState();
-        TaskAddress taskAddress = taskToDismissFrom.getTaskAddress();
+        Assignees newAssignees = new Assignees(assignees);
+        ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToDismiss);
 
-        assignees.dismiss(personsToDismiss);
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
-        updateTask(taskToDismissFrom, updatedTask);
+        newAssignees.dismiss(positions);
+        ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToDismissFrom, newAssignees);
+        addressBook.updateTask(taskToDismissFrom, updatedTask);
+        indicateAddressBookChanged();
     }
 
     //@@author Esilocke
@@ -272,11 +274,11 @@ public class ModelManager extends ComponentManager implements Model {
         Deadline deadline = toSet.getDeadline();
         Priority priority = toSet.getPriority();
         Assignees assignees = toSet.getAssignees();
+        TaskAddress taskAddress = toSet.getTaskAddress();
         Boolean state = isComplete;
         if (state == toSet.getCompleteState()) {
             throw new DuplicateTaskException();
         }
-        TaskAddress taskAddress = toSet.getTaskAddress();
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
         updateTask(toSet, updatedTask);
     }
@@ -332,4 +334,21 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredTasks.equals(other.filteredTasks);
     }
 
+    //=========== Utility methods =============================================================
+
+    /**
+     * Constructs a new {@code ReadOnlyTask} from an existing ReadOnlyTask, with the specified assignees list.
+     */
+    public ReadOnlyTask constructTaskWithNewAssignee(ReadOnlyTask originalTask, Assignees updatedAssignees) {
+        TaskName taskName = originalTask.getTaskName();
+        Description description = originalTask.getDescription();
+        Deadline deadline = originalTask.getDeadline();
+        Priority priority = originalTask.getPriority();
+        Boolean state = originalTask.getCompleteState();
+        TaskAddress taskAddress = originalTask.getTaskAddress();
+
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, updatedAssignees,
+                state, taskAddress);
+        return updatedTask;
+    }
 }

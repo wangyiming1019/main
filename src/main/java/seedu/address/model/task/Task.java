@@ -119,6 +119,10 @@ public class Task implements ReadOnlyTask {
         return assignees;
     }
 
+    public void clearAssignees() {
+        this.assignees = new SimpleObjectProperty<>(new Assignees());
+    }
+
     @Override
     public ObjectProperty<TaskAddress> taskAddressProperty() {
         return taskAddress;
