@@ -47,9 +47,9 @@ public class CommandTestUtil {
     public static final String VALID_REMARK_AMY = "She sells sea shells on the sea shore";
     public static final String VALID_REMARK_BOB = "He eats, shoots and leaves";
     public static final String VALID_REMARK_CHRIS = "He likes swimming";
-    public static final String VALID_AVATAR_AMY = "";
-    public static final String VALID_AVATAR_BOB = "";
-    public static final String VALID_AVATAR_CHRIS = "";
+    public static final String VALID_AVATAR_AMY = "amyavatar";
+    public static final String VALID_AVATAR_BOB = "bobavatar";
+    public static final String VALID_AVATAR_CHRIS = "chirsavatar";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_FAVOURITE = "false";

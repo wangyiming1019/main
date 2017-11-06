@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.AVATAR_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.AVATAR_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_PAPER;
@@ -32,6 +34,8 @@ import static seedu.address.logic.commands.CommandTestUtil.TASK_NAME_DESC_PENCIL
 import static seedu.address.logic.commands.CommandTestUtil.TASK_SEPARATOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVATAR_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AVATAR_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -71,35 +75,36 @@ public class AddCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withRemark(VALID_REMARK_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withRemark(VALID_REMARK_BOB)
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
 
         // multiple names - last name accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_AMY
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + AVATAR_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple phones - last phone accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_AMY
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + AVATAR_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_AMY
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + AVATAR_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple addresses - last address accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + REMARK_DESC_AMY
+                + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + REMARK_DESC_BOB + AVATAR_DESC_BOB
                 + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withRemark(VALID_REMARK_BOB)
-                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + AVATAR_DESC_BOB
+                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTags));
     }
 
@@ -144,7 +149,8 @@ public class AddCommandParserTest {
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withRemark(VALID_REMARK_AMY)
                 .withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY, new AddCommand(expectedPerson));
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY,
+                new AddCommand(expectedPerson));
     }
 
     @Test
