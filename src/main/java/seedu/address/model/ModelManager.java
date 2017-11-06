@@ -31,6 +31,7 @@ import seedu.address.model.task.Description;
 import seedu.address.model.task.Priority;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
 import seedu.address.model.task.TaskName;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
@@ -273,14 +274,13 @@ public class ModelManager extends ComponentManager implements Model {
         Deadline deadline = toSet.getDeadline();
         Priority priority = toSet.getPriority();
         Assignees assignees = toSet.getAssignees();
+        TaskAddress taskAddress = toSet.getTaskAddress();
         Boolean state = isComplete;
         if (state == toSet.getCompleteState()) {
             throw new DuplicateTaskException();
         }
-
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state);
-        addressBook.updateTask(toSet, updatedTask);
-        indicateAddressBookChanged();
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
+        updateTask(toSet, updatedTask);
     }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
@@ -345,8 +345,10 @@ public class ModelManager extends ComponentManager implements Model {
         Deadline deadline = originalTask.getDeadline();
         Priority priority = originalTask.getPriority();
         Boolean state = originalTask.getCompleteState();
+        TaskAddress taskAddress = originalTask.getTaskAddress();
 
-        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, updatedAssignees, state);
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, updatedAssignees,
+                state, taskAddress);
         return updatedTask;
     }
 }

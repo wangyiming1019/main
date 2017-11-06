@@ -28,4 +28,11 @@ public class CliSyntax {
     public static final Prefix PREFIX_TARGET = new Prefix("to/");
     public static final Prefix PREFIX_FROM = new Prefix("from/");
     public static final Prefix PREFIX_STATE = new Prefix("done/");
+
+    public static final Prefix PREFIX_NAVIGATE_FROM_PERSON = new Prefix("fp/");
+    public static final Prefix PREFIX_NAVIGATE_FROM_TASK = new Prefix("ft/");
+    public static final Prefix PREFIX_NAVIGATE_FROM_ADDRESS = new Prefix("fa/");
+    public static final Prefix PREFIX_NAVIGATE_TO_PERSON = new Prefix("tp/");
+    public static final Prefix PREFIX_NAVIGATE_TO_TASK = new Prefix("tt/");
+    public static final Prefix PREFIX_NAVIGATE_TO_ADDRESS = new Prefix("ta/");
 }
