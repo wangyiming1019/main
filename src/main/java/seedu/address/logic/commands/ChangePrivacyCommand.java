@@ -14,6 +14,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -81,17 +82,22 @@ public class ChangePrivacyCommand extends UndoableCommand {
 
         ReadOnlyPerson personToChange = lastShownList.get(index.getZeroBased());
 
-        Person newPerson = createPersonWithChangedPrivacy(personToChange, pps);
+        Person newPerson = null;
+        try {
+            newPerson = createPersonWithChangedPrivacy(personToChange, pps);
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Person must have all fields initialised.");
+        }
 
         try {
             model.updatePerson(personToChange, newPerson);
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson));
     }
 
@@ -100,21 +106,19 @@ public class ChangePrivacyCommand extends UndoableCommand {
      * @param person the person whose privacy we would like to change
      * @param pps the settings of privacy for each field
      */
-    private static Person createPersonWithChangedPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+    private static Person createPersonWithChangedPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps)
+            throws IllegalValueException {
         assert person != null;
 
-        Name n = person.getName();
-        Phone p = person.getPhone();
-        Email e = person.getEmail();
-        Address a = person.getAddress();
-        Remark r = person.getRemark();
-        Avatar v = person.getAvatar();
+        Name n = createNameWithPrivacy(person, pps);
+        Phone p = createPhoneWithPrivacy(person, pps);
+        Email e = createEmailWithPrivacy(person, pps);
+        Address a = createAddressWithPrivacy(person, pps);
+        Remark r = createRemarkWithPrivacy(person, pps);
+        Avatar v = createAvatarWithPrivacy(person, pps);
         Boolean f = person.getFavourite();
         Set<Tag> t = person.getTags();
 
-        if (pps.getNameIsPrivate() != null) {
-            n.setPrivate(pps.getNameIsPrivate());
-        }
         if (pps.getPhoneIsPrivate() != null) {
             p.setPrivate(pps.getPhoneIsPrivate());
         }
@@ -136,6 +140,128 @@ public class ChangePrivacyCommand extends UndoableCommand {
         }
 
         return new Person(n, p, e, a, f, r, v, t);
+    }
+
+    /**
+     * Creates a new (@code Name) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Name) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
+    private static Name createNameWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Name n;
+        try {
+            if (person.getName().isPrivate()) {
+                person.getName().setPrivate(false);
+                n = new Name(person.getName().toString());
+                person.getName().setPrivate(true);
+            } else {
+                n = new Name(person.getName().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Name");
+        }
+        if (pps.getNameIsPrivate() != null) {
+            n.setPrivate(pps.getNameIsPrivate());
+        }
+        return n;
+    }
+
+
+    /**
+     * Creates a new (@code Phone) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Phone) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
+    private static Phone createPhoneWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Phone p;
+        try {
+            if (person.getPhone().isPrivate()) {
+                person.getPhone().setPrivate(false);
+                p = new Phone(person.getPhone().toString());
+                person.getPhone().setPrivate(true);
+            } else {
+                p = new Phone(person.getPhone().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Phone");
+        }
+        if (pps.getPhoneIsPrivate() != null) {
+            p.setPrivate(pps.getPhoneIsPrivate());
+        }
+        return p;
+    }
+
+
+    /**
+     * Creates a new (@code Email) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Email) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
+    private static Email createEmailWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Email em;
+        try {
+            if (person.getEmail().isPrivate()) {
+                person.getEmail().setPrivate(false);
+                em = new Email(person.getEmail().toString());
+                person.getEmail().setPrivate(true);
+            } else {
+                em = new Email(person.getEmail().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Email");
+        }
+        if (pps.getEmailIsPrivate() != null) {
+            em.setPrivate(pps.getEmailIsPrivate());
+        }
+        return em;
+    }
+
+    /**
+     * Creates a new (@code Address) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Address) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
+    private static Address createAddressWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Address a;
+        try {
+            if (person.getAddress().isPrivate()) {
+                person.getAddress().setPrivate(false);
+                a = new Address(person.getAddress().toString());
+                person.getAddress().setPrivate(true);
+            } else {
+                a = new Address(person.getAddress().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Address");
+        }
+        if (pps.getAddressIsPrivate() != null) {
+            a.setPrivate(pps.getAddressIsPrivate());
+        }
+        return a;
+    }
+
+    /**
+     * Creates a new (@code Remark) based on the input (@code Person) and (@code PersonPrivacySettings)
+     * @return A (@code Remark) with the same value as that of the (@code Person)'s but with the privacy set to that
+     * of the (@code PersonPrivacySettings)
+     */
+    private static Remark createRemarkWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+        Remark r;
+        try {
+            if (person.getRemark().isPrivate()) {
+                person.getRemark().setPrivate(false);
+                r = new Remark(person.getRemark().toString());
+                person.getRemark().setPrivate(true);
+            } else {
+                r = new Remark(person.getRemark().toString());
+            }
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Invalid Remark");
+        }
+        if (pps.getRemarkIsPrivate() != null) {
+            r.setPrivate(pps.getRemarkIsPrivate());
+        }
+        return r;
     }
 
     public Index getIndex() {

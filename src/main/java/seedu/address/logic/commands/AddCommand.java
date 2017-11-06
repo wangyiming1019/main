@@ -54,11 +54,13 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + PREFIX_DEADLINE + "DEADLINE "
             + PREFIX_PRIORITY + "PRIORITY "
+            + PREFIX_ADDRESS + "ADDRESS"
             + "Example: " + COMMAND_WORD + " " + PREFIX_TASK + " "
             + PREFIX_NAME + "Buy pencil "
             + PREFIX_DESCRIPTION + "Buy a new pencil from ABS "
             + PREFIX_DEADLINE + "10-10-2017 "
-            + PREFIX_PRIORITY + "4 ";
+            + PREFIX_PRIORITY + "4 "
+            + PREFIX_ADDRESS + "12 Kent Ridge Crescent, 119275";
 
     public static final String MESSAGE_TASK_SUCCESS = "New task added: \n%1$s";
     public static final String MESSAGE_SUCCESS = "New person added: \n%1$s";
