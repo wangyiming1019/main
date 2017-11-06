@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -15,22 +15,61 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="taskName" prefHeight="107.0" prefWidth="472.0" text="\$title" wrapText="true" />
-                  <Label fx:id="priority" alignment="CENTER" prefHeight="135.0" prefWidth="231.0" text="\$priority" />
-                  <Label fx:id="state" alignment="CENTER" prefHeight="135.0" prefWidth="231.0" text="\$state" />
-                  <ImageView fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="taskName" prefHeight="107.0" prefWidth="472.0" text="\$title" wrapText="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <Label fx:id="priority" alignment="CENTER" prefHeight="135.0" prefWidth="231.0" text="\$priority">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <Label fx:id="state" alignment="CENTER" prefHeight="135.0" prefWidth="231.0" text="\$state">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <ImageView fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></ImageView>
                </children>
             </HBox>
-            <SplitPane dividerPositions="0.7205513784461153" prefHeight="419.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+            <SplitPane prefHeight="419.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
               <items>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label fx:id="description" prefHeight="499.0" prefWidth="571.0" text="\$description" wrapText="true" />
-                        <Label fx:id="deadline" prefHeight="206.0" prefWidth="571.0" text="\$deadline" />
-                        <Button fx:id="markState" mnemonicParsing="false" prefHeight="31.0" prefWidth="315.0" text="Mark as $state" />
+                        <Label fx:id="description" prefHeight="377.0" prefWidth="880.0" text="\$description" wrapText="true">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding></Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="92.0" prefWidth="179.0" text="Due by:">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="deadline" prefHeight="92.0" prefWidth="805.0" text="\$deadline">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Button fx:id="markState" mnemonicParsing="false" prefHeight="31.0" prefWidth="315.0" text="Mark as $state">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding></Button>
                      </children>
                   </VBox>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
               </items>
             </SplitPane>
          </children>
