@@ -420,23 +420,9 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommandBackupWord() throws Exception {
-        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
-    }
-
-    @Test
-    public void parseCommandBackupWordWithInput() throws Exception {
-        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " test.xml") instanceof BackupCommand);
-    }
-
-    @Test
-    public void parseCommandBackupAlias() throws Exception {
-        assertTrue(parser.parseCommand(BackupCommand.COMMAND_ALIAS) instanceof BackupCommand);
-    }
-
-    @Test
-    public void parseCommandBackupAliasWithInput() throws Exception {
-        assertTrue(parser.parseCommand(BackupCommand.COMMAND_ALIAS + " test.xml") instanceof BackupCommand);
+    public void parseCommandBackup() throws Exception {
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " testbackupfilename") instanceof BackupCommand);
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_ALIAS + " testbackupfilename") instanceof BackupCommand);
     }
 
     @Test
