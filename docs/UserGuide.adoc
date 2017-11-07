@@ -118,7 +118,7 @@ Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] r/[REMARK] [t/TAG]...
 **Things To Note** +
 * A person can have any number of tags (including 0) +
 * The `EMAIL` should be in the format address@email.domain +
-* You can set a person's `Name`, `Phone`, `Email`, `Address` or `Remark` to be private by placing a `p` in front of the prefix. +
+* You can set a person's `Name`, `Phone`, `Email`, `Address`, `Remark`, `Avatar` to be private by placing a `p` in front of the prefix. +
 ****
 
 **Example Scenarios**:
@@ -126,7 +126,8 @@ Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] r/[REMARK] [t/TAG]...
 **Example Scenario 1** +
 Suppose you wanted to add your new friend John Doe. You could type the following command to add his details:
 
-`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995 r/Likes panda bears`
+`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995 r/Likes panda bears
+v/https://helloworld/image.png`
 ****
 ****
 **Example Scenario 2** +
@@ -134,6 +135,7 @@ Now suppose you have another friend named Ima Hidearu, who does not provide you 
 you need. You can choose to omit these fields by typing in the command:
 
 `add n/Ima Hidearu a/ e/ p/ r/ t/secretive`
+
 ****
 ****
 **Example Scenario 3** +
@@ -145,6 +147,9 @@ option while typing in your command:
 * Do note that you do not have to set all fields as private, and you can choose which specific fields you want to set as private.
 ****
 // end::addprivacy[]
+
+[NOTE]
+As of version 1.5rc, the avatar field supports only URLs sourced online. References to local files may not work.
 
 === Adding a task: `add task`
 
