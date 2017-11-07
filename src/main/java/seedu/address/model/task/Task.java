@@ -133,6 +133,16 @@ public class Task implements ReadOnlyTask {
         String printableState = getPrintableState();
         return new SimpleObjectProperty<>(printableState);
     }
+
+    @Override
+    public ObjectProperty<String> changeStateProperty() {
+        boolean state = getCompleteState();
+        if (state) {
+            return new SimpleObjectProperty<>("Set as incomplete");
+        } else {
+            return new SimpleObjectProperty<>("Set as complete");
+        }
+    }
     // Setters for TaskBuilder testing
 
     public void setTaskName(TaskName taskName) {
@@ -157,6 +167,10 @@ public class Task implements ReadOnlyTask {
 
     public void setState(boolean state) {
         this.state.set(state);
+    }
+
+    public void changeState() {
+        this.setState(!this.getCompleteState());
     }
 
     public void setTaskAddress(TaskAddress taskAddress) {

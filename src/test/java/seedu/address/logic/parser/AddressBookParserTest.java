@@ -357,14 +357,14 @@ public class AddressBookParserTest {
     public void parseCommandSelect() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+        assertEquals(new SelectCommand(INDEX_FIRST_PERSON, false), command);
     }
 
     @Test
     public void parseCommandAliasSelect() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+        assertEquals(new SelectCommand(INDEX_FIRST_PERSON, false), command);
     }
 
     //@@author jeffreygohkw

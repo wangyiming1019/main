@@ -23,6 +23,8 @@ public interface ReadOnlyTask {
     ObjectProperty<Assignees> assigneeProperty();
     ObjectProperty<TaskAddress> taskAddressProperty();
     ObjectProperty<String> stateProperty();
+    ObjectProperty<String> changeStateProperty();
+    void changeState();
 
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();

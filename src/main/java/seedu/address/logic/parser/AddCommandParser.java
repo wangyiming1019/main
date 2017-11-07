@@ -168,9 +168,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Priority priority;
             TaskAddress address;
 
-            name = arePrefixesPresent(argMultimap, PREFIX_NAME)
-                    ? ParserUtil.parseTaskName(argMultimap.getValue(PREFIX_NAME)).get()
-                    : new TaskName(null);
+            name = ParserUtil.parseTaskName(argMultimap.getValue(PREFIX_NAME)).get();
 
             description = arePrefixesPresent(argMultimap, PREFIX_DESCRIPTION)
                     ? ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)).get()
@@ -179,7 +177,6 @@ public class AddCommandParser implements Parser<AddCommand> {
             deadline = arePrefixesPresent(argMultimap, PREFIX_DEADLINE)
                     ? ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get()
                     : new Deadline(null);
-
             priority = arePrefixesPresent(argMultimap, PREFIX_PRIORITY)
                     ? ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get()
                     : new Priority(null);
