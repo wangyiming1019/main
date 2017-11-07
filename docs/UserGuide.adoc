@@ -13,15 +13,15 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-W09-B2/main
 
 By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT`
-
+//tag::introduction[]
 Address++ is an application that keeps track of your contacts and your daily todos for you. It is targeted
-at students who work on projects or assignments frequently, but it can also be used for other similar purposes.
+at students who work on projects or assignments frequently, but it can also be used for other purposes.
 
 == About
 
 After reading this user guide, you should be more familiar with how Address++ can be used to maintain your contacts and tasks. +
 No technical knowledge is required when running the application, although basic knowledge of installation is required to install the prerequisite libraries for Address++ (Java). +
-
+//end::introduction[]
 == Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -59,7 +59,7 @@ adds a contact named `John Doe` to Address++.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
-
+//tag::fontsize[]
 === Changing Font Sizes
 
 Are the font sizes too small or too big? Address++ allows you to change your font sizes at will. Here are some of the
@@ -94,7 +94,7 @@ image::FontSizeCLI.png[width="540"]
 * Decrease Size Command: `fontsize decrease`
 * Reset Size Command: `fontsize reset`
 ****
-
+//end::fontsize[]
 === Viewing help : `help`
 If you have trouble figuring out how to do something, or would like to find out about more features, you can click
 on the **help** menu button. You can also enter the command `help` to access the help window.
@@ -105,6 +105,7 @@ Format: `help` +
 Alternatively,  you may opt to use the keyboard shortcut kbd:[F1].
 
 // tag::addprivacy[]
+// tag::avatar[]
 === Adding a person: `add`
 
 You can use the `add` command to add new people to your address book
@@ -145,11 +146,12 @@ option while typing in your command:
 
 * Do note that you do not have to set all fields as private, and you can choose which specific fields you want to set as private.
 ****
-// end::addprivacy[]
+//end::avatar[]
+//end::addprivacy[]
 
 [NOTE]
 As of version 1.5rc, the avatar field supports only URLs sourced online. References to local files may not work.
-
+//tag::addtask[]
 === Adding a task: `add task`
 
 You can use the `add task` command to add new tasks to your address book. This allows you to keep track of your
@@ -181,7 +183,7 @@ You realize that you have run out of pencils. You decide to add a task into Addr
 new ones later.
 `add task n/Buy new pencil p/2`
 ****
-
+// end::addtask[]
 // tag::addtag[]
 
 === Adding a tag to persons : `addtag` (Since V1.2)
@@ -481,7 +483,7 @@ Delete the friends tag of the 1st and 2nd person in the address book.
 `deletetag t/friends` +
 Delete the friends tag from all contacts in the address book.
 // end::deletetag[]
-
+// tag::sort[]
 === Sorting your contact list and tasks : `sort`
 
 Sort your contacts or tasks by using the `sort` command +
@@ -491,7 +493,7 @@ Format: `sort LIST FIELD ORDER` +
 ****
 * Allows you to sort your contacts by any field in either ascending or descending order
 * Allows you to srot your tasks by deadline or by priority in ascending or descending order
-* Field parameters for person contacts: NAME, PHONE, EMAIL, ADDRESS.
+* Field parameters for person contacts: NAME, PHONE, EMAIL, ADDRESS, REMARK, AVATAR.
 * Field parameters for tasks: DEADLINE, PRIORITY.
 * Order parameters are limited to the following fields: ASC, DESC.
 * You can undo this command if you want to revert to the pre-sort ordering of contacts
@@ -511,7 +513,8 @@ This allows you to sort all tasks in ascending order by the deadline field (i.e.
 * `sort task priority desc` +
 This allows you to sort all tasks in descending order by the priority field (i.e. higher priority tasks
 are listed on top).
-
+//end::sort[]
+//tag::backup[]
 === Backing up your data : `backup`
 
 You can backup your saved data on Address++ by using the `backup` command. +
@@ -531,7 +534,7 @@ Examples:
 This command will help you back up in the default save location --> In the data directory of your application.
 * `backup ./test.xml` or `bk ./test.xml` +
 This saves the backup file in the current data directory, with the name `test.xml`.
-
+//end::backup[]
 === Selecting a person : `select`
 
 You can use `select` to pick out one contact or task, and look at it in greater detail, such as examining a task with a very long description, or checking out the full address of one of your friends. +
@@ -858,7 +861,7 @@ e.g. `delete 3`
 e.g. `delete task 4`
 * *Delete tag* : `deletetag INDEX t/[TAG]` +
 e.g. `deletetag 1 2 t/friends`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] 
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]
 [v/AVATAR] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit task* : `edit task INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
