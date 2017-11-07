@@ -27,6 +27,8 @@ public class NavigateCommand extends Command {
     public static final String MESSAGE_MULTIPLE_FROM_ERROR = "Only one type of From prefix allowed.";
     public static final String MESSAGE_MULTIPLE_TO_ERROR = "Only one type of To prefix allowed.";
     public static final String MESSAGE_PRIVATE_PERSON_ADDRESS_ERROR = "Address of the Person at index %1$s is private.";
+    public static final String MESSAGE_PERSON_HAS_NO_ADDRESS_ERROR = "Person at index %1$s does not have an address.";
+    public static final String MESSAGE_TASK_HAS_NO_ADDRESS_ERROR = "Task at index %1$s does not have an address.";
 
     private final Location locationFrom;
     private final Location locationTo;
@@ -69,11 +71,17 @@ public class NavigateCommand extends Command {
         }
     }
 
-    private Location setLocationByIndex(Index index, boolean isTask) throws IllegalValueException {
+    private Location setLocationByIndex(Index index, boolean isTask) throws IllegalValueException, CommandException {
         if (isTask) {
-            return new Location(model.getFilteredTaskList().get(index.getZeroBased()).getTaskAddress().toString());
+            if (model.getFilteredTaskList().get(index.getZeroBased()).getTaskAddress().toString().equals("")) {
+                throw new CommandException(String.format(MESSAGE_TASK_HAS_NO_ADDRESS_ERROR, index.getOneBased()));
+            } else {
+                return new Location(model.getFilteredTaskList().get(index.getZeroBased()).getTaskAddress().toString());
+            }
         } else {
-            if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().isPrivate()) {
+            if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().toString().equals("")) {
+                throw new CommandException(String.format(MESSAGE_PERSON_HAS_NO_ADDRESS_ERROR, index.getOneBased()));
+            } else if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().isPrivate()) {
                 throw new IllegalArgumentException(MESSAGE_PRIVATE_PERSON_ADDRESS_ERROR);
             } else {
                 return new Location(model.getFilteredPersonList().get(index.getZeroBased())
