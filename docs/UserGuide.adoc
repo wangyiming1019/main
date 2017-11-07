@@ -256,6 +256,7 @@ Edits the priority of the 2nd task to be `5`.
 Removes the priority and deadline of the second task.
 // end::editprivacy[]
 
+// tag::edittag[]
 === Renaming existing tags : `edittag` (Since v1.2)
 
 You can use `edittag` to rename one existing tag. For example, you may wish to promote all existing "acquaintances" into "friends", or change all "CS2103" project mates to "CS2101" project mates instead. +
@@ -272,6 +273,7 @@ Examples:
 
 * `edittag friends enemies` +
 Changes the tag called `friends` to one called `enemies` instead. All existing contacts with a `friends` tag will now have an `enemies` tag instead.
+// end::edittag[]
 
 // tag::changeprivacy[]
 === Changing the Privacy of a person's details : `changeprivacy`(Since V1.3)
@@ -615,6 +617,7 @@ Opens Google Maps to provide directions on how to navigate from the address of t
 ****
 // end::navigate[]
 
+// tag::setstate[]
 === Mark task as complete : `setcomplete` (Since V1.5)
 
 Have you finally completed a task in the address book? You can use `setcomplete` to mark the specified task as complete. +
@@ -656,7 +659,9 @@ Sets the 2nd task in the address book as incomplete.
 * `find task update` +
 `setincomplete 1` +
 Sets the 1st task in the results of the `find task` command as incomplete.
+// end::setstate[]
 
+// tag::assignDismiss[]
 === Assign contacts to task : `assign` (Since V1.4)
 
 You can use `assign` to assign contacts to an ongoing task. You may wish to use `assign` when collaborating with others for projects, for example. +
@@ -704,6 +709,7 @@ Dismisses 1st, 4th and 5th contacts in the address book from the 2nd task.
 `find task update` +
 `dismiss 2 from/1` +
 Dismisses the 2nd person in the address book from the 1st task in the results of the `find task` command.
+// end::assignDismiss[]
 
 === Listing entered commands : `history`
 
