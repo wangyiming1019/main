@@ -124,7 +124,17 @@ public class ParserUtil {
         return avatar.isPresent() ? Optional.of(new Avatar(avatar.get())) : Optional.empty();
     }
 
-    //@@author
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Avatar> parseAvatar(Optional<String> avatar, boolean isPrivate)
+            throws IllegalValueException {
+        requireNonNull(avatar);
+        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), isPrivate)) : Optional.empty();
+    }
+
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
@@ -156,7 +166,6 @@ public class ParserUtil {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(new Remark(remark.get(), isPrivate)) : Optional.empty();
     }
-
     //@@author
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
