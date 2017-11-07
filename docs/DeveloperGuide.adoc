@@ -217,7 +217,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
-
+//tag:fontsize[]
 === Increase/Decrease/Reset Font Size
 
 On some screens, the text appear to be too small. The aim of the increase/decrease/reset font size feature is to allow
@@ -249,7 +249,8 @@ standardised the handling of font size change requests through events.
 **Alternative 2:** Implementing only UI functionality +
 **Pros:** Less tedious to implement and very intuitive for the user +
 **Cons:** Users who prefer typing commands will not have the option of editing their font sizes using the CLI
-
+//end::fontsize[]
+//tag::avatar[]
 === Setting Avatar on ViewPersonPanel
 
 The following function allows the setting of URL for the `ImageView` attribute within the `ViewPersonPanel` class:
@@ -284,9 +285,9 @@ the `ImageView` attribute.
 ----
 
 [NOTE]
-As of version 1.5rc, the avatar field supports only URLs sourced online. References to local files may not work at the moment.
-
-// tag::undoredo[]
+As of v1.5rc, the avatar field supports only URLs sourced online. References to local files may not work at the moment.
+//end::avatar[]
+//tag::undoredo[]
 === Undo/Redo mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -494,7 +495,7 @@ Task objects are stored in a similar manner to Person objects, and share the sam
 **Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa. +
 **Cons:** All existing save/load functions will require an additional method to handle Task storage. +
 // end::task[]
-
+// tag::sort[]
 === Sort Command
 
 The sort command is facilitated by the `sortBy` methods in UniquePersonList and UniqueTaskList. It supports
@@ -544,27 +545,23 @@ Future changes to the implementation will be easier as a consequence. +
 **Alternative 2:** Duplicate a temporary version of the list and sort it for viewing (i.e. the actual list is not sorted) +
 **Pros:** Old order of contact instances remains intact. +
 **Cons:** Will use more memory and may be less intuitive for developer to understand and in terms of user experience. Also, sorting will not persist in the system.
-
+// end::sort[]
+// tag::backup[]
 === Backup Command
 
 The backup command makes use of both the model manager and the storage manager. The `LogicManager` class was
 improved to support the accessing of storage value.
 
 The backup command arguments are parsed through the `BackupCommandParser`, which passes control over to the
-`BackupCommand` class. If there is a file path specified by the user, then the `execute()` command within the
-`BackupCommand` class will save the backup file to that path. If not file path is specified, the backup file will be
-saved to a default location.
+`BackupCommand` class. The `BackupCommand` class will save the backup file to a user specified path.
 
-Suppose a user enters a new command `backup`. The backup file will be saved to a default location:
+Suppose a user enters a new command `backup filepath`. The backup file will be saved to a default location.
+The sequence diagram that illustrates this process is shown below:
 
-image::BackupSequenceDefaultDiagram.png[width="800"]
+image::BackupSequenceDiagram.png[width="800]
 
-Suppose a user enters a new command `backup testBackup.xml`. The following sequence diagram
-demonstrates how this works:
-
-image::BackupSequenceCustomDiagram.png[width="800]
-
-Note that the execution of the sort methods result in the actual person list being sorted.
+[NOTE]
+that the execution of the sort methods result in the actual person list being sorted.
 
 ==== Design Considerations
 
@@ -575,17 +572,7 @@ Note that the execution of the sort methods result in the actual person list bei
 **Alternative 2:** Implement backup command via GUI +
 **Pros:** More intuitive for all users since the options are all graphical +
 **Cons:** Hinders productivity. Excessive number of clicks to accomplish an essential task.
-
----
-
-**Aspect:** Custom and/or Default file paths for backup file +
-**Alternative 1 (current choice):** Implemented both types of commands +
-**Pros:** User can choose either command option. Gives the user more choices +
-**Cons:** May seem confusing to the user at first +
-**Alternative 2:** Implement only the default option (save backup file to data directory of application) +
-**Pros:** Faster for the user to key in one word rather than a command with many words +
-**Cons:** Reduces choice for experienced users who may want to save to another location or use a different save name
-
+// end::backup[]
 // tag::privacy[]
 === Privacy of fields
 
