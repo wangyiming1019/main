@@ -9,6 +9,8 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -60,6 +62,8 @@ public class ViewPersonPanel extends UiPart<Region> {
     @FXML
     private Label remark;
     @FXML
+    private ImageView avatarImage;
+    @FXML
     private Label email;
     @FXML
     private FlowPane tags;
@@ -71,6 +75,7 @@ public class ViewPersonPanel extends UiPart<Region> {
         this.fontSizeMultipler = fontSizeMultiplier;
         initTags(person);
         initializeWithPerson(person);
+        initializeAvatar();
         updateAttributeSizes();
         registerAsAnEventHandler(this);
     }
@@ -95,6 +100,23 @@ public class ViewPersonPanel extends UiPart<Region> {
             initTags(person);
         });
     }
+    //author charlesgoh
+    /**
+     * Sets avatar to a filepath or the avatar placeholder by default
+     */
+    private void initializeAvatar() {
+        try {
+            String avatarPath = person.getAvatar().value;
+            if (!avatarPath.equals("")) {
+                logger.info("Initializing avatar to image at saved URL");
+                Image newImage = new Image(avatarPath);
+                avatarImage.setImage(newImage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //author
     //@@author wangyiming1019
     /**
      * Locate hashed colour for tag. If not found, new colour is assigned to tag
@@ -192,5 +214,6 @@ public class ViewPersonPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.person = event.getNewSelection().person;
         initializeWithPerson(person);
+        initializeAvatar();
     }
 }
