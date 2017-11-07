@@ -22,16 +22,22 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.TaskStateChangeEvent;
+import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.OpenRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SaveAsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.storage.Storage;
 import seedu.address.storage.XmlFileStorage;
 
@@ -62,6 +68,8 @@ public class MainWindow extends UiPart<Region> {
     private TaskListPanel taskListPanel;
     private Config config;
     private UserPrefs prefs;
+    private ViewTaskPanel viewTaskPanel;
+    private ViewPersonPanel viewPersonPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -210,6 +218,8 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        viewTaskPanel = new ViewTaskPanel();
+        viewPersonPanel = new ViewPersonPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -433,5 +443,39 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(viewTaskPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(viewPersonPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleTaskStateChangeEvent(TaskStateChangeEvent event) {
+        //TODO make sure this structure does not violate architecture
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        try {
+            model.updateTask(event.targetToReplace, event.newTask);
+        } catch (DuplicateTaskException dte) {
+            throw new AssertionError("The newly updated task cannot be the same as the previous one");
+        } catch (TaskNotFoundException tnfe) {
+            throw new AssertionError("The task cannot be missing");
+        }
     }
 }

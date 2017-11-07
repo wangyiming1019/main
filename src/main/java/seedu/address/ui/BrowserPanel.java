@@ -15,7 +15,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
 import seedu.address.commons.events.ui.BrowserPanelNavigateEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -118,11 +117,7 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
-    }
+
 
     //@@author jeffreygohkw
     @Subscribe
