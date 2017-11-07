@@ -928,6 +928,7 @@ _Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another_
 **Cons:** It is easier for stray Strings to pollute the information, and the Strings can be unintentionally modified.
 // end::navigate[]
 
+// tag::adddeletetag[]
 === Add/Delete Tag mechanism
 
 The add/delete tag mechanism is facilitated by `personArrayList`, which resides inside `LogicManager`. It supports add/delete
@@ -996,6 +997,9 @@ This violates the Single Responsibility Principle.
 **Alternative 2:** Modify the existing `add` and `delete` command +
 **Pros:** Users could use the same commands to achieve different purpose +
 **Cons:** Additional override the constructor for the existing command. It might not be easy for the beginner.
+// end::adddeletetag[]
+
+// tag::findtag[]
 
 === Find Tag mechanism
 
@@ -1064,6 +1068,7 @@ If the input index tags do not exist, the `FindTagCommand` will give a empty lis
 **Pros:** Easier for user. They do not have to memorize some many commands. +
 **Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
 and Separation of Concerns as FindCommand now needs to do two different things.
+// end::findtag[]
 
 === Logging
 
