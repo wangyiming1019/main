@@ -33,28 +33,43 @@ public class ChangePrivacyCommandTest {
         assertFalse(pps.isAnyFieldNonNull());
 
         PersonPrivacySettings ppsByBuilder = new PersonPrivacySettingsBuilder().setNamePrivate("true")
-            .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("true").build();
-
+            .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("true")
+            .setRemarkPrivate("false").build();
         pps.setNameIsPrivate(true);
         pps.setPhoneIsPrivate(false);
         pps.setEmailIsPrivate(true);
         pps.setAddressIsPrivate(true);
+        pps.setRemarkIsPrivate(false);
 
         assertEquals(ppsByBuilder.getAddressIsPrivate(), pps.getAddressIsPrivate());
         assertEquals(ppsByBuilder.getEmailIsPrivate(), pps.getEmailIsPrivate());
         assertEquals(ppsByBuilder.getNameIsPrivate(), pps.getNameIsPrivate());
         assertEquals(ppsByBuilder.getPhoneIsPrivate(), pps.getPhoneIsPrivate());
+        assertEquals(ppsByBuilder.getRemarkIsPrivate(), pps.getRemarkIsPrivate());
         assertEquals(ppsByBuilder.isAnyFieldNonNull(), pps.isAnyFieldNonNull());
+
+        PersonPrivacySettings ppsCopy = new PersonPrivacySettings(pps);
+
+        assertEquals(ppsCopy.getAddressIsPrivate(), pps.getAddressIsPrivate());
+        assertEquals(ppsCopy.getEmailIsPrivate(), pps.getEmailIsPrivate());
+        assertEquals(ppsCopy.getNameIsPrivate(), pps.getNameIsPrivate());
+        assertEquals(ppsCopy.getPhoneIsPrivate(), pps.getPhoneIsPrivate());
+        assertEquals(ppsCopy.getRemarkIsPrivate(), pps.getRemarkIsPrivate());
     }
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Person newPerson = new PersonBuilder().withEmail("alice@example.com").build();
+        newPerson.getName().setPrivate(true);
+        newPerson.getPhone().setPrivate(true);
         newPerson.getEmail().setPrivate(true);
+        newPerson.getAddress().setPrivate(true);
         newPerson.setRemark(model.getFilteredPersonList().get(0).getRemark());
+        newPerson.getRemark().setPrivate(true);
 
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("false")
-                .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("false").build();
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("true")
+                .setPhonePrivate("true").setEmailPrivate("true").setAddressPrivate("true").setRemarkPrivate("true")
+                .build();
         ChangePrivacyCommand changePrivacyCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
         changePrivacyCommand.model = model;
 
@@ -67,9 +82,14 @@ public class ChangePrivacyCommandTest {
         assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
 
         PersonPrivacySettings ppsPublic = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("false")
-                .setPhonePrivate("false").setEmailPrivate("false").setAddressPrivate("false").build();
+                .setPhonePrivate("false").setEmailPrivate("false").setAddressPrivate("false").setRemarkPrivate("false")
+                .build();
 
+        newPerson.getName().setPrivate(false);
+        newPerson.getPhone().setPrivate(false);
         newPerson.getEmail().setPrivate(false);
+        newPerson.getAddress().setPrivate(false);
+        newPerson.getRemark().setPrivate(false);
 
         ChangePrivacyCommand changePrivacyCommandPublic = new ChangePrivacyCommand(INDEX_FIRST_PERSON, ppsPublic);
         changePrivacyCommandPublic.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -282,7 +302,7 @@ public class LocateCommandTest {
     }
 
     /**
-     * Executes a {@code LocateCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * Executes a {@code LocateCommand} with the given {@code index}, and checks that {@code BrowserPanelLocateEvent}
      * is raised with the correct index.
      */
     private void assertExecutionSuccess(Index index) {
@@ -323,6 +343,142 @@ public class LocateCommandTest {
         LocateCommand locateCommand = new LocateCommand(index);
         locateCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return locateCommand;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\NavigateCommandTest.java
+``` java
+import static junit.framework.TestCase.assertEquals;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.BrowserPanelNavigateEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Location;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code NavigateCommand}.
+ */
+public class NavigateCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_fromAddress_success() throws IllegalValueException {
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+        NavigateCommand navi = prepareCommand(from, to, null, null, false, false);
+        assertExecutionSuccess(navi);
+    }
+
+    @Test
+    public void execute_fromPersons_success() throws IllegalValueException {
+        NavigateCommand navi = prepareCommand(null, null,
+                INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, false, false);
+
+        assertExecutionSuccess(navi);
+    }
+
+    @Test
+    public void execute_fromTasks_success() throws IllegalValueException {
+        NavigateCommand navi = prepareCommand(null, null,
+                INDEX_THIRD_TASK, INDEX_FIRST_TASK, true, true);
+
+        assertExecutionSuccess(navi);
+    }
+
+
+    @Test
+    public void execute_invalidArgs_failure() throws IllegalValueException {
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(NavigateCommand.MESSAGE_MULTIPLE_FROM_ERROR);
+        NavigateCommand navi = prepareCommand(from, to,
+                INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, false, false);
+
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(NavigateCommand.MESSAGE_MULTIPLE_TO_ERROR);
+        NavigateCommand naviOne = prepareCommand(from, to,
+                null, INDEX_SECOND_PERSON, false, false);
+    }
+
+    /**
+     * Executes the input (@code NavigateCommand) and checks that (@code BrowserPanelNavigateEvent) is raised with
+     * the correct locations
+     */
+    private void assertExecutionSuccess(NavigateCommand navi) throws IllegalValueException {
+        Location from;
+        Location to;
+        try {
+
+            if (navi.getLocationFrom() != null) {
+                from = navi.getLocationFrom();
+            } else if (navi.isFromIsTask()) {
+                from = new Location(model.getFilteredTaskList().get(navi.getFromIndex().getZeroBased())
+                        .getTaskAddress().toString());
+            } else {
+                from = new Location(model.getFilteredPersonList().get(navi.getFromIndex().getZeroBased())
+                        .getAddress().toString());
+            }
+
+            if (navi.getLocationTo() != null) {
+                to = navi.getLocationTo();
+            } else if (navi.isToIsTask()) {
+                to = new Location(model.getFilteredTaskList().get(navi.getToIndex().getZeroBased())
+                        .getTaskAddress().toString());
+            } else {
+                to = new Location(model.getFilteredPersonList().get(navi.getToIndex().getZeroBased())
+                        .getAddress().toString());
+            }
+            CommandResult commandResult = navi.execute();
+            assertEquals(String.format(NavigateCommand.MESSAGE_NAVIGATE_SUCCESS,
+                    from, to),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        BrowserPanelNavigateEvent lastEvent =
+                (BrowserPanelNavigateEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(from, lastEvent.getFromLocation());
+        assertEquals(to, lastEvent.getToLocation());
+    }
+    /**
+     * Returns a {@code NavigateCommand} based on input parameters.
+     */
+    private NavigateCommand prepareCommand(Location locationFrom, Location locationTo, Index fromIndex, Index toIndex,
+                                           boolean fromIsTask, boolean toIsTask) throws IllegalValueException {
+        NavigateCommand navi = new NavigateCommand(locationFrom, locationTo, fromIndex, toIndex, fromIsTask, toIsTask);
+        navi.setData(model, new CommandHistory(), new UndoRedoStack());
+        return navi;
     }
 }
 ```
@@ -375,6 +531,28 @@ public class LocateCommandTest {
         LocateCommand command = (LocateCommand) parser.parseCommand(
                 LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandNavigate() throws Exception {
+        NavigateCommand command = (NavigateCommand) parser.parseCommand(
+                NavigateCommand.COMMAND_WORD + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+        assertEquals(new NavigateCommand(from, to, null, null, false, false),
+                command);
+    }
+
+    @Test
+    public void parseCommandAliasNavigate() throws Exception {
+        NavigateCommand command = (NavigateCommand) parser.parseCommand(
+                NavigateCommand.COMMAND_ALIAS + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+        assertEquals(new NavigateCommand(from, to, null, null, false, false),
+                command);
     }
 
 ```
@@ -604,7 +782,10 @@ public class LocateCommandParserTest {
 ``` java
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_INPUT;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_FIELD_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_LIST_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_ORDER_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_USAGE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
@@ -618,88 +799,61 @@ public class SortCommandParserTest {
 
     @Test
     public void no_arguments_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
     }
 
+    //author charlesgoh
     @Test
     public void parse_wrongArguments_failure() {
+        // no list specified
+        assertParseFailure(parser,  ACCEPTED_FIELD_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
         // no field specified
-        assertParseFailure(parser, "asc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "desc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
         // no order specified
-        assertParseFailure(parser, "name",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "phone",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "email",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "address",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
-        // no field or order
+        // list is person but field is for tasks
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(5)
+                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // list is task but field is for person
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(1) + " " + ACCEPTED_FIELD_PARAMETERS.get(0)
+                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // Incorrect test
         assertParseFailure(parser, "random text",
-                String.format(MESSAGE_INVALID_INPUT, SortCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
     }
-
 
     @Test
     public void parse_validArguments_success() throws ParseException {
         SortCommand expectedCommand;
         SortCommand actualCommand;
 
-        expectedCommand = new SortCommand("name", "asc");
-        actualCommand = parser.parse("name asc");
+        // For person sorts
+        String list = ACCEPTED_LIST_PARAMETERS.get(0);
+        String field = ACCEPTED_FIELD_PARAMETERS.get(0);
+        String order = ACCEPTED_ORDER_PARAMETERS.get(0);
 
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
+        expectedCommand = new SortCommand(list, field, order);
+        actualCommand = parser.parse(list + " " + field + " " + order);
+        assertEquals(true, expectedCommand.sameCommandAs(actualCommand));
 
-        expectedCommand = new SortCommand("name", "desc");
-        actualCommand = parser.parse("name desc");
+        // For task sorts
+        list = ACCEPTED_LIST_PARAMETERS.get(1);
+        field = ACCEPTED_FIELD_PARAMETERS.get(5);
+        order = ACCEPTED_ORDER_PARAMETERS.get(1);
 
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("phone", "asc");
-        actualCommand = parser.parse("phone asc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("phone", "desc");
-        actualCommand = parser.parse("phone desc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("email", "asc");
-        actualCommand = parser.parse("email asc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("email", "desc");
-        actualCommand = parser.parse("email desc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("address", "asc");
-        actualCommand = parser.parse("address asc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
-
-        expectedCommand = new SortCommand("address", "desc");
-        actualCommand = parser.parse("address desc");
-
-        assertEquals(expectedCommand.getField(), actualCommand.getField());
-        assertEquals(expectedCommand.getOrder(), actualCommand.getOrder());
+        expectedCommand = new SortCommand(list, field, order);
+        actualCommand = parser.parse(list + " " + field + " " + order);
+        assertEquals(true, expectedCommand.sameCommandAs(actualCommand));
     }
-}
 ```
 ###### \java\seedu\address\model\person\AddressTest.java
 ``` java
@@ -769,6 +923,7 @@ public class PersonPrivacySettingsBuilder {
         pps.setPhoneIsPrivate(person.getPhone().isPrivate());
         pps.setEmailIsPrivate(person.getEmail().isPrivate());
         pps.setAddressIsPrivate(person.getAddress().isPrivate());
+        pps.setRemarkIsPrivate(person.getRemark().isPrivate());
     }
 
     /**
@@ -827,6 +982,20 @@ public class PersonPrivacySettingsBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code remarkIsPrivate} of the {@code PersonPrivacySettings} that we are building.
+     */
+    public PersonPrivacySettingsBuilder setRemarkPrivate(String remark) {
+        if (remark.equals("Optional[true]") || remark.equals("true")) {
+            pps.setRemarkIsPrivate(true);
+        } else if (remark.equals("Optional[false]") || remark.equals("false")) {
+            pps.setRemarkIsPrivate(false);
+        } else {
+            throw new IllegalArgumentException("Privacy of remark should be true or false");
+        }
+        return this;
+    }
+
     public PersonPrivacySettings build() {
         return pps;
     }
@@ -856,6 +1025,20 @@ public class PersonPrivacySettingsBuilder {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedMapUrl, browserPanelHandle.getLoadedUrl());
+
+        // google maps page of a person
+        postNow(panelNavigateEventStub);
+        URL expectedDirUrl = new URL(GOOGLE_MAPS_DIRECTIONS_PREFIX
+                + "&origin="
+                + panelNavigateEventStub.getFromLocation().toString().replaceAll("#(\\w+)\\s*", "")
+                .replaceAll(" ", "+").replaceAll("-(\\w+)\\s*", "")
+                + "&destination="
+                + panelNavigateEventStub.getToLocation().toString().replaceAll("#(\\w+)\\s*", "")
+                .replaceAll(" ", "+").replaceAll("-(\\w+)\\s*", "")
+                + GOOGLE_MAPS_DIRECTIONS_SUFFIX);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedDirUrl, browserPanelHandle.getLoadedUrl());
     }
 }
 ```
