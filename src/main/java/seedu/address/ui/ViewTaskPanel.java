@@ -16,7 +16,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 
 /**
- * The Browser Panel of the App.
+ * Contains details of a Task.
  */
 public class ViewTaskPanel extends UiPart<Region> {
 
