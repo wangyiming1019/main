@@ -378,6 +378,81 @@ public class FindTagCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\TagListCommand.java
+``` java
+import java.util.ArrayList;
+import java.util.Collections;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
+
+/**
+ * List all tags in the address book to the user
+ */
+public class TagListCommand extends Command {
+    public static final String COMMAND_WORD = "showtag";
+    public static final String COMMAND_ALIAS = "stag";
+
+    public static final String MESSAGE_FAILURE = "There is no tag!";
+    public static final String MESSAGE_SUCCESS = "All the tags are here: ";
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        return new CommandResult(displayTags());
+    }
+
+    /**
+     * display all the tags to user
+     * @return String displayTags
+     */
+    private String displayTags() {
+
+        String displayTags;
+        ArrayList<Tag> tagList = getAllTagsInAddressBook();
+
+        if (tagList.isEmpty()) {
+            displayTags = MESSAGE_FAILURE;
+        } else {
+            displayTags = MESSAGE_SUCCESS + convertTagToString(tagList);
+        }
+        return displayTags;
+    }
+
+    /**
+     * get all the tags in the address book without duplication
+     * @return allTagList
+     */
+    private ArrayList<Tag> getAllTagsInAddressBook() {
+        ArrayList<Tag> allTagList = new ArrayList<Tag>();
+        for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
+            for (Tag tag : p.getTags()) {
+                if (!allTagList.contains(tag)) {
+                    allTagList.add(tag);
+                }
+            }
+        }
+        return allTagList;
+    }
+
+    /**
+     * convert a list of tags to a String
+     * @return String tags
+     */
+    private String convertTagToString(ArrayList<Tag> tagList) {
+        ArrayList<String> tagNameList = new ArrayList<String>();
+        for (Tag tag : tagList) {
+            tagNameList.add(tag.getTagName());
+        }
+        Collections.sort(tagNameList);
+        StringBuilder tagNameString = new StringBuilder();
+        for (String tagName : tagNameList) {
+            tagNameString.append("<").append(tagName).append("> ");
+        }
+        return tagNameString.toString().trim();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\UnfavouriteCommand.java
 ``` java
 import java.util.List;
@@ -767,7 +842,6 @@ public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
     @Override
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.unfavouritePerson(target);
-        updateFilteredPersonList(new NameContainsFavouritePredicate());
         indicateAddressBookChanged();
     }
 
@@ -857,10 +931,10 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
 
     private void updateWantedTagUnwantedTag(List<String> wantedTag, List<String> unwantedTag) {
         for (String everyTag : tags) {
-            if (!everyTag.startsWith("/not")) {
+            if (!everyTag.startsWith("/")) {
                 wantedTag.add(everyTag);
             } else {
-                unwantedTag.add(everyTag.substring(4));
+                unwantedTag.add(everyTag.substring(1));
             }
         }
 
