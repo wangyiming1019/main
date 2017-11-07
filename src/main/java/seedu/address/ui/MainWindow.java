@@ -69,6 +69,7 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
     private ViewTaskPanel viewTaskPanel;
+    private ViewPersonPanel viewPersonPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -218,6 +219,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         viewTaskPanel = new ViewTaskPanel();
+        viewPersonPanel = new ViewPersonPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -454,7 +456,7 @@ public class MainWindow extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         browserPlaceholder.getChildren().clear();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPlaceholder.getChildren().add(viewPersonPanel.getRoot());
     }
 
     @Subscribe
