@@ -104,6 +104,7 @@ image::HelpButtonUI.png[width="540"]
 Format: `help` +
 Alternatively,  you may opt to use the keyboard shortcut kbd:[F1].
 
+// tag::addprivacy[]
 === Adding a person: `add`
 
 You can use the `add` command to add new people to your address book
@@ -143,6 +144,7 @@ option while typing in your command:
 
 * Do note that you do not have to set all fields as private, and you can choose which specific fields you want to set as private.
 ****
+// end::addprivacy[]
 
 === Adding a task: `add task`
 
@@ -209,6 +211,7 @@ Format: `list` +
 
 Instead of typing out `list` every time, you can alternatively use `l` to shorten the command.
 
+// tag::editprivacy[]
 === Editing a person : `edit`
 
 You can use the `edit` command to quickly fix mistakes in your entries, or add/remove details in your contacts. You may wish to edit your contacts when they change their phone numbers, for example. +
@@ -250,6 +253,7 @@ Examples:
 Edits the priority of the 2nd task to be `5`.
 * `edit task 2 p/ t/` +
 Removes the priority and deadline of the second task.
+// tag::editprivacy[]
 
 === Renaming existing tags : `edittag` (Since v1.2)
 
@@ -268,6 +272,7 @@ Examples:
 * `edittag friends enemies` +
 Changes the tag called `friends` to one called `enemies` instead. All existing contacts with a `friends` tag will now have an `enemies` tag instead.
 
+// tag::changeprivacy[]
 === Changing the Privacy of a person's details : `changeprivacy`(Since V1.3)
 
 You can use the `changeprivacy` command to set the privacy settings for each field of an existing `Person` in the address book, which allows you to choose specifically what information will be displayed. +
@@ -290,7 +295,7 @@ Examples:
 Sets the phone number of the 1st person to be public and their email address to be private. The 1st person's phone number will be displayed, if available, while their email address will be hidden in the UI.
 * `cp 2 a/false n/true e/false` +
 Sets the address and email of the 2nd person to be public and their name to be private. The 2nd person's address and email will be displayed, if available, while their name will be hidden in the UI.
-
+// end::changeprivacy[]
 
 === Favouriting persons : `favourite` (since V1.3)
 
@@ -541,6 +546,7 @@ Selects the 2nd task in the address book.
 `select task 1` +
 Selects the 1st task in the results of the `find task` command.
 
+// tag::locate[]
 === Locating a person's address : `locate` (Since V1.4)
 
 If you ever need to visit one of your contacts, you can use `locate` to choose a contact, and search for their address online using Google Maps. +
@@ -564,7 +570,9 @@ Locates the address of the 1st person in the results of the `find` command on Go
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...` and must be within the range of people in the most recent listing.
 ****
+// end::locate[]
 
+// tag::navigate[]
 === Navigating from one address to another : `navigate` (Since V1.5)
 
 Although `locate` shows you where a person's address is, it does not tell you how to get there. The `navigate` command will provide directions, with the help of Google Maps, on how to get from one address to another. +
@@ -591,6 +599,7 @@ Opens Google Maps to provide directions on how to navigate from the address of t
 ** If you input any less or any more than 1 of the 3 prefixes from each group, the command will fail.
 ** There is no need to match the type of prefixes. You can navigate with any combination of prefixes as long as there is only one prefix to indicate the address to navigate from and only one prefix to indicate the address to navigate to.
 ****
+// end::navigate[]
 
 === Mark task as complete : `setcomplete` (Since V1.5)
 
@@ -781,6 +790,7 @@ Format: `exit`
 
 Alternatively, you may opt to use the keyboard shortcut kbd:[ALT]+kbd:[F4].
 
+// tag::opensaveas[]
 === Saving the data
 
 Address book data is saved in the hard disk automatically after any command that changes the data. +
@@ -790,6 +800,7 @@ If you want to change the location of the save file, click on `File -> Save As` 
 
 If you want to open a different save file, click on `File -> Open` or use the keyboard shortcut kbd:[CTRL]+kbd:[O] and select the new save file to use from the pop-up window.
 
+// end::opensaveas[]
 === Using the browser
 
 If you click on a box containing a contact, an internet browser on the right side of the window.
