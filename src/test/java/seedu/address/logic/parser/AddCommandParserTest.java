@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.AVATAR_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.AVATAR_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_PENCIL;
@@ -34,7 +33,6 @@ import static seedu.address.logic.commands.CommandTestUtil.TASK_NAME_DESC_PENCIL
 import static seedu.address.logic.commands.CommandTestUtil.TASK_SEPARATOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AVATAR_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_AVATAR_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PENCIL;
