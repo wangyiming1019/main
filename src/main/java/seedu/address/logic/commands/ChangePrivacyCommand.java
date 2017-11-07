@@ -110,36 +110,16 @@ public class ChangePrivacyCommand extends UndoableCommand {
             throws IllegalValueException {
         assert person != null;
 
-        Name n = createNameWithPrivacy(person, pps);
-        Phone p = createPhoneWithPrivacy(person, pps);
-        Email e = createEmailWithPrivacy(person, pps);
-        Address a = createAddressWithPrivacy(person, pps);
-        Remark r = createRemarkWithPrivacy(person, pps);
-        Avatar v = createAvatarWithPrivacy(person, pps);
-        Boolean f = person.getFavourite();
-        Set<Tag> t = person.getTags();
+        Name name = createNameWithPrivacy(person, pps);
+        Phone phone = createPhoneWithPrivacy(person, pps);
+        Email email = createEmailWithPrivacy(person, pps);
+        Address address = createAddressWithPrivacy(person, pps);
+        Remark remark = createRemarkWithPrivacy(person, pps);
+        Avatar avatar = createAvatarWithPrivacy(person, pps);
+        Boolean favourite = person.getFavourite();
+        Set<Tag> tag = person.getTags();
 
-        if (pps.getPhoneIsPrivate() != null) {
-            p.setPrivate(pps.getPhoneIsPrivate());
-        }
-
-        if (pps.getEmailIsPrivate() != null) {
-            e.setPrivate(pps.getEmailIsPrivate());
-        }
-
-        if (pps.getAddressIsPrivate() != null) {
-            a.setPrivate(pps.getAddressIsPrivate());
-        }
-
-        if (pps.getRemarkIsPrivate() != null) {
-            r.setPrivate(pps.getRemarkIsPrivate());
-        }
-
-        if (pps.getAvatarIsPrivate() != null) {
-            v.setPrivate(pps.getAvatarIsPrivate());
-        }
-
-        return new Person(n, p, e, a, f, r, v, t);
+        return new Person(name, phone, email, address, favourite, remark, avatar, tag);
     }
 
     /**
