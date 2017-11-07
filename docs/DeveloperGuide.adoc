@@ -770,6 +770,8 @@ _Figure 3.7.1 : Sequence Diagram for Locating a Person's Address_
 **Pros:** Expands the utility of `SelectCommand` beyond performing a Google search on their name. +
 **Cons:** Will require significant modification of existing code, and may make it more confusing for users.
 
+// tag::adddeletetag[]
+
 === Add/Delete Tag mechanism
 
 The add/delete tag mechanism is facilitated by `personArrayList`, which resides inside `LogicManager`. It supports add/delete
@@ -838,6 +840,9 @@ This violates the Single Responsibility Principle.
 **Alternative 2:** Modify the existing `add` and `delete` command +
 **Pros:** Users could use the same commands to achieve different purpose +
 **Cons:** Additional override the constructor for the existing command. It might not be easy for the beginner.
+// end::adddeletetag[]
+
+// tag::findtag[]
 
 === Find Tag mechanism
 
@@ -906,6 +911,7 @@ If the input index tags do not exist, the `FindTagCommand` will give a empty lis
 **Pros:** Easier for user. They do not have to memorize some many commands. +
 **Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
 and Separation of Concerns as FindCommand now needs to do two different things.
+// end::findtag[]
 
 === Logging
 
