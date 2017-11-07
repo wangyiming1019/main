@@ -876,7 +876,7 @@ e.g. `delete 3`
 e.g. `delete task 4`
 * *Delete tag* : `deletetag INDEX t/[TAG]` +
 e.g. `deletetag 1 2 t/friends`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [v/AVATAR] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit task* : `edit task INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
 e.g. `edit task 2 p/veryhigh`
