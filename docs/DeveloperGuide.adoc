@@ -552,6 +552,7 @@ Note that the execution of the sort methods result in the actual person list bei
 **Pros:** Faster for the user to key in one word rather than a command with many words +
 **Cons:** Reduces choice for experienced users who may want to save to another location or use a different save name
 
+// tag::privacy[]
 === Privacy of fields
 
 The `Name`, `Phone`, `Email`, `Address` and `Remark` of a `Person` contains a boolean `isPrivate`, which will determine if the field belonging to that person is private or not.
@@ -704,7 +705,9 @@ This allows `isAnyFieldNonNull` to check if the user has input any field at all.
 **Alternative 2:** Enhance the functionality of EditCommand. +
 **Pros:** Can make use of existing code to aid the implementation. +
 **Cons:** Increases the complexity of EditCommand for both users and developers. More ambiguous as to how editing a private field will affect the data.
+// end::privacy[]
 
+// tag::locate[]
 === Locating a Person on Google Maps
 
 Upon calling the `locate` command, `LocateCommandParser` will parse the input string into an `Index`, and create a new `LocateCommand`. Should the arguments be a non-integer, a `ParseException` will be thrown. +
@@ -775,8 +778,9 @@ _Figure 3.8.1 : Sequence Diagram for Locating a Person's Address_
 **Alternative 2:** Add the functionality into `SelectCommand`. +
 **Pros:** Expands the utility of `SelectCommand` beyond performing a Google search on their name. +
 **Cons:** Will require significant modification of existing code, and may make it more confusing for users.
+// end::locate[]
 
-
+// tag::navigate[]
 === Navigating from one address to another using Google Maps
 
 When the `navigate` command is entered into the command line, `NavigateCommandParse` will first reset its internal `from`, `to`, `fromIndex`, `toIndex` to null. It will then check for the input prefixes and ensure that only one of the prefixes from the group `fp/`, `ft/`, and `fa/`, which we will subsequently call the `from` prefixes are present. It then does the same with the prefixes from the group `tp/`, `tt/` and `ta/`, which we will call the `to` prefixes. +
@@ -902,7 +906,7 @@ private void loadDirectionsPage(String fromLocation, String toLocation) {
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::NavigateSequenceDiagram.png[width="800"]
-_Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another
+_Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another_
 
 
 ==== Design Considerations
@@ -922,6 +926,7 @@ _Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another
 **Alternative 2:** Simply pass on a String containing the address from class to class +
 **Pros:** Easy to read and transfer information, lower overhead +
 **Cons:** It is easier for stray Strings to pollute the information, and the Strings can be unintentionally modified.
+// end::navigate[]
 
 === Add/Delete Tag mechanism
 

@@ -253,7 +253,7 @@ Examples:
 Edits the priority of the 2nd task to be `5`.
 * `edit task 2 p/ t/` +
 Removes the priority and deadline of the second task.
-// tag::editprivacy[]
+// end::editprivacy[]
 
 === Renaming existing tags : `edittag` (Since v1.2)
 
