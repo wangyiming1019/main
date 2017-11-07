@@ -225,36 +225,30 @@ users to customize the application's font size quickly on the go.
 
 image::FontSizeUI.png[width="540"]
 
-There are two methods of calling changes in font size. The first way is through the UI. The Class Diagram for this
-procedure is shown below:
+There are two methods of calling changes in font size:
 
-Image Placeholder
+1. `onAction` handlers are used to handle UI font size buttons. These handlers will post
+new events via `ComponentManager`.
 
-The other method of calling changes in font size is through a CLI command. When the relevant command is entered,
-the Command class calls MainWindow. The rest of the process flow is identical to that of the UI triggered font size
-command.
+2. CLI commands also post new events to handle font size changes, when the relevant command is entered (e.g. `fontsize increase`).
 
-Image Placeholder
+image::FontSizeChangeSequenceDiagram.png[width="700"]
+From the sequence diagram above, we can observe that the font size changes are handled by subscriber functions in PersonListPanel
+and TaskListPanel.
+
+[NOTE]
+The initial implementation required access to the model from the UI. This implementation was replaced with one that
+standardised the handling of font size change requests through events.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of Task-related commands +
-**Alternative 1 (current choice):** Use polymorphism to allow existing commands to implement the new commands +
-**Pros:** Under this scheme, any command can be extended to allow addition of new commands of any type, without affecting the architecture significantly +
-**Cons:** SRP may be violated as each Command class may now need to handle 2 different types of objects. +
-**Alternative 2:** Create new classes for all new commands +
-**Pros:** Simpler to implement. +
-**Cons:** Code duplication occurs as the commands for Person and Tasks objects share the same structure.
-
----
-
-**Aspect:** Storage of Task objects +
-**Alternative 1 (current choice):** Store Tasks objects in a separate XML file +
-**Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa.
-**Cons:** All existing save/load functions will require an additional method to handle Task storage.
-**Alternative 2:** Store Task objects together in the default XML storage file +
-**Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
-**Cons** Any changes to the Person or Task
+**Aspect:** Use either UI or CLI based implementations +
+**Alternative 1 (current choice):** Implementing both UI and CLI functionality +
+**Pros:** More options for the user. The was also not much increase in complexity when implementing the CLI version  +
+**Cons:** This implementation required passing information between classes, which may cause unnecessary coupling. +
+**Alternative 2:** Implementing only UI functionality +
+**Pros:** Less tedious to implement and very intuitive for the user +
+**Cons:** Users who prefer typing commands will not have the option of editing their font sizes using the CLI
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -469,31 +463,39 @@ Tasks objects are stored in the same level of hierarchy as Person objects, and d
 
 === Sort Command
 
-The sort command is facilitated by the `sortBy` method in UniquePersonList. It supports
+The sort command is facilitated by the `sortBy` methods in UniquePersonList and UniqueTaskList. It supports
 sort by ascending or by descending order in any field.
 
 The sort enhancement utilises the Java Collections Sort API by passing it a custom Comparator.
 
 The sort command is parsed through `SortCommandParser`, which passes control over to the `SortCommand`
-class. The actual sorting happens via the UniquePersonList class.
+class. The actual sorting happens via the UniquePersonList class or the UniqueTaskList class.
 
-The UML Class diagram for this sort command implementation is shown below:
+The UML Class diagram for sort commands that trigger sorting in person listings is shown below:
 
-image::SortCommandDiagram.png[width="800"]
+image::SortCommandPersonDiagram.png[width="800"]
+
+Likewise, the UML Class diagram for sort commands that trigger sorting in person listings is shown below:
+
+image::SortCommandTaskDiagram.png[width="800"]
+
+We can deduce from the UML diagrams diagrams above that the only difference between the implementation
+of the sorting for persons and tasks lies in the location where the sorting is actually executed.
 
 Suppose a user enters a new command `sort name desc`. The following sequence diagram
 demonstrates how the sort command works.
 
 image::SortSequenceDiagram.png[width="800]
 
-Note that the execution of the sort methods result in the actual person list being sorted. The resulting list
+Note that the execution of the sort methods result in the actual person or task list being sorted. The resulting list
 is not returned, but will be reflected in the application's storage and graphical user interface.
 
 ==== Design Considerations
 
 **Aspect:** Implementation of `sort Command` +
-**Alternative 1 (current choice):** Implement sorting functionality in `UniquePersonList` class. +
-**Pros:** Delegates the concern of sorting to the class that is responsible for the core of most operations done to the person lists. Future changes to the implementation will be easier as a consequence. +
+**Alternative 1 (current choice):** Implement sorting functionality in `UniquePersonList` and `UniqueTaskList` class. +
+**Pros:** Delegates the concern of sorting to the class that is responsible for the core of most operations done to the lists.
+Future changes to the implementation will be easier as a consequence. +
 **Cons:** Hard for new developers to understand the flow of control passed between classes at first. +
 **Alternative 2:** Implement the sorting functionality within other classes like `AddressBook` or `SortCommand`. +
 **Pros:** May be more intuitive for new developers and it is easier to trace function calls between lesser classes involved. +
@@ -503,7 +505,7 @@ is not returned, but will be reflected in the application's storage and graphica
 
 **Aspect:** Temporary Sort Implementation vs. Persistent Sort Implementation +
 **Alternative 1 (current choice):** Saves the entire address book after sorting. +
-**Pros:** More intuitive for both user and developer and reduced complexity in implementation. +
+**Pros:** More intuitive and reduces complexity in implementation. +
 **Cons:** Old order of contact instances in the address book will be lost +
 **Alternative 2:** Duplicate a temporary version of the list and sort it for viewing (i.e. the actual list is not sorted) +
 **Pros:** Old order of contact instances remains intact. +

@@ -14,10 +14,8 @@ endif::[]
 
 By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT`
 
-== Overview
-
-Address++ is an address book application that can store contacts, as well as maintain a list of ongoing tasks. You can use the various commands in Address++ to maintain, create, and delete your contacts, or tasks. +
-Address++ is targeted at NUS students, such as those working on projects or assignments.
+Address++ is an application that keeps track of your contacts and your daily todos for you. It is targeted
+at students who work on projects or assignments frequently, but it can also be used for other similar purposes.
 
 == About
 
@@ -64,10 +62,11 @@ adds a contact named `John Doe` to Address++.
 
 === Changing Font Sizes
 
-Are the font sizes too small or too large?
+Are the font sizes too small or too big? Address++ allows you to change your font sizes at will. Here are some of the
+ways of triggering a change in font sizes:
 ****
 
-You can change the font sizes by clicking on the Font Size button and selecting any of the following options:
+**Option 1: Menu Font Size Buttons and Keyboard Shortcuts**
 
 image::FontSizeUI.png[width="540"]
 
@@ -76,52 +75,104 @@ image::FontSizeUI.png[width="540"]
 * *Reset Size:* kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
 ****
 
-Keyboard shortcuts have been provided for your convenience.
+****
+**Option 2: Change Font Size Buttons (Top Right Hand Corder)**
 
-[NOTE]
-====
-There is a limit to how much your font sizes can increase or decrease. Also, font sizes will increase for the
-contacts entries and the todo list's entries.
-====
+image::FontSizePlusMinusButtons.png[width="540"]
+
+* Increase Size: kbd:[+]
+* Decrease Size: kbd:[-]
+* Reset Size: kbd:[R]
+****
+
+****
+**Option 3: Handtype command into CLI**:
+
+image::FontSizeCLI.png[width="540"]
+
+* Increase Size Command: `fontsize increase`
+* Decrease Size Command: `fontsize decrease`
+* Reset Size Command: `fontsize reset`
+****
 
 === Viewing help : `help`
+If you have trouble figuring out how to do something, or would like to find out about more features, you can click
+on the **help** menu button. You can also enter the command `help` to access the help window.
+
+image::HelpButtonUI.png[width="540"]
 
 Format: `help` +
 Alternatively,  you may opt to use the keyboard shortcut kbd:[F1].
 
-=== Adding a person/task: `add`
+=== Adding a person: `add`
 
-You can use the `add` command to add new people to your address book, be it a newly met project member, or your friend who is taking the same module as you. +
-`add` can be replaced by `a` for faster input. +
+You can use the `add` command to add new people to your address book
+
+[NOTE]
+`add` can be replaced by `a` for faster input.
+
 Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] b/[BIRTHDAY] r/[REMARK] f/[FACULTY] c/[GOOGLE CALENDAR URL] [t/TAG]...` +
 
 ****
+**Things To Note** +
 * A person can have any number of tags (including 0) +
 * The `EMAIL` should be in the format address@email.domain +
 * You can set a person's `Name`, `Phone`, `Email`, `Address` or `Remark` to be private by placing a `p` in front of the prefix. +
 ****
 
-Examples:
+**Example Scenarios**:
+****
+**Example Scenario 1** +
+Suppose you wanted to add your new friend John Doe. You could type the following command to add his details:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995 r/Likes panda bears`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com b/29-02-1996 a/Newgate Prison p/1234567 t/criminal r/Stares at the wall`
-* `add n/Ima Hidearu b/ a/ e/ p/ r/ t/secretive`
-* `add n/Luke Groundswimmer p/ a/ e/ c/`
-* `add pn/Neville Shorttop pp/46492787 pe/nevilleS@gmail.com pa/Gryphon Gate c/`
+`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995 r/Likes panda bears`
+****
+****
+**Example Scenario 2** +
+Now suppose you have another friend named Ima Hidearu, who does not provide you with all the contact information that
+you need. You can choose to omit these fields by typing in the command:
 
-By adding the word `task`, you can use the same command to add a new task or deadline, such as a reminder of project deadlines. +
+`add n/Ima Hidearu b/ a/ e/ p/ r/ t/secretive`
+****
+****
+**Example Scenario 3** +
+Sometimes, you may wish to keep some fields private (i.e. not reveal them in the application). You can use the private
+option while typing in your command:
+
+`add pn/Neville Shorttop pp/46492787 pe/nevilleS@gmail.com pa/Gryphon Gate c/`
+****
+
+=== Adding a task: `add task`
+
+You can use the `add task` command to add new tasks to your address book. This allows you to keep track of your
+assignments and project objectives.
+
 Format: `add task n/NAME d/[DESCRIPTION] by/[DEADLINE] p/[PRIORITY]` +
 
+[NOTE]
+`add` can be replaced by `a` for faster input.
+
 ****
+**Things To Note** +
 * Task deadlines should be in the format DD-MM-YYYY +
 * A task priority must be a positive integer from 1 to 5 inclusive, with 5 being the highest priority +
 * Newly added tasks are marked as incomplete by default.
 ****
 
-Examples:
+**Examples**:
+****
+**Example Scenario 1** +
+You are assigned the task of updating the documentation for a software engineering project. You decide to add this
+task into the Address++ application.
 
-* `add task n/Update documentation d/Update docs for V1.1 for CS2103T t/10-10-2017 p/4`
-* `add task n/Buy new pencil p/2`
+`add task n/Update documentation d/Update docs for V1.1 for CS2103T t/10-10-2017 p/4`
+****
+****
+**Example Scenario 2** +
+You realize that you have run out of pencils. You decide to add a task into Address++ to remind you to get some
+new ones later.
+`add task n/Buy new pencil p/2`
+****
 
 // tag::addtag[]
 
@@ -133,9 +184,10 @@ Format: `addtag INDEX... t/[TAG]` +
 
 
 ****
-* You can add the tag of the person at the specific `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index you key in *must be a positive integer* 1, 2, 3, ...
+**Things To Note** +
+* You can add the tag of the person at the specific `INDEX`. +
+* The index refers to the index number shown in the most recent listing. +
+* The index you key in *must be a positive integer* 1, 2, 3, ... +
 * If you don not key in any indexes, addtag will add the tag to all contacts in the address book.
 ****
 
@@ -292,8 +344,9 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 Adding `task` after `find` will allow you to sieve through your tasks, instead of your contacts. +
 In addition to searching the name and description of tasks, you can also opt to filter your tasks by their priority. Simply include `p/PRIORITY` after all your other criteria to do so. +
+You can also opt to find all tasks that are either complete or incomplete by including an optional `done/ISTASKDONE` in the command.
 All tasks with a priority higher than or equal to the value provided will be shown. +
-Format: `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY]` (Priority search to be coming in v2.0) +
+Format: `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY] [done/ISTASKDONE]` +
 
 ****
 *Important note on `find` criteria*
@@ -303,6 +356,9 @@ Format: `find task KEYWORD [MORE_KEYWORDS] [p/PRIORITY]` (Priority search to be 
 * You can only search for names in Address++
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* *You must include at least 1 search keyword*, in order to filter the results by their priority, and whether or not it is completed.
+* The `PRIORITY` must be an integer from 1 to 5, inclusive.
+* `ISTASKDONE` must be either `true` or `false`. If it is `true`, you will only see tasks that have been marked as complete, and if it is `false, you will only see tasks that are not complete, in addition to all other search criteria.
 ****
 
 Examples:
@@ -311,6 +367,7 @@ Examples:
 Returns any task that has the word `update` in their names or descriptions
 * `find task update 4` +
 Returns all tasks that has the word `update` in their names or descriptions
+
 
 // tag::showandfindtag[]
 
@@ -412,27 +469,35 @@ Delete the friends tag of the 1st and 2nd person in the address book.
 Delete the friends tag from all contacts in the address book.
 // end::deletetag[]
 
-=== Sorting your contact list : `sort`
+=== Sorting your contact list and tasks : `sort`
 
-Sort your contacts by any field in ascending or descending order using the `sort` command +
+Sort your contacts or tasks by using the `sort` command +
 `sort` can be replaced by `so` for faster input. +
-Format: `sort FIELD ORDER` +
-
-
+Format: `sort LIST FIELD ORDER` +
 
 ****
-* Allows you to sort your contact by any field in either ascending or descending order
-* Field parameters are limited to the following fields: NAME, PHONE, EMAIL, ADDRESS.
+* Allows you to sort your contacts by any field in either ascending or descending order
+* Allows you to srot your tasks by deadline or by priority in ascending or descending order
+* Field parameters for person contacts: NAME, PHONE, EMAIL, ADDRESS.
+* Field parameters for tasks: DEADLINE, PRIORITY.
 * Order parameters are limited to the following fields: ASC, DESC.
 * You can undo this command if you want to revert to the pre-sort ordering of contacts
 ****
 
-Examples:
+Examples for sorting person contacts:
 
-* `sort name asc` +
+* `sort person name asc` +
 This allows you to sort all persons in the address book in ascending order by the name field.
-* `sort address desc` +
+* `sort person address desc` +
 This allows you to sort all persons in the address book in descending order by the address field.
+
+Examples for sorting tasks:
+
+* `sort task deadline asc` +
+This allows you to sort all tasks in ascending order by the deadline field (i.e. closer deadlines are at the bottom).
+* `sort task priority desc` +
+This allows you to sort all tasks in descending order by the priority field (i.e. higher priority tasks
+are listed on top).
 
 === Backing up your data : `backup`
 

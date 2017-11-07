@@ -23,15 +23,18 @@ import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FavouriteListCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.FontSizeCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.TagListCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -98,6 +101,7 @@ public class AddressBookParser {
         case SetIncompleteCommand.COMMAND_WORD:
         case SetIncompleteCommand.COMMAND_ALIAS:
             return new SetTaskIncompleteCommandParser().parse(arguments);
+
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
@@ -105,6 +109,10 @@ public class AddressBookParser {
         case LocateCommand.COMMAND_WORD:
         case LocateCommand.COMMAND_ALIAS:
             return new LocateCommandParser().parse(arguments);
+
+        case NavigateCommand.COMMAND_WORD:
+        case NavigateCommand.COMMAND_ALIAS:
+            return new NavigateCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
@@ -142,6 +150,10 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        case TagListCommand.COMMAND_WORD:
+        case TagListCommand.COMMAND_ALIAS:
+            return new TagListCommand();
+
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
@@ -159,7 +171,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-
+        //@@author charlesgoh
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -168,6 +180,10 @@ public class AddressBookParser {
         case BackupCommand.COMMAND_ALIAS:
             return new BackupCommandParser().parse(arguments);
 
+        case FontSizeCommand.COMMAND_WORD:
+        case FontSizeCommand.COMMAND_ALIAS:
+            return new FontSizeCommandParser().parse(arguments);
+        //author charlesgoh
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
