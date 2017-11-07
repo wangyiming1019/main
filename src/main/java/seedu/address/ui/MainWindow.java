@@ -99,15 +99,6 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem resetSizeMenuItem;
 
     @FXML
-    private Button increaseFontSizeButton;
-
-    @FXML
-    private Button decreaseFontSizeButton;
-
-    @FXML
-    private Button resetFontSizeButton;
-
-    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -286,21 +277,6 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleIncreaseFontSize() {
-        increaseFontSize();
-    }
-
-    /**
-     * Handle increase font size command for button
-     */
-    @FXML
-    public void handleIncreaseFontSizeButton() {
-        increaseFontSize();
-    }
-
-    /**
-     * Calls method to increase font size
-     */
-    public void increaseFontSize() {
         logger.info("Handling increase in font size");
         raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getIncreaseSizeEventIndex()));
     }
@@ -310,23 +286,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleDecreaseFontSize() {
-        decreaseFontSize();
-    }
-
-    /**
-     * Handle decrease font size command for button
-     */
-    @FXML
-    public void handleDecreaseFontSizeButton() {
-        decreaseFontSize();
-    }
-
-    /**
-     * Calls method to decrease font size
-     */
-    public void decreaseFontSize() {
-        logger.info("Handling increase in font size");
-        personListPanel.decreaseFontSize();
+        logger.info("Handling decrease in font size");
         raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getDecreaseSizeEventIndex()));
     }
 
@@ -335,21 +295,6 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleResetFontSize() {
-        resetFontSize();
-    }
-
-    /**
-     * Handle reset font size command for button
-     */
-    @FXML
-    public void handleResetFontSizeButton() {
-        resetFontSize();
-    }
-
-    /**
-     * Calls method to reset font size
-     */
-    public void resetFontSize() {
         logger.info("Handling reset in font size");
         raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getResetSizeEventIndex()));
     }
