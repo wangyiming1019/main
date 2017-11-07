@@ -3,8 +3,6 @@ package seedu.address.ui;
 import java.util.HashMap;
 import java.util.Random;
 
-import javax.swing.text.html.ImageView;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -55,8 +53,6 @@ public class PersonCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label remark;
-    @FXML
-    private ImageView avatar;
     @FXML
     private Label email;
     @FXML
@@ -176,10 +172,6 @@ public class PersonCard extends UiPart<Region> {
 
     public Label getEmail() {
         return email;
-    }
-
-    public ImageView getAvatar() {
-        return avatar;
     }
 
     public int getFontSizeMultipler() {
