@@ -180,7 +180,9 @@ public class PersonCard extends UiPart<Region> {
         return email;
     }
 
-    public ImageView getAvatar() { return avatar; }
+    public ImageView getAvatar() {
+        return avatar;
+    }
 
     public int getFontSizeMultipler() {
         return fontSizeMultipler;
