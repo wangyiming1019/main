@@ -115,14 +115,12 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Email email = createEmailWithPrivacy(person, pps);
         Address address = createAddressWithPrivacy(person, pps);
         Remark remark = createRemarkWithPrivacy(person, pps);
-        Avatar v = createAvatarWithPrivacy(person, pps);
-        Boolean f = person.getFavourite();
-        Set<Tag> t = person.getTags();
-
+        Avatar avatar = createAvatarWithPrivacy(person, pps);
         Boolean favourite = person.getFavourite();
         Set<Tag> tag = person.getTags();
 
         return new Person(name, phone, email, address, favourite, remark, avatar, tag);
+    }
 
     /**
      * Creates a new (@code Name) based on the input (@code Person) and (@code PersonPrivacySettings)
