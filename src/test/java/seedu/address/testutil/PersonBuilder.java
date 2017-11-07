@@ -25,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_FAVOURITE = "false";
     public static final String DEFAULT_REMARK = "Eats, shoots, and leaves";
-    public static final String DEFAULT_AVATAR = "test-avatar.png";
+    public static final String DEFAULT_AVATAR = "";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -109,7 +109,7 @@ public class PersonBuilder {
         try {
             this.person.setAvatar(new Avatar(filepath));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Remark is invalid");
+            throw new IllegalArgumentException("Avatar is invalid");
         }
         return this;
     }
