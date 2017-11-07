@@ -123,6 +123,7 @@ Examples:
 * `add task n/Update documentation d/Update docs for V1.1 for CS2103T t/10-10-2017 p/4`
 * `add task n/Buy new pencil p/2`
 
+// tag::addtag[]
 
 === Adding a tag to persons : `addtag` (Since V1.2)
 
@@ -146,7 +147,7 @@ Adds the friends tag of the 1st and 2nd person in the address book.
 * `list` +
 `addtag t/acquaintance` +
 Adds the acquaintance tag to all contacts in the address book.
-
+// end::addtag[]
 
 === Listing all persons : `list`
 
@@ -237,6 +238,7 @@ Sets the phone number of the 1st person to be public and their email address to 
 * `cp 2 a/false n/true e/false` +
 Sets the address and email of the 2nd person to be public and their name to be private. The 2nd person's address and email will be displayed, if available, while their name will be hidden in the UI.
 
+// tag::favourite[]
 
 === Favouriting persons : `favourite` (since V1.3)
 
@@ -258,6 +260,10 @@ Favourite the 1st person in the results of the `find` command.
 * The index refers to the index number shown in the most recent listing.
 * The index you key in *must be a positive integer* 1, 2, 3, ...
 ****
+// end::favourite[]
+
+
+// tag::showfavourite[]
 
 === Listing all favourite persons : `showfavourite` (since V1.3)
 
@@ -269,6 +275,7 @@ Format: `showfavourite` +
 ====
 `showfavourite` command: It will return an empty list if there is no favourite persons.
 ====
+// end::showfavourite[]
 
 === Locating persons by name : `find`
 
@@ -305,10 +312,23 @@ Returns any task that has the word `update` in their names or descriptions
 * `find task update 4` +
 Returns all tasks that has the word `update` in their names or descriptions
 
+// tag::showandfindtag[]
+
+=== Listing all tags : `showtag` (Since V1.5)
+
+You can use the `showtag` command to quickly show all tags in the address book. This is a helper command for `findtag`+
+`showtag` can be replaced by `stag` for faster input. +
+Format: `showtag` +
+
+[NOTE]
+====
+`showtag` command: It will return an empty list if there is no tags in the address book.
+====
+
 === Locating persons by tag : `findtag` (Since V1.4)
 
 You can use the `findtag` command to quickly filter out contacts who match your criteria. For example, you may wish to find contacts who are your `classmates`. +
-If you want to find contacts who are your `classmates` but not your `friends`, you just need to add `/not` in front of the `friends`. +
+If you want to find contacts who are your `classmates` but not your `friends`, you just need to add `/` in front of the `friends`. +
 `findtag` can be replaced by `ftag` for faster input. +
 Format: `findtag KEYWORD [MORE_KEYWORDS]` +
 
@@ -318,19 +338,20 @@ Examples:
 Returns any persons having tag `friends`
 * `findtag friends colleagues` +
 Returns any person having tags `friends` or `colleagues`
-* `findtag /notfriends` +
+* `findtag /friends` +
 Returns any persons not have tag `friends`
-* `findtag classmates /notfriends` +
-Returns any person have tags `classmates` but not have tag `friends`
+* `findtag classmates /friends` +
+Returns any person having tags `classmates` but not having tag `friends`
 
 ****
-*Important note on `findtag` criteria
+* Important note on `findtag` criteria
 * The search is not case insensitive. e.g `friends` will match `FRIENDS`
 * The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
 * Only the tag is searched for persons.
 * Only full words will be matched e.g. `friend` will not match `friends`
 * There is no space `/not` and tag name e.g. `/not friends` will not match `/notfriends`
 ****
+// end::showandfindtag[]
 
 === Deleting a person : `delete`
 
@@ -365,6 +386,7 @@ Deletes the 2nd task in the address book.
 `delete task 1` +
 Deletes the 1st task in the results of the `find task` command.
 
+// tag::deletetag[]
 
 === Deleting a tag of persons : `deletetag` (Since V1.2)
 
@@ -388,6 +410,7 @@ Delete the friends tag of the 1st and 2nd person in the address book.
 * `list` +
 `deletetag t/friends` +
 Delete the friends tag from all contacts in the address book.
+// end::deletetag[]
 
 === Sorting your contact list : `sort`
 
@@ -588,7 +611,6 @@ Format: `history` +
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
 === Undoing previous command : `undo`
 
 Did you make a mistake somewhere? `undo` restores the address book to the state before the previous _undoable_ command was executed. +
@@ -616,6 +638,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+// tag::unfavourite[]
 
 === Unfavouriting persons : `unfavourite` (since V1.3)
 
@@ -638,6 +661,7 @@ Unfavourite the 1st person in the results of the `find` command.
 * The index refers to the index number shown in the most recent listing.
 * The index you key in *must be a positive integer* 1, 2, 3, ...
 ****
+// end::unfavourite[]
 
 === Redoing the previously undone command : `redo`
 
@@ -661,7 +685,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
-// end::undoredo[]
 
 === Clearing all entries : `clear`
 
@@ -750,6 +773,7 @@ e.g. `find task update p/high`
 * *Help* : `help`
 * *List persons* : `list`
 * *List tasks* : `list task`
+* *List tags* : `showtag`
 * *Locate a person's address* : `locate`
 * *Select person* : `select INDEX` +
 e.g.`select 2`
