@@ -250,6 +250,42 @@ standardised the handling of font size change requests through events.
 **Pros:** Less tedious to implement and very intuitive for the user +
 **Cons:** Users who prefer typing commands will not have the option of editing their font sizes using the CLI
 
+=== Setting Avatar on ViewPersonPanel
+
+The following function allows the setting of URL for the `ImageView` attribute within the `ViewPersonPanel` class:
+[source,java]
+----
+private void initializeAvatar() {
+        try {
+            String avatarPath = person.getAvatar().value;
+            if (!avatarPath.equals("")) {
+                logger.info("Initializing avatar to image at saved URL");
+                Image newImage = new Image(avatarPath);
+                avatarImage.setImage(newImage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+----
+
+The `initializeAvatar` method piggybacks on the `handlePersonPanelSelectionChangedEvent` event handler. Whenever there is
+a change in the person selection panel, this function will call the `initializeAvatar` method, which will update
+the `ImageView` attribute.
+[source,java]
+----
+@Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        this.person = event.getNewSelection().person;
+        initializeWithPerson(person);
+        initializeAvatar();
+    }
+----
+
+[NOTE]
+As of version 1.5rc, the avatar field supports only URLs sourced online. References to local files may not work at the moment.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 

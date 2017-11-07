@@ -30,11 +30,10 @@
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding></Label>
-                  <ImageView fx:id="avatarImage" fitHeight="105.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="avatarImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../docs/images/Avatar.png" />
-                     </image>
-                  </ImageView>
+                     </image></ImageView>
                </children>
             </HBox>
             <SplitPane prefHeight="419.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
@@ -48,7 +47,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="phone" prefHeight="92.0" prefWidth="805.0" styleClass="cell_small_label" text="\$phone">
+                              <Label fx:id="phone" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$phone">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
@@ -62,7 +61,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="email" prefHeight="92.0" prefWidth="805.0" styleClass="cell_small_label" text="\$email">
+                              <Label fx:id="email" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$email">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
@@ -76,7 +75,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="address" prefHeight="92.0" prefWidth="805.0" styleClass="cell_small_label" text="\$address">
+                              <Label fx:id="address" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$address">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
@@ -90,7 +89,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="remark" prefHeight="92.0" prefWidth="805.0" styleClass="cell_small_label" text="\$remark">
+                              <Label fx:id="remark" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$remark">
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
@@ -104,7 +103,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <FlowPane fx:id="tags" prefHeight="64.0" prefWidth="433.0" />
+                              <FlowPane fx:id="tags" prefHeight="64.0" prefWidth="405.0" />
                            </children>
                         </HBox>
                      </children>
