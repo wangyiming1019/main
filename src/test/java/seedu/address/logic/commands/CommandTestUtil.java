@@ -83,8 +83,8 @@ public class CommandTestUtil {
     public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK_BOB;
     public static final String REMARK_DESC_CHRIS = " " + PREFIX_REMARK + VALID_REMARK_CHRIS;
 
-    public static final String AVATAR_DESC_AMY = " " + PREFIX_AVATAR + VALID_REMARK_AMY;
-    public static final String AVATAR_DESC_BOB = " " + PREFIX_AVATAR + VALID_REMARK_BOB;
+    public static final String AVATAR_DESC_AMY = " " + PREFIX_AVATAR + VALID_AVATAR_AMY;
+    public static final String AVATAR_DESC_BOB = " " + PREFIX_AVATAR + VALID_AVATAR_BOB;
     public static final String AVATAR_DESC_CHRIS = " " + PREFIX_AVATAR + VALID_REMARK_CHRIS;
 
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
