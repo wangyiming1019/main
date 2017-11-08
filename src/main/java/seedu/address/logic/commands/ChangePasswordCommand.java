@@ -123,7 +123,7 @@ public class ChangePasswordCommand extends Command {
             logger.info("New Password: " + newPassword
                     + "\nEncrypted New Password: " + hashedNewPassword
                     + "\nEncrypted Password From UserPrefs:" + userPrefsHashedPassword
-                    + "\nConfirm save of new password: "
+                    + "\nCommand's Password and UserPrefs saved password matches: "
                     + Boolean.toString(hashedNewPassword.equals(userPrefsHashedPassword)) + "\n");
 
             // Return command result
