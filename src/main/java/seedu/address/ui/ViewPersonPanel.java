@@ -109,8 +109,8 @@ public class ViewPersonPanel extends UiPart<Region> {
     private void initializeAvatar() {
         String avatarPath = person.getAvatar().value;
         try {
-            logger.info("Attempting to set avatar to image at specified filepath");
-            Image newImage = new Image("file:" + avatarPath);
+            logger.info("Attempting to set avatar to image at specified URL or filepath");
+            Image newImage = new Image(avatarPath);
             avatarImage.setImage(newImage);
         } catch (IllegalArgumentException ex) {
             logger.warning("Saved path is not a valid filepath or URL path. Setting avatar to placeholder");
