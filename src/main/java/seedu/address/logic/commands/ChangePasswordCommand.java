@@ -36,7 +36,7 @@ public class ChangePasswordCommand extends Command {
 
     private String oldPassword;
     private String newPassword;
-    private String confirmPassword;
+    private String confirmationPassword;
 
     /**
      * Takes in old password, new password and confirmation password from parser and creates a new
@@ -48,7 +48,7 @@ public class ChangePasswordCommand extends Command {
     public ChangePasswordCommand(String oldPassword, String newPassword, String confirmPassword) {
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
-        this.confirmPassword = confirmPassword;
+        this.confirmationPassword = confirmPassword;
     }
 
     /**
@@ -88,7 +88,7 @@ public class ChangePasswordCommand extends Command {
      * Takes new input passwords and checks them against one another.
      */
     private boolean isNewPasswordInputsSame() {
-        return newPassword.equals(oldPassword);
+        return newPassword.equals(confirmationPassword);
     }
 
     @Override
