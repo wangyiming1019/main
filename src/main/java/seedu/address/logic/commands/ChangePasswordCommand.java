@@ -27,6 +27,7 @@ public class ChangePasswordCommand extends Command {
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n";
 
+    public static final String MESSAGE_OLD_NEW_PS_SAME = "New password must be different from your old password";
     public static final String MESSAGE_ERROR_OCCURED = "An error occured. Please try again.\n";
     public static final String MESSAGE_PASSWORD_INCORRECT = "Your password is incorrect. Please try again.\n";
     public static final String MESSAGE_PASSWORD_CONFIRMATION_INCORRECT = "Your new password and confirmation password "
@@ -91,6 +92,13 @@ public class ChangePasswordCommand extends Command {
         return newPassword.equals(confirmationPassword);
     }
 
+    /**
+     * Checks if old password and new password are the same
+     */
+    private boolean isOldAndNewPasswordTheSame() {
+        return oldPassword.equals(newPassword);
+    }
+
     @Override
     public CommandResult execute() {
         // Case where old password is incorrect
@@ -101,8 +109,14 @@ public class ChangePasswordCommand extends Command {
 
         // Case where new password and confirmation password do not match
         if (!isNewPasswordInputsSame()) {
-            logger.warning("New password and confirmation passwords do not match");
+            logger.warning("New password and confirmation password do not match");
             return new CommandResult(MESSAGE_PASSWORD_CONFIRMATION_INCORRECT);
+        }
+
+        // Case where old and new passwords are the same
+        if (!isOldAndNewPasswordTheSame()) {
+            logger.warning("Old password and new password cannot be the same");
+            return new CommandResult();
         }
 
         // Case where user input passes both checks. Password is changed and UserPrefs saved
