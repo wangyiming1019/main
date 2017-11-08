@@ -6,10 +6,12 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.scene.control.TextFormatter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.BackupCommand;
+import seedu.address.logic.commands.ChangePasswordCommand;
 import seedu.address.logic.commands.ChangePrivacyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -183,6 +185,10 @@ public class AddressBookParser {
         case FontSizeCommand.COMMAND_WORD:
         case FontSizeCommand.COMMAND_ALIAS:
             return new FontSizeCommandParser().parse(arguments);
+
+        case ChangePasswordCommand.COMMAND_WORD:
+        case ChangePasswordCommand.COMMAND_ALIAS:
+            return new ChangePasswordCommandParser().parse(arguments);
         //author charlesgoh
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
