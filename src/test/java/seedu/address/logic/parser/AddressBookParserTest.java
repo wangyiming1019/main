@@ -259,7 +259,6 @@ public class AddressBookParserTest {
         Tag enemies = new Tag("enemies");
         assertEquals(new EditTagCommand(friends, enemies), command);
     }
-    //@@author
 
     //@@author jeffreygohkw
     @Test
