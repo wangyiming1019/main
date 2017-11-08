@@ -51,7 +51,9 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.NavigateCommand;
+import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SaveAsCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
@@ -256,6 +258,20 @@ public class AddressBookParserTest {
         Tag friends = new Tag("friends");
         Tag enemies = new Tag("enemies");
         assertEquals(new EditTagCommand(friends, enemies), command);
+    }
+    //@@author
+
+    //@@author jeffreygohkw
+    @Test
+    public void parseCommandOpen() throws Exception {
+        assertTrue(parser.parseCommand(OpenCommand.COMMAND_WORD) instanceof OpenCommand);
+        assertTrue(parser.parseCommand(OpenCommand.COMMAND_WORD + " 3") instanceof OpenCommand);
+    }
+
+    @Test
+    public void parseCommandSaveAs() throws Exception {
+        assertTrue(parser.parseCommand(SaveAsCommand.COMMAND_WORD) instanceof SaveAsCommand);
+        assertTrue(parser.parseCommand(SaveAsCommand.COMMAND_WORD + " 3") instanceof SaveAsCommand);
     }
     //@@author
 
