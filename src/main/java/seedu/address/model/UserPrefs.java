@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import java.util.Objects;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import seedu.address.commons.core.GuiSettings;
 
 /**
@@ -12,6 +14,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String addressBookEncryptedPassword = DigestUtils.sha256Hex("password");
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -44,7 +47,13 @@ public class UserPrefs {
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
     }
+    //@@author charlesgoh
+    public String getAddressBookEncryptedPassword() { return addressBookEncryptedPassword; }
 
+    public void setAddressBookEncryptedPassword(String addressBookPassword) {
+        this.addressBookEncryptedPassword = DigestUtils.sha256Hex(addressBookPassword);
+    }
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -58,7 +67,8 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(addressBookEncryptedPassword, o.addressBookEncryptedPassword);
     }
 
     @Override
@@ -72,6 +82,7 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nPassword : " + addressBookEncryptedPassword);
         return sb.toString();
     }
 
