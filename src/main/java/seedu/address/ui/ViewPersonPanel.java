@@ -107,13 +107,12 @@ public class ViewPersonPanel extends UiPart<Region> {
     private void initializeAvatar() {
         try {
             String avatarPath = person.getAvatar().value;
-            if (!avatarPath.equals("")) {
-                logger.info("Initializing avatar to image at saved URL");
-                Image newImage = new Image(avatarPath);
-                avatarImage.setImage(newImage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            Image newImage = new Image(avatarPath);
+            logger.info("Initializing avatar to image at saved URL");
+            avatarImage.setImage(newImage);
+        } catch (IllegalArgumentException e) {
+            logger.warning("URL not valid");
+            avatarImage.setImage(null);
         }
     }
     //author
