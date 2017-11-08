@@ -50,7 +50,9 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
     //@@author charlesgoh
-    public String getAddressBookEncryptedPassword() { return addressBookEncryptedPassword; }
+    public String getAddressBookEncryptedPassword() {
+        return addressBookEncryptedPassword;
+    }
 
     public void setAddressBookEncryptedPassword(String addressBookPasswordInput) {
         this.addressBookEncryptedPassword = Hashing.sha256()

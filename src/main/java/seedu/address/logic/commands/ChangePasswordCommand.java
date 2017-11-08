@@ -27,7 +27,10 @@ public class ChangePasswordCommand extends Command {
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n";
 
-    public static final String MESSAGE_PASSWORD_CONFIRMATION_INCORRECT = "Your new passwords do not match\n";
+    public static final String MESSAGE_ERROR_OCCURED = "An error occured. Please try again.\n";
+    public static final String MESSAGE_PASSWORD_INCORRECT = "Your password is incorrect. Please try again.\n";
+    public static final String MESSAGE_PASSWORD_CONFIRMATION_INCORRECT = "Your new password and confirmation password "
+            + "do not match. Please try again\n";
 
     private final Logger logger = LogsCenter.getLogger(ChangePasswordCommand.class);
 
@@ -35,12 +38,23 @@ public class ChangePasswordCommand extends Command {
     private String newPassword;
     private String confirmPassword;
 
+    /**
+     * Takes in old password, new password and confirmation password from parser and creates a new
+     * ChangePasswordCommand object
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword
+     */
     public ChangePasswordCommand(String oldPassword, String newPassword, String confirmPassword) {
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
         this.confirmPassword = confirmPassword;
     }
 
+    /**
+     * Forward hashes string using SHA256 encryption and returns hashed string
+     * @param argument
+     */
     private String forwardHash(String argument) {
         return Hashing.sha256().hashString(argument, StandardCharsets.UTF_8).toString();
     }
@@ -74,12 +88,51 @@ public class ChangePasswordCommand extends Command {
      * Takes new input passwords and checks them against one another.
      */
     private boolean isNewPasswordInputsSame() {
-        return forwardHash(newPassword).equals(confirmPassword);
+        return newPassword.equals(oldPassword);
     }
 
     @Override
     public CommandResult execute() {
+        // Case where old password is incorrect
+        if (!isOldPasswordCorrect()) {
+            logger.warning("Password is incorrect. Note: Default password is 'password' ");
+            return new CommandResult(MESSAGE_PASSWORD_INCORRECT);
+        }
 
-        return new CommandResult(MESSAGE_SUCCESS);
+        // Case where new password and confirmation password do not match
+        if (!isNewPasswordInputsSame()) {
+            logger.warning("New password and confirmation passwords do not match");
+            return new CommandResult(MESSAGE_PASSWORD_CONFIRMATION_INCORRECT);
+        }
+
+        // Case where user input passes both checks. Password is changed and UserPrefs saved
+        UserPrefs userPrefs;
+        try {
+            // Get user prefs file
+            userPrefs = storage.readUserPrefs().get();
+
+            // Set new password to user prefs
+            userPrefs.setAddressBookEncryptedPassword(newPassword);
+
+            // Save new userprefs
+            storage.saveUserPrefs(userPrefs);
+
+            // Logs new password and saved password for debugging purposes
+            String hashedNewPassword = forwardHash(newPassword);
+            String userPrefsHashedPassword = userPrefs.getAddressBookEncryptedPassword();
+            logger.info("New Password: " + newPassword
+                    + "\nEncrypted New Password: " + hashedNewPassword
+                    + "\nEncrypted Password From UserPrefs:" + userPrefsHashedPassword
+                    + "\nConfirm save of new password: "
+                    + Boolean.toString(hashedNewPassword.equals(userPrefsHashedPassword)) + "\n");
+
+            // Return command result
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (DataConversionException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new CommandResult(MESSAGE_ERROR_OCCURED);
     }
 }
