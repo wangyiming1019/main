@@ -10,8 +10,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserPrefs;
 
+//@@author charlesgoh
 /**
- * Lists all persons in the address book to the user.
+ * Changes user's password provided old password is correct and new passwords match.
  */
 public class ChangePasswordCommand extends Command {
     public static final String COMMAND_WORD = "changepassword";
