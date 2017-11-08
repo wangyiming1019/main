@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import java.nio.charset.StandardCharsets;
+
+import com.google.common.hash.Hashing;
+
 /**
  * Lists all persons in the address book to the user.
  */
@@ -25,6 +29,10 @@ public class ChangePasswordCommand extends Command {
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
         this.confirmPassword = confirmPassword;
+    }
+
+    private String forwardHash(String argument) {
+        return Hashing.sha256().hashString(argument, StandardCharsets.UTF_8).toString();
     }
 
     @Override
