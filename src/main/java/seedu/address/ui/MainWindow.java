@@ -333,7 +333,13 @@ public class MainWindow extends UiPart<Region> {
             // Update the UI
             fillInnerParts();
         }
-        raise(new OpenRequestEvent());
+        //raise(new OpenRequestEvent());
+    }
+
+    @Subscribe
+    private void handleOpenRequestEvent(OpenRequestEvent event) throws IOException, DataConversionException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleOpen();
     }
 
     /**
@@ -362,9 +368,14 @@ public class MainWindow extends UiPart<Region> {
             // Update the UI
             fillInnerParts();
         }
-        raise(new SaveAsRequestEvent());
+        //raise(new SaveAsRequestEvent());
     }
 
+    @Subscribe
+    private void handleSaveAsRequestEvent(SaveAsRequestEvent event) throws IOException, DataConversionException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSaveAs();
+    }
     //@@author
     @FXML
     private void handleExit() {
