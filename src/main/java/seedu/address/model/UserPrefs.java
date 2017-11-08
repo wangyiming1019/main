@@ -14,7 +14,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "My Address++";
     private String addressBookEncryptedPassword = Hashing.sha256()
             .hashString("password", StandardCharsets.UTF_8).toString();
 
