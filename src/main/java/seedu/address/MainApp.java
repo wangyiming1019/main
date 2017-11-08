@@ -195,6 +195,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
+        // TODO: Find a solution to this automatic saving of userprefs using event handlers
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {
