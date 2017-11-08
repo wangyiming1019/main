@@ -195,23 +195,26 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        // TODO: Find a solution to this automatic saving of userprefs using event handlers
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {
-            storage.saveUserPrefs(userPrefs);
+            storage.saveUserPrefs(storage.readUserPrefs().get());
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
+        } catch (DataConversionException e) {
+            e.printStackTrace();
         }
         Platform.exit();
         System.exit(0);
     }
 
+    //@@author charlesgoh
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
     }
+    //@@author
 
     public static void main(String[] args) {
         launch(args);

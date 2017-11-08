@@ -114,7 +114,7 @@ public class ChangePasswordCommand extends Command {
         }
 
         // Case where old and new passwords are the same
-        if (!isOldAndNewPasswordTheSame()) {
+        if (isOldAndNewPasswordTheSame()) {
             logger.warning("Old password and new password cannot be the same");
             return new CommandResult(MESSAGE_OLD_NEW_PS_SAME);
         }
