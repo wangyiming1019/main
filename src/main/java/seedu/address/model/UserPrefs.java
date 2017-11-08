@@ -1,8 +1,9 @@
 package seedu.address.model;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import org.apache.commons.codec.digest.DigestUtils;
+import com.google.common.hash.Hashing;
 
 import seedu.address.commons.core.GuiSettings;
 
@@ -14,7 +15,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private String addressBookEncryptedPassword = DigestUtils.sha256Hex("password");
+    private String addressBookEncryptedPassword = Hashing.sha256()
+            .hashString("password", StandardCharsets.UTF_8).toString();
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -50,8 +52,9 @@ public class UserPrefs {
     //@@author charlesgoh
     public String getAddressBookEncryptedPassword() { return addressBookEncryptedPassword; }
 
-    public void setAddressBookEncryptedPassword(String addressBookPassword) {
-        this.addressBookEncryptedPassword = DigestUtils.sha256Hex(addressBookPassword);
+    public void setAddressBookEncryptedPassword(String addressBookPasswordInput) {
+        this.addressBookEncryptedPassword = Hashing.sha256()
+                .hashString(addressBookPasswordInput, StandardCharsets.UTF_8).toString();
     }
     //@@author
     @Override

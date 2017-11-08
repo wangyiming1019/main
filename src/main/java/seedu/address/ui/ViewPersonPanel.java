@@ -102,17 +102,26 @@ public class ViewPersonPanel extends UiPart<Region> {
     }
     //author charlesgoh
     /**
-     * Sets avatar to a filepath or the avatar placeholder by default
+     * Sets avatar to a URL or filepath and falls back to the placeholder avatar if specified path fits in
+     * neither categories
      */
     private void initializeAvatar() {
+        String avatarPath = person.getAvatar().value;
+        Image newImage;
         try {
-            String avatarPath = person.getAvatar().value;
-            Image newImage = new Image(avatarPath);
-            logger.info("Initializing avatar to image at saved URL");
+            logger.info("Attempting to set avatar to image at specified URL");
+            newImage = new Image(avatarPath);
             avatarImage.setImage(newImage);
         } catch (IllegalArgumentException e) {
-            logger.warning("URL not valid");
-            avatarImage.setImage(null);
+            try {
+                logger.info("URL invalid. Attempting to set avatar to image at specified filepath");
+                newImage = new Image("file:" + avatarPath);
+                avatarImage.setImage(newImage);
+            } catch (IllegalArgumentException ex) {
+                logger.warning("Filepath invalid. Saved path is not a valid filepath or URL path");
+                Image imagePlaceholder = new Image("file:docs/images/Avatar.png");
+                avatarImage.setImage(imagePlaceholder);
+            }
         }
     }
     //author
@@ -199,7 +208,7 @@ public class ViewPersonPanel extends UiPart<Region> {
     public Label getEmail() {
         return email;
     }
-
+    //@@author charlesgoh
     public int getFontSizeMultipler() {
         return fontSizeMultipler;
     }
@@ -207,7 +216,7 @@ public class ViewPersonPanel extends UiPart<Region> {
     public void setFontSizeMultipler(int fontSizeMultipler) {
         this.fontSizeMultipler = fontSizeMultipler;
     }
-
+    //@@author
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
