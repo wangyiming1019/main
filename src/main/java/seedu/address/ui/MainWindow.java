@@ -333,7 +333,6 @@ public class MainWindow extends UiPart<Region> {
             // Update the UI
             fillInnerParts();
         }
-        //raise(new OpenRequestEvent());
     }
 
     @Subscribe
@@ -368,7 +367,6 @@ public class MainWindow extends UiPart<Region> {
             // Update the UI
             fillInnerParts();
         }
-        //raise(new SaveAsRequestEvent());
     }
 
     @Subscribe

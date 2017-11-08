@@ -958,6 +958,54 @@ These two commands will then post a new `OpenRequestEvent` or a new `SaveAsReque
 
 `MainWindow` will have two methods, `HandleOpenRequestEvent` and `HandleSaveAsRequestEvent` that subscribe to the above two events and will call `handleOpen` and `handleSaveAs`.
 
+[source, java]
+----
+private void handleOpen() throws IOException, DataConversionException {
+    // Set extension filter
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    // Show open file dialog
+    File file = fileChooser.showOpenDialog(primaryStage);
+    if (file != null) {
+        // Change file path to the opened file
+        storage.changeFilePath(file.getPath(), prefs);
+        // Reset data in the model to the data from the opened file
+        model.resetData(XmlFileStorage.loadDataFromSaveFile(file));
+        // Update the UI
+        fillInnerParts();
+    }
+}
+----
+
+[source, java]
+----
+private void handleSaveAs() throws IOException {
+    // Set extension filter
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    // Show save file dialog
+    File file = fileChooser.showSaveDialog(primaryStage);
+
+    if (file != null) {
+        // Make sure it has the correct extension
+        if (!file.getPath().endsWith(".xml")) {
+            file = new File(file.getPath() + ".xml");
+        }
+        // Change file path to the new save file
+        storage.changeFilePath(file.getPath(), prefs);
+        // Save the address book data and the user preferences
+        storage.saveAddressBook(model.getAddressBook());
+        storage.saveUserPrefs(prefs);
+        // Update the UI
+        fillInnerParts();
+    }
+}
+----
+
 Both `handleOpen` and `handleSaveAs` will create a new `FileChooser` extension filter that only allows the pop-up window to save files and load files in the .xml format.
 
 Upon successfully selecting a file to load or a location to save as in the pop-up window, both methods will call `changefilepath` in `Storage` to the selected file path.
