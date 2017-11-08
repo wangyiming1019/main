@@ -12,9 +12,9 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-W09-B2/main
 
-By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT` +
 //tag::introduction[]
-Address++ is an application that keeps track of your contacts and your daily todos for you. It is targeted
+Address++ is an application that keeps track of your contacts and your daily to-dos for you. It is targeted
 at students who work on projects or assignments frequently, but it can also be used for other purposes.
 
 == About
@@ -22,6 +22,7 @@ at students who work on projects or assignments frequently, but it can also be u
 After reading this user guide, you should be more familiar with how Address++ can be used to maintain your contacts and tasks. +
 No technical knowledge is required when running the application, although basic knowledge of installation is required to install the prerequisite libraries for Address++ (Java). +
 //end::introduction[]
+
 == Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
