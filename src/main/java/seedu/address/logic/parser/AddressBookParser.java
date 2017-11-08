@@ -29,7 +29,9 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.NavigateCommand;
+import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SaveAsCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
@@ -158,6 +160,12 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
+        case OpenCommand.COMMAND_WORD:
+            return new OpenCommand();
+
+        case SaveAsCommand.COMMAND_WORD:
+            return new SaveAsCommand();
+
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
@@ -171,7 +179,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-        //@@author charlesgoh
+
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -183,7 +191,7 @@ public class AddressBookParser {
         case FontSizeCommand.COMMAND_WORD:
         case FontSizeCommand.COMMAND_ALIAS:
             return new FontSizeCommandParser().parse(arguments);
-        //author charlesgoh
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

@@ -700,7 +700,7 @@ Upon generation of all the fields, if `areFieldsAllPrivate` is still true, `crea
 The sequence diagram for `ChangePrivacyCommand` is illustrated below.
 
 image::ChangePrivacySequenceDiagram.png[width="800"]
-_Figure 3.7.1 : Sequence Diagram for changing the privacy of a Person's fields_
+_Figure 3.4.1 : Sequence Diagram for changing the privacy of a Person's fields_
 
 Upon receiving a String containing the arguments from `AddressBookParser`, `ChangePrivacyCommandParser` will create a `PersonPrivacySettings` object.
 
@@ -788,7 +788,7 @@ BrowserPanel will then use `handleBrowserPanelLocationEvent` to process this new
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::LocateSequenceDiagram.png[width="800"]
-_Figure 3.8.1 : Sequence Diagram for Locating a Person's Address_
+_Figure 3.5.1 : Sequence Diagram for Locating a Person's Address_
 
 ==== Design Considerations
 
@@ -927,7 +927,7 @@ private void loadDirectionsPage(String fromLocation, String toLocation) {
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::NavigateSequenceDiagram.png[width="800"]
-_Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another_
+_Figure 3.6.1 : Sequence Diagram for Navigating from one Address to another_
 
 
 ==== Design Considerations
@@ -948,6 +948,85 @@ _Figure 3.9.1 : Sequence Diagram for Navigating from one Address to another_
 **Pros:** Easy to read and transfer information, lower overhead +
 **Cons:** It is easier for stray Strings to pollute the information, and the Strings can be unintentionally modified.
 // end::navigate[]
+
+// tag::opensaveas[]
+=== Opening and Saving of the .xml save file
+Both `OpenCommand` and `SaveAsCommand` function in a very similar way.
+When `open` or `save` is input by the user, `AddressBookParser` will create a new `OpenCommand` or `SaveAsCommand`.
+
+These two commands will then post a new `OpenRequestEvent` or a new `SaveAsRequestEvent` and return a successful `CommandResult`.
+
+`MainWindow` will have two methods, `HandleOpenRequestEvent` and `HandleSaveAsRequestEvent` that subscribe to the above two events and will call `handleOpen` and `handleSaveAs`.
+
+[source, java]
+----
+private void handleOpen() throws IOException, DataConversionException {
+    // Set extension filter
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    // Show open file dialog
+    File file = fileChooser.showOpenDialog(primaryStage);
+    if (file != null) {
+        // Change file path to the opened file
+        storage.changeFilePath(file.getPath(), prefs);
+        // Reset data in the model to the data from the opened file
+        model.resetData(XmlFileStorage.loadDataFromSaveFile(file));
+        // Update the UI
+        fillInnerParts();
+    }
+}
+----
+
+[source, java]
+----
+private void handleSaveAs() throws IOException {
+    // Set extension filter
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    // Show save file dialog
+    File file = fileChooser.showSaveDialog(primaryStage);
+
+    if (file != null) {
+        // Make sure it has the correct extension
+        if (!file.getPath().endsWith(".xml")) {
+            file = new File(file.getPath() + ".xml");
+        }
+        // Change file path to the new save file
+        storage.changeFilePath(file.getPath(), prefs);
+        // Save the address book data and the user preferences
+        storage.saveAddressBook(model.getAddressBook());
+        storage.saveUserPrefs(prefs);
+        // Update the UI
+        fillInnerParts();
+    }
+}
+----
+
+Both `handleOpen` and `handleSaveAs` will create a new `FileChooser` extension filter that only allows the pop-up window to save files and load files in the .xml format.
+
+Upon successfully selecting a file to load or a location to save as in the pop-up window, both methods will call `changefilepath` in `Storage` to the selected file path.
+
+Finally, both commands diverge as `handleOpen` will call `resetData` to reset the data using the new save file, while `handleSaveAs` will call `saveAddressBook` and `saveUserPrefs` to save the data. Both methods will finally call `fillInnerParts()` to refresh the data displayed on the UI.
+
+This process is illustrated using the sequence diagram below:
+
+image::OpenSequenceDiagram.png[width="800"]
+_Figure 3.7.1 : Sequence Diagram for Opening a save file_
+
+==== Design Considerations
+**Aspect:** How does `OpenCommand` and `SaveAsCommand` determine the file location to save or load the save file from +
+**Alternative 1 (current choice):** Open a `FileChooser` window, allowing the user to move through their file directory to acquire their save location and to select the name of the save file. +
+**Pros:** User friendly, many other applications function similarly when saving and loading. Easier to implement and use as part of the dropdown menu in the User Interface. +
+**Cons:** Not entirely command line based.  +
+**Alternative 2:** Input the file directory and file name to save or load from as part of the command. +
+**Pros:** Entirely command line based, may be more preferable for users who prefer using the command line. +
+**Cons:** Requires more complex code. Command must check if the file location to save or load from is valid, and that there is a valid file of that name.
+
+// end::opensaveas[]
 
 // tag::adddeletetag[]
 === Add/Delete Tag mechanism
