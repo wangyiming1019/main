@@ -824,7 +824,7 @@ Format `open`
 If you would like to save a copy of your data in a separate location or with a different name, the `save` command will allow you to do just that. +
 You can choose what to name your save file and where to save it from the pop up window that appears upon executing this command. +
 `save` can be replaced by `sa` for faster input. +
-Format `save`
+Format: `save`
 // end::saveas[]
 
 === Exiting the program : `exit`
