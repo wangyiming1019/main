@@ -128,6 +128,4 @@ public interface Model {
     //@@author
 
     void setPrivacyLevel(int level);
-
-    int getPrivacyLevel();
 }

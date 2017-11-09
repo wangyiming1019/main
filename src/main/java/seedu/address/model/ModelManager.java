@@ -387,9 +387,4 @@ public class ModelManager extends ComponentManager implements Model {
             this.privacyLevel = level;
         }
     }
-
-    @Override
-    public int getPrivacyLevel() {
-        return this.privacyLevel;
-    }
 }
