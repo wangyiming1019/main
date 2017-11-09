@@ -1,387 +1,209 @@
 # jeffreygohkw
-###### /java/seedu/address/ui/BrowserPanelTest.java
+###### \java\seedu\address\logic\commands\ChangePrivacyCommandTest.java
 ``` java
-    @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
-
-        // google maps page of a person
-        postNow(panelLocateEventStub);
-        URL expectedMapUrl = new URL(GOOGLE_MAPS_URL_PREFIX
-                + BOB.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAPS_URL_SUFFIX
-                + "?dg=dbrw&newdg=1");
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedMapUrl, browserPanelHandle.getLoadedUrl());
-
-        // google maps page of a person
-        postNow(panelNavigateEventStub);
-        URL expectedDirUrl = new URL(GOOGLE_MAPS_DIRECTIONS_PREFIX
-                + "&origin="
-                + panelNavigateEventStub.getFromLocation().toString().replaceAll("#(\\w+)\\s*", "")
-                .replaceAll(" ", "+").replaceAll("-(\\w+)\\s*", "")
-                + "&destination="
-                + panelNavigateEventStub.getToLocation().toString().replaceAll("#(\\w+)\\s*", "")
-                .replaceAll(" ", "+").replaceAll("-(\\w+)\\s*", "")
-                + GOOGLE_MAPS_DIRECTIONS_SUFFIX);
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedDirUrl, browserPanelHandle.getLoadedUrl());
-    }
-}
-```
-###### /java/seedu/address/logic/parser/SortCommandParserTest.java
-``` java
-import static org.junit.Assert.assertEquals;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.SortCommand.ACCEPTED_FIELD_PARAMETERS;
-import static seedu.address.logic.commands.SortCommand.ACCEPTED_LIST_PARAMETERS;
-import static seedu.address.logic.commands.SortCommand.ACCEPTED_ORDER_PARAMETERS;
-import static seedu.address.logic.commands.SortCommand.MESSAGE_USAGE;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.SortCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-public class SortCommandParserTest {
-
-    private SortCommandParser parser = new SortCommandParser();
-
-    @Test
-    public void no_arguments_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-    }
-
-    //author charlesgoh
-    @Test
-    public void parse_wrongArguments_failure() {
-        // no list specified
-        assertParseFailure(parser,  ACCEPTED_FIELD_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-
-        // no field specified
-        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-
-        // no order specified
-        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(0),
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-
-        // list is person but field is for tasks
-        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(5)
-                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-
-        // list is task but field is for person
-        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(1) + " " + ACCEPTED_FIELD_PARAMETERS.get(0)
-                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-
-        // Incorrect test
-        assertParseFailure(parser, "random text",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
-
-    }
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommandChangePrivacy() throws Exception {
-        Person person = new PersonBuilder().build();
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
-
-        ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
-                ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
-                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
-                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
-        ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
-
-        assertTrue(changePrivacyCommandsEqual(command, actualCommand));
-    }
-
-    @Test
-    public void parseCommandAliasChangePrivacy() throws Exception {
-        Person person = new PersonBuilder().build();
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
-
-        ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
-                ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
-                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
-                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
-        ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
-
-        assertTrue(changePrivacyCommandsEqual(command, actualCommand));
-    }
-
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommandLocate() throws Exception {
-        LocateCommand command = (LocateCommand) parser.parseCommand(
-                LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommandAliasLocate() throws Exception {
-        LocateCommand command = (LocateCommand) parser.parseCommand(
-                LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommandNavigate() throws Exception {
-        NavigateCommand command = (NavigateCommand) parser.parseCommand(
-                NavigateCommand.COMMAND_WORD + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
-                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
-        Location from = new Location("NUS");
-        Location to = new Location("Sentosa");
-        assertEquals(new NavigateCommand(from, to, null, null, false, false),
-                command);
-    }
-
-    @Test
-    public void parseCommandAliasNavigate() throws Exception {
-        NavigateCommand command = (NavigateCommand) parser.parseCommand(
-                NavigateCommand.COMMAND_ALIAS + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
-                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
-        Location from = new Location("NUS");
-        Location to = new Location("Sentosa");
-        assertEquals(new NavigateCommand(from, to, null, null, false, false),
-                command);
-    }
-
-```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    /**
-     * Checks if 2 ChangePrivacyCommands are equal
-     * @param command the expected command
-     * @param actualCommand the actual command
-     * @return true if all the data are equal
-     */
-    private boolean changePrivacyCommandsEqual(ChangePrivacyCommand command, ChangePrivacyCommand actualCommand) {
-        assertEquals(command.getIndex(), actualCommand.getIndex());
-        assertEquals(command.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
-        assertEquals(command.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
-        assertEquals(command.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
-        assertEquals(command.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
-        return true;
-    }
-}
-```
-###### /java/seedu/address/logic/parser/LocateCommandParserTest.java
-``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.LocateCommand;
-
-/**
- * Test scope: similar to {@code SelectCommandParserTest}.
- * @see SelectCommandParserTest
- */
-public class LocateCommandParserTest {
-
-    private LocateCommandParser parser = new LocateCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsLocateCommand() {
-        assertParseSuccess(parser, "1", new LocateCommand(INDEX_FIRST_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LocateCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/parser/ChangePrivacyCommandParserTest.java
-``` java
-import static org.junit.Assert.assertEquals;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.ChangePrivacyCommand;
-import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonPrivacySettingsBuilder;
 
-public class ChangePrivacyCommandParserTest {
+public class ChangePrivacyCommandTest {
 
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE);
-
-    private ChangePrivacyCommandParser parser = new ChangePrivacyCommandParser();
+    private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
 
     @Test
-    public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+    public void personPrivacySettingsTests() {
+        PersonPrivacySettings pps = new PersonPrivacySettings();
 
-        // no field specified
-        assertParseFailure(parser, "1", ChangePrivacyCommand.MESSAGE_NO_FIELDS);
+        assertFalse(pps.isAnyFieldNonNull());
 
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+        PersonPrivacySettings ppsByBuilder = new PersonPrivacySettingsBuilder().setNamePrivate("true")
+            .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("true")
+            .setRemarkPrivate("false").build();
+        pps.setNameIsPrivate(true);
+        pps.setPhoneIsPrivate(false);
+        pps.setEmailIsPrivate(true);
+        pps.setAddressIsPrivate(true);
+        pps.setRemarkIsPrivate(false);
+
+        assertEquals(ppsByBuilder.getAddressIsPrivate(), pps.getAddressIsPrivate());
+        assertEquals(ppsByBuilder.getEmailIsPrivate(), pps.getEmailIsPrivate());
+        assertEquals(ppsByBuilder.getNameIsPrivate(), pps.getNameIsPrivate());
+        assertEquals(ppsByBuilder.getPhoneIsPrivate(), pps.getPhoneIsPrivate());
+        assertEquals(ppsByBuilder.getRemarkIsPrivate(), pps.getRemarkIsPrivate());
+        assertEquals(ppsByBuilder.isAnyFieldNonNull(), pps.isAnyFieldNonNull());
+
+        PersonPrivacySettings ppsCopy = new PersonPrivacySettings(pps);
+
+        assertEquals(ppsCopy.getAddressIsPrivate(), pps.getAddressIsPrivate());
+        assertEquals(ppsCopy.getEmailIsPrivate(), pps.getEmailIsPrivate());
+        assertEquals(ppsCopy.getNameIsPrivate(), pps.getNameIsPrivate());
+        assertEquals(ppsCopy.getPhoneIsPrivate(), pps.getPhoneIsPrivate());
+        assertEquals(ppsCopy.getRemarkIsPrivate(), pps.getRemarkIsPrivate());
     }
 
     @Test
-    public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Person newPerson = new PersonBuilder().withEmail("alice@example.com").build();
+        newPerson.getName().setPrivate(true);
+        newPerson.getPhone().setPrivate(true);
+        newPerson.getEmail().setPrivate(true);
+        newPerson.getAddress().setPrivate(true);
+        newPerson.setRemark(model.getFilteredPersonList().get(0).getRemark());
+        newPerson.getRemark().setPrivate(true);
 
-        // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("true")
+                .setPhonePrivate("true").setEmailPrivate("true").setAddressPrivate("true").setRemarkPrivate("true")
+                .build();
+        ChangePrivacyCommand changePrivacyCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
+        changePrivacyCommand.model = model;
 
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        String expectedMessage = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson);
 
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), newPerson);
+
+        assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
+
+        PersonPrivacySettings ppsPublic = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("false")
+                .setPhonePrivate("false").setEmailPrivate("false").setAddressPrivate("false").setRemarkPrivate("false")
+                .build();
+
+        newPerson.getName().setPrivate(false);
+        newPerson.getPhone().setPrivate(false);
+        newPerson.getEmail().setPrivate(false);
+        newPerson.getAddress().setPrivate(false);
+        newPerson.getRemark().setPrivate(false);
+
+        ChangePrivacyCommand changePrivacyCommandPublic = new ChangePrivacyCommand(INDEX_FIRST_PERSON, ppsPublic);
+        changePrivacyCommandPublic.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        String expectedMessagePublic = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson);
+
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), newPerson);
+
+        assertCommandSuccess(changePrivacyCommandPublic, model, expectedMessagePublic, expectedModel);
     }
 
     @Test
-    public void parse_invalidValue_failure() {
-        // Non boolean argument
-        assertParseFailure(parser, "1" + " " + PREFIX_NAME + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_PHONE + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_EMAIL + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_ADDRESS + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_REMARK + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
+        ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
-        // valid value followed by invalid value. The test case for invalid value  followed by valid value
-        // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-        assertParseFailure(parser, "1" + " " + PREFIX_NAME + "true" + " " + PREFIX_NAME + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_PHONE + "true" + " " + PREFIX_PHONE + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_EMAIL + "true" + " " + PREFIX_EMAIL + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_ADDRESS + "true" + " " + PREFIX_ADDRESS + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1" + " " + PREFIX_REMARK + "true" + " " + PREFIX_REMARK + "notBoolean",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
-    }
+        Person personInList = new PersonBuilder().withName(lastPerson.getName().toString())
+                .withPhone(lastPerson.getPhone().toString()).withEmail(lastPerson.getEmail().toString())
+                .withAddress(lastPerson.getAddress().toString()).withRemark(lastPerson.getRemark().toString())
+                .withFavourite(lastPerson.getFavourite().toString())
+                .build();
+
+        personInList.setTags(lastPerson.getTags());
+        personInList.getName().setPrivate(true);
+        personInList.getPhone().setPrivate(true);
 
 
-    @Test
-    public void parse_allFieldsSpecified_success() throws ParseException {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "false"
-                + " " + PREFIX_ADDRESS + "true" + " " + PREFIX_PHONE + "false";
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(personInList).setNamePrivate("true")
+                .setPhonePrivate("true").build();
+        ChangePrivacyCommand changePrivacyCommand = new ChangePrivacyCommand(indexLastPerson, pps);
+        changePrivacyCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true")
-                .setEmailPrivate("false").setAddressPrivate("true").setPhonePrivate("false").build();
-        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+        String expectedMessage = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, personInList);
 
-        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        compareChangePrivacyCommand(expectedCommand, actualCommand);
+        expectedModel.updatePerson(lastPerson, personInList);
 
-    }
+        assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
 
-    @Test
-    public void parse_someFieldsSpecified_success() throws ParseException {
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "true";
+        PersonPrivacySettings ppsPublic = new PersonPrivacySettingsBuilder(personInList).setNamePrivate("false")
+                .setPhonePrivate("false").build();
 
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true")
-                .setEmailPrivate("true").build();
-        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
 
-        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+        personInList.getName().setPrivate(false);
+        personInList.getPhone().setPrivate(false);
 
-        compareChangePrivacyCommand(expectedCommand, actualCommand);
-    }
+        ChangePrivacyCommand changePrivacyCommandPublic = new ChangePrivacyCommand(indexLastPerson, ppsPublic);
+        changePrivacyCommandPublic.setData(model, new CommandHistory(), new UndoRedoStack());
 
-    @Test
-    public void parse_oneFieldSpecified_success() throws ParseException {
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true";
+        String expectedMessagePublic = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, personInList);
 
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").build();
-        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+        expectedModel.updatePerson(lastPerson, personInList);
 
-        ChangePrivacyCommand actualCommand = parser.parse(userInput);
-
-        compareChangePrivacyCommand(expectedCommand, actualCommand);
-    }
-
-    @Test
-    public void parse_multipleRepeatedFields_acceptsLast() throws ParseException {
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "false"
-                + " " + PREFIX_ADDRESS + "true" + " " + PREFIX_PHONE + "false" + " " + PREFIX_NAME + "false" + " "
-                + PREFIX_EMAIL + "true" + " " + PREFIX_ADDRESS + "false" + " " + PREFIX_PHONE + "true";
-
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("false")
-                .setEmailPrivate("true").setAddressPrivate("false").setPhonePrivate("true").build();
-        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
-
-        ChangePrivacyCommand actualCommand = parser.parse(userInput);
-
-        compareChangePrivacyCommand(expectedCommand, actualCommand);
-    }
-
-    @Test
-    public void parse_invalidValueFollowedByValidValue_success() throws ParseException {
-        Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "notBoolean" + " " + PREFIX_NAME + "true";
-
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").build();
-        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
-
-        ChangePrivacyCommand actualCommand = parser.parse(userInput);
-
-        compareChangePrivacyCommand(expectedCommand, actualCommand);
-    }
-
-    /**
-     * Checks if two ChangePrivacyCommands are equal by comparing their contents
-     * @param expectedCommand The expected ChangePrivacyCommand
-     * @param actualCommand The actual ChangePrivacyCommand
-     */
-    private void compareChangePrivacyCommand(ChangePrivacyCommand expectedCommand, ChangePrivacyCommand actualCommand) {
-        assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
-        assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
-        assertEquals(expectedCommand.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
-        assertEquals(expectedCommand.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
-        assertEquals(expectedCommand.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
-        assertEquals(expectedCommand.getPps().getRemarkIsPrivate(), actualCommand.getPps().getRemarkIsPrivate());
+        assertCommandSuccess(changePrivacyCommandPublic, model, expectedMessagePublic, expectedModel);
     }
 }
 ```
-###### /java/seedu/address/logic/commands/LocateCommandTest.java
+###### \java\seedu\address\logic\commands\EditCommandTest.java
+``` java
+    @Test
+    public void execute_privateFields_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        personInFilteredList.getName().setPrivate(true);
+        Name originalName = personInFilteredList.getName();
+
+        personInFilteredList.getPhone().setPrivate(true);
+        Phone originalPhone = personInFilteredList.getPhone();
+
+        personInFilteredList.getEmail().setPrivate(true);
+        Email originalEmail = personInFilteredList.getEmail();
+
+        personInFilteredList.getAddress().setPrivate(true);
+        Address originalAddress = personInFilteredList.getAddress();
+
+        personInFilteredList.getRemark().setPrivate(true);
+        Remark originalRemark = personInFilteredList.getRemark();
+
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
+                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personInFilteredList);
+
+        assertCommandFailure(editCommand, model, expectedMessage);
+
+        assertEquals(personInFilteredList.getName(), originalName);
+        assertEquals(personInFilteredList.getPhone(), originalPhone);
+        assertEquals(personInFilteredList.getEmail(), originalEmail);
+        assertEquals(personInFilteredList.getAddress(), originalAddress);
+        assertEquals(personInFilteredList.getRemark(), originalRemark);
+
+        personInFilteredList.getName().setPrivate(false);
+        personInFilteredList.getPhone().setPrivate(false);
+        personInFilteredList.getEmail().setPrivate(false);
+        personInFilteredList.getAddress().setPrivate(false);
+        personInFilteredList.getRemark().setPrivate(false);
+    }
+
+    @Test
+    public void execute_noFieldSpecifiedUnfilteredList_failure() {
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
+
+        assertCommandFailure(editCommand, model, expectedMessage);
+    }
+
+```
+###### \java\seedu\address\logic\commands\LocateCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -578,8 +400,17 @@ public class LocateCommandTest {
         assertCommandFailure(editPersonCommand, model, expectedMessage);
     }
 
+    /**
+     * Returns a {@code LocateCommand} with parameters {@code index}.
+     */
+    private LocateCommand prepareCommand(Index index) {
+        LocateCommand locateCommand = new LocateCommand(index);
+        locateCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return locateCommand;
+    }
+}
 ```
-###### /java/seedu/address/logic/commands/NavigateCommandTest.java
+###### \java\seedu\address\logic\commands\NavigateCommandTest.java
 ``` java
 import static junit.framework.TestCase.assertEquals;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
@@ -715,186 +546,420 @@ public class NavigateCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ChangePrivacyCommandTest.java
+###### \java\seedu\address\logic\commands\OpenCommandTest.java
 ``` java
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.OpenCommand.OPEN_COMMAND_SUCCESS;
+
+import org.junit.Rule;
+import org.junit.Test;
+
+import seedu.address.commons.events.ui.OpenRequestEvent;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+public class OpenCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Test
+    public void execute_exit_success() {
+        CommandResult result = new OpenCommand().execute();
+        assertEquals(OPEN_COMMAND_SUCCESS, result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof OpenRequestEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SaveAsCommandTest.java
+``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.SaveAsCommand.SAVE_AS_COMMAND_SUCCESS;
+
+import org.junit.Rule;
+import org.junit.Test;
+
+import seedu.address.commons.events.ui.SaveAsRequestEvent;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+public class SaveAsCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Test
+    public void execute_exit_success() {
+        CommandResult result = new SaveAsCommand().execute();
+        assertEquals(SAVE_AS_COMMAND_SUCCESS, result.feedbackToUser);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof SaveAsRequestEvent);
+        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandChangePrivacy() throws Exception {
+        Person person = new PersonBuilder().build();
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
+
+        ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
+                ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+        ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
+
+        assertTrue(changePrivacyCommandsEqual(command, actualCommand));
+    }
+
+    @Test
+    public void parseCommandAliasChangePrivacy() throws Exception {
+        Person person = new PersonBuilder().build();
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(person).build();
+
+        ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
+                ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+        ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
+
+        assertTrue(changePrivacyCommandsEqual(command, actualCommand));
+    }
+
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandOpen() throws Exception {
+        assertTrue(parser.parseCommand(OpenCommand.COMMAND_WORD) instanceof OpenCommand);
+        assertTrue(parser.parseCommand(OpenCommand.COMMAND_WORD + " 3") instanceof OpenCommand);
+    }
+
+    @Test
+    public void parseCommandSaveAs() throws Exception {
+        assertTrue(parser.parseCommand(SaveAsCommand.COMMAND_WORD) instanceof SaveAsCommand);
+        assertTrue(parser.parseCommand(SaveAsCommand.COMMAND_WORD + " 3") instanceof SaveAsCommand);
+    }
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommandLocate() throws Exception {
+        LocateCommand command = (LocateCommand) parser.parseCommand(
+                LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandAliasLocate() throws Exception {
+        LocateCommand command = (LocateCommand) parser.parseCommand(
+                LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandNavigate() throws Exception {
+        NavigateCommand command = (NavigateCommand) parser.parseCommand(
+                NavigateCommand.COMMAND_WORD + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+        assertEquals(new NavigateCommand(from, to, null, null, false, false),
+                command);
+    }
+
+    @Test
+    public void parseCommandAliasNavigate() throws Exception {
+        NavigateCommand command = (NavigateCommand) parser.parseCommand(
+                NavigateCommand.COMMAND_ALIAS + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+        Location from = new Location("NUS");
+        Location to = new Location("Sentosa");
+        assertEquals(new NavigateCommand(from, to, null, null, false, false),
+                command);
+    }
+
+```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    /**
+     * Checks if 2 ChangePrivacyCommands are equal
+     * @param command the expected command
+     * @param actualCommand the actual command
+     * @return true if all the data are equal
+     */
+    private boolean changePrivacyCommandsEqual(ChangePrivacyCommand command, ChangePrivacyCommand actualCommand) {
+        assertEquals(command.getIndex(), actualCommand.getIndex());
+        assertEquals(command.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(command.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(command.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(command.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
+        return true;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ChangePrivacyCommandParserTest.java
+``` java
+import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.logic.commands.ChangePrivacyCommand;
+import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.testutil.PersonPrivacySettingsBuilder;
 
-public class ChangePrivacyCommandTest {
+public class ChangePrivacyCommandParserTest {
 
-    private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE);
+
+    private ChangePrivacyCommandParser parser = new ChangePrivacyCommandParser();
 
     @Test
-    public void personPrivacySettingsTests() {
-        PersonPrivacySettings pps = new PersonPrivacySettings();
+    public void parse_missingParts_failure() {
+        // no index specified
+        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
 
-        assertFalse(pps.isAnyFieldNonNull());
+        // no field specified
+        assertParseFailure(parser, "1", ChangePrivacyCommand.MESSAGE_NO_FIELDS);
 
-        PersonPrivacySettings ppsByBuilder = new PersonPrivacySettingsBuilder().setNamePrivate("true")
-            .setPhonePrivate("false").setEmailPrivate("true").setAddressPrivate("true")
-            .setRemarkPrivate("false").build();
-        pps.setNameIsPrivate(true);
-        pps.setPhoneIsPrivate(false);
-        pps.setEmailIsPrivate(true);
-        pps.setAddressIsPrivate(true);
-        pps.setRemarkIsPrivate(false);
-
-        assertEquals(ppsByBuilder.getAddressIsPrivate(), pps.getAddressIsPrivate());
-        assertEquals(ppsByBuilder.getEmailIsPrivate(), pps.getEmailIsPrivate());
-        assertEquals(ppsByBuilder.getNameIsPrivate(), pps.getNameIsPrivate());
-        assertEquals(ppsByBuilder.getPhoneIsPrivate(), pps.getPhoneIsPrivate());
-        assertEquals(ppsByBuilder.getRemarkIsPrivate(), pps.getRemarkIsPrivate());
-        assertEquals(ppsByBuilder.isAnyFieldNonNull(), pps.isAnyFieldNonNull());
-
-        PersonPrivacySettings ppsCopy = new PersonPrivacySettings(pps);
-
-        assertEquals(ppsCopy.getAddressIsPrivate(), pps.getAddressIsPrivate());
-        assertEquals(ppsCopy.getEmailIsPrivate(), pps.getEmailIsPrivate());
-        assertEquals(ppsCopy.getNameIsPrivate(), pps.getNameIsPrivate());
-        assertEquals(ppsCopy.getPhoneIsPrivate(), pps.getPhoneIsPrivate());
-        assertEquals(ppsCopy.getRemarkIsPrivate(), pps.getRemarkIsPrivate());
+        // no index and no field specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person newPerson = new PersonBuilder().withEmail("alice@example.com").build();
-        newPerson.getName().setPrivate(true);
-        newPerson.getPhone().setPrivate(true);
-        newPerson.getEmail().setPrivate(true);
-        newPerson.getAddress().setPrivate(true);
-        newPerson.setRemark(model.getFilteredPersonList().get(0).getRemark());
-        newPerson.getRemark().setPrivate(true);
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("true")
-                .setPhonePrivate("true").setEmailPrivate("true").setAddressPrivate("true").setRemarkPrivate("true")
-                .build();
-        ChangePrivacyCommand changePrivacyCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
-        changePrivacyCommand.model = model;
+        // zero index
+        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
-        String expectedMessage = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson);
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), newPerson);
-
-        assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
-
-        PersonPrivacySettings ppsPublic = new PersonPrivacySettingsBuilder(newPerson).setNamePrivate("false")
-                .setPhonePrivate("false").setEmailPrivate("false").setAddressPrivate("false").setRemarkPrivate("false")
-                .build();
-
-        newPerson.getName().setPrivate(false);
-        newPerson.getPhone().setPrivate(false);
-        newPerson.getEmail().setPrivate(false);
-        newPerson.getAddress().setPrivate(false);
-        newPerson.getRemark().setPrivate(false);
-
-        ChangePrivacyCommand changePrivacyCommandPublic = new ChangePrivacyCommand(INDEX_FIRST_PERSON, ppsPublic);
-        changePrivacyCommandPublic.setData(model, new CommandHistory(), new UndoRedoStack());
-
-        String expectedMessagePublic = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, newPerson);
-
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), newPerson);
-
-        assertCommandSuccess(changePrivacyCommandPublic, model, expectedMessagePublic, expectedModel);
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-        ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
+    public void parse_invalidValue_failure() {
+        // Non boolean argument
+        assertParseFailure(parser, "1" + " " + PREFIX_NAME + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_PHONE + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_EMAIL + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_ADDRESS + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_REMARK + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
 
-        Person personInList = new PersonBuilder().withName(lastPerson.getName().toString())
-                .withPhone(lastPerson.getPhone().toString()).withEmail(lastPerson.getEmail().toString())
-                .withAddress(lastPerson.getAddress().toString()).withRemark(lastPerson.getRemark().toString())
-                .withFavourite(lastPerson.getFavourite().toString())
-                .build();
-
-        personInList.setTags(lastPerson.getTags());
-        personInList.getName().setPrivate(true);
-        personInList.getPhone().setPrivate(true);
-
-
-        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder(personInList).setNamePrivate("true")
-                .setPhonePrivate("true").build();
-        ChangePrivacyCommand changePrivacyCommand = new ChangePrivacyCommand(indexLastPerson, pps);
-        changePrivacyCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
-        String expectedMessage = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, personInList);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        expectedModel.updatePerson(lastPerson, personInList);
-
-        assertCommandSuccess(changePrivacyCommand, model, expectedMessage, expectedModel);
-
-        PersonPrivacySettings ppsPublic = new PersonPrivacySettingsBuilder(personInList).setNamePrivate("false")
-                .setPhonePrivate("false").build();
+        // valid value followed by invalid value. The test case for invalid value  followed by valid value
+        // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
+        assertParseFailure(parser, "1" + " " + PREFIX_NAME + "true" + " " + PREFIX_NAME + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_PHONE + "true" + " " + PREFIX_PHONE + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_EMAIL + "true" + " " + PREFIX_EMAIL + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_ADDRESS + "true" + " " + PREFIX_ADDRESS + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "1" + " " + PREFIX_REMARK + "true" + " " + PREFIX_REMARK + "notBoolean",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePrivacyCommand.MESSAGE_USAGE));
+    }
 
 
-        personInList.getName().setPrivate(false);
-        personInList.getPhone().setPrivate(false);
+    @Test
+    public void parse_allFieldsSpecified_success() throws ParseException {
+        Index targetIndex = INDEX_SECOND_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "false"
+                + " " + PREFIX_ADDRESS + "true" + " " + PREFIX_PHONE + "false";
 
-        ChangePrivacyCommand changePrivacyCommandPublic = new ChangePrivacyCommand(indexLastPerson, ppsPublic);
-        changePrivacyCommandPublic.setData(model, new CommandHistory(), new UndoRedoStack());
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true")
+                .setEmailPrivate("false").setAddressPrivate("true").setPhonePrivate("false").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
 
-        String expectedMessagePublic = String.format(ChangePrivacyCommand.MESSAGE_CHANGE_PRIVACY_SUCCESS, personInList);
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
 
-        expectedModel.updatePerson(lastPerson, personInList);
+        compareChangePrivacyCommand(expectedCommand, actualCommand);
 
-        assertCommandSuccess(changePrivacyCommandPublic, model, expectedMessagePublic, expectedModel);
+    }
+
+    @Test
+    public void parse_someFieldsSpecified_success() throws ParseException {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true")
+                .setEmailPrivate("true").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        compareChangePrivacyCommand(expectedCommand, actualCommand);
+    }
+
+    @Test
+    public void parse_oneFieldSpecified_success() throws ParseException {
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        compareChangePrivacyCommand(expectedCommand, actualCommand);
+    }
+
+    @Test
+    public void parse_multipleRepeatedFields_acceptsLast() throws ParseException {
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "true" + " " + PREFIX_EMAIL + "false"
+                + " " + PREFIX_ADDRESS + "true" + " " + PREFIX_PHONE + "false" + " " + PREFIX_NAME + "false" + " "
+                + PREFIX_EMAIL + "true" + " " + PREFIX_ADDRESS + "false" + " " + PREFIX_PHONE + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("false")
+                .setEmailPrivate("true").setAddressPrivate("false").setPhonePrivate("true").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        compareChangePrivacyCommand(expectedCommand, actualCommand);
+    }
+
+    @Test
+    public void parse_invalidValueFollowedByValidValue_success() throws ParseException {
+        Index targetIndex = INDEX_THIRD_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NAME + "notBoolean" + " " + PREFIX_NAME + "true";
+
+        PersonPrivacySettings pps = new PersonPrivacySettingsBuilder().setNamePrivate("true").build();
+        ChangePrivacyCommand expectedCommand = new ChangePrivacyCommand(targetIndex, pps);
+
+        ChangePrivacyCommand actualCommand = parser.parse(userInput);
+
+        compareChangePrivacyCommand(expectedCommand, actualCommand);
+    }
+
+    /**
+     * Checks if two ChangePrivacyCommands are equal by comparing their contents
+     * @param expectedCommand The expected ChangePrivacyCommand
+     * @param actualCommand The actual ChangePrivacyCommand
+     */
+    private void compareChangePrivacyCommand(ChangePrivacyCommand expectedCommand, ChangePrivacyCommand actualCommand) {
+        assertEquals(expectedCommand.getIndex(), actualCommand.getIndex());
+        assertEquals(expectedCommand.getPps().getAddressIsPrivate(), actualCommand.getPps().getAddressIsPrivate());
+        assertEquals(expectedCommand.getPps().getNameIsPrivate(), actualCommand.getPps().getNameIsPrivate());
+        assertEquals(expectedCommand.getPps().getEmailIsPrivate(), actualCommand.getPps().getEmailIsPrivate());
+        assertEquals(expectedCommand.getPps().getPhoneIsPrivate(), actualCommand.getPps().getPhoneIsPrivate());
+        assertEquals(expectedCommand.getPps().getRemarkIsPrivate(), actualCommand.getPps().getRemarkIsPrivate());
     }
 }
 ```
-###### /java/seedu/address/model/person/NameTest.java
+###### \java\seedu\address\logic\parser\LocateCommandParserTest.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.LocateCommand;
+
+/**
+ * Test scope: similar to {@code SelectCommandParserTest}.
+ * @see SelectCommandParserTest
+ */
+public class LocateCommandParserTest {
+
+    private LocateCommandParser parser = new LocateCommandParser();
+
     @Test
-    public void privateNameIsHidden_success() throws IllegalValueException {
-        Name n = new Name("Any Name", true);
-        assertTrue(n.isPrivate());
-        assertEquals(n.toString(), "<Private Name>");
+    public void parse_validArgs_returnsLocateCommand() {
+        assertParseSuccess(parser, "1", new LocateCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LocateCommand.MESSAGE_USAGE));
     }
 }
 ```
-###### /java/seedu/address/model/person/PhoneTest.java
+###### \java\seedu\address\logic\parser\SortCommandParserTest.java
 ``` java
+import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_FIELD_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_LIST_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.ACCEPTED_ORDER_PARAMETERS;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_USAGE;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class SortCommandParserTest {
+
+    private SortCommandParser parser = new SortCommandParser();
+
     @Test
-    public void privatePhoneIsHidden_success() throws IllegalValueException {
-        Phone p = new Phone("999", true);
-        assertTrue(p.isPrivate());
-        assertEquals(p.toString(), "<Private Phone>");
+    public void no_arguments_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
     }
-}
-```
-###### /java/seedu/address/model/person/EmailTest.java
-``` java
+
+    //author charlesgoh
     @Test
-    public void privateEmailIsHidden_success() throws IllegalValueException {
-        Email e = new Email("AnyEmail@example.com", true);
-        assertTrue(e.isPrivate());
-        assertEquals(e.toString(), "<Private Email>");
+    public void parse_wrongArguments_failure() {
+        // no list specified
+        assertParseFailure(parser,  ACCEPTED_FIELD_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // no field specified
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_ORDER_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // no order specified
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(0),
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // list is person but field is for tasks
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(0) + " " + ACCEPTED_FIELD_PARAMETERS.get(5)
+                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // list is task but field is for person
+        assertParseFailure(parser,  ACCEPTED_LIST_PARAMETERS.get(1) + " " + ACCEPTED_FIELD_PARAMETERS.get(0)
+                + " " + ACCEPTED_ORDER_PARAMETERS.get(0), String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
+        // Incorrect test
+        assertParseFailure(parser, "random text",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+
     }
-}
 ```
-###### /java/seedu/address/model/person/AddressTest.java
+###### \java\seedu\address\model\person\AddressTest.java
 ``` java
     @Test
     public void privateAddressIsHidden_success() throws IllegalValueException {
@@ -904,7 +969,37 @@ public class ChangePrivacyCommandTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/PersonPrivacySettingsBuilder.java
+###### \java\seedu\address\model\person\EmailTest.java
+``` java
+    @Test
+    public void privateEmailIsHidden_success() throws IllegalValueException {
+        Email e = new Email("AnyEmail@example.com", true);
+        assertTrue(e.isPrivate());
+        assertEquals(e.toString(), "<Private Email>");
+    }
+}
+```
+###### \java\seedu\address\model\person\NameTest.java
+``` java
+    @Test
+    public void privateNameIsHidden_success() throws IllegalValueException {
+        Name n = new Name("Any Name", true);
+        assertTrue(n.isPrivate());
+        assertEquals(n.toString(), "<Private Name>");
+    }
+}
+```
+###### \java\seedu\address\model\person\PhoneTest.java
+``` java
+    @Test
+    public void privatePhoneIsHidden_success() throws IllegalValueException {
+        Phone p = new Phone("999", true);
+        assertTrue(p.isPrivate());
+        assertEquals(p.toString(), "<Private Phone>");
+    }
+}
+```
+###### \java\seedu\address\testutil\PersonPrivacySettingsBuilder.java
 ``` java
 import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -1007,6 +1102,39 @@ public class PersonPrivacySettingsBuilder {
 
     public PersonPrivacySettings build() {
         return pps;
+    }
+}
+```
+###### \java\seedu\address\ui\BrowserPanelTest.java
+``` java
+    @Test
+    public void display() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // google maps page of a person
+        postNow(panelLocateEventStub);
+        URL expectedMapUrl = new URL(GOOGLE_MAPS_URL_PREFIX
+                + BOB.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAPS_URL_SUFFIX
+                + "?dg=dbrw&newdg=1");
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedMapUrl, browserPanelHandle.getLoadedUrl());
+
+        // google maps page of a person
+        postNow(panelNavigateEventStub);
+        URL expectedDirUrl = new URL(GOOGLE_MAPS_DIRECTIONS_PREFIX
+                + "&origin="
+                + panelNavigateEventStub.getFromLocation().toString().replaceAll("#(\\w+)\\s*", "")
+                .replaceAll(" ", "+").replaceAll("-(\\w+)\\s*", "")
+                + "&destination="
+                + panelNavigateEventStub.getToLocation().toString().replaceAll("#(\\w+)\\s*", "")
+                .replaceAll(" ", "+").replaceAll("-(\\w+)\\s*", "")
+                + GOOGLE_MAPS_DIRECTIONS_SUFFIX);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedDirUrl, browserPanelHandle.getLoadedUrl());
     }
 }
 ```

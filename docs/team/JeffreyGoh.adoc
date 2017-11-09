@@ -86,11 +86,41 @@ include::../DeveloperGuide.adoc[tag=navigate]
 
 ---
 
+=== Enhancement Added: Opening and Saving of the .xml save file
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=open]
+
+include::../UserGuide.adoc[tag=saveas]
+
+include::../UserGuide.adoc[tag=opensaveas]
+
+
+---
+
+==== Justification
+
+Open and Save As will allow users to more easily manage their data. Open allows them to load their data from a .xml file, letting them easily work on multiple different address books. +
+Save As allows users to save their address book data, letting it serve as backup or allowing them to be placed in a different location on the computer while still remaining operational. +
+This also allows for easier transfers of save files between devices without having to manually drag and manage the save files to and from the folder where Address++ is located.
+It can even potentially allow for syncing save files between devices if external software like Dropbox is used.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=opensaveas]
+
+---
+
 === Other contributions
 
-* Added Save As and Open (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/10[#10], https://github.com/CS2103AUG2017-W09-B2/main/pull/17[#17])
-* Add Icons for Open, Save As, Exit and Help (Pull request https://github.com/CS2103AUG2017-W09-B2/main/pull/10[#10])
+* Add Menu Icons for Open, Save As, Exit and Help (Pull request https://github.com/CS2103AUG2017-W09-B2/main/pull/10[#10])
 * Add Keyboard Shortcuts for Open, Save As, Exit and Help (Pull request https://github.com/CS2103AUG2017-W09-B2/main/pull/10[#11], https://github.com/CS2103AUG2017-W09-B2/main/pull/101[#101])
 * Modified SortCommand to be undoable, and wrote test cases for it (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/29[#29], https://github.com/CS2103AUG2017-W09-B2/main/pull/30[#30])
 * Created TaskAddress to store the address of tasks (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/129[#129], https://github.com/CS2103AUG2017-W09-B2/main/pull/132[#132])
 * Added Travis, Coveralls and Appveyor links for Continuous Integration (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/4[#4], https://github.com/CS2103AUG2017-W09-B2/main/pull/22[#22])
+* Performed Acceptance Testing for Team T16-B2 (Issue https://github.com/CS2103AUG2017-T16-B2/main/issues/102[#102])
