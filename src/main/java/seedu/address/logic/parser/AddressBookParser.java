@@ -31,6 +31,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.NavigateCommand;
+import seedu.address.logic.commands.NoAccessCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
@@ -67,8 +68,32 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
 
+        // Cases for non operationally related functionality and for locking and unlocking
+        switch (commandWord) {
+        case FontSizeCommand.COMMAND_WORD:
+        case FontSizeCommand.COMMAND_ALIAS:
+            return new FontSizeCommandParser().parse(arguments);
+
+        case LockCommand.COMMAND_WORD:
+        case LockCommand.COMMAND_ALIAS:
+            return new LockCommandParser().parse(arguments);
+
+        case UnlockCommand.COMMAND_WORD:
+        case UnlockCommand.COMMAND_ALIAS:
+            return new UnlockCommandParser().parse(arguments);
+
+        default:
+            break;
+        }
+
+        // Test for lock. If locked, return placeholder NoAccessCommand object
+        if (lockState) {
+            return new NoAccessCommand();
+        }
+
+        // Cases for CRUD related functionality
+        switch (commandWord) {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
@@ -174,7 +199,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-        //@@author charlesgoh
+
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
@@ -182,10 +207,6 @@ public class AddressBookParser {
         case BackupCommand.COMMAND_WORD:
         case BackupCommand.COMMAND_ALIAS:
             return new BackupCommandParser().parse(arguments);
-
-        case FontSizeCommand.COMMAND_WORD:
-        case FontSizeCommand.COMMAND_ALIAS:
-            return new FontSizeCommandParser().parse(arguments);
 
         case ChangePasswordCommand.COMMAND_WORD:
         case ChangePasswordCommand.COMMAND_ALIAS:
@@ -198,7 +219,7 @@ public class AddressBookParser {
         case UnlockCommand.COMMAND_WORD:
         case UnlockCommand.COMMAND_ALIAS:
             return new UnlockCommandParser().parse(arguments);
-        //author charlesgoh
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
