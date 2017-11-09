@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -10,6 +13,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and returns a new LockCommand object
  */
 public class UnlockCommandParser implements Parser<UnlockCommand> {
+
+    public static final String MESSAGE_PRIORITY_CONSTRAINTS = "Password is required";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     /**
      * Parses the given {@code String} of arguments in the context of the UnlockCommand
@@ -25,11 +32,11 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
             }
-            String[] nameKeywords = trimmedArgs.split("\\s+");
-            return new UnlockCommand(nameKeywords[0]);
+            String[] passwordKeywords = trimmedArgs.split("\\s+");
+            return new UnlockCommand(passwordKeywords[0]);
         } else {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+            String[] passwordKeywords = trimmedArgs.split(PREFIX_PASSWORD.getPrefix());
+            return new UnlockCommand(passwordKeywords[1]);
         }
     }
 }

@@ -26,11 +26,11 @@ public class LockCommandParser implements Parser<LockCommand> {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
             }
-            String[] nameKeywords = trimmedArgs.split("\\s+");
-            return new LockCommand(nameKeywords[0]);
+            String[] passwordKeywords = trimmedArgs.split("\\s+");
+            return new LockCommand(passwordKeywords[0]);
         } else {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
+            String[] passwordKeywords = trimmedArgs.split(PREFIX_PASSWORD.getPrefix());
+            return new LockCommand(passwordKeywords[1]);
         }
     }
 }
