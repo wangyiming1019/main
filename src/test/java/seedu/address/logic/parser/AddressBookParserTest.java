@@ -82,11 +82,11 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandAdd() throws Exception {
         Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
+        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person), false);
         assertEquals(new AddCommand(person), command);
 
         Task task = new TaskBuilder().build();
-        command = (AddCommand) parser.parseCommand(TaskUtil.getAddCommand(task));
+        command = (AddCommand) parser.parseCommand(TaskUtil.getAddCommand(task), false);
         assertEquals(new AddCommand(task), command);
     }
 
@@ -95,12 +95,12 @@ public class AddressBookParserTest {
     public void parseCommandAliasAdd() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(AddCommand.COMMAND_ALIAS + " "
-                + PersonUtil.getPersonDetails(person));
+                + PersonUtil.getPersonDetails(person), false);
         assertEquals(new AddCommand(person), command);
 
         Task task = new TaskBuilder().build();
         command = (AddCommand) parser.parseCommand(AddCommand.COMMAND_ALIAS + " "
-                + PREFIX_TASK + " " + TaskUtil.getTaskDetails(task));
+                + PREFIX_TASK + " " + TaskUtil.getTaskDetails(task), false);
         assertEquals(new AddCommand(task), command);
     }
 
@@ -110,7 +110,7 @@ public class AddressBookParserTest {
         ArrayList<Index> personIndexes = new ArrayList<>(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
         AssignCommand command = (AssignCommand) parser.parseCommand(AssignCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
-                + PREFIX_TARGET + INDEX_FIRST_TASK.getOneBased());
+                + PREFIX_TARGET + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new AssignCommand(personIndexes, INDEX_FIRST_TASK), command);
     }
 
@@ -119,7 +119,7 @@ public class AddressBookParserTest {
         ArrayList<Index> personIndexes = new ArrayList<>(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
         AssignCommand command = (AssignCommand) parser.parseCommand(AssignCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
-                + PREFIX_TARGET + INDEX_FIRST_TASK.getOneBased());
+                + PREFIX_TARGET + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new AssignCommand(personIndexes, INDEX_FIRST_TASK), command);
     }
 
@@ -134,7 +134,7 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
                         + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
                         + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()), false);
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -150,7 +150,7 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
                         + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
                         + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()), false);
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -159,33 +159,34 @@ public class AddressBookParserTest {
     //@@author
     @Test
     public void parseCommandClear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, false) instanceof ClearCommand);
     }
 
     @Test
     public void parseCommandAliasClear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS, false) instanceof ClearCommand);
     }
 
     @Test
     public void parseCommandDelete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(), false);
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON, DELETE_TYPE_PERSON), command);
 
         command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + PREFIX_TASK + " " + INDEX_FIRST_TASK.getOneBased());
+                DeleteCommand.COMMAND_WORD + " " + PREFIX_TASK + " " + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new DeleteCommand(INDEX_FIRST_TASK, DELETE_TYPE_TASK), command);
     }
 
     @Test
     public void parseCommandAliasDelete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+                DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased(), false);
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON, DELETE_TYPE_PERSON), command);
 
         command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_ALIAS + " " + PREFIX_TASK + " "  + INDEX_FIRST_TASK.getOneBased());
+                DeleteCommand.COMMAND_ALIAS + " "
+                        + PREFIX_TASK + " "  + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new DeleteCommand(INDEX_FIRST_TASK, DELETE_TYPE_TASK), command);
     }
 
@@ -195,7 +196,7 @@ public class AddressBookParserTest {
         ArrayList<Index> personIndexes = new ArrayList<>(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
         DismissCommand command = (DismissCommand) parser.parseCommand(DismissCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
-                + PREFIX_FROM + INDEX_FIRST_TASK.getOneBased());
+                + PREFIX_FROM + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new DismissCommand(personIndexes, INDEX_FIRST_TASK), command);
     }
 
@@ -204,7 +205,7 @@ public class AddressBookParserTest {
         ArrayList<Index> personIndexes = new ArrayList<>(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
         DismissCommand command = (DismissCommand) parser.parseCommand(DismissCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
-                + PREFIX_FROM + INDEX_FIRST_TASK.getOneBased());
+                + PREFIX_FROM + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new DismissCommand(personIndexes, INDEX_FIRST_TASK), command);
     }
     //@@author
@@ -214,13 +215,13 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person), false);
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
 
         Task task = new TaskBuilder().build();
         EditTaskDescriptor taskDescriptor = new EditTaskDescriptorBuilder(task).build();
         command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_TASK.getOneBased() + " " + PREFIX_TASK + " " + TaskUtil.getTaskDetails(task));
+                + INDEX_FIRST_TASK.getOneBased() + " " + PREFIX_TASK + " " + TaskUtil.getTaskDetails(task), false);
         assertEquals(new EditCommand(INDEX_FIRST_TASK, taskDescriptor), command);
     }
 
@@ -229,13 +230,13 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person), false);
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
 
         Task task = new TaskBuilder().build();
         EditTaskDescriptor taskDescriptor = new EditTaskDescriptorBuilder(task).build();
         command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_TASK.getOneBased() + " " + PREFIX_TASK + " " + TaskUtil.getTaskDetails(task));
+                + INDEX_FIRST_TASK.getOneBased() + " " + PREFIX_TASK + " " + TaskUtil.getTaskDetails(task), false);
         assertEquals(new EditCommand(INDEX_FIRST_TASK, taskDescriptor), command);
     }
 
@@ -243,7 +244,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandEditTag() throws Exception {
         EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_WORD + " "
-                + " friends enemies");
+                + " friends enemies", false);
         Tag friends = new Tag("friends");
         Tag enemies = new Tag("enemies");
         assertEquals(new EditTagCommand(friends, enemies), command);
@@ -252,7 +253,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandAliasEditTag() throws Exception {
         EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_ALIAS + " "
-                + " friends enemies");
+                + " friends enemies", false);
         Tag friends = new Tag("friends");
         Tag enemies = new Tag("enemies");
         assertEquals(new EditTagCommand(friends, enemies), command);
@@ -261,41 +262,48 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommandExit() throws Exception {
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
+        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD, false) instanceof ExitCommand);
+        assertTrue(parser
+                .parseCommand(ExitCommand.COMMAND_WORD + " 3", false) instanceof ExitCommand);
     }
 
     @Test
     public void parseCommandFind() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        FindCommand command = (FindCommand) parser
+                .parseCommand(FindCommand
+                        .COMMAND_WORD + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")), false);
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
 
         command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + PREFIX_TASK +  " "
-                        + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new TaskContainsKeywordPredicate(keywords, false, false, false, 0)), command);
+                        + keywords.stream().collect(Collectors.joining(" ")), false);
+        assertEquals(new FindCommand(
+                new TaskContainsKeywordPredicate(keywords, false, false, false, 0)), command);
     }
 
     @Test
     public void parseCommandAliasFind() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindCommand.COMMAND_ALIAS + " " + keywords
+                        .stream().collect(Collectors.joining(" ")), false);
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
 
         command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_ALIAS + " " + PREFIX_TASK +  " "
-                        + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new TaskContainsKeywordPredicate(keywords, false, false, false, 0)), command);
+                        + keywords.stream().collect(Collectors.joining(" ")), false);
+        assertEquals(new FindCommand(new TaskContainsKeywordPredicate(
+                keywords, false, false, false, 0)), command);
     }
     //@@author wangyiming1019
     @Test
     public void parseCommandFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
         FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindTagCommand.COMMAND_WORD + " " + keywords
+                        .stream().collect(Collectors.joining(" ")), false);
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }
@@ -304,24 +312,25 @@ public class AddressBookParserTest {
     public void parseCommandAliasFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
         FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindTagCommand.COMMAND_ALIAS + " " + keywords.stream()
+                        .collect(Collectors.joining(" ")), false);
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }
     //@@author
     @Test
     public void parseCommandHelp() throws Exception {
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, false) instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3", false) instanceof HelpCommand);
     }
 
     @Test
     public void parseCommandHistory() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3") instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD, false) instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3", false) instanceof HistoryCommand);
 
         try {
-            parser.parseCommand("histories");
+            parser.parseCommand("histories", false);
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
@@ -330,11 +339,11 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommandAliasHistory() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS + " 3") instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS, false) instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS + " 3", false) instanceof HistoryCommand);
 
         try {
-            parser.parseCommand("histories");
+            parser.parseCommand("histories", false);
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
@@ -343,27 +352,27 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommandList() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD, false) instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3", false) instanceof ListCommand);
     }
 
     @Test
     public void parseCommandAliasList() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS, false) instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3", false) instanceof ListCommand);
     }
 
     @Test
     public void parseCommandSelect() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(), false);
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON, false), command);
     }
 
     @Test
     public void parseCommandAliasSelect() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+                SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased(), false);
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON, false), command);
     }
 
@@ -371,14 +380,14 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandLocate() throws Exception {
         LocateCommand command = (LocateCommand) parser.parseCommand(
-                LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+                LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(), false);
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommandAliasLocate() throws Exception {
         LocateCommand command = (LocateCommand) parser.parseCommand(
-                LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+                LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased(), false);
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
     }
 
@@ -386,7 +395,7 @@ public class AddressBookParserTest {
     public void parseCommandNavigate() throws Exception {
         NavigateCommand command = (NavigateCommand) parser.parseCommand(
                 NavigateCommand.COMMAND_WORD + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
-                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa", false);
         Location from = new Location("NUS");
         Location to = new Location("Sentosa");
         assertEquals(new NavigateCommand(from, to, null, null, false, false),
@@ -397,7 +406,7 @@ public class AddressBookParserTest {
     public void parseCommandAliasNavigate() throws Exception {
         NavigateCommand command = (NavigateCommand) parser.parseCommand(
                 NavigateCommand.COMMAND_ALIAS + " " + PREFIX_NAVIGATE_FROM_ADDRESS + "NUS"
-                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa");
+                        + " " + PREFIX_NAVIGATE_TO_ADDRESS + "Sentosa", false);
         Location from = new Location("NUS");
         Location to = new Location("Sentosa");
         assertEquals(new NavigateCommand(from, to, null, null, false, false),
@@ -409,27 +418,29 @@ public class AddressBookParserTest {
     public void parseSortCommandWord() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " "
                 + SortCommand.ACCEPTED_LIST_PARAMETERS.get(0) + " " + SortCommand.ACCEPTED_FIELD_PARAMETERS.get(0)
-                + " " + SortCommand.ACCEPTED_ORDER_PARAMETERS.get(0)) instanceof SortCommand);
+                + " " + SortCommand.ACCEPTED_ORDER_PARAMETERS.get(0), false) instanceof SortCommand);
     }
 
     @Test
     public void parseSortCommandAlias() throws Exception {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_ALIAS + " "
                 + SortCommand.ACCEPTED_LIST_PARAMETERS.get(0) + " " + SortCommand.ACCEPTED_FIELD_PARAMETERS.get(0)
-                + " " + SortCommand.ACCEPTED_ORDER_PARAMETERS.get(0)) instanceof SortCommand);
+                + " " + SortCommand.ACCEPTED_ORDER_PARAMETERS.get(0), false) instanceof SortCommand);
     }
 
     @Test
     public void parseCommandBackup() throws Exception {
-        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " testbackupfilename") instanceof BackupCommand);
-        assertTrue(parser.parseCommand(BackupCommand.COMMAND_ALIAS + " testbackupfilename") instanceof BackupCommand);
+        assertTrue(parser.parseCommand(BackupCommand
+                .COMMAND_WORD + " testbackupfilename", false) instanceof BackupCommand);
+        assertTrue(parser.parseCommand(BackupCommand
+                .COMMAND_ALIAS + " testbackupfilename", false) instanceof BackupCommand);
     }
 
     @Test
     public void parseCommandFontSizeWord() throws Exception {
         for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
             assertTrue(parser
-                    .parseCommand(FontSizeCommand.COMMAND_WORD + " " + arg) instanceof FontSizeCommand);
+                    .parseCommand(FontSizeCommand.COMMAND_WORD + " " + arg, false) instanceof FontSizeCommand);
         }
 
     }
@@ -438,7 +449,7 @@ public class AddressBookParserTest {
     public void parseCommandFontSizeAlias() throws Exception {
         for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
             assertTrue(parser
-                    .parseCommand(FontSizeCommand.COMMAND_ALIAS + " " + arg) instanceof FontSizeCommand);
+                    .parseCommand(FontSizeCommand.COMMAND_ALIAS + " " + arg, false) instanceof FontSizeCommand);
         }
 
     }
@@ -446,58 +457,58 @@ public class AddressBookParserTest {
     //@@author
     @Test
     public void parseCommandRedoCommandWordReturnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD, false) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redo 1", false) instanceof RedoCommand);
     }
 
     //@@author Esilocke
     @Test
     public void  parseCommandSetComplete() throws Exception {
         SetCompleteCommand command = (SetCompleteCommand) parser.parseCommand(SetCompleteCommand.COMMAND_WORD
-                + " " + INDEX_FIRST_TASK.getOneBased());
+                + " " + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new SetCompleteCommand(INDEX_FIRST_TASK), command);
     }
 
     @Test
     public void  parseCommandAliasSetComplete() throws Exception {
         SetCompleteCommand command = (SetCompleteCommand) parser.parseCommand(SetCompleteCommand.COMMAND_ALIAS
-                + " " + INDEX_FIRST_TASK.getOneBased());
+                + " " + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new SetCompleteCommand(INDEX_FIRST_TASK), command);
     }
 
     @Test
     public void  parseCommandSetIncomplete() throws Exception {
         SetIncompleteCommand command = (SetIncompleteCommand) parser.parseCommand(SetIncompleteCommand.COMMAND_ALIAS
-                + " " + INDEX_FIRST_TASK.getOneBased());
+                + " " + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new SetIncompleteCommand(INDEX_FIRST_TASK), command);
     }
 
     @Test
     public void  parseCommandAliasSetIncomplete() throws Exception {
         SetIncompleteCommand command = (SetIncompleteCommand) parser.parseCommand(SetIncompleteCommand.COMMAND_ALIAS
-                + " " + INDEX_FIRST_TASK.getOneBased());
+                + " " + INDEX_FIRST_TASK.getOneBased(), false);
         assertEquals(new SetIncompleteCommand(INDEX_FIRST_TASK), command);
     }
     //@@author
 
     @Test
     public void parseCommandUndoCommandWordReturnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD, false) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undo 3", false) instanceof UndoCommand);
     }
 
     @Test
     public void parseCommandUnrecognisedInputThrowsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        parser.parseCommand("");
+        parser.parseCommand("", false);
     }
 
     @Test
     public void parseCommandUnknownCommandThrowsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand");
+        parser.parseCommand("unknownCommand", false);
     }
 
     //@@author jeffreygohkw
