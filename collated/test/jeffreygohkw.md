@@ -546,7 +546,7 @@ public class LocateCommandTest {
         personInFilteredList.getRemark().setPrivate(true);
         Remark originalRemark = personInFilteredList.getRemark();
 
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
+        EditCommand editPersonCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
@@ -554,7 +554,7 @@ public class LocateCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), personInFilteredList);
 
-        assertCommandFailure(editCommand, model, expectedMessage);
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
 
         assertEquals(personInFilteredList.getName(), originalName);
         assertEquals(personInFilteredList.getPhone(), originalPhone);
@@ -571,11 +571,11 @@ public class LocateCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_failure() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
+        EditCommand editPersonCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
 
-        assertCommandFailure(editCommand, model, expectedMessage);
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
     }
 
 ```
