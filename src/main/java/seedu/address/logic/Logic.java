@@ -28,10 +28,4 @@ public interface Logic {
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
-
-    /**
-     * Returns the current state of the lock. Default return value is true for models that exist, and
-     * false for models that do not exist
-     */
-    boolean getLockState();
 }

@@ -22,7 +22,7 @@ public class UnlockCommand extends Command {
     public static final String COMMAND_ALIAS = "ul";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlocks the addressbook. "
-            + "No commands can be executed\n "
+            + "No commands can be executed\n"
             + "Parameters: "
             + PREFIX_PASSWORD + "PASSWORD";
 

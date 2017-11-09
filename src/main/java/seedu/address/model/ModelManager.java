@@ -48,13 +48,14 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyTask> filteredTasks;
 
     // The lock is set to true by default. True = locked. False = Unlocked
-    private boolean lock = true;
+    private boolean lock;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();
+        lock = true;
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);

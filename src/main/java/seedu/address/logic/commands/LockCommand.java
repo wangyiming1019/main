@@ -21,7 +21,7 @@ public class LockCommand extends Command {
     public static final String COMMAND_WORD = "lock";
     public static final String COMMAND_ALIAS = "lk";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locks the addressbook. No commands can be executed\n "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Locks the addressbook. No commands can be executed\n"
             + "Parameters: "
             + PREFIX_PASSWORD + "PASSWORD";
 
