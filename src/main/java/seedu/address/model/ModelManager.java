@@ -47,6 +47,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyTask> filteredTasks;
 
+    // The lock is set to true by default. True = locked. False = Unlocked
+    private boolean lock = true;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -172,6 +175,16 @@ public class ModelManager extends ComponentManager implements Model {
     public void sortTasks(String field, String order) {
         addressBook.sortTasksBy(field, order);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unlockAddressBook() {
+        this.lock = false;
+    }
+
+    @Override
+    public void lockAddressBook() {
+        this.lock = true;
     }
     //@@author
 

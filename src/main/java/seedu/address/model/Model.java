@@ -125,5 +125,15 @@ public interface Model {
      * @param order
      */
     void sortTasks(String field, String order);
+
+    /**
+     * Unlocks addressbook by setting lock variable to true
+     */
+    void unlockAddressBook();
+
+    /**
+     * Locks address book by setting lock variable to false
+     */
+    void lockAddressBook();
     //@@author
 }

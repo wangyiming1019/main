@@ -226,7 +226,7 @@ public class AddCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called.");
         }
-
+        //@@author charlesgoh
         @Override
         public void sortPersons(String field, String order) {
             fail("This method should not be called.");
@@ -237,6 +237,16 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
+        public void unlockAddressBook() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void lockAddressBook() {
+            fail("This method should not be called.");
+        }
+        //@@author
         @Override
         public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
