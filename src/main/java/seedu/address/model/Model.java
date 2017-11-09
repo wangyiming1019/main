@@ -135,5 +135,10 @@ public interface Model {
      * Locks address book by setting lock variable to false
      */
     void lockAddressBook();
+
+    /**
+     * Getter method for lock state for external classes
+     */
+    public boolean getLockState();
     //@@author
 }

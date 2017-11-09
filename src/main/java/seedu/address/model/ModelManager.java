@@ -186,6 +186,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void lockAddressBook() {
         this.lock = true;
     }
+
+    @Override
+    public boolean getLockState() {
+        return this.lock;
+    }
     //@@author
 
     //@@author Esilocke

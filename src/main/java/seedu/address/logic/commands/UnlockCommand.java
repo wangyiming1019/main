@@ -4,9 +4,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 import com.google.common.hash.Hashing;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserPrefs;
 
@@ -26,6 +28,8 @@ public class UnlockCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Address++ unlocked successfully";
     public static final String MESSAGE_PASSWORD_INCORRECT = "Password is incorrect. Please try again";
+
+    private final Logger logger = LogsCenter.getLogger(UnlockCommand.class);
 
     private String password;
 
@@ -58,6 +62,9 @@ public class UnlockCommand extends Command {
 
             // Access model to lock
             model.unlockAddressBook();
+
+            // Logs current state
+            logger.info("Lock state is now: " + Boolean.toString(model.getLockState()));
 
             //Return command result
             return new CommandResult(MESSAGE_SUCCESS);
