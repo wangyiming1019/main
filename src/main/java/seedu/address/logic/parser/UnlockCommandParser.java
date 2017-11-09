@@ -12,8 +12,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class UnlockCommandParser implements Parser<UnlockCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the LockCommand
-     * and returns a LockCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the UnlockCommand
+     * and returns a UnlockCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnlockCommand parse(String args) throws ParseException {
