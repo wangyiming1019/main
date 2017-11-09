@@ -1,13 +1,11 @@
 package seedu.address.logic.parser;
-
-//@@author charlesgoh
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author charlesgoh
 /**
  * Parses input arguments and returns a new LockCommand object
  */

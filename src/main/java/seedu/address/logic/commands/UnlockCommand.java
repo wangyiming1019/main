@@ -10,6 +10,7 @@ import com.google.common.hash.Hashing;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserPrefs;
 
+//@@author charlesgoh
 /**
  * Sets lock in model to true or false, which allows or restricts the usage of all commands
  */
