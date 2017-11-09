@@ -1,7 +1,5 @@
 package seedu.address.logic.parser;
 //@@author jeffreygohkw
-import static seedu.address.logic.commands.PrivacyLevelCommand.WRONG_PRIVACY_LEVEL_MESSAGE;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PrivacyLevelCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
