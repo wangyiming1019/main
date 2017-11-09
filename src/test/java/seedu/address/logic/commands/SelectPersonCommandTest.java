@@ -29,8 +29,6 @@ import seedu.address.ui.testutil.EventsCollectorRule;
  * Contains integration tests (interaction with the Model) for {@code SelectPersonCommand}.
  */
 public class SelectPersonCommandTest {
-    private static final boolean IS_TYPE_PERSON = false;
-    private static final boolean IS_TYPE_TASK = true;
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
     private Model model;
@@ -52,7 +50,6 @@ public class SelectPersonCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        Index taskOutOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
