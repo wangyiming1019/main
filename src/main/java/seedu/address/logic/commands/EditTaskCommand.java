@@ -14,7 +14,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.Assignees;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
@@ -61,7 +60,6 @@ public class EditTaskCommand extends EditCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         List<ReadOnlyTask> lastShownTaskList = model.getFilteredTaskList();
 
         try {

@@ -29,7 +29,6 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * Edits a person in the address book.
@@ -73,7 +72,6 @@ public class EditPersonCommand extends EditCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        List<ReadOnlyTask> lastShownTaskList = model.getFilteredTaskList();
 
         try {
             if (index.getZeroBased() >= lastShownList.size()) {

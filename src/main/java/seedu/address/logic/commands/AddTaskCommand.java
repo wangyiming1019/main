@@ -36,7 +36,7 @@ public class AddTaskCommand extends AddCommand {
     private final Task taskToAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@Code ReadOnlyTask}
+     * Creates an AddTaskCommand to add the specified {@code ReadOnlyTask}
      */
     public AddTaskCommand(ReadOnlyTask task) {
         super();

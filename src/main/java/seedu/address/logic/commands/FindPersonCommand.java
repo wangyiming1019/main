@@ -25,12 +25,8 @@ public class FindPersonCommand extends FindCommand {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        } else if (!(other instanceof FindPersonCommand)) {
-            return false;
-        } else {
-            return this.personPredicate.equals(((FindPersonCommand) other).personPredicate);
-        }
+        return other == this
+                || other instanceof FindPersonCommand
+                && this.personPredicate.equals(((FindPersonCommand) other).personPredicate);
     }
 }

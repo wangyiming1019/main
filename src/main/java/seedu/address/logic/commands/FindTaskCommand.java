@@ -27,12 +27,8 @@ public class FindTaskCommand extends FindCommand {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        } else if (!(other instanceof FindTaskCommand)) {
-            return false;
-        } else {
-            return this.taskPredicate.equals(((FindTaskCommand) other).taskPredicate);
-        }
+        return other == this
+                || other instanceof FindTaskCommand
+                && this.taskPredicate.equals(((FindTaskCommand) other).taskPredicate);
     }
 }

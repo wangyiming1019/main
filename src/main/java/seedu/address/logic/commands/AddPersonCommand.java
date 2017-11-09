@@ -66,7 +66,6 @@ public class AddPersonCommand extends AddCommand {
         } else if (!(other instanceof AddPersonCommand)) {
             return false;
         } else {
-            assert (personToAdd != null);
             assert (((AddPersonCommand) other).personToAdd != null); // The personToAdd cannot be null
             return personToAdd.equals(((AddPersonCommand) other).personToAdd);
         }
