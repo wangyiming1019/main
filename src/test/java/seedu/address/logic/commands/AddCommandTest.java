@@ -246,6 +246,12 @@ public class AddCommandTest {
         public void lockAddressBook() {
             fail("This method should not be called.");
         }
+
+        @Override
+        public boolean getLockState() {
+            fail("This method should not be called.");
+            return false;
+        }
         //@@author
         @Override
         public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
