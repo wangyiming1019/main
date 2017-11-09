@@ -21,7 +21,7 @@ public class PrivacyLevelCommandParser {
             return new PrivacyLevelCommand(level);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(WRONG_PRIVACY_LEVEL_MESSAGE, PrivacyLevelCommand.MESSAGE_USAGE));
+                    String.format(PrivacyLevelCommand.MESSAGE_USAGE));
         }
     }
 }
