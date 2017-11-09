@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeletePersonCommand;
+import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -26,14 +28,14 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             if (argMultimap.getValue(PREFIX_TASK).isPresent()) {
                 String filteredString = args.replace(PREFIX_TASK.getPrefix(), " ");
                 index = ParserUtil.parseIndex(filteredString.trim());
-                return new DeleteCommand(index, DeleteCommand.DELETE_TYPE_TASK);
+                return new DeleteTaskCommand(index);
             } else {
                 index = ParserUtil.parseIndex(args);
-                return new DeleteCommand(index, DeleteCommand.DELETE_TYPE_PERSON);
+                return new DeletePersonCommand(index);
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand.MESSAGE_USAGE));
         }
     }
 

@@ -25,6 +25,8 @@ import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPersonCommand;
+import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Avatar;
@@ -58,10 +60,10 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_TASK);
         if (arePrefixesPresent(argMultimap, PREFIX_TASK)) {
             ReadOnlyTask taskToAdd = constructTask(args);
-            return new AddCommand(taskToAdd);
+            return new AddTaskCommand(taskToAdd);
         }
         ReadOnlyPerson personToAdd = constructPerson(args);
-        return new AddCommand(personToAdd);
+        return new AddPersonCommand(personToAdd);
     }
 
     /**
@@ -84,7 +86,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || (arePrefixesPresent(argMultimap, PREFIX_NAME_PRIVATE)))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -158,7 +160,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                         PREFIX_ADDRESS);
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_TASK_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
         try {

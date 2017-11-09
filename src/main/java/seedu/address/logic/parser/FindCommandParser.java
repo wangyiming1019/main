@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 import java.util.Arrays;
 
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindPersonCommand;
+import seedu.address.logic.commands.FindTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.task.Priority;
@@ -30,10 +32,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         if (!argMultimap.getValue(PREFIX_TASK).isPresent()) {
             if (trimmedArgs.isEmpty()) {
                 throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindPersonCommand.MESSAGE_USAGE));
             }
             String[] nameKeywords = trimmedArgs.split("\\s+");
-            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            return new FindPersonCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         } else {
             String argsWithNoTaskPrefix = args.replaceFirst(PREFIX_TASK.getPrefix(), "");
             argMultimap = ArgumentTokenizer.tokenize(argsWithNoTaskPrefix, PREFIX_PRIORITY, PREFIX_STATE);
@@ -51,12 +53,12 @@ public class FindCommandParser implements Parser<FindCommand> {
             }
             if (trimmedArgs.isEmpty()) {
                 throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_TASK_USAGE));
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTaskCommand.MESSAGE_USAGE));
             }
             String[] nameKeywords = trimmedArgs.split("\\s+");
 
-            return new FindCommand(new TaskContainsKeywordPredicate(Arrays.asList(nameKeywords), isStateFindRequired,
-                    isPriorityFindRequired, isComplete, minPriority));
+            return new FindTaskCommand(new TaskContainsKeywordPredicate(Arrays.asList(nameKeywords),
+                    isStateFindRequired, isPriorityFindRequired, isComplete, minPriority));
         }
     }
 
@@ -64,7 +66,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Parses the given string, and returns an integer corresponding to its value
      * Guarantees: The specified value is valid as a priority value
      */
-    public int parsePriority(String args) throws ParseException {
+    private int parsePriority(String args) throws ParseException {
         if (args == null) {
             throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
         }
@@ -72,10 +74,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         try {
             priority = Integer.parseInt(args.trim());
         } catch (NumberFormatException nfe) {
-            throw new ParseException(FindCommand.MESSAGE_INVALID_PRIORITY);
+            throw new ParseException(FindTaskCommand.MESSAGE_INVALID_PRIORITY);
         }
         if (priority < 1 || priority > 5) {
-            throw new ParseException(FindCommand.MESSAGE_INVALID_PRIORITY);
+            throw new ParseException(FindTaskCommand.MESSAGE_INVALID_PRIORITY);
         } else {
             return priority;
         }
@@ -84,12 +86,12 @@ public class FindCommandParser implements Parser<FindCommand> {
     /**
      * Parses the given string, and returns a boolean value corresponding to its value
      */
-    public boolean parseState(String args) throws ParseException {
+    private boolean parseState(String args) throws ParseException {
         String trimmed = args.trim();
         if ("true".equals(trimmed) || "false".equals(trimmed)) {
             return Boolean.valueOf(trimmed);
         } else {
-            throw new ParseException(FindCommand.MESSAGE_INVALID_COMPLETE_VALUE);
+            throw new ParseException(FindTaskCommand.MESSAGE_INVALID_COMPLETE_VALUE);
         }
     }
 }
