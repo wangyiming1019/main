@@ -14,7 +14,7 @@ public class PriorityTest {
         assertFalse(Priority.isValidPriority(" ")); // spaces only
         assertFalse(Priority.isValidPriority("invalid")); // invalid priority
         assertFalse(Priority.isValidPriority("777")); // priority out of range
-        assertFalse(Priority.isValidPriority("0")); // priority out of range
+        assertFalse(Priority.isValidPriority("-1")); // priority out of range
 
         // valid names
         assertTrue(Priority.isValidPriority("")); // empty string

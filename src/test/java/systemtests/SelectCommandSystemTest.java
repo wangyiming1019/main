@@ -40,6 +40,12 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
+    }
+
+    @Test
+    public void selectSecondTest() throws Exception {
+        String command;
+        Index personCount = Index.fromOneBased(getTypicalPersons().size());
 
         /* Case: select the middle card in the person list -> selected */
         Index middleIndex = Index.fromOneBased(personCount.getOneBased() / 2);
@@ -59,6 +65,12 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void selectThirdTest() throws Exception {
+        String command;
+        Index personCount = Index.fromOneBased(getTypicalPersons().size());
 
         /* Case: filtered person list, select index within bounds of address book and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
@@ -77,6 +89,12 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void selectFourthTest() throws Exception {
+        String command;
+        Index personCount = Index.fromOneBased(getTypicalPersons().size());
 
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",

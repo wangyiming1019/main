@@ -16,8 +16,7 @@
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
-
-  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+  <MenuBar fx:id="menuBar" minWidth="240.0" prefHeight="33.0" prefWidth="513.0">
     <Menu mnemonicParsing="false" text="File">
       <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#handleOpen" text="Open">
             <graphic>
@@ -26,7 +25,8 @@
                      <Image url="@../images/open-folder.png" />
                   </image>
                </ImageView>
-            </graphic></MenuItem>
+            </graphic>
+         </MenuItem>
          <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#handleSaveAs" text="Save As">
             <graphic>
                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -54,7 +54,8 @@
                      <Image url="@../images/help_icon.png" />
                   </image>
                </ImageView>
-            </graphic></MenuItem>
+            </graphic>
+         </MenuItem>
     </Menu>
       <!-- @@author charlesgoh -->
       <Menu mnemonicParsing="false" text="Font Size">
@@ -64,7 +65,6 @@
             <MenuItem fx:id="resetSizeMenuItem" mnemonicParsing="false" onAction="#handleResetFontSize" text="Reset" />
         </items>
       </Menu>
-      <!-- @@author -->
   </MenuBar>
 
   <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
@@ -86,7 +86,7 @@
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
-      <VBox fx:id="taskList">
+      <VBox fx:id="taskList" prefHeight="262.0" prefWidth="121.0">
          <children>
             <StackPane fx:id="taskListPanelPlaceholder" alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
                <opaqueInsets>

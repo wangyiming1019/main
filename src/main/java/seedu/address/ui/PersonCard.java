@@ -15,18 +15,16 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-
     public static final int DEFAULT_NAME_SIZE = 15;
     public static final int DEFAULT_ATTRIBUTE_SIZE = 10;
     public static final int FONT_SIZE_EXTENDER = 5;
     public static final int DEFAULT_FONT_SIZE_MULTIPLIER = 0;
-
     private static final String FXML = "PersonListCard.fxml";
     /**
      * Preset values for random selection later.
      */
     private enum Colours {
-        blue, green, brown, purple, navy, crimson, firebrick, maroon, red
+        blue, green, brown, purple, navy, crimson, firebrick, maroon, red, black
     }
     private static HashMap<String, String> colourHash = new HashMap<String, String>();
     private static Random randomNumber = new Random();
@@ -61,7 +59,6 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
 
     private int fontSizeMultipler;
-
     public PersonCard(ReadOnlyPerson person, int displayedIndex, int fontSizeMultiplier) {
         super(FXML);
         this.person = person;
@@ -134,7 +131,6 @@ public class PersonCard extends UiPart<Region> {
     }
     //@@author
 
-
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -153,6 +149,7 @@ public class PersonCard extends UiPart<Region> {
                 && person.equals(card.person);
     }
 
+    //@@author charlesgoh
     public Label getName() {
         return name;
     }
@@ -184,4 +181,5 @@ public class PersonCard extends UiPart<Region> {
     public void setFontSizeMultipler(int fontSizeMultipler) {
         this.fontSizeMultipler = fontSizeMultipler;
     }
+    //author
 }
