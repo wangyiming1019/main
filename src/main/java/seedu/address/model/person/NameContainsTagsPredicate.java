@@ -83,6 +83,12 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         return allTagNames.toString().trim();
     }
 
+    //@@author jeffreygohkw
+    public List<String> getTags() {
+        return tags;
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
