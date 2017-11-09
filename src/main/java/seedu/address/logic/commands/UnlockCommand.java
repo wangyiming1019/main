@@ -41,7 +41,7 @@ public class UnlockCommand extends Command {
             userPrefs = storage.readUserPrefs().get();
             String hashedPassword = Hashing.sha256()
                     .hashString(password, StandardCharsets.UTF_8).toString();
-            return hashedPassword.equals(userPrefs.getAddressBookEncryptedPassword())
+            return hashedPassword.equals(userPrefs.getAddressBookEncryptedPassword());
         } catch (DataConversionException e) {
             e.printStackTrace();
         } catch (IOException e) {
