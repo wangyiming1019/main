@@ -11,8 +11,8 @@ import org.junit.Test;
 import seedu.address.logic.commands.LocateCommand;
 
 /**
- * Test scope: similar to {@code SelectCommandParserTest}.
- * @see SelectCommandParserTest
+ * Test scope: similar to {@code SelectPersonCommandParserTest}.
+ * @see SelectPersonCommandParserTest
  */
 public class LocateCommandParserTest {
 

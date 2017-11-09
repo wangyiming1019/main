@@ -110,10 +110,10 @@ public class CommandTestUtil {
 
     public static final String TASK_SEPARATOR = " " + PREFIX_TASK + " ";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
-    public static final EditCommand.EditTaskDescriptor DESC_PENCIL;
-    public static final EditCommand.EditTaskDescriptor DESC_PAPER;
+    public static final EditPersonCommand.EditPersonDescriptor DESC_AMY;
+    public static final EditPersonCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_PENCIL;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_PAPER;
 
     static {
         //TODO: Change avatar filename to a real filename

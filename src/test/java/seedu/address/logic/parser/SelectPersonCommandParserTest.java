@@ -9,27 +9,29 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectPersonCommand;
+import seedu.address.logic.commands.SelectTaskCommand;
 
 /**
- * Test scope: similar to {@code DeleteCommandParserTest}.
- * @see DeleteCommandParserTest
+ * Test scope: similar to {@code DeletePersonCommandParserTest}.
+ * @see DeletePersonCommandParserTest
  */
-public class SelectCommandParserTest {
+public class SelectPersonCommandParserTest {
 
     private SelectCommandParser parser = new SelectCommandParser();
 
     @Test
     public void parse_validArgs_returnsSelectCommand() {
-        assertParseSuccess(parser, "1", new SelectCommand(INDEX_FIRST_PERSON, false));
+        assertParseSuccess(parser, "1", new SelectPersonCommand(INDEX_FIRST_PERSON));
         assertParseSuccess(parser, " " + PREFIX_TASK.getPrefix() + " 1",
-                new SelectCommand(INDEX_FIRST_TASK, true));
+                new SelectTaskCommand(INDEX_FIRST_TASK));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                SelectPersonCommand.MESSAGE_USAGE));
         assertParseFailure(parser, " " + PREFIX_TASK.getPrefix() + " -1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectPersonCommand.MESSAGE_USAGE));
     }
 }
