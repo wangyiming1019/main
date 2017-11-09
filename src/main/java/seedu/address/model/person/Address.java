@@ -20,6 +20,7 @@ public class Address {
 
     public final String value;
     private boolean isPrivate = false;
+    private int privacyLevel = 2;
 
     /**
      * Validates given address.
@@ -54,10 +55,14 @@ public class Address {
     //@@author jeffreygohkw
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Address>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Address>";
+            }
+            return value;
         }
-        return value;
     }
 
     //@@author
@@ -79,5 +84,13 @@ public class Address {
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }
