@@ -8,7 +8,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new EditCommand object
+ * Parses input arguments and creates a new ClearCommand object
  */
 public class ClearCommandParser {
 
