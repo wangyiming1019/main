@@ -204,7 +204,7 @@ Format: `addtag INDEX... t/[TAG]` +
 ****
 
 Examples:
-
+Example 1: 
 * `list` +
 `addtag 1 2 t/friends` +
 Adds the friends tag of the 1st and 2nd person in the address book.
