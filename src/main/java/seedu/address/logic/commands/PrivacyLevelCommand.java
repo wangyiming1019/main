@@ -17,12 +17,12 @@ public class PrivacyLevelCommand extends Command {
     public static final String COMMAND_ALIAS = "pl";
 
     public static final String CHANGE_PRIVACY_LEVEL_SUCCESS = "Successfully change privacy level to %1$s.";
-    public static final String WRONG_PRIVACY_LEVEL_MESSAGE = "Privacy Level can only be 0, 1 or 2";
+    public static final String WRONG_PRIVACY_LEVEL_MESSAGE = "Privacy Level can only be 1, 2 or 3";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Changes the privacy level of the address book. Level 0 shows all data, level 1 hides private fields"
-            + " and level 2 hides people with at least 1 private field.\n"
+            + ": Changes the privacy level of the address book. Level 1 shows all data, level 2 hides private fields"
+            + " and level 3 hides persons with at least 1 private field.\n"
             + "Parameters: LEVEL (must be 1, 2 or 3)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
