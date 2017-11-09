@@ -379,6 +379,7 @@ public class ModelManager extends ComponentManager implements Model {
         return updatedTask;
     }
 
+    @Override
     public void setPrivacyLevel(int level) {
         if (level < 1 || level > 3) {
             throw new IllegalArgumentException("Privacy Level can only be 0, 1 or 2");
@@ -387,6 +388,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
     public int getPrivacyLevel() {
         return this.privacyLevel;
     }
