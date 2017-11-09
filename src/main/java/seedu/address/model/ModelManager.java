@@ -46,6 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyTask> filteredTasks;
+    private int privacyLevel;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -350,5 +351,17 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, updatedAssignees,
                 state, taskAddress);
         return updatedTask;
+    }
+
+    public void setPrivacyLevel(int level) {
+        if (level < 0 || level > 2) {
+            throw new IllegalArgumentException("Privacy Level can only be 0, 1 or 2");
+        } else {
+            this.privacyLevel = level;
+        }
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }
