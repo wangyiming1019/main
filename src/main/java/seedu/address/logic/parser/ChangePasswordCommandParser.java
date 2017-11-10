@@ -19,6 +19,7 @@ public class ChangePasswordCommandParser implements Parser<ChangePasswordCommand
     public static final int OLD_PASSWORD_POSITION = 0;
     public static final int NEW_PASSWORD_POSITION = 1;
     public static final int CONFIRM_PASSWORD_POSITION = 2;
+    public static final int SIZE_OF_ARG_ARRAY = 3;
 
     /**
      * Parses the given {@code String} of arguments in the context of the ChangePasswordCommand
@@ -30,8 +31,13 @@ public class ChangePasswordCommandParser implements Parser<ChangePasswordCommand
                 .tokenize(args, PREFIX_PASSWORD, PREFIX_NEW_PASSWORD, PREFIX_CONFIRM_PASSOWRD);
         String trimmedArgs = args.trim();
 
+        // Check if all arguments are there
+        if (trimmedArgs.length() != SIZE_OF_ARG_ARRAY) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangePasswordCommand.MESSAGE_USAGE));
+        }
 
-
+        // Check and split arguments before passing them to ChangePasswordCommand
         if (!argMultimap.getValue(PREFIX_PASSWORD).isPresent()
                 || !argMultimap.getValue(PREFIX_NEW_PASSWORD).isPresent()
                 || !argMultimap.getValue(PREFIX_CONFIRM_PASSOWRD).isPresent()) {
