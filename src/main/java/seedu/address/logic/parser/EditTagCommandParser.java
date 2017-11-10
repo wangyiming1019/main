@@ -19,8 +19,8 @@ public class EditTagCommandParser implements Parser<EditTagCommand> {
     public static final int EXPECTED_NUMBER_OF_ARGS = 2;
 
     /**
-     * Parses the given {@code String} of arguments in the context of the EditCommand
-     * and returns an EditCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the EditTagCommand
+     * and returns an EditTagCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditTagCommand parse(String args) throws ParseException {

@@ -346,6 +346,70 @@ public class LocateCommandTest {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/EditCommandTest.java
+``` java
+    @Test
+    public void execute_privateFields_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        personInFilteredList.getName().setPrivate(true);
+        Name originalName = personInFilteredList.getName();
+
+        personInFilteredList.getPhone().setPrivate(true);
+        Phone originalPhone = personInFilteredList.getPhone();
+
+        personInFilteredList.getEmail().setPrivate(true);
+        Email originalEmail = personInFilteredList.getEmail();
+
+        personInFilteredList.getAddress().setPrivate(true);
+        Address originalAddress = personInFilteredList.getAddress();
+
+        personInFilteredList.getRemark().setPrivate(true);
+        Remark originalRemark = personInFilteredList.getRemark();
+
+        EditCommand editPersonCommand = prepareCommand(INDEX_FIRST_PERSON,
+                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), personInFilteredList);
+
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
+
+        assertEquals(personInFilteredList.getName(), originalName);
+        assertEquals(personInFilteredList.getPhone(), originalPhone);
+        assertEquals(personInFilteredList.getEmail(), originalEmail);
+        assertEquals(personInFilteredList.getAddress(), originalAddress);
+        assertEquals(personInFilteredList.getRemark(), originalRemark);
+
+        personInFilteredList.getName().setPrivate(false);
+        personInFilteredList.getPhone().setPrivate(false);
+        personInFilteredList.getEmail().setPrivate(false);
+        personInFilteredList.getAddress().setPrivate(false);
+        personInFilteredList.getRemark().setPrivate(false);
+    }
+
+    @Test
+    public void execute_noFieldSpecifiedUnfilteredList_failure() {
+        EditCommand editPersonCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
+
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
+    }
+
+    /**
+     * Returns a {@code LocateCommand} with parameters {@code index}.
+     */
+    private LocateCommand prepareCommand(Index index) {
+        LocateCommand locateCommand = new LocateCommand(index);
+        locateCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return locateCommand;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\NavigateCommandTest.java
 ``` java
 import static junit.framework.TestCase.assertEquals;

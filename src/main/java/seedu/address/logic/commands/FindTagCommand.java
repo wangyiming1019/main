@@ -1,18 +1,18 @@
 package seedu.address.logic.commands;
 
 //@@author wangyiming1019
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
+
 import seedu.address.model.person.NameContainsTagsPredicate;
 
 /**
  * Finds and lists all persons in address book who has a tag that contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
-public class FindTagCommand extends Command {
+public class FindTagCommand extends FindCommand {
 
-    public static final String COMMAND_WORD = "findtag";
-    public static final String COMMAND_ALIAS = "ftag";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
+            + ": Finds all persons whose tags contain any of "
             + "the specified tags (not case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " friends colleagues";
