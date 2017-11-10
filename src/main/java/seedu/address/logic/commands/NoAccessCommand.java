@@ -7,7 +7,7 @@ package seedu.address.logic.commands;
  */
 public class NoAccessCommand extends Command {
 
-    public static final String MESSAGE_NO_ACCESS = "Not allowed You must unlock before"
+    public static final String MESSAGE_NO_ACCESS = "Not allowed! You must unlock before"
             + " making any changes.\n" + UnlockCommand.MESSAGE_USAGE;
 
     @Override
