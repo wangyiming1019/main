@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTasks.getTypicalTasksOnlyAddressBook;
 
 import org.junit.Test;
 
@@ -11,25 +12,27 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-public class ClearCommandTest {
+public class ClearPersonCommandTest {
 
     @Test
     public void execute_emptyAddressBook_success() {
         Model model = new ModelManager();
-        assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
+        assertCommandSuccess(prepareCommand(model), model, ClearPersonCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
+        Model expectedModel = new ModelManager(getTypicalTasksOnlyAddressBook(), new UserPrefs());
+        // Verify that only the persons are cleared
+        assertCommandSuccess(prepareCommand(model), model, ClearPersonCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     /**
-     * Generates a new {@code ClearCommand} which upon execution, clears the contents in {@code model}.
+     * Generates a new {@code ClearPersonCommand} which upon execution, clears the contents in {@code model}.
      */
-    private ClearCommand prepareCommand(Model model) {
-        ClearCommand command = new ClearCommand();
+    private ClearPersonCommand prepareCommand(Model model) {
+        ClearPersonCommand command = new ClearPersonCommand();
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
