@@ -6,6 +6,8 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -65,6 +67,7 @@ public class PersonCard extends UiPart<Region> {
         this.fontSizeMultipler = fontSizeMultiplier;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initFavourite(person);
         bindListeners(person);
         updateAttributeSizes();
     }
@@ -83,7 +86,25 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavourite(person));
     }
+
+    //@@author wangyiming1019
+    /**
+     * display the heart for favourite person
+     */
+    private void initFavourite(ReadOnlyPerson person) {
+        boolean favouriteStatus = person.getFavourite();
+        Label favouriteLabel = new Label();
+        Image starFilled = new Image(getClass().getResource("/images/heart.png").toExternalForm());
+        if (favouriteStatus) {
+            favouriteLabel.setGraphic(new ImageView(starFilled));
+            favouriteLabel.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
+        }
+        cardPane.getChildren().add(favouriteLabel);
+    }
+    //@@author
+
     //@@author wangyiming1019
     /**
      * Locate hashed colour for tag. If not found, new colour is assigned to tag

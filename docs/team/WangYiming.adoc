@@ -22,12 +22,12 @@ Address++ is a desktop address book application used for storing contacts inform
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=addtag]
-include::../UserGuide.adoc[tag=deletetag]
-include::../UserGuide.adoc[tag=showandfindtag]
-include::../UserGuide.adoc[tag=favourite]
-include::../UserGuide.adoc[tag=unfavourite]
-include::../UserGuide.adoc[tag=showfavourite]
+include::../UserGuide.adoc[tag=addtag] +
+include::../UserGuide.adoc[tag=deletetag] +
+include::../UserGuide.adoc[tag=showandfindtag] +
+include::../UserGuide.adoc[tag=favourite] +
+include::../UserGuide.adoc[tag=unfavourite] +
+include::../UserGuide.adoc[tag=showfavourite] +
 
 #End of Extract#
 
