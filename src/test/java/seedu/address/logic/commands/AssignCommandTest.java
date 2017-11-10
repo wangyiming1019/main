@@ -31,7 +31,7 @@ public class AssignCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_assignOnePerson_addSuccessful() throws Exception {
+    public void execute_assignOnePerson_success() throws Exception {
         List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON);
         ReadOnlyTask assignedTask = model.getFilteredTaskList().get(0);
         ReadOnlyPerson assignedPerson = model.getFilteredPersonList().get(0);
@@ -47,7 +47,7 @@ public class AssignCommandTest {
     }
 
     @Test
-    public void execute_assignManyPersons_addSuccessful() throws Exception {
+    public void execute_assignManyPersons_success() throws Exception {
         List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON);
         ReadOnlyTask assignedTask = model.getFilteredTaskList().get(0);
         ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
@@ -67,7 +67,7 @@ public class AssignCommandTest {
     }
 
     @Test
-    public void execute_assignDuplicates_addSuccessful() throws Exception {
+    public void execute_assignDuplicates_success() throws Exception {
         List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON, INDEX_FIRST_PERSON);
         ReadOnlyTask assignedTask = model.getFilteredTaskList().get(0);
         ReadOnlyPerson assignedPerson = model.getFilteredPersonList().get(0);
@@ -128,9 +128,9 @@ public class AssignCommandTest {
     /**
      * Generates a new AssignCommand with the specified targets.
      */
-    private AssignCommand prepareCommand(List<Index> personsToAssign, Index task) {
+    private AssignCommand prepareCommand(List<Index> personsToAssign, Index taskIndex) {
         ArrayList<Index> listIndexes = new ArrayList<>(personsToAssign);
-        AssignCommand command = new AssignCommand(listIndexes, task);
+        AssignCommand command = new AssignCommand(listIndexes, taskIndex);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

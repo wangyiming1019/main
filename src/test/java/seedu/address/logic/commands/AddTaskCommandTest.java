@@ -71,12 +71,12 @@ public class AddTaskCommandTest {
         // null -> returns false
         assertFalse(addPaperCommand.equals(null));
 
-        // different person/task -> returns false
+        // different task -> returns false
         assertFalse(addPaperCommand.equals(addPencilCommand));
     }
 
     /**
-     * Generates a new AddPersonCommand with the details of the given person.
+     * Generates a new AddTaskCommand with the details of the given task.
      */
     private AddTaskCommand prepareCommand(Task task, Model model) {
         AddTaskCommand command = new AddTaskCommand(task);
@@ -85,7 +85,7 @@ public class AddTaskCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicateTaskException when trying to add a person or task.
+     * A Model stub that always throw a DuplicateTaskException when trying to add a task.
      */
     private class ModelStubAlwaysThrowingDuplicateException extends ModelStub {
 

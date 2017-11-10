@@ -33,7 +33,7 @@ import seedu.address.testutil.PersonBuilder;
 public class EditTagCommandTest {
     private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
     @Test
-    public void noTagsPresent() throws IllegalValueException {
+    public void noTagsPresent_throwsCommandException() throws IllegalValueException {
         Model taglessModel = new ModelManager(getTaglessAddressBook(), new UserPrefs());
         Model blankModel = new ModelManager(new AddressBook(), new UserPrefs());
         String absentTag = "notInAddressBook";
@@ -50,7 +50,7 @@ public class EditTagCommandTest {
     }
 
     @Test
-    public void editTagSubset() throws IllegalValueException, PersonNotFoundException {
+    public void editTagSubset_success() throws IllegalValueException, PersonNotFoundException {
         AddressBook testBook = prepareAddressBook();
         Model testModel = new ModelManager(testBook, new UserPrefs());
         EditTagCommand tagChangeColleagueToHusband = prepareCommand(VALID_TAG_COLLEAGUE, VALID_TAG_HUSBAND, testModel);
@@ -67,7 +67,7 @@ public class EditTagCommandTest {
         assertCommandSuccess(tagChangeColleagueToHusband, testModel, expectedMessage, expectedModel);
     }
     @Test
-    public void editTagAll() throws IllegalValueException, PersonNotFoundException {
+    public void editTagAll_success() throws IllegalValueException, PersonNotFoundException {
         AddressBook testBook = prepareAddressBook();
         Model testModel = new ModelManager(testBook, new UserPrefs());
         EditTagCommand tagChangeFriendToHusband = prepareCommand(VALID_TAG_FRIEND, VALID_TAG_HUSBAND, testModel);
@@ -93,7 +93,7 @@ public class EditTagCommandTest {
         return editTagCommand;
     }
     /** Returns a pre-made Address Book for testing purposes */
-    public AddressBook prepareAddressBook() throws DuplicatePersonException {
+    private AddressBook prepareAddressBook() throws DuplicatePersonException {
         ReadOnlyPerson alice = new PersonBuilder().withName("Alice Pauline")
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_COLLEAGUE).build();
         ReadOnlyPerson bernice = new PersonBuilder().withName("Bernice Applecut")
