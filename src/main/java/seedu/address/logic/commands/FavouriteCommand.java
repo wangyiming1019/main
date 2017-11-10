@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 //@@author wangyiming1019
 import java.util.List;
 
@@ -11,7 +13,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Favourites a person identified using it's last displayed index from the address book.
@@ -45,9 +46,11 @@ public class FavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToFavourite = lastShownList.get(targetIndex.getZeroBased());
-
-        Person editedPerson = new Person(personToFavourite.getName(), personToFavourite.getPhone(), personToFavourite.getEmail(),
-                personToFavourite.getAddress(), true, personToFavourite.getRemark(), personToFavourite.getAvatar(), personToFavourite.getTags());
+        Person editedPerson = new Person(personToFavourite.getName(),
+                personToFavourite.getPhone(), personToFavourite.getEmail(),
+                personToFavourite.getAddress(), true,
+                personToFavourite.getRemark(), personToFavourite.getAvatar(),
+                personToFavourite.getTags());
 
         try {
             model.updatePerson(personToFavourite, editedPerson);
