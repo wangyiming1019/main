@@ -5,9 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIRM_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
-import java.util.logging.Logger;
-
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.ChangePasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
