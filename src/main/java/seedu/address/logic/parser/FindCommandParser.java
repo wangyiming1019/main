@@ -26,7 +26,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         } else if (argMultimap.getValue(PREFIX_TASK).isPresent()) {
             return new FindTaskCommandParser().parse(args);
         } else if (argMultimap.getValue(PREFIX_TAG_FULL).isPresent()) {
-            return new FindTagCommandParser().parse(args);
+            String filteredArgs = args.replace(PREFIX_TAG_FULL.getPrefix(), " ");
+            return new FindTagCommandParser().parse(filteredArgs);
         } else {
             return new FindPersonCommandParser().parse(args);
         }
