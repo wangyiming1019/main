@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
+//@@author wangyiming1019
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-//@@author wangyiming1019
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
