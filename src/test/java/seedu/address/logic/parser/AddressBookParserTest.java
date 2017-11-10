@@ -83,9 +83,11 @@ import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TaskUtil;
 
 public class AddressBookParserTest {
+
+    private static final boolean DEFAULT_STATE_LOCK = false;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    private static final boolean DEFAULT_STATE_LOCK = false;
     private final AddressBookParser parser = new AddressBookParser();
 
     @Test
