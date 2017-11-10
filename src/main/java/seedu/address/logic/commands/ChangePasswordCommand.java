@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIRM_PASSOWRD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIRM_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
@@ -27,9 +27,9 @@ public class ChangePasswordCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes user password. \n"
             + "[" + PREFIX_PASSWORD + "PASSWORD] "
             + "[" + PREFIX_NEW_PASSWORD + "NEWPASSWORD] "
-            + "[" + PREFIX_CONFIRM_PASSOWRD + "CONFIRMPASSWORD] \n"
+            + "[" + PREFIX_CONFIRM_PASSWORD + "CONFIRMPASSWORD] \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PASSWORD + "password "
-            + PREFIX_NEW_PASSWORD + "mynewpassword111 " + PREFIX_CONFIRM_PASSOWRD + "mynewpassword111\n";
+            + PREFIX_NEW_PASSWORD + "mynewpassword111 " + PREFIX_CONFIRM_PASSWORD + "mynewpassword111\n";
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n";
 
