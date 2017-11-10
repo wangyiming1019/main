@@ -104,6 +104,7 @@ public class CommandTestUtil {
     public static final String TASK_ADDRESS_DESC_PENCIL = " " + PREFIX_ADDRESS + VALID_TASK_ADDRESS_PENCIL;
     public static final String TASK_ADDRESS_DESC_PAPER = " " + PREFIX_ADDRESS + VALID_TASK_ADDRESS_PAPER;
 
+    public static final String INVALID_TASK_NAME_DESC = " " + PREFIX_NAME + " "; // task name cannot be blank
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
