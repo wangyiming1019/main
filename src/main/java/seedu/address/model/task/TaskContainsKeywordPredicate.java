@@ -35,8 +35,7 @@ public class TaskContainsKeywordPredicate  implements Predicate<ReadOnlyTask> {
 
     @Override
     public boolean test(ReadOnlyTask task) {
-        for (int i = 0; i < keywords.size(); i++) {
-            String keyword = keywords.get(i);
+        for (String keyword : keywords) {
             if (needFilterByState && task.getCompleteState() != isComplete) {
                 return false;
             } else if (needFilterByPriority && task.getPriority().value < basePriority) {
