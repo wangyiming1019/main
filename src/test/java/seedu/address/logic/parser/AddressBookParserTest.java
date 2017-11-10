@@ -346,7 +346,8 @@ public class AddressBookParserTest {
     public void parseCommandAliasFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
         FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_ALIAS + " " + PREFIX_TAG_FULL + " ", DEFAULT_STATE_LOCK);
+                FindTagCommand.COMMAND_ALIAS + " " + PREFIX_TAG_FULL + " "
+                        + keywords.stream().collect(Collectors.joining(" ")), DEFAULT_STATE_LOCK);
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }
