@@ -16,14 +16,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new ChangePassword object
  */
 public class ChangePasswordCommandParser implements Parser<ChangePasswordCommand> {
-
-    public static final int OLD_PASSWORD_POSITION = 0;
-    public static final int NEW_PASSWORD_POSITION = 1;
-    public static final int CONFIRM_PASSWORD_POSITION = 2;
-    public static final int SIZE_OF_ARG_ARRAY = 4;
-
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     /**
      * Parses the given {@code String} of arguments in the context of the ChangePasswordCommand
      * and returns a ChangePasswordCommand object for execution.
