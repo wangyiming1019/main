@@ -21,10 +21,10 @@ public class UnlockCommand extends Command {
     public static final String COMMAND_WORD = "unlock";
     public static final String COMMAND_ALIAS = "ul";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlocks the addressbook. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlocks the application. "
             + "No commands can be executed\n"
             + "Parameters: "
-            + PREFIX_PASSWORD + "PASSWORD";
+            + "[" + PREFIX_PASSWORD + "PASSWORD] ";
 
     public static final String MESSAGE_SUCCESS = "Address++ unlocked successfully";
     public static final String MESSAGE_PASSWORD_INCORRECT = "Password is incorrect. Please try again";

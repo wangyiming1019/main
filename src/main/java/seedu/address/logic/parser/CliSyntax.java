@@ -39,6 +39,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_NAVIGATE_TO_ADDRESS = new Prefix("ta/");
 
     public static final Prefix PREFIX_PASSWORD = new Prefix("ps/");
-    public static final Prefix PREFIX_NEWPASSWORD = new Prefix("nps/");
+    public static final Prefix PREFIX_NEW_PASSWORD = new Prefix("nps/");
     public static final Prefix PREFIX_CONFIRM_PASSOWRD = new Prefix("cps/");
 }
