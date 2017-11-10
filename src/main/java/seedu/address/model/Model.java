@@ -126,4 +126,6 @@ public interface Model {
      */
     void sortTasks(String field, String order);
     //@@author
+
+    void setPrivacyLevel(int level);
 }

@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+//@@author jeffregokw
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_PRIVATE;
@@ -35,7 +36,6 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new ReadOnlyPerson object in the context of AddPersonCommand.
  */
 public class AddPersonCommandParser extends AddCommandParser {
-    //@@author jeffreygohkw
     /**
      * Constructs a ReadOnlyPerson from the arguments provided.
      */
@@ -58,51 +58,17 @@ public class AddPersonCommandParser extends AddCommandParser {
             Remark remark;
             Avatar avatar;
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
-                name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            } else {
-                name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME_PRIVATE), true).get();
-            }
+            name = makeName(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_PHONE))) {
-                phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_PHONE_PRIVATE)) {
-                phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE_PRIVATE), true).get();
-            } else {
-                phone = new Phone(null);
-            }
+            phone = makePhone(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_EMAIL))) {
-                email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_EMAIL_PRIVATE)) {
-                email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL_PRIVATE), true).get();
-            } else {
-                email = new Email(null);
-            }
+            email = makeEmail(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_ADDRESS))) {
-                address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_ADDRESS_PRIVATE)) {
-                address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS_PRIVATE), true).get();
-            } else {
-                address = new Address(null);
-            }
+            address = mmakeAddress(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
-                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_AVATAR_PRIVATE)) {
-                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR_PRIVATE), true).get();
-            } else {
-                avatar = new Avatar(null);
-            }
+            avatar = makeAvatar(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_REMARK))) {
-                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_REMARK_PRIVATE)) {
-                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK_PRIVATE), true).get();
-            } else {
-                remark = new Remark(null);
-            }
+            remark = makeRemark(argMultimap);
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, avatar, tagList);
@@ -110,5 +76,93 @@ public class AddPersonCommandParser extends AddCommandParser {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
+    }
+
+    /**
+     * Creates a Name based on the input arguments
+     */
+    private static Name makeName(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Name name;
+        if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
+            name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+        } else {
+            name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME_PRIVATE), true).get();
+        }
+        return name;
+    }
+
+    /**
+     * Creates a Phone based on the input arguments
+     */
+    private static Phone makePhone(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Phone phone;
+        if ((arePrefixesPresent(argMultimap, PREFIX_PHONE))) {
+            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_PHONE_PRIVATE)) {
+            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE_PRIVATE), true).get();
+        } else {
+            phone = new Phone(null);
+        }
+        return phone;
+    }
+
+    /**
+     * Creates an Email based on the input arguments
+     */
+    private static Email makeEmail(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Email email;
+        if ((arePrefixesPresent(argMultimap, PREFIX_EMAIL))) {
+            email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_EMAIL_PRIVATE)) {
+            email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL_PRIVATE), true).get();
+        } else {
+            email = new Email(null);
+        }
+        return email;
+    }
+
+    /**
+     * Creates an Address based on the input arguments
+     */
+    private static Address mmakeAddress(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Address address;
+        if ((arePrefixesPresent(argMultimap, PREFIX_ADDRESS))) {
+            address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_ADDRESS_PRIVATE)) {
+            address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS_PRIVATE), true).get();
+        } else {
+            address = new Address(null);
+        }
+        return address;
+    }
+
+    /**
+     * Creates an Avatar based on the input arguments
+     */
+    private static Avatar makeAvatar(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Avatar avatar;
+        if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
+            avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_AVATAR_PRIVATE)) {
+            avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR_PRIVATE), true).get();
+        } else {
+            avatar = new Avatar(null);
+        }
+        return avatar;
+    }
+
+    /**
+     * Creates a Remark based on the input arguments
+     */
+    private static Remark makeRemark(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Remark remark;
+        if ((arePrefixesPresent(argMultimap, PREFIX_REMARK))) {
+            remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_REMARK_PRIVATE)) {
+            remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK_PRIVATE), true).get();
+        } else {
+            remark = new Remark(null);
+        }
+        return remark;
     }
 }

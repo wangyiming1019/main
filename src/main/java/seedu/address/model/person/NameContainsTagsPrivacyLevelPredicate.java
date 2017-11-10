@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-//@@author wangyiming1019
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,12 +9,12 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the tags given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the tags and hasno private fields.
  */
-public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
+public class NameContainsTagsPrivacyLevelPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> tags;
 
-    public NameContainsTagsPredicate(List<String> tags) {
+    public NameContainsTagsPrivacyLevelPredicate(List<String> tags) {
         this.tags = tags;
     }
 
@@ -28,14 +27,16 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         boolean isOnlyUnwantedTags = isOnlyUnwantedTagsCheck(wantedTag, unwantedTag);
 
         if (isOnlyUnwantedTags) {
-            return !(unwantedTag.stream()
-                    .anyMatch((inputTag -> StringUtil.containsWordIgnoreCase(allTagString, inputTag))));
+            return (!(unwantedTag.stream()
+                    .anyMatch((inputTag -> StringUtil.containsWordIgnoreCase(allTagString, inputTag))))
+                    && !person.hasPrivateField());
         }
 
-        return wantedTag.stream()
+        return (wantedTag.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagString, keyword))
                 && !(unwantedTag.stream()
-                .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagString, keyword))));
+                .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagString, keyword))))
+                && !person.hasPrivateField());
     }
 
     /**
@@ -82,18 +83,4 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         }
         return allTagNames.toString().trim();
     }
-
-    //@@author jeffreygohkw
-    public List<String> getTags() {
-        return tags;
-    }
-    //@@author
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof NameContainsTagsPredicate // instanceof handles nulls
-                && this.tags.equals(((NameContainsTagsPredicate) other).tags)); // state check
-    }
-
 }
