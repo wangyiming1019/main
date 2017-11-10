@@ -6,8 +6,12 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Unfavourites a person identified using it's last displayed index from the address book.
@@ -42,15 +46,17 @@ public class UnfavouriteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToUnfavourite = lastShownList.get(targetIndex.getZeroBased());
 
-        if (personToUnfavourite.getFavourite().equals(false)) {
-            throw new CommandException(MESSAGE_NOTFAVOURITEYET_PERSON);
-        }
+        Person editedPerson = new Person(personToUnfavourite.getName(), personToUnfavourite.getPhone(), personToUnfavourite.getEmail(),
+                personToUnfavourite.getAddress(), false, personToUnfavourite.getRemark(), personToUnfavourite.getAvatar(), personToUnfavourite.getTags());
 
         try {
-            model.unfavouritePerson(personToUnfavourite);
+            model.updatePerson(personToUnfavourite, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_NOTFAVOURITEYET_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
+            throw new AssertionError("The target person cannot be missing");
         }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_UNFAVOURITE_PERSON_SUCCESS, personToUnfavourite));
     }
