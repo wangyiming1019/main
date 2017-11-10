@@ -39,7 +39,7 @@ public class AddPersonCommandParser extends AddCommandParser {
     /**
      * Constructs a ReadOnlyPerson from the arguments provided.
      */
-    private static ReadOnlyPerson constructPerson(String args) throws ParseException {
+    public static ReadOnlyPerson constructPerson(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
                         PREFIX_AVATAR, PREFIX_TAG, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE,
