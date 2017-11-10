@@ -85,10 +85,8 @@ import seedu.address.testutil.TaskUtil;
 public class AddressBookParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    private final AddressBookParser parser = new AddressBookParser();
-
     private static final boolean DEFAULT_STATE_LOCK = false;
+    private final AddressBookParser parser = new AddressBookParser();
 
     @Test
     public void parseCommandAdd() throws Exception {
@@ -328,8 +326,8 @@ public class AddressBookParserTest {
         command = (FindCommand) parser.parseCommand(
                 FindPersonCommand.COMMAND_ALIAS + " " + PREFIX_TASK +  " "
                         + keywords.stream().collect(Collectors.joining(" ")), DEFAULT_STATE_LOCK);
-        assertEquals(new FindTaskCommand
-                (new TaskContainsKeywordPredicate(keywords, DEFAULT_STATE_LOCK, false, false, 0)), command);
+        assertEquals(new FindTaskCommand(new TaskContainsKeywordPredicate(
+                keywords, DEFAULT_STATE_LOCK, false, false, 0)), command);
     }
     //@@author wangyiming1019
     @Test
@@ -361,7 +359,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandHistory() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD, DEFAULT_STATE_LOCK) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3", DEFAULT_STATE_LOCK) instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand
+                .COMMAND_WORD + " 3", DEFAULT_STATE_LOCK) instanceof HistoryCommand);
 
         try {
             parser.parseCommand("histories", false);
@@ -374,7 +373,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandAliasHistory() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS, DEFAULT_STATE_LOCK) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS + " 3", DEFAULT_STATE_LOCK) instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand
+                .COMMAND_ALIAS + " 3", DEFAULT_STATE_LOCK) instanceof HistoryCommand);
 
         try {
             parser.parseCommand("histories", DEFAULT_STATE_LOCK);
