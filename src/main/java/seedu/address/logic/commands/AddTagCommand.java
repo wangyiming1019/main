@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 //@@author wangyiming1019
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,9 @@ import seedu.address.model.tag.Tag;
 /**
  * Adds a tag to the persons in the latest list from the address book.
  */
-public class AddTagCommand extends UndoableCommand {
+public class AddTagCommand extends AddCommand {
 
-    public static final String COMMAND_WORD = "addtag";
-    public static final String COMMAND_ALIAS = "atag";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
             + ": Adds the tag to the persons with the index numbers used in the last person list."
             + " Command is case-sensitive. \n"
             + "Parameters: "

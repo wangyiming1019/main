@@ -11,7 +11,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.EditCommand.EditTaskDescriptor;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 //@@author Esilocke
