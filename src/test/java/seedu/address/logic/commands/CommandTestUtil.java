@@ -24,6 +24,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.TaskContainsKeywordPredicate;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
@@ -193,6 +196,30 @@ public class CommandTestUtil {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first task in the {@code model}'s address book.
+     */
+    public static void showFirstTaskOnly(Model model) {
+        ReadOnlyTask task = model.getAddressBook().getTasksList().get(0);
+        final String[] splitName = task.getTaskName().taskName.split("\\s+");
+        model.updateFilteredTaskList(new TaskContainsKeywordPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredTaskList().size() == 1;
+    }
+
+    /**
+     * Deletes the first task in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstTask(Model model) {
+        ReadOnlyTask firstTask = model.getFilteredTaskList().get(0);
+        try {
+            model.deleteTask(firstTask);
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("Task in filtered list must exist in model.", pnfe);
+        }
+    }
+
     //@@author wangyiming1019
     /**
      * Favourites the first person in {@code model}'s filtered list from {@code model}'s address book.
