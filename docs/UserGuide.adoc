@@ -12,9 +12,9 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-W09-B2/main
 
-By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT`
+By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT` +
 //tag::introduction[]
-Address++ is an application that keeps track of your contacts and your daily todos for you. It is targeted
+Address++ is an application that keeps track of your contacts and your daily to-dos for you. It is targeted
 at students who work on projects or assignments frequently, but it can also be used for other purposes.
 
 == About
@@ -22,6 +22,7 @@ at students who work on projects or assignments frequently, but it can also be u
 After reading this user guide, you should be more familiar with how Address++ can be used to maintain your contacts and tasks. +
 No technical knowledge is required when running the application, although basic knowledge of installation is required to install the prerequisite libraries for Address++ (Java). +
 //end::introduction[]
+
 == Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -136,6 +137,7 @@ Now suppose you have another friend named Ima Hidearu, who does not provide you 
 you need. You can choose to omit these fields by typing in the command:
 
 `add n/Ima Hidearu a/ e/ p/ r/ v/ t/secretive`
+
 ****
 ****
 **Example Scenario 3** +
@@ -809,6 +811,22 @@ If you would like to start fresh on a clean slate, you can use this command to c
 `clear` can be replaced by `c` for faster input. +
 Format: `clear` +
 
+// tag::open[]
+=== Opening a save file : `open`
+Switching between address books is made easy with the `open` command, as it allows you can load different save files into the application. +
+You can choose which .xml file to open from the pop up window that appears upon executing this command. +
+`open` can be replaced by `o` for faster input. +
+Format `open`
+// end::open[]
+
+// tag::saveas[]
+=== Saving the data as a new save file : `save`
+If you would like to save a copy of your data in a separate location or with a different name, the `save` command will allow you to do just that. +
+You can choose what to name your save file and where to save it from the pop up window that appears upon executing this command. +
+`save` can be replaced by `sa` for faster input. +
+Format: `save`
+// end::saveas[]
+
 === Exiting the program : `exit`
 
 Once you have finished using Address++, you may use this command to exit the program. +
@@ -822,9 +840,9 @@ Alternatively, you may opt to use the keyboard shortcut kbd:[ALT]+kbd:[F4].
 Address book data is saved in the hard disk automatically after any command that changes the data. +
 There is no need for you to save manually.
 
-If you want to change the location of the save file, click on `File -> Save As` or use the keyboard shortcut kbd:[CTRL]+kbd:[S] and select the new location and file name for the save file in the pop-up window.
+If you want to change the location of the save file, you can use the `save` command, click on `File -> Save As` or use the keyboard shortcut kbd:[CTRL]+kbd:[S] and select the new location and file name for the save file in the pop-up window.
 
-If you want to open a different save file, click on `File -> Open` or use the keyboard shortcut kbd:[CTRL]+kbd:[O] and select the new save file to use from the pop-up window.
+If you want to open a different save file, you can use the `open` command, click on `File -> Open` or use the keyboard shortcut kbd:[CTRL]+kbd:[O] and select the new save file to use from the pop-up window.
 
 // end::opensaveas[]
 === Using the browser
@@ -835,6 +853,7 @@ If you click on a box containing a contact, an internet browser on the right sid
 * If a person's name or address is set to private, the browser will not perform a search if you click on their box.
 * Right clicking on the browser will allow you to go to the previous or next page, as well as reload the page.
 ****
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -861,8 +880,8 @@ e.g. `delete 3`
 e.g. `delete task 4`
 * *Delete tag* : `deletetag INDEX t/[TAG]` +
 e.g. `deletetag 1 2 t/friends`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]
-[v/AVATAR] [t/TAG]...` +
+
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [v/AVATAR] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit task* : `edit task INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
 e.g. `edit task 2 p/veryhigh`
@@ -901,6 +920,9 @@ e.g. `dismiss 4 1 from/17`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Open* : `open`
+* *Save As* : `save`
+* *Exit* : `exit`
 
 == Command Shorthand Cheat Sheet
 * *Add* : `a n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
@@ -960,6 +982,9 @@ e.g. `ds 4 1 from/17`
 * *History* : `h`
 * *Undo* : `u`
 * *Redo* : `r`
+* *Open* : `o`
+* *Save As* : `sa`
+
 == Keyboard Shortcuts
 
 * *Exit* : kbd:[ALT]+kbd:[F4]

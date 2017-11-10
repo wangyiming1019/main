@@ -21,6 +21,12 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
     }
 
+    //@@author jeffreygohkw
+    public List<String> getKeywords() {
+        return keywords;
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -141,4 +141,6 @@ public interface Model {
      */
     public boolean getLockState();
     //@@author
+
+    void setPrivacyLevel(int level);
 }

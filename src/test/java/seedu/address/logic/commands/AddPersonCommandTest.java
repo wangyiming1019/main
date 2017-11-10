@@ -36,7 +36,7 @@ import seedu.address.testutil.TaskBuilder;
 import seedu.address.ui.MainWindow;
 
 
-public class AddCommandTest {
+public class AddPersonCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -48,7 +48,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
+        assertEquals(String.format(AddPersonCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
 
@@ -59,7 +59,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = getAddCommandForTask(validTask, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_TASK_SUCCESS, validTask), commandResult.feedbackToUser);
+        assertEquals(String.format(AddTaskCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
     }
 
@@ -69,7 +69,7 @@ public class AddCommandTest {
         Person validPerson = new PersonBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddPersonCommand.MESSAGE_DUPLICATE_PERSON);
 
         getAddCommandForPerson(validPerson, modelStub).execute();
     }
@@ -80,7 +80,7 @@ public class AddCommandTest {
         Task validTask = new TaskBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
+        thrown.expectMessage(AddTaskCommand.MESSAGE_DUPLICATE_TASK);
 
         getAddCommandForTask(validTask, modelStub).execute();
     }
@@ -92,18 +92,18 @@ public class AddCommandTest {
         Task paper = new TaskBuilder().withTaskName("Paper").build();
         Task pencil = new TaskBuilder().withTaskName("Pencil").build();
 
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
-        AddCommand addPaperCommand = new AddCommand(paper);
-        AddCommand addPencilCommand = new AddCommand(pencil);
+        AddPersonCommand addAliceCommand = new AddPersonCommand(alice);
+        AddPersonCommand addBobCommand = new AddPersonCommand(bob);
+        AddTaskCommand addPaperCommand = new AddTaskCommand(paper);
+        AddTaskCommand addPencilCommand = new AddTaskCommand(pencil);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
         assertTrue(addPaperCommand.equals(addPaperCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        AddCommand addPaperCommandCopy = new AddCommand(paper);
+        AddPersonCommand addAliceCommandCopy = new AddPersonCommand(alice);
+        AddTaskCommand addPaperCommandCopy = new AddTaskCommand(paper);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
         assertTrue(addPaperCommand.equals(addPaperCommandCopy));
 
@@ -124,19 +124,19 @@ public class AddCommandTest {
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddPersonCommand with the details of the given person.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddPersonCommand getAddCommandForPerson(Person person, Model model) {
+        AddPersonCommand command = new AddPersonCommand(person);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddPersonCommand with the details of the given person.
      */
-    private AddCommand getAddCommandForTask(Task task, Model model) {
-        AddCommand command = new AddCommand(task);
+    private AddTaskCommand getAddCommandForTask(Task task, Model model) {
+        AddTaskCommand command = new AddTaskCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -299,6 +299,11 @@ public class AddCommandTest {
         @Override
         public void setAsComplete(ReadOnlyTask toSet, boolean isComplete)
                 throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setPrivacyLevel(int level) {
             fail("This method should not be called.");
         }
     }
