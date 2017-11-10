@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_FROM_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_TO_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -250,7 +251,8 @@ public class AddressBookParserTest {
     //@@author Esilocke
     @Test
     public void parseCommandEditTag() throws Exception {
-        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_WORD + " "
+        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_WORD
+                + " " + PREFIX_TAG_FULL + " "
                 + " friends enemies");
         Tag friends = new Tag("friends");
         Tag enemies = new Tag("enemies");
@@ -259,7 +261,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommandAliasEditTag() throws Exception {
-        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_ALIAS + " "
+        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_ALIAS
+                + " " + PREFIX_TAG_FULL + " "
                 + " friends enemies");
         Tag friends = new Tag("friends");
         Tag enemies = new Tag("enemies");
@@ -316,7 +319,8 @@ public class AddressBookParserTest {
     public void parseCommandFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
         FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindTagCommand.COMMAND_WORD + " " + PREFIX_TAG_FULL + " "
+                        + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }
@@ -325,7 +329,8 @@ public class AddressBookParserTest {
     public void parseCommandAliasFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
         FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindTagCommand.COMMAND_ALIAS + " " + PREFIX_TAG_FULL + " "
+                        + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }

@@ -46,7 +46,7 @@ public class DeletePersonCommandParserTest {
     @Test
     public void parseTaskInvalidArgs_throwsParseException() {
         assertParseFailure(parser, TASK_SEPARATOR + "a",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeletePersonCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTaskCommand.MESSAGE_USAGE));
     }
     //@@author
 }

@@ -32,6 +32,6 @@ public class SelectPersonCommandParserTest {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 SelectPersonCommand.MESSAGE_USAGE));
         assertParseFailure(parser, " " + PREFIX_TASK.getPrefix() + " -1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectPersonCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectTaskCommand.MESSAGE_USAGE));
     }
 }
