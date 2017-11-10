@@ -217,6 +217,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
 //tag::fontsize[]
 === Increase/Decrease/Reset Font Size
 
@@ -250,6 +251,7 @@ standardised the handling of font size change requests through events.
 **Pros:** Less tedious to implement and very intuitive for the user +
 **Cons:** Users who prefer typing commands will not have the option of editing their font sizes using the CLI
 //end::fontsize[]
+
 //tag::avatar[]
 === Setting Avatar on ViewPersonPanel
 
@@ -287,6 +289,7 @@ the `ImageView` attribute.
 [NOTE]
 As of v1.5rc, the avatar field supports only URLs sourced online. References to local files may not work at the moment.
 //end::avatar[]
+
 //tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -495,6 +498,7 @@ Task objects are stored in a similar manner to Person objects, and share the sam
 **Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa. +
 **Cons:** All existing save/load functions will require an additional method to handle Task storage. +
 // end::task[]
+
 // tag::sort[]
 === Sort Command
 
@@ -546,6 +550,7 @@ Future changes to the implementation will be easier as a consequence. +
 **Pros:** Old order of contact instances remains intact. +
 **Cons:** Will use more memory and may be less intuitive for developer to understand and in terms of user experience. Also, sorting will not persist in the system.
 // end::sort[]
+
 // tag::backup[]
 === Backup Command
 
@@ -573,6 +578,7 @@ that the execution of the sort methods result in the actual person list being so
 **Pros:** More intuitive for all users since the options are all graphical +
 **Cons:** Hinders productivity. Excessive number of clicks to accomplish an essential task.
 // end::backup[]
+
 // tag::privacy[]
 === Privacy of fields
 
@@ -1169,6 +1175,16 @@ If the input index tags do not exist, the `FindTagCommand` will give a empty lis
 **Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
 and Separation of Concerns as FindCommand now needs to do two different things.
 // end::findtag[]
+
+=== Favourite/Unfavourite Person mechanism
+To favourite a person is achieved by `FavouriteCommand`. It basically changes the value of the `Favourite` field of a `Person`. The `Favourite` class has two status indicators: one is a boolean value and the other is a String. The boolean one is used in the constructor while the String one is for UI and output purposes.
+
+In this sense, `Favourite` class needs to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is false.
+
+The following sequence diagram shows how a `FavouriteCommand` is processed:
+
+image::FavouriteSequenceDiagram.png[width="800"]
+
 
 === Logging
 
