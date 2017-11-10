@@ -1,12 +1,15 @@
 package seedu.address.logic.commands;
 //@@author Esilocke
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
 import seedu.address.model.task.TaskContainsKeywordPredicate;
 
 /**
  * Finds tasks in the address book.
  */
 public class FindTaskCommand extends FindCommand {
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks whose names or descriptions "
+    public static final String MESSAGE_USAGE = COMMAND_WORD  + " " + PREFIX_TASK
+            + ": Finds all tasks whose names or descriptions "
             + "contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]... [p/MINIMUM_PRIORITY] [done/TASK_STATE]\n"
             + "Example: " + COMMAND_WORD + " task make";

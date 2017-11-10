@@ -17,7 +17,8 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
  * Adds a task to the address book.
  */
 public class AddTaskCommand extends AddCommand {
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TASK
+            + ": Adds a task to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DESCRIPTION + "DESCRIPTION "

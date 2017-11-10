@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.List;
@@ -29,7 +30,8 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
  * Edits a task in the address book.
  */
 public class EditTaskCommand extends EditCommand {
-    public static final String MESSAGE_TASK_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
+    public static final String MESSAGE_TASK_USAGE = COMMAND_WORD  + " " + PREFIX_TASK
+            + ": Edits the details of the task identified "
             + "by the index number used in the last task listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "

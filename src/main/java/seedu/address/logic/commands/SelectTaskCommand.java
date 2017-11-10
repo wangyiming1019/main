@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 //@@author Esilocke
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -13,7 +15,7 @@ import seedu.address.model.task.ReadOnlyTask;
  * Selects a task in the address book and loads the view panel for that task.
  */
 public class SelectTaskCommand extends SelectCommand {
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TASK
             + ": Selects the task identified by the index number used in the last task listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
