@@ -23,7 +23,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PENCIL
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
@@ -40,8 +39,6 @@ import seedu.address.model.task.TaskName;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 public class EditTaskCommandParserTest {
-
-    private static final String TAG_EMPTY = " " + PREFIX_TAG;
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE);
