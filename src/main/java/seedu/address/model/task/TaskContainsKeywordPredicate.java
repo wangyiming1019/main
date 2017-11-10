@@ -37,13 +37,14 @@ public class TaskContainsKeywordPredicate  implements Predicate<ReadOnlyTask> {
     public boolean test(ReadOnlyTask task) {
         for (int i = 0; i < keywords.size(); i++) {
             String keyword = keywords.get(i);
+            System.out.println(keyword);
             if (needFilterByState && task.getCompleteState() != isComplete) {
                 return false;
             } else if (needFilterByPriority && task.getPriority().value < basePriority) {
                 return false;
-            } else {
-                return (StringUtil.containsWordIgnoreCase(task.getTaskName().taskName, keyword)
-                        || StringUtil.containsWordIgnoreCase(task.getDescription().value, keyword));
+            } else if (StringUtil.containsWordIgnoreCase(task.getTaskName().taskName, keyword)
+                    || StringUtil.containsWordIgnoreCase(task.getDescription().value, keyword)) {
+                return true;
             }
         }
         return false;
