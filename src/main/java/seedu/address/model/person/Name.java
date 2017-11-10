@@ -21,6 +21,7 @@ public class Name {
 
     public final String fullName;
     private boolean isPrivate = false;
+    private int privacyLevel = 2;
 
     /**
      * Validates given name.
@@ -53,10 +54,14 @@ public class Name {
     //@@author jeffreygohkw
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Name>";
+        if (privacyLevel == 1) {
+            return fullName;
+        } else {
+            if (isPrivate) {
+                return "<Private Name>";
+            }
+            return fullName;
         }
-        return fullName;
     }
 
     //@@author
@@ -78,5 +83,13 @@ public class Name {
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }

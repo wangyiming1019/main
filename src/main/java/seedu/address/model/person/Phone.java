@@ -16,6 +16,7 @@ public class Phone {
     public final String value;
 
     private boolean isPrivate = false;
+    private int privacyLevel = 2;
 
     /**
      * Validates given phone number.
@@ -51,10 +52,14 @@ public class Phone {
     //@@author jeffreygohkw
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Phone>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Phone>";
+            }
+            return value;
         }
-        return value;
     }
 
     //@@author
@@ -76,5 +81,13 @@ public class Phone {
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }

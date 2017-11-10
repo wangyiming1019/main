@@ -26,6 +26,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.PrivacyLevelCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SaveAsCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -79,6 +80,10 @@ public class AddressBookParser {
         case ChangePrivacyCommand.COMMAND_WORD:
         case ChangePrivacyCommand.COMMAND_ALIAS:
             return new ChangePrivacyCommandParser().parse(arguments);
+
+        case PrivacyLevelCommand.COMMAND_WORD:
+        case PrivacyLevelCommand.COMMAND_ALIAS:
+            return new PrivacyLevelCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:

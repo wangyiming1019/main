@@ -285,6 +285,11 @@ public class AddPersonCommandTest {
                 throws TaskNotFoundException, DuplicateTaskException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void setPrivacyLevel(int level) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

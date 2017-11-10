@@ -20,8 +20,15 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.logic.parser.Prefix;
+import seedu.address.model.person.NameContainsFavouritePredicate;
+import seedu.address.model.person.NameContainsFavouritePrivacyLevelPredicate;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordsPrivacyLevelPredicate;
+import seedu.address.model.person.NameContainsTagsPredicate;
+import seedu.address.model.person.NameContainsTagsPrivacyLevelPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ShowAllPrivacyLevelPredicate;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -46,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyTask> filteredTasks;
+    private int privacyLevel;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -301,10 +309,29 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
+    //@@author jeffreygohkw
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        if (privacyLevel == 3) {
+            if (predicate instanceof NameContainsKeywordsPredicate) {
+                this.updateFilteredPersonList(new NameContainsKeywordsPrivacyLevelPredicate(((
+                        NameContainsKeywordsPredicate) predicate).getKeywords()));
+                System.out.println("!");
+            } else if (predicate instanceof NameContainsTagsPredicate) {
+                this.updateFilteredPersonList(new NameContainsTagsPrivacyLevelPredicate(((
+                        NameContainsTagsPredicate) predicate).getTags()));
+                System.out.println("!!");
+            } else if (predicate instanceof NameContainsFavouritePredicate) {
+                this.updateFilteredPersonList(new NameContainsFavouritePrivacyLevelPredicate());
+            } else if (predicate == PREDICATE_SHOW_ALL_PERSONS) {
+                this.updateFilteredPersonList(new ShowAllPrivacyLevelPredicate());
+            } else {
+                filteredPersons.setPredicate(predicate);
+            }
+        } else {
+            filteredPersons.setPredicate(predicate);
+        }
     }
 
     //@@author Esilocke
@@ -350,5 +377,14 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, updatedAssignees,
                 state, taskAddress);
         return updatedTask;
+    }
+
+    @Override
+    public void setPrivacyLevel(int level) {
+        if (level < 1 || level > 3) {
+            throw new IllegalArgumentException("Privacy Level can only be 0, 1 or 2");
+        } else {
+            this.privacyLevel = level;
+        }
     }
 }
