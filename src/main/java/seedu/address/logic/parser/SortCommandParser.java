@@ -35,10 +35,10 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
-        // Converts arg arrays to lower case to account for caps entries
+        // Eliminate spaces
         String[] argKeywords = trimmedArgs.split("\\s");
 
-        // Eliminate the sort keyword
+        // Converts arg arrays to lower case to account for caps entries
         for (int i = 0; i < argKeywords.length; i++) {
             argKeywords[i] = argKeywords[i].toLowerCase();
         }

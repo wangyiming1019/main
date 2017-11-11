@@ -106,6 +106,7 @@ Format: `help` +
 Alternatively,  you may opt to use the keyboard shortcut kbd:[F1].
 
 // tag::addprivacy[]
+
 // tag::avatar[]
 === Adding a person: `add`
 
@@ -149,6 +150,7 @@ option while typing in your command:
 * Do note that you do not have to set all fields as private, and you can choose which specific fields you want to set as private.
 ****
 //end::avatar[]
+
 //end::addprivacy[]
 
 [NOTE]
@@ -186,6 +188,7 @@ new ones later.
 `add task n/Buy new pencil p/2`
 ****
 // end::addtask[]
+
 // tag::addtag[]
 
 === Adding a tag to persons : `addtag` (Since V1.2)
@@ -196,21 +199,31 @@ Format: `addtag INDEX... t/[TAG]` +
 
 
 ****
-**Things To Note** +
+**Things To Note**
+
 * You can add the tag of the person at the specific `INDEX`. +
 * The index refers to the index number shown in the most recent listing. +
 * The index you key in *must be a positive integer* 1, 2, 3, ... +
 * If you don not key in any indexes, addtag will add the tag to all contacts in the address book.
 ****
 
-Examples:
+**Examples Scenarios:**
+****
+**Example Scenario 1:** +
+Suppose you want to add tag `friends` to the 1st and 2nd persons in the address book, you can use `list` to show all the contacts in the address book first,
+then use the `addtag` command to achieve it.
 
-* `list` +
+`list` +
 `addtag 1 2 t/friends` +
-Adds the friends tag of the 1st and 2nd person in the address book.
-* `list` +
+****
+
+****
+**Example Scenario 2:** +
+Suppose you want to add a common tag to all the persons in the address book. You can type in the following command.
+
+`list` +
 `addtag t/acquaintance` +
-Adds the acquaintance tag to all contacts in the address book.
+****
 // end::addtag[]
 
 === Listing all persons : `list`
@@ -339,28 +352,43 @@ Changes the privacy level of the address book to 1, revealing all data hidden by
 // end::privacylevel[]
 
 // tag::favourite[]
+
 === Favouriting persons : `favourite` (since V1.3)
 
-You can use `favourite` command to make persons in the address book become your favourite persons. For example, you may wish to set your girlfriend as your favourite contact. +
+You can use `favourite` command to make persons in the address book become your favourite contacts. For example, you may wish to set your girlfriend as your favourite contact. You will see a heart png next to your girlfriend's name
+once you successfully set her as your favourite contact. +
 `favourite` can be replaced by `fav` for faster input. +
 Format: `favourite INDEX [MORE INDEX]` +
 
-Examples:
-
-* `list` +
-`favourite 2` +
-Favourites the 2nd person in the address book.
-* `find Betsy` +
-`favourite 1` +
-Favourite the 1st person in the results of the `find` command.
-
 ****
+**Things To Note**
+
 * You can set a person to be the favourite person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index you key in *must be a positive integer* 1, 2, 3, ...
+* You will see a heart png next to your favourite persons.
 ****
-// end::favourite[]
 
+**Examples Scenarios:** +
+****
+**Example Scenario 1:** +
+Suppose you want to set the 2nd person in the address book to be your favourite contact. You should `list` all the persons first, then use `favourite` command to achieve it.
+
+`list` +
+`favourite 2` +
+****
+
+****
+**Example Scenario 2:** +
+Suppose you have `Betsy Brandt, Betsy Devos and Betsy Ross` in your address book. You want to set `Betsy Brandt` as your favourite contact.
+Instead of `listing` all the contacts, you can `find` all the `Besty` first, then `favourite` her.
+
+`find Betsy` +
+`favourite 1` +
+****
+image::FavouriteCommandBeforeAndAfter.png[width="790"]
+_Figure 3.9.1 : FavouriteCommand_
+// end::favourite[]
 
 // tag::showfavourite[]
 
@@ -370,10 +398,13 @@ You can use the `showfavourite` command to quickly show all your favourite conta
 `showfavourite` can be replaced by `sfav` for faster input. +
 Format: `showfavourite` +
 
-[NOTE]
-====
-`showfavourite` command: It will return an empty list if there is no favourite persons.
-====
+****
+**Things To Note**
+
+* `showfavourite` command: It will return an empty list if there is no favourite persons.
+****
+image::ShowFavouriteCommand.png[width="790"]
+_Figure 3.10.1 : ShowFavouriteCommand_
 // end::showfavourite[]
 
 === Locating persons by name : `find`
@@ -420,14 +451,16 @@ Returns all tasks that has the word `update` in their names or descriptions
 
 === Listing all tags : `showtag` (Since V1.5)
 
-You can use the `showtag` command to quickly show all tags in the address book. This is a helper command for `findtag`+
+You can use the `showtag` command to quickly show all tags in the address book. Sometimes you may forget `tags` you added few weeks ago. You may use this command to help you. +
 `showtag` can be replaced by `stag` for faster input. +
 Format: `showtag` +
 
-[NOTE]
-====
-`showtag` command: It will return an empty list if there is no tags in the address book.
-====
+****
+**Things To Note**
+
+* `showtag` command: It will return an empty list if there is no tags in the address book.
+* You may want to use `showtag` command to help you recall all the `tags` in the address book before you try to use `findtag` to find persons.
+****
 
 === Locating persons by tag : `findtag` (Since V1.4)
 
@@ -436,24 +469,36 @@ If you want to find contacts who are your `classmates` but not your `friends`, y
 `findtag` can be replaced by `ftag` for faster input. +
 Format: `findtag KEYWORD [MORE_KEYWORDS]` +
 
-Examples:
-
-* `findtag friends` +
-Returns any persons having tag `friends`
-* `findtag friends colleagues` +
-Returns any person having tags `friends` or `colleagues`
-* `findtag /friends` +
-Returns any persons not have tag `friends`
-* `findtag classmates /friends` +
-Returns any person having tags `classmates` but not having tag `friends`
-
 ****
-* Important note on `findtag` criteria
+**Things To Note** +
+
 * The search is not case insensitive. e.g `friends` will match `FRIENDS`
 * The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
 * Only the tag is searched for persons.
-* Only full words will be matched e.g. `friend` will not match `friends`
-* There is no space `/not` and tag name e.g. `/not friends` will not match `/notfriends`
+* Only full words will be matched. e.g. `friend` will not match `friends`
+* There is no space between `/` and tag name. e.g. `/ friends` will not match `/friends`.
+****
+
+**Examples Scenarios:** +
+****
+**Example Scenario 1:** +
+Suppose you want to find contatcs with tag `friends` or `colleagues`, you can just key in the following command.
+
+`findtag friends colleagues`
+****
+
+****
+**Example Scenario 2:** +
+Suppose you want to find contacts without tag `frineds`, you can key in the following command.
+
+`findtag /friends`
+****
+
+****
+**Example Scenario 3:** +
+Suppose you want to find contacts with tag `friends` but without `colleagues`, you can key in the following command.
+
+`findtag friends /colleagues`
 ****
 // end::showandfindtag[]
 
@@ -500,21 +545,33 @@ Format: `deletetag INDEX... t/[TAG]` +
 
 
 ****
+**Things To Note** +
+
 * You can delete the tag of the person at the specific `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index you key in *must be a positive integer* 1, 2, 3, ...
 * If you do not key in any index, deletetag will delete the tag from all contacts in the address book.
 ****
 
-Examples:
+**Examples Scenarios:** +
+****
+**Example Scenario 1:** +
+Suppose you want to delete `classmates` tag for the first two persons in the address book, you can `list` all the persons first, then
+use the `deletetag` command to achieve.
 
-* `list` +
+`list` +
 `deletetag 1 2 t/friends` +
-Delete the friends tag of the 1st and 2nd person in the address book.
-* `list` +
+****
+
+****
+**Example Scenario 2:** +
+Suppose you want to delete `friends` tag from all contacts in the address book.
+
+`list` +
 `deletetag t/friends` +
-Delete the friends tag from all contacts in the address book.
+****
 // end::deletetag[]
+
 // tag::sort[]
 === Sorting your contact list and tasks : `sort`
 
@@ -796,19 +853,31 @@ after you break up with your girlfriend, you may wish to set your girlfriend bac
 `unfavourite` can be replaced by `unfav` for faster input. +
 Format: `unfavourite INDEX [MORE INDEX]` +
 
-Examples:
-
-* `list` +
-`unfavourite 2` +
-Unfavourites the 2nd person in the address book.
-* `find Betsy` +
-`unfavourite 1` +
-Unfavourite the 1st person in the results of the `find` command.
-
 ****
+**Things To Note** +
+
 * You can unfavourites the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index you key in *must be a positive integer* 1, 2, 3, ...
+* The heart png will disappear once you `unfavourite` the person.
+****
+
+**Examples Scenarios:** +
+****
+**Example Scenario 1:** +
+Suppose you do not want to the 2nd person in the address book to be your favourite contact anymore, you should `list` all the persons first, then use `unfavourite` command to achieve it.
+
+`list` +
+`unfavourite 2` +
+****
+
+****
+**Example Scenario 2:** +
+Suppose you have `Betsy Brandt, Betsy Devos and Betsy Ross` in your address book. You want to `unfavourite` `Betsy Brandt` in the address book.
+Instead of `listing` all the contacts, you can `find` all the `Besty` first, then `unfavourite` her.
+
+`find Betsy` +
+`unfavourite 1` +
 ****
 // end::unfavourite[]
 

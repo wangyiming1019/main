@@ -53,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyTask> filteredTasks;
+    private final UserPrefs userPrefs;
     private int privacyLevel;
 
     /**
@@ -61,6 +62,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
+        this.userPrefs = userPrefs;
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
@@ -180,6 +182,22 @@ public class ModelManager extends ComponentManager implements Model {
     public void sortTasks(String field, String order) {
         addressBook.sortTasksBy(field, order);
         indicateAddressBookChanged();
+    }
+
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
+    }
+
+    public boolean getLockState() {
+        return getUserPrefs().getAddressBookLockState();
+    }
+
+    public void lockAddressBookFromModel() {
+        getUserPrefs().lockAddressBook();
+    }
+
+    public void unlockAddressBookFromModel() {
+        getUserPrefs().unlockAddressBook();
     }
     //@@author
 

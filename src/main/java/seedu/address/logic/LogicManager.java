@@ -27,14 +27,6 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
 
-    public LogicManager(Model model, Storage storage) {
-        this.model = model;
-        this.storage = storage;
-        this.history = new CommandHistory();
-        this.addressBookParser = new AddressBookParser();
-        this.undoRedoStack = new UndoRedoStack();
-    }
-
     public LogicManager(Model model) {
         this.model = model;
         this.storage = null;
@@ -47,7 +39,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
-            Command command = addressBookParser.parseCommand(commandText);
+            Command command = addressBookParser.parseCommand(commandText, model.getLockState());
             command.setData(model, history, undoRedoStack);
             command.setStorageInfo(this.storage);
             CommandResult result = command.execute();
@@ -57,7 +49,7 @@ public class LogicManager extends ComponentManager implements Logic {
             history.add(commandText);
         }
     }
-
+    //@@author
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
