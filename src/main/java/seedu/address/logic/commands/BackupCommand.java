@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.BackupRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
