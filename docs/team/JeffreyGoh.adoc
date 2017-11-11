@@ -20,6 +20,8 @@ include::../UserGuide.adoc[tag=editprivacy]
 
 include::../UserGuide.adoc[tag=changeprivacy]
 
+include::../UserGuide.adoc[tag=privacylevel]
+
 ---
 
 ==== Justification
@@ -29,6 +31,8 @@ Users may have contacts that they would like to keep confidential or those that 
 In addition, a private name cannot be searched for, and a private address cannot be used in the locate and navigate commands to prevent users from finding out the value of the private field.
 
 Having a private field also doubles up as an extra layer of protection against unintentional modifications, as private fields cannot be edited without changing them back to public fields.
+
+It may be inconvenient for a user to set a person's fields to public and back to private every time they would like to have a peek at the data that was hidden, or to set a person's every field to private if they want to hide them. Thus, having a command to change the privacy level of the address book will make it much more convenient for users to access private information.
 
 ==== Implementation
 
