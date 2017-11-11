@@ -75,58 +75,9 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        // Cases for CRUD related functionality and for locking and unlocking
-        switch (commandWord) {
-        case OpenCommand.COMMAND_WORD:
-            return new OpenCommand();
-
-        case SaveAsCommand.COMMAND_WORD:
-            return new SaveAsCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
-        case SelectCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
-
-        case LocateCommand.COMMAND_WORD:
-        case LocateCommand.COMMAND_ALIAS:
-            return new LocateCommandParser().parse(arguments);
-
-        case NavigateCommand.COMMAND_WORD:
-        case NavigateCommand.COMMAND_ALIAS:
-            return new NavigateCommandParser().parse(arguments);
-
-        case BackupCommand.COMMAND_WORD:
-        case BackupCommand.COMMAND_ALIAS:
-            return new BackupCommandParser().parse(arguments);
-
-        case FontSizeCommand.COMMAND_WORD:
-        case FontSizeCommand.COMMAND_ALIAS:
-            return new FontSizeCommandParser().parse(arguments);
-
-        case LockCommand.COMMAND_WORD:
-        case LockCommand.COMMAND_ALIAS:
-            return new LockCommandParser().parse(arguments);
-
-        case UnlockCommand.COMMAND_WORD:
-        case UnlockCommand.COMMAND_ALIAS:
-            return new UnlockCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
-
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
-
-        default:
-            break;
+        Command result = processNonCrudCommands(commandWord, arguments);
+        if (result != null) {
+            return result;
         }
 
         // Test for lock. If locked, return placeholder NoAccessCommand object
@@ -216,5 +167,69 @@ public class AddressBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
+    //@@author charlesgoh
+    /**
+     * Checks for non crud command words or aliases and returns the relevant commmand if there is one.
+     * Otherwise control is returned back to the original parseCommand method.
+     * Note: Code was refactored due to codacy's recommendation that there was a problem with parseCommand's
+     * NPath complexity (i.e. it the code was too long. Makes it less readable and prone to errors)
+     * @param commandWord
+     * @param arguments
+     */
+    private Command processNonCrudCommands(String commandWord, String arguments) throws ParseException {
+        // Cases for CRUD related functionality and for locking and unlocking
+        switch (commandWord) {
+        case OpenCommand.COMMAND_WORD:
+            return new OpenCommand();
 
+        case SaveAsCommand.COMMAND_WORD:
+            return new SaveAsCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
+        case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
+            return new SelectCommandParser().parse(arguments);
+
+        case LocateCommand.COMMAND_WORD:
+        case LocateCommand.COMMAND_ALIAS:
+            return new LocateCommandParser().parse(arguments);
+
+        case NavigateCommand.COMMAND_WORD:
+        case NavigateCommand.COMMAND_ALIAS:
+            return new NavigateCommandParser().parse(arguments);
+
+        case BackupCommand.COMMAND_WORD:
+        case BackupCommand.COMMAND_ALIAS:
+            return new BackupCommandParser().parse(arguments);
+
+        case FontSizeCommand.COMMAND_WORD:
+        case FontSizeCommand.COMMAND_ALIAS:
+            return new FontSizeCommandParser().parse(arguments);
+
+        case LockCommand.COMMAND_WORD:
+        case LockCommand.COMMAND_ALIAS:
+            return new LockCommandParser().parse(arguments);
+
+        case UnlockCommand.COMMAND_WORD:
+        case UnlockCommand.COMMAND_ALIAS:
+            return new UnlockCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
+
+        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
+            return new FindCommandParser().parse(arguments);
+
+        default:
+            return null;
+        }
+    }
+    //@@author
 }

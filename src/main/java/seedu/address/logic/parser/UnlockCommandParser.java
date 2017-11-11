@@ -16,8 +16,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS = "Password is required";
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     /**
      * Parses the given {@code String} of arguments in the context of the UnlockCommand
      * and returns a UnlockCommand object for execution.
