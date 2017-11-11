@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new PrivacyLevelCommand object
  */
-public class PrivacyLevelCommandParser implements Parser<PrivacyLevelCommand>{
+public class PrivacyLevelCommandParser implements Parser<PrivacyLevelCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the PrivacyLevelCommand
      * and returns an PrivacyLevelCommand object for execution.

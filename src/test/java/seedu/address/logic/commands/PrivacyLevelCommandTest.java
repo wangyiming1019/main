@@ -37,9 +37,9 @@ public class PrivacyLevelCommandTest {
     @Test
     public void execute_validIndex_success() {
         //valid levels
-        PrivacyLevelCommand onePlc = prepareCommand( 1);
-        PrivacyLevelCommand twoPlc = prepareCommand( 2);
-        PrivacyLevelCommand threePlc = prepareCommand( 3);
+        PrivacyLevelCommand onePlc = prepareCommand(1);
+        PrivacyLevelCommand twoPlc = prepareCommand(2);
+        PrivacyLevelCommand threePlc = prepareCommand(3);
 
         assertExecutionSuccess(onePlc);
         assertExecutionSuccess(twoPlc);
@@ -49,11 +49,11 @@ public class PrivacyLevelCommandTest {
     @Test
     public void execute_invalidIndex_failure() {
         //Negative level
-        PrivacyLevelCommand negativePlc = prepareCommand( -1);
+        PrivacyLevelCommand negativePlc = prepareCommand(-1);
         //Zero level
-        PrivacyLevelCommand zeroPlc = prepareCommand( 0);
+        PrivacyLevelCommand zeroPlc = prepareCommand(0);
         //Level greater than the maximum level allowed
-        PrivacyLevelCommand tooBigPlc = prepareCommand( 5);
+        PrivacyLevelCommand tooBigPlc = prepareCommand(5);
 
         assertExecutionFailure(negativePlc, PrivacyLevelCommand.WRONG_PRIVACY_LEVEL_MESSAGE);
         assertExecutionFailure(zeroPlc, PrivacyLevelCommand.WRONG_PRIVACY_LEVEL_MESSAGE);
