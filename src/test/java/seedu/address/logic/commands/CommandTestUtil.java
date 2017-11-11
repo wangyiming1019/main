@@ -64,8 +64,8 @@ public class CommandTestUtil {
     public static final String VALID_TASK_NAME_PAPER = "Buy paper";
     public static final String VALID_DESCRIPTION_PENCIL = "Buy mechanical pencil from ABS";
     public static final String VALID_DESCRIPTION_PAPER = "Buy 500 pieces of paper";
-    public static final String VALID_DEADLINE_PENCIL = "04-04-2017";
-    public static final String VALID_DEADLINE_PAPER = "05-04-2017";
+    public static final String VALID_DEADLINE_PENCIL = "04-04-2017 12pm";
+    public static final String VALID_DEADLINE_PAPER = "05-04-2017 12pm";
     public static final String VALID_PRIORITY_PENCIL = "1";
     public static final String VALID_PRIORITY_PAPER = "3";
     public static final String VALID_TASK_ADDRESS_PENCIL = "12 Kent Ridge Cres";
@@ -112,6 +112,7 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "TIMELESS AGES"; // not a date
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "6"; // priority is out of bounds
+    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS + " "; // priority is out of bounds
 
     public static final String TASK_SEPARATOR = " " + PREFIX_TASK + " ";
 
