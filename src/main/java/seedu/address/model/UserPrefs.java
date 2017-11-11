@@ -15,6 +15,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "My Address++";
+    private boolean lockState = false;
     private String addressBookEncryptedPassword = Hashing.sha256()
             .hashString("password", StandardCharsets.UTF_8).toString();
 
@@ -58,6 +59,18 @@ public class UserPrefs {
         this.addressBookEncryptedPassword = Hashing.sha256()
                 .hashString(addressBookPasswordInput, StandardCharsets.UTF_8).toString();
     }
+
+    public void lockAddressBook() {
+        this.lockState = false;
+    }
+
+    public void unlockAddressBook() {
+        this.lockState = true;
+    }
+
+    public boolean getAddressBookLockState() {
+        return this.lockState;
+    }
     //@@author
     @Override
     public boolean equals(Object other) {
@@ -88,6 +101,7 @@ public class UserPrefs {
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
         sb.append("\nPassword : " + addressBookEncryptedPassword);
+        sb.append("\nLock State: " + Boolean.toString(this.lockState));
         return sb.toString();
     }
 
