@@ -493,9 +493,9 @@ public class AddressBookParserTest {
     public void parseCommandFontSizeAlias() throws Exception {
         for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
             assertTrue(parser
-                    .parseCommand(FontSizeCommand.COMMAND_ALIAS + " " + arg, DEFAULT_STATE_LOCK) instanceof FontSizeCommand);
+                    .parseCommand(FontSizeCommand
+                            .COMMAND_ALIAS + " " + arg, DEFAULT_STATE_LOCK) instanceof FontSizeCommand);
         }
-
     }
 
     @Test
@@ -538,14 +538,16 @@ public class AddressBookParserTest {
 
         // Pass parser with prefix
         assertTrue(parser.parseCommand(UnlockCommand
-                .COMMAND_WORD + " " + PREFIX_PASSWORD + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
+                .COMMAND_WORD + " "
+                + PREFIX_PASSWORD + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
 
         // Do the same tests, this time with command alias
         assertTrue(parser.parseCommand(UnlockCommand
                 .COMMAND_ALIAS + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
 
         assertTrue(parser.parseCommand(UnlockCommand
-                .COMMAND_ALIAS + " " + PREFIX_PASSWORD + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
+                .COMMAND_ALIAS + " " + PREFIX_PASSWORD
+                + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
     }
 
     @Test
