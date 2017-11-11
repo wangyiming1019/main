@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -23,6 +22,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.TaskAddress;
+import seedu.address.model.task.TaskName;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
@@ -30,6 +34,11 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_TASK_NAME = " ";
+    private static final String INVALID_DESCRIPTION = "";
+    private static final String INVALID_DEADLINE = "The distant, distant past";
+    private static final String INVALID_PRIORITY = "99";
+    private static final String INVALID_TASK_ADDRESS = " ";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -37,6 +46,11 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_TASK_NAME = "Launcher";
+    private static final String VALID_DESCRIPTION = "An arbitrary decision";
+    private static final String VALID_DEADLINE = "2 weeks later";
+    private static final String VALID_PRIORITY = "3";
+    private static final String VALID_TASK_ADDRESS = "NUS";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -183,8 +197,127 @@ public class ParserUtilTest {
     @Test
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseTaskName_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTaskName(null);
+    }
+
+    @Test
+    public void parseTaskName_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskName(Optional.of(INVALID_TASK_NAME));
+    }
+
+    @Test
+    public void parseTaskName_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTaskName(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTaskName_validValue_returnsTaskName() throws Exception {
+        TaskName expectedTaskName = new TaskName(VALID_TASK_NAME);
+        Optional<TaskName> actualTaskName = ParserUtil.parseTaskName(Optional.of(VALID_TASK_NAME));
+
+        assertEquals(expectedTaskName, actualTaskName.get());
+    }
+
+    @Test
+    public void parseDescription_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDescription(null);
+    }
+
+    @Test
+    public void parseDescription_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDescription(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDescription_validValue_returnsDescription() throws Exception {
+        Description expectedDescription = new Description(VALID_DESCRIPTION);
+        Optional<Description> actualDescription = ParserUtil.parseDescription(Optional.of(VALID_DESCRIPTION));
+
+        assertEquals(expectedDescription, actualDescription.get());
+    }
+
+    @Test
+    public void parseDeadline_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDeadline(null);
+    }
+
+    @Test
+    public void parseDeadline_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDeadline(Optional.of(INVALID_DEADLINE));
+    }
+
+    @Test
+    public void parseDeadline_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDeadline(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDeadline_validValue_returnsDeadline() throws Exception {
+        Deadline expectedDeadline = new Deadline(VALID_DEADLINE);
+        Optional<Deadline> actualDeadline = ParserUtil.parseDeadline(Optional.of(VALID_DEADLINE));
+
+        assertEquals(expectedDeadline, actualDeadline.get());
+    }
+
+    @Test
+    public void parsePriority_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parsePriority(null);
+    }
+
+    @Test
+    public void parsePriority_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parsePriority(Optional.of(INVALID_PRIORITY));
+    }
+
+    @Test
+    public void parsePriority_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parsePriority(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parsePriority_validValue_returnsPriority() throws Exception {
+        Priority expectedPriority = new Priority(VALID_PRIORITY);
+        Optional<Priority> actualPriority = ParserUtil.parsePriority(Optional.of(VALID_PRIORITY));
+
+        assertEquals(expectedPriority, actualPriority.get());
+    }
+
+    @Test
+    public void parseTaskAddress_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTaskAddress(null);
+    }
+
+    @Test
+    public void parseTaskAddress_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskAddress(Optional.of(INVALID_TASK_ADDRESS));
+    }
+
+    @Test
+    public void parseTaskAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTaskAddress(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTaskAddress_validValue_returnsTaskAddress() throws Exception {
+        TaskAddress expectedTaskAddress = new TaskAddress(VALID_TASK_ADDRESS);
+        Optional<TaskAddress> actualTaskAddress = ParserUtil.parseTaskAddress(Optional.of(VALID_TASK_ADDRESS));
+
+        assertEquals(expectedTaskAddress, actualTaskAddress.get());
     }
 }
