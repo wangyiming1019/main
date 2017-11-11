@@ -29,7 +29,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.NavigateCommand;
-import seedu.address.logic.commands.NoAccessCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.PrivacyLevelCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -48,6 +47,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses user input.
  */
 public class AddressBookParser {
+
+    public static final String MESSAGE_NO_ACCESS = "Not allowed! You must unlock before"
+            + " making any changes.\n" + UnlockCommand.MESSAGE_USAGE;
 
     /**
      * Used for initial separation of command word and args.
@@ -80,9 +82,9 @@ public class AddressBookParser {
             return result;
         }
 
-        // Test for lock. If locked, return placeholder NoAccessCommand object
+        // Test for lock. If locked, return no access message
         if (lockState) {
-            return new NoAccessCommand();
+            throw new ParseException(MESSAGE_NO_ACCESS);
         }
 
         // Cases for CRUD related functionality
