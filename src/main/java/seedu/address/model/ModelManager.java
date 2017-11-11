@@ -317,11 +317,9 @@ public class ModelManager extends ComponentManager implements Model {
             if (predicate instanceof NameContainsKeywordsPredicate) {
                 this.updateFilteredPersonList(new NameContainsKeywordsPrivacyLevelPredicate(((
                         NameContainsKeywordsPredicate) predicate).getKeywords()));
-                System.out.println("!");
             } else if (predicate instanceof NameContainsTagsPredicate) {
                 this.updateFilteredPersonList(new NameContainsTagsPrivacyLevelPredicate(((
                         NameContainsTagsPredicate) predicate).getTags()));
-                System.out.println("!!");
             } else if (predicate instanceof NameContainsFavouritePredicate) {
                 this.updateFilteredPersonList(new NameContainsFavouritePrivacyLevelPredicate());
             } else if (predicate == PREDICATE_SHOW_ALL_PERSONS) {

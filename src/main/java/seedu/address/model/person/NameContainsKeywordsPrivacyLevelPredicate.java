@@ -19,10 +19,6 @@ public class NameContainsKeywordsPrivacyLevelPredicate implements Predicate<Read
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        System.out.println(person.getName().toString());
-        System.out.println((keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().value, keyword))
-                && !person.hasPrivateField()));
         return (keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().value, keyword))
                         && !person.hasPrivateField());
