@@ -59,10 +59,10 @@ public class BrowserPanel extends UiPart<Region> {
      * @param person The person we want to search for
      */
     private void loadPersonPage(ReadOnlyPerson person) {
-        if (person.getName().isPrivate()) {
+        if (person.getName().getIsPrivate()) {
             raise(new NewResultAvailableEvent(PRIVATE_NAME_CANNOT_SEARCH));
         } else {
-            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().value.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
         }
     }
@@ -74,7 +74,7 @@ public class BrowserPanel extends UiPart<Region> {
      * @param person The person's address we want to search for
      */
     private void loadMapsPage(ReadOnlyPerson person) {
-        if (person.getAddress().isPrivate()) {
+        if (person.getAddress().getIsPrivate()) {
             raise(new NewResultAvailableEvent(PRIVATE_ADDRESS_CANNOT_SEARCH));
         } else {
             loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")

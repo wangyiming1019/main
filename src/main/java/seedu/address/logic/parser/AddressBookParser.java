@@ -3,12 +3,15 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.BackupCommand;
+import seedu.address.logic.commands.ChangePasswordCommand;
 import seedu.address.logic.commands.ChangePrivacyCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -24,7 +27,9 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.NavigateCommand;
+import seedu.address.logic.commands.NoAccessCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.PrivacyLevelCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -36,6 +41,7 @@ import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.TagListCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -48,6 +54,8 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
     /**
      * Parses user input into command for execution.
      *
@@ -55,7 +63,10 @@ public class AddressBookParser {
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Command parseCommand(String userInput) throws ParseException {
+    public Command parseCommand(String userInput, boolean lockState) throws ParseException {
+        // Check lock state
+        logger.info("Parsing command. Lock state is currently: " + Boolean.toString(lockState));
+
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -63,8 +74,19 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
 
+        Command result = processNonCrudCommands(commandWord, arguments);
+        if (result != null) {
+            return result;
+        }
+
+        // Test for lock. If locked, return placeholder NoAccessCommand object
+        if (lockState) {
+            return new NoAccessCommand();
+        }
+
+        // Cases for CRUD related functionality
+        switch (commandWord) {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
@@ -97,18 +119,6 @@ public class AddressBookParser {
         case SetIncompleteCommand.COMMAND_ALIAS:
             return new SetTaskIncompleteCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
-
-        case LocateCommand.COMMAND_WORD:
-        case LocateCommand.COMMAND_ALIAS:
-            return new LocateCommandParser().parse(arguments);
-
-        case NavigateCommand.COMMAND_WORD:
-        case NavigateCommand.COMMAND_ALIAS:
-            return new NavigateCommandParser().parse(arguments);
-
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
@@ -116,10 +126,6 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommandParser().parse(arguments);
-
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
 
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
@@ -133,10 +139,6 @@ public class AddressBookParser {
         case UnfavouriteCommand.COMMAND_ALIAS:
             return new UnfavouriteCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
-
         case TagListCommand.COMMAND_WORD:
         case TagListCommand.COMMAND_ALIAS:
             return new TagListCommand();
@@ -144,18 +146,6 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
-
-        case OpenCommand.COMMAND_WORD:
-            return new OpenCommand();
-
-        case SaveAsCommand.COMMAND_WORD:
-            return new SaveAsCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
@@ -169,6 +159,50 @@ public class AddressBookParser {
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
 
+        case ChangePasswordCommand.COMMAND_WORD:
+        case ChangePasswordCommand.COMMAND_ALIAS:
+            return new ChangePasswordCommandParser().parse(arguments);
+
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+    //@@author charlesgoh
+    /**
+     * Checks for non crud command words or aliases and returns the relevant commmand if there is one.
+     * Otherwise control is returned back to the original parseCommand method.
+     * Note: Code was refactored due to codacy's recommendation that there was a problem with parseCommand's
+     * NPath complexity (i.e. it the code was too long. Makes it less readable and prone to errors)
+     * @param commandWord
+     * @param arguments
+     */
+    private Command processNonCrudCommands(String commandWord, String arguments) throws ParseException {
+        // Cases for CRUD related functionality and for locking and unlocking
+        switch (commandWord) {
+        case OpenCommand.COMMAND_WORD:
+            return new OpenCommand();
+
+        case SaveAsCommand.COMMAND_WORD:
+            return new SaveAsCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
+        case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
+            return new SelectCommandParser().parse(arguments);
+
+        case LocateCommand.COMMAND_WORD:
+        case LocateCommand.COMMAND_ALIAS:
+            return new LocateCommandParser().parse(arguments);
+
+        case NavigateCommand.COMMAND_WORD:
+        case NavigateCommand.COMMAND_ALIAS:
+            return new NavigateCommandParser().parse(arguments);
+
         case BackupCommand.COMMAND_WORD:
         case BackupCommand.COMMAND_ALIAS:
             return new BackupCommandParser().parse(arguments);
@@ -177,9 +211,25 @@ public class AddressBookParser {
         case FontSizeCommand.COMMAND_ALIAS:
             return new FontSizeCommandParser().parse(arguments);
 
+        case LockCommand.COMMAND_WORD:
+        case LockCommand.COMMAND_ALIAS:
+            return new LockCommandParser().parse(arguments);
+
+        case UnlockCommand.COMMAND_WORD:
+        case UnlockCommand.COMMAND_ALIAS:
+            return new UnlockCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
+
+        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
+            return new FindCommandParser().parse(arguments);
+
         default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            return null;
         }
     }
-
+    //@@author
 }

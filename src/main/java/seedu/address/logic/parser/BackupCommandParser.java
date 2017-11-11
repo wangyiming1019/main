@@ -27,7 +27,6 @@ public class BackupCommandParser implements Parser<BackupCommand> {
 
         // Converts arg arrays to lower case to account for caps entries
         String[] argKeywords = trimmedArgs.split("\\s");
-        // System.out.println(Integer.toString(argKeywords.length));
 
         if (argKeywords.length != SIZE_OF_ARG_ARRAY) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BackupCommand.MESSAGE_USAGE));

@@ -38,4 +38,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_NAVIGATE_TO_PERSON = new Prefix("tp/");
     public static final Prefix PREFIX_NAVIGATE_TO_TASK = new Prefix("tt/");
     public static final Prefix PREFIX_NAVIGATE_TO_ADDRESS = new Prefix("ta/");
+
+    public static final Prefix PREFIX_PASSWORD = new Prefix("pw/");
+    public static final Prefix PREFIX_NEW_PASSWORD = new Prefix("np/");
+    public static final Prefix PREFIX_CONFIRM_PASSWORD = new Prefix("cfp/");
 }

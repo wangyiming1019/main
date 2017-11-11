@@ -121,7 +121,7 @@ Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] r/[REMARK] v/[AVATAR]
 **Things To Note** +
 * A person can have any number of tags (including 0) +
 * The `EMAIL` should be in the format address@email.domain +
-* You can set a person's `Name`, `Phone`, `Email`, `Address`, `Remark`, `Avatar` to be private by placing a `p` in front of the prefix. +
+* You can set a person's `Name`, `Phone`, `Email`, `Address` and `Remark`, to be private by placing a `p` in front of the prefix. +
 ****
 
 **Example Scenarios**:
@@ -300,8 +300,9 @@ Changes the tag called `friends` to one called `enemies` instead. All existing c
 === Changing the Privacy of a person's details : `changeprivacy`(Since V1.3)
 
 You can use the `changeprivacy` command to set the privacy settings for each field of an existing `Person` in the address book, which allows you to choose specifically what information will be displayed. +
+`changeprivacy` can be replaced by `cp` for faster input. +
+
 Format: `changeprivacy INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [v/AVATAR]`
-Shorthand commands: `cp`
 
 ****
 * This command allows you to change the privacy settings for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -320,6 +321,35 @@ Sets the phone number of the 1st person to be public and their email address to 
 * `cp 2 a/false n/true e/false` +
 Sets the address and email of the 2nd person to be public and their name to be private. The 2nd person's address and email will be displayed, if available, while their name will be hidden in the UI.
 // end::changeprivacy[]
+
+// tag::privacylevel[]
+=== Changing the Privacy Level of the address book : `privacylevel`(Since V1.5)
+
+Changing a person's privacy just to reveal their data or to make a person fully confidential may be time-consuming. If you would like to view all the data hidden by private fields easily, or completely hide a person with private fields, you can use this command to change the Privacy Level of the address book. +
+At level 1, all data, regardless of whether they are set to be private or public, can be viewed. +
+At level 2, private fields will have their data hidden by a string, such as `<Private Phone>`. +
+At level 3, any person containing at least one private field will be completely hidden in the address book. +
+`privacylevel` can be replaced by `pl` for faster input. +
+
+Format: `privacylevel [LEVEL]`
+
+****
+* Address++ always launches in privacy level 2.
+* The `LEVEL` that you input can only contain the values 1, 2, or 3.
+* This does not change the actual privacy setting of each field, thus, changing the privacy level to 1 does not make any of the private fields public.
+** Thus, even if you have set the address book to be privacy level 1, you cannot edit a field that is set as private without setting it back to public.
+** Similarly, since a person is completely hidden in privacy level 3, you will have to set the privacy level back to 2 or 1 to be able to modify that person.
+****
+
+Examples:
+
+* `privacylevel 1` +
+Changes the privacy level of the address book to 1, revealing all data hidden by private fields.
+
+* `pl 3` +
+ Changes the privacy level of the address book to 3, hiding all persons with private fields completely in the address book.
+
+// end::privacylevel[]
 
 // tag::favourite[]
 
@@ -932,7 +962,7 @@ If you click on a box containing a contact, an internet browser on the right sid
 
 * *Add* : `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] r/[REMARK] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Sleeps at 3am t/friend t/colleague`
-* *Add with private fields* : `add pn/NAME pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] r/[REMARK] [t/TAG]...` +
+* *Add person with private fields* : `add pn/NAME pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] r/[REMARK] [t/TAG]...` +
 e.g. `add pn/James Ho pp/22224444 pe/jamesho@example.com pa/123, Clementi Rd, 1234665 r/Sleeps at 3am t/friend t/colleague`
 * *Add task* : `add task n/NAME d/[DESCRIPTION] by/[DEADLINE] p/[PRIORITY]` +
 e.g. `add task n/Update Documentation d/Update documentations for V1.1 for CS2103T t/30/10/17 p/high`
@@ -940,6 +970,7 @@ e.g. `add task n/Update Documentation d/Update documentations for V1.1 for CS210
 e.g. `addtag 1 2 t/friends`
 * *Change a person's details' privacy* : `changeprivacy INDEX [n/TRUE or FALSE] [p/TRUE or FALSE] [e/TRUE or FALSE] [a/TRUE or FALSE] [r/TRUE or FALSE]` +
 e.g. `changeprivacy 2 n/true p/false e/true a/false r/true`
+* *Changing the privacy level of the address book*: `privacylevel [LEVEL]` +
 * *Clear all data* : `clear`
 * *Clear persons* : `clear person`
 * *Clear tasks* : `clear task`
@@ -949,7 +980,6 @@ e.g. `delete 3`
 e.g. `delete task 4`
 * *Delete tag* : `deletetag INDEX t/[TAG]` +
 e.g. `deletetag 1 2 t/friends`
-
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [v/AVATAR] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit task* : `edit task INDEX [n/NAME] [d/DESCRIPTION] [t/DEADLINE] [p/PRIORITY]` +
@@ -996,7 +1026,7 @@ e.g. `dismiss 4 1 from/17`
 == Command Shorthand Cheat Sheet
 * *Add* : `a n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
 e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Sleeps at 3am t/friend t/colleague`
-* *Add with private fields* : `a pn/[NAME] pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] pr/[REMARK] [t/TAG]...` +
+* *Add person with private fields* : `a pn/[NAME] pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] pr/[REMARK] [t/TAG]...` +
 e.g. `a pn/James Ho pp/22224444 pe/jamesho@example.com pa/123, Clementi Rd, 1234665 pr/Sleeps at 3am`
 * *Add task* : `a task n/NAME d/[DESCRIPTION] by/[DEADLINE] p/[PRIORITY]` +
 e.g. `a task n/Update Documentation d/Update documentations for V1.1 for CS2103T t/30/10/17 p/high`
@@ -1004,6 +1034,7 @@ e.g. `a task n/Update Documentation d/Update documentations for V1.1 for CS2103T
 e.g. `atag 1 2 t/friends`
 * *Change a person's details' privacy* : `cp INDEX [n/TRUE or FALSE] [p/TRUE or FALSE] [e/TRUE or FALSE] [a/TRUE or FALSE] [r/TRUE or FALSE]` +
 e.g. `cp 2 n/true p/false e/true a/false r/true`
+* *Changing the privacy level of the address book*: `pl [LEVEL]` +
 * *Clear all data* : `clear`
 * *Clear persons* : `c person`
 * *Clear tasks* : `c task`

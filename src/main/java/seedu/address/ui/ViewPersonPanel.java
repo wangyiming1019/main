@@ -100,23 +100,26 @@ public class ViewPersonPanel extends UiPart<Region> {
             initTags(person);
         });
     }
+
     //author charlesgoh
     /**
-     * Sets avatar to a filepath or the avatar placeholder by default
+     * Sets avatar to a URL or filepath and falls back to the placeholder avatar if specified path fits in
+     * neither categories
      */
     private void initializeAvatar() {
+        String avatarPath = person.getAvatar().value;
         try {
-            String avatarPath = person.getAvatar().value;
-            if (!avatarPath.equals("")) {
-                logger.info("Initializing avatar to image at saved URL");
-                Image newImage = new Image(avatarPath);
-                avatarImage.setImage(newImage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            logger.info("Attempting to set avatar to image at specified URL or filepath");
+            Image newImage = new Image(avatarPath);
+            avatarImage.setImage(newImage);
+        } catch (IllegalArgumentException ex) {
+            logger.warning("Saved path is not a valid filepath or URL path. Setting avatar to placeholder");
+            Image imagePlaceholder = new Image("file:docs/images/Avatar.png");
+            avatarImage.setImage(imagePlaceholder);
         }
     }
     //author
+
     //@@author wangyiming1019
     /**
      * Locate hashed colour for tag. If not found, new colour is assigned to tag
@@ -200,7 +203,7 @@ public class ViewPersonPanel extends UiPart<Region> {
     public Label getEmail() {
         return email;
     }
-
+    //@@author charlesgoh
     public int getFontSizeMultipler() {
         return fontSizeMultipler;
     }
@@ -208,7 +211,7 @@ public class ViewPersonPanel extends UiPart<Region> {
     public void setFontSizeMultipler(int fontSizeMultipler) {
         this.fontSizeMultipler = fontSizeMultipler;
     }
-
+    //@@author
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

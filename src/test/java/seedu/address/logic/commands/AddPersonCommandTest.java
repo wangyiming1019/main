@@ -17,6 +17,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -84,7 +85,6 @@ public class AddPersonCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
-
 
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person or task.

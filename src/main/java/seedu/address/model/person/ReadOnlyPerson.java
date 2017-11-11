@@ -30,6 +30,7 @@ public interface ReadOnlyPerson {
     Avatar getAvatar();
     //@@author jeffreygohkw
     void setPrivacyLevel(int level);
+    int getPrivacyLevel();
     boolean hasPrivateField();
     //@@author
 

@@ -125,7 +125,32 @@ public interface Model {
      * @param order
      */
     void sortTasks(String field, String order);
+
+    /**
+     * Returns lock state. True means locked. False means unlocked
+     */
+    boolean getLockState();
+
+    /**
+     * Locks address book from model
+     */
+    void lockAddressBookFromModel();
+
+    /**
+     * Unlock address book from model
+     */
+    void unlockAddressBookFromModel();
+
+    /**
+     * Returns a copy of the UserPrefs
+     */
+    UserPrefs getUserPrefs();
     //@@author
 
+    //@@author jeffreygohkw
     void setPrivacyLevel(int level);
+
+    int getPrivacyLevel();
+
+    ReadOnlyPerson getPersonAtIndexFromAddressBook(int index);
 }

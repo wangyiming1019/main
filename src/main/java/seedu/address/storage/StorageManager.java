@@ -25,7 +25,6 @@ public class StorageManager extends ComponentManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
-
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
@@ -86,6 +85,7 @@ public class StorageManager extends ComponentManager implements Storage {
      * @param filePath
      * @throws IOException
      */
+    @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to backup data file in custom location");
         this.saveAddressBook(addressBook, filePath);

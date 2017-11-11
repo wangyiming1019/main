@@ -522,7 +522,7 @@ public class SetIncompleteCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddPersonCommandParserTest.java
 ``` java
     @Test
     public void parseTasksAllFieldsPresent_success() {
@@ -531,29 +531,29 @@ public class SetIncompleteCommandTest {
                 .withPriority(VALID_PRIORITY_PENCIL).withTaskAddress(VALID_TASK_ADDRESS_PENCIL).build();
 
         // multiple names - last name accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PAPER
+        assertParseSuccess(parser, AddPersonCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PAPER
                 + TASK_NAME_DESC_PENCIL + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL
-                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddTaskCommand(expectedTask));
 
         // multiple descriptions - last description accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
+        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PAPER + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL
-                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddTaskCommand(expectedTask));
 
         // multiple deadlines - last deadline accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
+        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PAPER + DEADLINE_DESC_PENCIL
-                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddTaskCommand(expectedTask));
 
         // multiple priorities - last priority accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
+        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL + PRIORITY_DESC_PAPER
-                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL, new AddTaskCommand(expectedTask));
 
         // multiple addresses - last address accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
+        assertParseSuccess(parser, AddTaskCommand.COMMAND_WORD + TASK_SEPARATOR + TASK_NAME_DESC_PENCIL
                 + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL + PRIORITY_DESC_PENCIL
-                + TASK_ADDRESS_DESC_PAPER + TASK_ADDRESS_DESC_PENCIL, new AddCommand(expectedTask));
+                + TASK_ADDRESS_DESC_PAPER + TASK_ADDRESS_DESC_PENCIL, new AddTaskCommand(expectedTask));
     }
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
@@ -601,7 +601,8 @@ public class SetIncompleteCommandTest {
 ``` java
     @Test
     public void parseCommandEditTag() throws Exception {
-        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_WORD + " "
+        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_WORD
+                + " " + PREFIX_TAG_FULL + " "
                 + " friends enemies");
         Tag friends = new Tag("friends");
         Tag enemies = new Tag("enemies");
@@ -610,7 +611,8 @@ public class SetIncompleteCommandTest {
 
     @Test
     public void parseCommandAliasEditTag() throws Exception {
-        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_ALIAS + " "
+        EditTagCommand command = (EditTagCommand) parser.parseCommand(EditTagCommand.COMMAND_ALIAS
+                + " " + PREFIX_TAG_FULL + " "
                 + " friends enemies");
         Tag friends = new Tag("friends");
         Tag enemies = new Tag("enemies");
@@ -648,20 +650,20 @@ public class SetIncompleteCommandTest {
         assertEquals(new SetIncompleteCommand(INDEX_FIRST_TASK), command);
     }
 ```
-###### \java\seedu\address\logic\parser\DeleteCommandParserTest.java
+###### \java\seedu\address\logic\parser\DeletePersonCommandParserTest.java
 ``` java
     @Test
     public void parseTaskValidArgs_returnsDeleteCommand() {
         assertParseSuccess(parser, TASK_SEPARATOR + "1",
-                new DeleteCommand(INDEX_FIRST_PERSON, DELETE_TYPE_TASK));
+                new DeleteTaskCommand(INDEX_FIRST_TASK));
     }
 ```
-###### \java\seedu\address\logic\parser\DeleteCommandParserTest.java
+###### \java\seedu\address\logic\parser\DeletePersonCommandParserTest.java
 ``` java
     @Test
     public void parseTaskInvalidArgs_throwsParseException() {
         assertParseFailure(parser, TASK_SEPARATOR + "a",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTaskCommand.MESSAGE_USAGE));
     }
 ```
 ###### \java\seedu\address\logic\parser\EditTagCommandParserTest.java

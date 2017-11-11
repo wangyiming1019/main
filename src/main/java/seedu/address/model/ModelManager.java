@@ -53,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyTask> filteredTasks;
+    private final UserPrefs userPrefs;
     private int privacyLevel;
 
     /**
@@ -61,6 +62,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
+        this.userPrefs = userPrefs;
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
@@ -180,6 +182,22 @@ public class ModelManager extends ComponentManager implements Model {
     public void sortTasks(String field, String order) {
         addressBook.sortTasksBy(field, order);
         indicateAddressBookChanged();
+    }
+
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
+    }
+
+    public boolean getLockState() {
+        return getUserPrefs().getAddressBookLockState();
+    }
+
+    public void lockAddressBookFromModel() {
+        getUserPrefs().lockAddressBook();
+    }
+
+    public void unlockAddressBookFromModel() {
+        getUserPrefs().unlockAddressBook();
     }
     //@@author
 
@@ -317,11 +335,9 @@ public class ModelManager extends ComponentManager implements Model {
             if (predicate instanceof NameContainsKeywordsPredicate) {
                 this.updateFilteredPersonList(new NameContainsKeywordsPrivacyLevelPredicate(((
                         NameContainsKeywordsPredicate) predicate).getKeywords()));
-                System.out.println("!");
             } else if (predicate instanceof NameContainsTagsPredicate) {
                 this.updateFilteredPersonList(new NameContainsTagsPrivacyLevelPredicate(((
                         NameContainsTagsPredicate) predicate).getTags()));
-                System.out.println("!!");
             } else if (predicate instanceof NameContainsFavouritePredicate) {
                 this.updateFilteredPersonList(new NameContainsFavouritePrivacyLevelPredicate());
             } else if (predicate == PREDICATE_SHOW_ALL_PERSONS) {
@@ -379,6 +395,7 @@ public class ModelManager extends ComponentManager implements Model {
         return updatedTask;
     }
 
+    //@@author jeffreygohkw
     @Override
     public void setPrivacyLevel(int level) {
         if (level < 1 || level > 3) {
@@ -386,5 +403,15 @@ public class ModelManager extends ComponentManager implements Model {
         } else {
             this.privacyLevel = level;
         }
+    }
+
+    @Override
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+
+    @Override
+    public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
+        return addressBook.getPersonAtIndexFromPersonList(index);
     }
 }
