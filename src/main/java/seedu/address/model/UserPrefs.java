@@ -15,12 +15,12 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "My Address++";
-    private boolean lockState = false;
+    private boolean addressBookLockState = false;
     private String addressBookEncryptedPassword = Hashing.sha256()
             .hashString("password", StandardCharsets.UTF_8).toString();
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1080, 720, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
@@ -61,15 +61,15 @@ public class UserPrefs {
     }
 
     public void lockAddressBook() {
-        this.lockState = false;
+        this.addressBookLockState = false;
     }
 
     public void unlockAddressBook() {
-        this.lockState = true;
+        this.addressBookLockState = true;
     }
 
     public boolean getAddressBookLockState() {
-        return this.lockState;
+        return this.addressBookLockState;
     }
     //@@author
     @Override
@@ -86,7 +86,8 @@ public class UserPrefs {
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
                 && Objects.equals(addressBookName, o.addressBookName)
-                && Objects.equals(addressBookEncryptedPassword, o.addressBookEncryptedPassword);
+                && Objects.equals(addressBookEncryptedPassword, o.addressBookEncryptedPassword)
+                && Objects.equals(addressBookLockState, o.addressBookLockState);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class UserPrefs {
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
         sb.append("\nPassword : " + addressBookEncryptedPassword);
-        sb.append("\nLock State: " + Boolean.toString(this.lockState));
+        sb.append("\nLock State: " + Boolean.toString(this.addressBookLockState));
         return sb.toString();
     }
 

@@ -125,21 +125,6 @@ public interface Model {
      * @param order
      */
     void sortTasks(String field, String order);
-
-    /**
-     * Unlocks addressbook by setting lock variable to false
-     */
-    void unlockAddressBook();
-
-    /**
-     * Locks address book by setting lock variable to true
-     */
-    void lockAddressBook();
-
-    /**
-     * Getter method for lock state for external classes
-     */
-    public boolean getLockState();
     //@@author
 
     void setPrivacyLevel(int level);

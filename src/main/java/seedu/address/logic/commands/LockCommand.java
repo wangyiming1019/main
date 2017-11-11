@@ -65,10 +65,10 @@ public class LockCommand extends Command {
             // Case where password is correct
 
             // Access model to lock
-            model.lockAddressBook();
+            storage.lockAddressBook();
 
             // Logs current state
-            logger.info("Lock state is now: " + Boolean.toString(model.getLockState()));
+            logger.info("Lock state is now: " + Boolean.toString(storage.getLockState()));
 
             //Return command result
             return new CommandResult(MESSAGE_SUCCESS);

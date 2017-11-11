@@ -24,12 +24,13 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
-
+    private UserPrefs userPrefs;
 
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        initUserPrefs();
     }
 
     // ================ UserPrefs methods ==============================
@@ -86,9 +87,41 @@ public class StorageManager extends ComponentManager implements Storage {
      * @param filePath
      * @throws IOException
      */
+    @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to backup data file in custom location");
         this.saveAddressBook(addressBook, filePath);
+    }
+
+    @Override
+    public void initUserPrefs() {
+        try {
+            if (readUserPrefs().isPresent()) {
+                this.userPrefs = readUserPrefs().get();
+            } else {
+                logger.warning("Unable to read user preferences when initializing StorageManager");
+                this.userPrefs = null;
+            }
+        } catch (DataConversionException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void unlockAddressBook() {
+        userPrefs.unlockAddressBook();
+    }
+
+    @Override
+    public void lockAddressBook() {
+        userPrefs.lockAddressBook();
+    }
+
+    @Override
+    public boolean getLockState() {
+        return userPrefs.getAddressBookLockState();
     }
     //@@author
 

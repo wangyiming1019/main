@@ -29,6 +29,35 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
+    //@@author charlesgoh
+    /**
+     * Backs up address book data at designated file name
+     * @param addressBook
+     * @param filePath
+     */
+    void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
+
+    /**
+     * Initializes user preferences in storage manager
+     */
+    void initUserPrefs();
+
+    /**
+     * Unlocks addressbook by setting lock variable to false
+     */
+    void unlockAddressBook();
+
+    /**
+     * Locks address book by setting lock variable to true
+     */
+    void lockAddressBook();
+
+    /**
+     * Getter method for lock state for external classes
+     */
+    boolean getLockState();
+    //@@author
+
     /**
      * Saves the current version of the Address Book to the hard disk.
      *   Creates the data file if it is missing.
