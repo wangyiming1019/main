@@ -18,7 +18,6 @@ public class Avatar {
     public static final String AVATAR_PLACEHOLDER_VALUE = "";
 
     public final String value;
-    private int privacyLevel = 2;
 
     /**
      * Validates given address.
@@ -60,14 +59,5 @@ public class Avatar {
     @Override
     public int hashCode() {
         return value.hashCode();
-    }
-
-    //@@author jeffreygohkw
-    public void setPrivacyLevel(int level) {
-        this.privacyLevel = level;
-    }
-
-    public int getPrivacyLevel() {
-        return this.privacyLevel;
     }
 }

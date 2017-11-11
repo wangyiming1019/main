@@ -63,7 +63,7 @@ public class XmlAdaptedPerson {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().fullName;
+        name = source.getName().value;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
@@ -71,11 +71,11 @@ public class XmlAdaptedPerson {
         remark = source.getRemark().value;
         avatar = source.getAvatar().value;
 
-        nameIsPrivate = source.getName().isPrivate();
-        phoneIsPrivate = source.getPhone().isPrivate();
-        emailIsPrivate = source.getEmail().isPrivate();
-        addressIsPrivate = source.getAddress().isPrivate();
-        remarkIsPrivate = source.getRemark().isPrivate();
+        nameIsPrivate = source.getName().getIsPrivate();
+        phoneIsPrivate = source.getPhone().getIsPrivate();
+        emailIsPrivate = source.getEmail().getIsPrivate();
+        addressIsPrivate = source.getAddress().getIsPrivate();
+        remarkIsPrivate = source.getRemark().getIsPrivate();
 
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {

@@ -140,10 +140,10 @@ public class AddressBookParserTest {
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
                 ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
-                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
-                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().getIsPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().getIsPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().getIsPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -156,10 +156,10 @@ public class AddressBookParserTest {
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
                 ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
-                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
-                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().getIsPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().getIsPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().getIsPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));

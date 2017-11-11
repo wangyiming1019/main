@@ -78,7 +78,7 @@ public class Address {
         return value.hashCode();
     }
     //@@author jeffreygohkw
-    public boolean isPrivate() {
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 

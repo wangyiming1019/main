@@ -30,7 +30,7 @@ public class NameTest {
     @Test
     public void privateNameIsHidden_success() throws IllegalValueException {
         Name n = new Name("Any Name", true);
-        assertTrue(n.isPrivate());
+        assertTrue(n.getIsPrivate());
         assertEquals(n.toString(), "<Private Name>");
     }
 }

@@ -35,7 +35,7 @@ public class UniquePersonListTest {
         Comparator<ReadOnlyPerson> nameComparator = new Comparator<ReadOnlyPerson>() {
             @Override
             public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2) {
-                return o1.getName().fullName.compareTo(o2.getName().fullName);
+                return o1.getName().value.compareTo(o2.getName().value);
             }
         };
         Collections.sort(personList, nameComparator);

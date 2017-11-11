@@ -210,7 +210,7 @@ public class Person implements ReadOnlyPerson {
      */
     @Override
     public boolean hasPrivateField() {
-        return (this.getName().isPrivate() || this.getPhone().isPrivate() || this.getAddress().isPrivate()
-                || this.getEmail().isPrivate() || this.getRemark().isPrivate());
+        return (this.getName().getIsPrivate() || this.getPhone().getIsPrivate() || this.getAddress().getIsPrivate()
+                || this.getEmail().getIsPrivate() || this.getRemark().getIsPrivate());
     }
 }

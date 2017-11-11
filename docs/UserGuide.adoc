@@ -120,7 +120,7 @@ Format: `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] r/[REMARK] v/[AVATAR]
 **Things To Note** +
 * A person can have any number of tags (including 0) +
 * The `EMAIL` should be in the format address@email.domain +
-* You can set a person's `Name`, `Phone`, `Email`, `Address`, `Remark`, `Avatar` to be private by placing a `p` in front of the prefix. +
+* You can set a person's `Name`, `Phone`, `Email`, `Address` and `Remark`, to be private by placing a `p` in front of the prefix. +
 ****
 
 **Example Scenarios**:
@@ -893,7 +893,7 @@ If you click on a box containing a contact, an internet browser on the right sid
 
 * *Add* : `add n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] r/[REMARK] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Sleeps at 3am t/friend t/colleague`
-* *Add with private fields* : `add pn/NAME pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] r/[REMARK] [t/TAG]...` +
+* *Add person with private fields* : `add pn/NAME pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] r/[REMARK] [t/TAG]...` +
 e.g. `add pn/James Ho pp/22224444 pe/jamesho@example.com pa/123, Clementi Rd, 1234665 r/Sleeps at 3am t/friend t/colleague`
 * *Add task* : `add task n/NAME d/[DESCRIPTION] by/[DEADLINE] p/[PRIORITY]` +
 e.g. `add task n/Update Documentation d/Update documentations for V1.1 for CS2103T t/30/10/17 p/high`
@@ -957,7 +957,7 @@ e.g. `dismiss 4 1 from/17`
 == Command Shorthand Cheat Sheet
 * *Add* : `a n/NAME p/[PHONE_NUMBER] e/[EMAIL] a/[ADDRESS] [t/TAG]...` +
 e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/Sleeps at 3am t/friend t/colleague`
-* *Add with private fields* : `a pn/[NAME] pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] pr/[REMARK] [t/TAG]...` +
+* *Add person with private fields* : `a pn/[NAME] pp/[PHONE_NUMBER] pe/[EMAIL] pa/[ADDRESS] pr/[REMARK] [t/TAG]...` +
 e.g. `a pn/James Ho pp/22224444 pe/jamesho@example.com pa/123, Clementi Rd, 1234665 pr/Sleeps at 3am`
 * *Add task* : `a task n/NAME d/[DESCRIPTION] by/[DEADLINE] p/[PRIORITY]` +
 e.g. `a task n/Update Documentation d/Update documentations for V1.1 for CS2103T t/30/10/17 p/high`

@@ -130,7 +130,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Name createNameWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Name n;
         try {
-            if (person.getName().isPrivate()) {
+            if (person.getName().getIsPrivate()) {
                 person.getName().setPrivate(false);
                 n = new Name(person.getName().toString());
                 person.getName().setPrivate(true);
@@ -155,7 +155,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Phone createPhoneWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Phone p;
         try {
-            if (person.getPhone().isPrivate()) {
+            if (person.getPhone().getIsPrivate()) {
                 person.getPhone().setPrivate(false);
                 p = new Phone(person.getPhone().toString());
                 person.getPhone().setPrivate(true);
@@ -180,7 +180,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Email createEmailWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Email em;
         try {
-            if (person.getEmail().isPrivate()) {
+            if (person.getEmail().getIsPrivate()) {
                 person.getEmail().setPrivate(false);
                 em = new Email(person.getEmail().toString());
                 person.getEmail().setPrivate(true);
@@ -204,7 +204,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Address createAddressWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Address a;
         try {
-            if (person.getAddress().isPrivate()) {
+            if (person.getAddress().getIsPrivate()) {
                 person.getAddress().setPrivate(false);
                 a = new Address(person.getAddress().toString());
                 person.getAddress().setPrivate(true);
@@ -228,7 +228,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Remark createRemarkWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Remark r;
         try {
-            if (person.getRemark().isPrivate()) {
+            if (person.getRemark().getIsPrivate()) {
                 person.getRemark().setPrivate(false);
                 r = new Remark(person.getRemark().toString());
                 person.getRemark().setPrivate(true);

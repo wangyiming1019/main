@@ -44,7 +44,7 @@ public class EmailTest {
     @Test
     public void privateEmailIsHidden_success() throws IllegalValueException {
         Email e = new Email("AnyEmail@example.com", true);
-        assertTrue(e.isPrivate());
+        assertTrue(e.getIsPrivate());
         assertEquals(e.toString(), "<Private Email>");
     }
 }
