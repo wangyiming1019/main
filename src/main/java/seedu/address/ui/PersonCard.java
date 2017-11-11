@@ -60,11 +60,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    private int fontSizeMultipler;
+    private int fontSizeMultiplier;
     public PersonCard(ReadOnlyPerson person, int displayedIndex, int fontSizeMultiplier) {
         super(FXML);
         this.person = person;
-        this.fontSizeMultipler = fontSizeMultiplier;
+        this.fontSizeMultiplier = fontSizeMultiplier;
         id.setText(displayedIndex + ". ");
         initTags(person);
         initFavourite(person);
@@ -139,8 +139,8 @@ public class PersonCard extends UiPart<Region> {
      * Set default size for all attributes
      */
     public void updateAttributeSizes() {
-        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
-        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultiplier * FONT_SIZE_EXTENDER);
+        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultiplier * FONT_SIZE_EXTENDER);
 
         // Set styles using set name and attribute sizes
         name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
@@ -195,12 +195,12 @@ public class PersonCard extends UiPart<Region> {
         return email;
     }
 
-    public int getFontSizeMultipler() {
-        return fontSizeMultipler;
+    public int getFontSizeMultiplier() {
+        return fontSizeMultiplier;
     }
 
-    public void setFontSizeMultipler(int fontSizeMultipler) {
-        this.fontSizeMultipler = fontSizeMultipler;
+    public void setFontSizeMultiplier(int fontSizeMultiplier) {
+        this.fontSizeMultiplier = fontSizeMultiplier;
     }
     //author
 }
