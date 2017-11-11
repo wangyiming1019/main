@@ -4,7 +4,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FROM;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import java.util.ArrayList;
 
@@ -26,8 +25,8 @@ public class DismissTaskCommandParser implements Parser<DismissCommand> {
         }
         String target = argMultimap.getValue(PREFIX_FROM).get();
         String persons = argMultimap.getPreamble();
-        ArrayList<Index> targetIndexes = parseIndexes(target);
-        ArrayList<Index> personIndexes = parseIndexes(persons);
+        ArrayList<Index> targetIndexes = ParserUtil.parseIndexes(target);
+        ArrayList<Index> personIndexes = ParserUtil.parseIndexes(persons);
         if (targetIndexes.size() != 1) {
             throw new ParseException(DismissCommand.MESSAGE_INVALID_TARGET_ARGS);
         } else if (personIndexes.size() < 1) {
@@ -37,25 +36,4 @@ public class DismissTaskCommandParser implements Parser<DismissCommand> {
         return new DismissCommand(personIndexes, taskIndex);
     }
 
-    /**
-     *   Parses the given {@code String} and returns an ArrayList of Indexes that correspond to
-     *   the value in the String.
-     *   @throws ParseException if any of the values in the String cannot be converted into an {@code Index}
-     */
-    private ArrayList<Index> parseIndexes(String args) throws ParseException {
-        String[] splitted = args.split(" ");
-        ArrayList<Index> targetsToAdd = new ArrayList<>();
-        int parsedInt;
-        try {
-            for (String s : splitted) {
-                if (!s.isEmpty()) {
-                    parsedInt = Integer.parseInt(s);
-                    targetsToAdd.add(Index.fromOneBased(parsedInt));
-                }
-            }
-        } catch (NumberFormatException nfe) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
-        }
-        return targetsToAdd;
-    }
 }
