@@ -68,8 +68,6 @@ public class AddPersonCommandSystemTest extends AddressBookSystemTest {
     public void add() throws Exception {
         Model model = getModel();
 
-        logger.warning("Model Lock state is: " + Boolean.toString(model.getLockState()));
-
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
@@ -270,7 +268,6 @@ public class AddPersonCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
-        expectedModel.unlockAddressBook();
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);

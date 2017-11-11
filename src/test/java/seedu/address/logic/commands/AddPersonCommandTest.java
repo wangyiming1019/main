@@ -236,22 +236,6 @@ public class AddPersonCommandTest {
         public void sortTasks(String field, String order) {
             fail("This method should not be called.");
         }
-
-        @Override
-        public void unlockAddressBook() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void lockAddressBook() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public boolean getLockState() {
-            fail("This method should not be called.");
-            return false;
-        }
         //@@author
         @Override
         public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
