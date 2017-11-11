@@ -60,6 +60,8 @@ public class TypicalTasks {
             .withDeadline(VALID_DEADLINE_PAPER).withPriority(VALID_PRIORITY_PAPER)
             .withTaskAddress(VALID_TASK_ADDRESS_PAPER).build();
 
+    public static final String KEYWORD_MATCHING_LUCY = "Lucy"; // A keyword that matches LUCY
+
     private TypicalTasks() {} // prevents instantiation
 
     /**
