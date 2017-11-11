@@ -396,6 +396,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
-        return getAddressBook().getPersonAtIndexFromPersonList(index);
+        return addressBook.getPersonAtIndexFromPersonList(index);
     }
 }

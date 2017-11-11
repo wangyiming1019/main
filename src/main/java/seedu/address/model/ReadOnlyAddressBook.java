@@ -17,11 +17,6 @@ public interface ReadOnlyAddressBook {
     ObservableList<ReadOnlyPerson> getPersonList();
 
     /**
-     * Returns a (@code ReadOnlyPerson) from the persons list at the specified (@code index)
-     */
-    ReadOnlyPerson getPersonAtIndexFromPersonList(int index);
-
-    /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
      */

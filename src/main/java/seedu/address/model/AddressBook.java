@@ -330,7 +330,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author jeffreygohkw
-    @Override
     public ReadOnlyPerson getPersonAtIndexFromPersonList(int index) {
         return persons.asObservableList().get(index);
     }
