@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import com.google.common.hash.Hashing;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.UserPrefs;
 
 //@@author charlesgoh
@@ -98,23 +99,23 @@ public class ChangePasswordCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         // Case where old password is incorrect
         if (!isOldPasswordCorrect()) {
             logger.warning("Password is incorrect. Note: Default password is 'password' ");
-            return new CommandResult(MESSAGE_PASSWORD_INCORRECT);
+            throw new CommandException(MESSAGE_PASSWORD_INCORRECT);
         }
 
         // Case where new password and confirmation password do not match
         if (!isNewPasswordInputsSame()) {
             logger.warning("New password and confirmation password do not match");
-            return new CommandResult(MESSAGE_PASSWORD_CONFIRMATION_INCORRECT);
+            throw new CommandException(MESSAGE_PASSWORD_CONFIRMATION_INCORRECT);
         }
 
         // Case where old and new passwords are the same
         if (isOldAndNewPasswordTheSame()) {
             logger.warning("Old password and new password cannot be the same");
-            return new CommandResult(MESSAGE_OLD_NEW_PS_SAME);
+            throw new CommandException(MESSAGE_OLD_NEW_PS_SAME);
         }
 
         // Case where user input passes both checks. Password is changed and UserPrefs saved

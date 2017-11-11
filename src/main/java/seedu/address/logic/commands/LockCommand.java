@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.google.common.hash.Hashing;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.UserPrefs;
 
 //@@author charlesgoh
@@ -46,7 +47,7 @@ public class LockCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         if (isPasswordCorrect()) {
             // Case where password is correct
 
@@ -60,7 +61,7 @@ public class LockCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             // Case where password is incorrect
-            return new CommandResult(MESSAGE_PASSWORD_INCORRECT);
+            throw new CommandException(MESSAGE_PASSWORD_INCORRECT);
         }
     }
 }
