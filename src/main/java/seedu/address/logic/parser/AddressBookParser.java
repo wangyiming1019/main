@@ -77,6 +77,22 @@ public class AddressBookParser {
 
         // Cases for non operationally related functionality and for locking and unlocking
         switch (commandWord) {
+        case OpenCommand.COMMAND_WORD:
+            return new OpenCommand();
+
+        case SaveAsCommand.COMMAND_WORD:
+            return new SaveAsCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
+        case BackupCommand.COMMAND_WORD:
+        case BackupCommand.COMMAND_ALIAS:
+            return new BackupCommandParser().parse(arguments);
+
         case FontSizeCommand.COMMAND_WORD:
         case FontSizeCommand.COMMAND_ALIAS:
             return new FontSizeCommandParser().parse(arguments);
@@ -180,18 +196,6 @@ public class AddressBookParser {
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
-        case OpenCommand.COMMAND_WORD:
-            return new OpenCommand();
-
-        case SaveAsCommand.COMMAND_WORD:
-            return new SaveAsCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
@@ -203,10 +207,6 @@ public class AddressBookParser {
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
-
-        case BackupCommand.COMMAND_WORD:
-        case BackupCommand.COMMAND_ALIAS:
-            return new BackupCommandParser().parse(arguments);
 
         case ChangePasswordCommand.COMMAND_WORD:
         case ChangePasswordCommand.COMMAND_ALIAS:
