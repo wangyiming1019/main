@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -153,4 +154,10 @@ public interface Model {
     int getPrivacyLevel();
 
     ReadOnlyPerson getPersonAtIndexFromAddressBook(int index);
+
+    void setTheme(String theme);
+
+    String getTheme();
+
+    HashMap<String, String> getStyleMap();
 }
