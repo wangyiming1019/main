@@ -37,8 +37,11 @@ import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
+import java.util.logging.Logger;
+
 import org.junit.Test;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -47,6 +50,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectPersonCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -58,9 +62,14 @@ import seedu.address.testutil.PersonUtil;
 
 public class AddPersonCommandSystemTest extends AddressBookSystemTest {
 
+    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+
     @Test
     public void add() throws Exception {
         Model model = getModel();
+
+        logger.warning("Model Lock state is: " + Boolean.toString(model.getLockState()));
+
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
@@ -125,6 +134,7 @@ public class AddPersonCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void addThirdTest() throws Exception {
         Model model = getModel();
+
         ReadOnlyPerson toAdd;
         String command;
 
