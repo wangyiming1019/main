@@ -72,23 +72,15 @@ public class ChangePasswordCommand extends Command {
     private boolean isOldPasswordCorrect() {
         String forwardHashedInputPassword = forwardHash(oldPassword);
         String forwardHashActualPassword;
-        UserPrefs userPrefs;
-        try {
-            userPrefs = storage.readUserPrefs().get();
-            forwardHashActualPassword = userPrefs.getAddressBookEncryptedPassword();
-            if (forwardHashActualPassword.equals(forwardHashedInputPassword)) {
-                logger.info("Actual password and input password matches");
-                return true;
-            } else {
-                logger.warning("Actual password and input password do not match");
-                return false;
-            }
-        } catch (DataConversionException e) {
-            e.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        UserPrefs userPrefs = model.getUserPrefs();
+        forwardHashActualPassword = userPrefs.getAddressBookEncryptedPassword();
+        if (forwardHashActualPassword.equals(forwardHashedInputPassword)) {
+            logger.info("Actual password and input password matches");
+            return true;
+        } else {
+            logger.warning("Actual password and input password do not match");
+            return false;
         }
-        return false;
     }
 
     /**
@@ -129,7 +121,7 @@ public class ChangePasswordCommand extends Command {
         UserPrefs userPrefs;
         try {
             // Get user prefs file
-            userPrefs = storage.readUserPrefs().get();
+            userPrefs = model.getUserPrefs();
 
             // Set new password to user prefs
             userPrefs.setAddressBookEncryptedPassword(newPassword);
@@ -148,8 +140,6 @@ public class ChangePasswordCommand extends Command {
 
             // Return command result
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (DataConversionException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

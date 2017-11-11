@@ -36,31 +36,6 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
      * @param filePath
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
-
-    /**
-     * Initializes user preferences in storage manager
-     */
-    void initUserPrefs();
-
-    /**
-     * Unlocks addressbook by setting lock variable to false
-     */
-    void unlockAddressBook();
-
-    /**
-     * Locks address book by setting lock variable to true
-     */
-    void lockAddressBook();
-
-    /**
-     * Getter method for lock state for external classes
-     */
-    boolean getLockState();
-
-    /**
-     * Updates user preferences within storage.
-     */
-    void updateUserPrefs();
     //@@author
 
     /**

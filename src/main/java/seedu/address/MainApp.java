@@ -198,11 +198,9 @@ public class MainApp extends Application {
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {
-            storage.saveUserPrefs(storage.readUserPrefs().get());
+            storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
-        } catch (DataConversionException e) {
-            e.printStackTrace();
         }
         Platform.exit();
         System.exit(0);

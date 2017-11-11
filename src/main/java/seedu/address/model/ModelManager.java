@@ -183,6 +183,22 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortTasksBy(field, order);
         indicateAddressBookChanged();
     }
+
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
+    }
+
+    public boolean getLockState() {
+        return getUserPrefs().getAddressBookLockState();
+    }
+
+    public void lockAddressBookFromModel() {
+        getUserPrefs().lockAddressBook();
+    }
+
+    public void unlockAddressBookFromModel() {
+        getUserPrefs().unlockAddressBook();
+    }
     //@@author
 
     //@@author Esilocke
