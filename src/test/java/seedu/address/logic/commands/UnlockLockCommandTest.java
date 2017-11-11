@@ -43,5 +43,4 @@ public class UnlockLockCommandTest {
         model.unlockAddressBookFromModel();
         assertFalse(model.getLockState());
     }
-
 }
