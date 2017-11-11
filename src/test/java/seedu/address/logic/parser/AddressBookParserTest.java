@@ -152,7 +152,8 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().getIsPrivate())
                         + " " + PREFIX_PHONE + String.valueOf(person.getPhone().getIsPrivate())
                         + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().getIsPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()), DEFAULT_STATE_LOCK);
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()),
+                DEFAULT_STATE_LOCK);
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -168,7 +169,8 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().getIsPrivate())
                         + " " + PREFIX_PHONE + String.valueOf(person.getPhone().getIsPrivate())
                         + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().getIsPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()), DEFAULT_STATE_LOCK);
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()),
+                DEFAULT_STATE_LOCK);
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
