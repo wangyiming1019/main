@@ -606,23 +606,22 @@ are listed on top).
 //tag::backup[]
 === Backing up your data : `backup`
 
-You can backup your saved data on Address++ by using the `backup` command. +
-`backup` can be replaced by `bk` for faster input. +
-Format: `backup [RELATIVE LOCATION]` +
+You can backup your saved data on Address++ by using the `backup` command.
 
+image::LockedRestriction.png[width="800"]
+
+Format: `backup [FILENAME]` +
+
+[NOTE]
+This allows you to backup your saved data on Address++ in another file.
 
 ****
-* Allows you to backup your saved data on Address++ in another file.
-* You can backup your data in the default location or you can specify your desired save location.
-* You can use the default save name or use your own.
+**Example Scenario**: +
+You decide to backup your data just in case you accidentally make changes that
+cannot be undone. You type the following code:
+
+`backup filename.xml`
 ****
-
-Examples:
-
-* `backup` or `bk` +
-This command will help you back up in the default save location --> In the data directory of your application.
-* `backup ./test.xml` or `bk ./test.xml` +
-This saves the backup file in the current data directory, with the name `test.xml`.
 //end::backup[]
 
 //tag::password[]
