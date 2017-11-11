@@ -624,6 +624,41 @@ This command will help you back up in the default save location --> In the data 
 * `backup ./test.xml` or `bk ./test.xml` +
 This saves the backup file in the current data directory, with the name `test.xml`.
 //end::backup[]
+
+//tag::password[]
+=== Protecting your date : `lock` `unlock`
+
+Worried about security? Address++ allows your to protect your data with a password.
+Using the `lock` and `unlock` commands, you can toggle between security modes. +
+
+Locked address books only allow viewing of data. If anyone attempts to tamper with
+your data, they will be greeted with this error:
+
+image::LockedRestriction.png[width="800"]
+
+Format for `lock` Command: `lock pw/[PASSWORD]` +
+Format for `unlock` Command: `unlock pw/[PASSWORD]` +
+
+[NOTE]
+The default password is 'password'
+
+**Example Scenarios**:
+****
+**Example Scenario 1** +
+You just finished editing your contacts on Address++ when you decide to have a break away from
+you computer. You decide to lock Address++ using the following command:
+
+`lock pw/password`
+****
+****
+**Example Scenario 2** +
+When you return to your computer, you decide to continue adding contacts in Address++.
+You decide to unlock Address++ using the following command:
+
+`unlock pw/password`
+****
+//end::password[]
+
 === Selecting a person : `select`
 
 You can use `select` to pick out one contact or task, and look at it in greater detail, such as examining a task with a very long description, or checking out the full address of one of your friends. +

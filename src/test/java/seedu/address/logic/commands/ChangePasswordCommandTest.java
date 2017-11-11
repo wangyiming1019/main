@@ -15,7 +15,6 @@ import seedu.address.logic.parser.ChangePasswordCommandParser;
 import seedu.address.model.UserPrefs;
 
 //@@author charlesgoh
-
 /**
  * Tests for lock and unlock functionality. Covers implementation across userprefs and model classes
  */
