@@ -10,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -167,5 +168,39 @@ public class ModelStub implements Model {
     @Override
     public void setPrivacyLevel(int level) {
         fail("This method should not be called.");
+    }
+
+    @Override
+    public int getPrivacyLevel() {
+        fail("This method should not be called.");
+        return 0;
+    }
+
+    @Override
+    public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public boolean getLockState() {
+        fail("This method should not be called.");
+        return false;
+    }
+
+    @Override
+    public void lockAddressBookFromModel() {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void unlockAddressBookFromModel() {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public UserPrefs getUserPrefs() {
+        fail("This method should not be called.");
+        return null;
     }
 }
