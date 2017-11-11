@@ -75,7 +75,7 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        // Cases for non operationally related functionality and for locking and unlocking
+        // Cases for CRUD related functionality and for locking and unlocking
         switch (commandWord) {
         case OpenCommand.COMMAND_WORD:
             return new OpenCommand();
@@ -88,6 +88,18 @@ public class AddressBookParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
+            return new SelectCommandParser().parse(arguments);
+
+        case LocateCommand.COMMAND_WORD:
+        case LocateCommand.COMMAND_ALIAS:
+            return new LocateCommandParser().parse(arguments);
+
+        case NavigateCommand.COMMAND_WORD:
+        case NavigateCommand.COMMAND_ALIAS:
+            return new NavigateCommandParser().parse(arguments);
 
         case BackupCommand.COMMAND_WORD:
         case BackupCommand.COMMAND_ALIAS:
@@ -104,6 +116,14 @@ public class AddressBookParser {
         case UnlockCommand.COMMAND_WORD:
         case UnlockCommand.COMMAND_ALIAS:
             return new UnlockCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
+
+        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
+            return new FindCommandParser().parse(arguments);
 
         default:
             break;
@@ -148,18 +168,6 @@ public class AddressBookParser {
         case SetIncompleteCommand.COMMAND_ALIAS:
             return new SetTaskIncompleteCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
-
-        case LocateCommand.COMMAND_WORD:
-        case LocateCommand.COMMAND_ALIAS:
-            return new LocateCommandParser().parse(arguments);
-
-        case NavigateCommand.COMMAND_WORD:
-        case NavigateCommand.COMMAND_ALIAS:
-            return new NavigateCommandParser().parse(arguments);
-
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
@@ -167,10 +175,6 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommandParser().parse(arguments);
-
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
 
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
@@ -183,10 +187,6 @@ public class AddressBookParser {
         case UnfavouriteCommand.COMMAND_WORD:
         case UnfavouriteCommand.COMMAND_ALIAS:
             return new UnfavouriteCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
 
         case TagListCommand.COMMAND_WORD:
         case TagListCommand.COMMAND_ALIAS:
