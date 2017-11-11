@@ -6,11 +6,14 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIRM_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_FROM_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_TO_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET;
@@ -34,6 +37,7 @@ import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.BackupCommand;
+import seedu.address.logic.commands.ChangePasswordCommand;
 import seedu.address.logic.commands.ChangePrivacyCommand;
 import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
 import seedu.address.logic.commands.ClearCommand;
@@ -57,6 +61,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
+import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -66,6 +71,7 @@ import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Location;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -146,7 +152,7 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
                         + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
                         + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()), false);
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()), DEFAULT_STATE_LOCK);
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -162,7 +168,7 @@ public class AddressBookParserTest {
                         + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
                         + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
                         + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()), false);
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()), DEFAULT_STATE_LOCK);
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -171,12 +177,12 @@ public class AddressBookParserTest {
     //@@author
     @Test
     public void parseCommandClear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, false) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, DEFAULT_STATE_LOCK) instanceof ClearCommand);
     }
 
     @Test
     public void parseCommandAliasClear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS, false) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS, DEFAULT_STATE_LOCK) instanceof ClearCommand);
     }
 
     @Test
@@ -365,7 +371,7 @@ public class AddressBookParserTest {
                 .COMMAND_WORD + " 3", DEFAULT_STATE_LOCK) instanceof HistoryCommand);
 
         try {
-            parser.parseCommand("histories", false);
+            parser.parseCommand("histories", DEFAULT_STATE_LOCK);
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
@@ -481,73 +487,182 @@ public class AddressBookParserTest {
                     .parseCommand(FontSizeCommand
                             .COMMAND_WORD + " " + arg, DEFAULT_STATE_LOCK) instanceof FontSizeCommand);
         }
-
     }
 
     @Test
     public void parseCommandFontSizeAlias() throws Exception {
         for (String arg: FontSizeCommand.ACCEPTED_PARAMETERS) {
             assertTrue(parser
-                    .parseCommand(FontSizeCommand.COMMAND_ALIAS + " " + arg, false) instanceof FontSizeCommand);
+                    .parseCommand(FontSizeCommand.COMMAND_ALIAS + " " + arg, DEFAULT_STATE_LOCK) instanceof FontSizeCommand);
         }
 
     }
 
+    @Test
+    public void parseLockCommandValid() throws Exception {
+        // Pass parser without prefix
+        assertTrue(parser.parseCommand(LockCommand
+                .COMMAND_WORD + " randompassword", DEFAULT_STATE_LOCK) instanceof LockCommand);
+
+        // Pass parser with prefix
+        assertTrue(parser.parseCommand(LockCommand
+                .COMMAND_WORD + " " + PREFIX_PASSWORD + " randompassword", DEFAULT_STATE_LOCK) instanceof LockCommand);
+
+        // Do the same tests, this time with command alias
+        assertTrue(parser.parseCommand(LockCommand
+                .COMMAND_ALIAS + " randompassword", DEFAULT_STATE_LOCK) instanceof LockCommand);
+
+        assertTrue(parser.parseCommand(LockCommand
+                .COMMAND_ALIAS + " " + PREFIX_PASSWORD + " randompassword", DEFAULT_STATE_LOCK) instanceof LockCommand);
+    }
+
+    @Test
+    public void parseLockCommandWordInvalid() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
+        parser.parseCommand(LockCommand.COMMAND_WORD, DEFAULT_STATE_LOCK);
+    }
+
+    @Test
+    public void parseLockCommandAliasInvalid() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LockCommand.MESSAGE_USAGE));
+        parser.parseCommand(LockCommand.COMMAND_ALIAS, DEFAULT_STATE_LOCK);
+    }
+
+    @Test
+    public void parseUnlockCommandValid() throws Exception {
+        // Pass parser without prefix
+        assertTrue(parser.parseCommand(UnlockCommand
+                .COMMAND_WORD + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
+
+        // Pass parser with prefix
+        assertTrue(parser.parseCommand(UnlockCommand
+                .COMMAND_WORD + " " + PREFIX_PASSWORD + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
+
+        // Do the same tests, this time with command alias
+        assertTrue(parser.parseCommand(UnlockCommand
+                .COMMAND_ALIAS + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
+
+        assertTrue(parser.parseCommand(UnlockCommand
+                .COMMAND_ALIAS + " " + PREFIX_PASSWORD + " randompassword", DEFAULT_STATE_LOCK) instanceof UnlockCommand);
+    }
+
+    @Test
+    public void parseUnlockCommandWordInvalid() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+        parser.parseCommand(UnlockCommand.COMMAND_WORD, DEFAULT_STATE_LOCK);
+    }
+
+    @Test
+    public void parseUnlockCommandAliasInvalid() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+        parser.parseCommand(UnlockCommand.COMMAND_ALIAS, DEFAULT_STATE_LOCK);
+    }
+
+    @Test
+    public void parseChangePasswordCommand() throws Exception {
+        // Pass inputs that are correct and valid
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_WORD + " " + PREFIX_PASSWORD + "password "
+                + PREFIX_NEW_PASSWORD + "newpassword "
+                + PREFIX_CONFIRM_PASSWORD + "newpassword ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+
+        // Pass inputs that are wrong but valid
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_WORD + " " + PREFIX_PASSWORD + "password "
+                + PREFIX_NEW_PASSWORD + "newpassword "
+                + PREFIX_CONFIRM_PASSWORD + "newpassword:P ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+
+        // Pass inputs that have the wrong order (i.e. fields are in the wrong order)
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_WORD + " " + PREFIX_NEW_PASSWORD + "newpassword "
+                + PREFIX_PASSWORD + "password "
+                + PREFIX_CONFIRM_PASSWORD + "newpassword:P ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_WORD + " " + PREFIX_CONFIRM_PASSWORD + "newpassword:P "
+                + PREFIX_PASSWORD + "password "
+                + PREFIX_NEW_PASSWORD + "newpassword ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+
+        // Do the same thing for alias counterparts
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_ALIAS + " " + PREFIX_PASSWORD + "password "
+                + PREFIX_NEW_PASSWORD + "newpassword "
+                + PREFIX_CONFIRM_PASSWORD + "newpassword ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_ALIAS + " " + PREFIX_PASSWORD + "password "
+                + PREFIX_NEW_PASSWORD + "newpassword "
+                + PREFIX_CONFIRM_PASSWORD + "newpassword:P ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_ALIAS + " " + PREFIX_NEW_PASSWORD + "newpassword "
+                + PREFIX_PASSWORD + "password "
+                + PREFIX_CONFIRM_PASSWORD + "newpassword:P ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+
+        assertTrue(parser.parseCommand(ChangePasswordCommand
+                .COMMAND_ALIAS + " " + PREFIX_CONFIRM_PASSWORD + "newpassword:P "
+                + PREFIX_PASSWORD + "password "
+                + PREFIX_NEW_PASSWORD + "newpassword ", DEFAULT_STATE_LOCK) instanceof ChangePasswordCommand);
+    }
     //@@author
     @Test
     public void parseCommandRedoCommandWordReturnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD, false) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1", false) instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD, DEFAULT_STATE_LOCK) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redo 1", DEFAULT_STATE_LOCK) instanceof RedoCommand);
     }
 
     //@@author Esilocke
     @Test
     public void  parseCommandSetComplete() throws Exception {
         SetCompleteCommand command = (SetCompleteCommand) parser.parseCommand(SetCompleteCommand.COMMAND_WORD
-                + " " + INDEX_FIRST_TASK.getOneBased(), false);
+                + " " + INDEX_FIRST_TASK.getOneBased(), DEFAULT_STATE_LOCK);
         assertEquals(new SetCompleteCommand(INDEX_FIRST_TASK), command);
     }
 
     @Test
     public void  parseCommandAliasSetComplete() throws Exception {
         SetCompleteCommand command = (SetCompleteCommand) parser.parseCommand(SetCompleteCommand.COMMAND_ALIAS
-                + " " + INDEX_FIRST_TASK.getOneBased(), false);
+                + " " + INDEX_FIRST_TASK.getOneBased(), DEFAULT_STATE_LOCK);
         assertEquals(new SetCompleteCommand(INDEX_FIRST_TASK), command);
     }
 
     @Test
     public void  parseCommandSetIncomplete() throws Exception {
         SetIncompleteCommand command = (SetIncompleteCommand) parser.parseCommand(SetIncompleteCommand.COMMAND_ALIAS
-                + " " + INDEX_FIRST_TASK.getOneBased(), false);
+                + " " + INDEX_FIRST_TASK.getOneBased(), DEFAULT_STATE_LOCK);
         assertEquals(new SetIncompleteCommand(INDEX_FIRST_TASK), command);
     }
 
     @Test
     public void  parseCommandAliasSetIncomplete() throws Exception {
         SetIncompleteCommand command = (SetIncompleteCommand) parser.parseCommand(SetIncompleteCommand.COMMAND_ALIAS
-                + " " + INDEX_FIRST_TASK.getOneBased(), false);
+                + " " + INDEX_FIRST_TASK.getOneBased(), DEFAULT_STATE_LOCK);
         assertEquals(new SetIncompleteCommand(INDEX_FIRST_TASK), command);
     }
     //@@author
 
     @Test
     public void parseCommandUndoCommandWordReturnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD, false) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3", false) instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD, DEFAULT_STATE_LOCK) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undo 3", DEFAULT_STATE_LOCK) instanceof UndoCommand);
     }
 
     @Test
     public void parseCommandUnrecognisedInputThrowsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        parser.parseCommand("", false);
+        parser.parseCommand("", DEFAULT_STATE_LOCK);
     }
 
     @Test
     public void parseCommandUnknownCommandThrowsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand", false);
+        parser.parseCommand("unknownCommand", DEFAULT_STATE_LOCK);
     }
 
     //@@author jeffreygohkw
