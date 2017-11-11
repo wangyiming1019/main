@@ -4,14 +4,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIRM_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 import com.google.common.hash.Hashing;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserPrefs;
 
 //@@author charlesgoh
@@ -119,30 +117,23 @@ public class ChangePasswordCommand extends Command {
 
         // Case where user input passes both checks. Password is changed and UserPrefs saved
         UserPrefs userPrefs;
-        try {
-            // Get user prefs file
-            userPrefs = model.getUserPrefs();
 
-            // Set new password to user prefs
-            userPrefs.setAddressBookEncryptedPassword(newPassword);
+        // Get user prefs file
+        userPrefs = model.getUserPrefs();
 
-            // Save new userprefs
-            storage.saveUserPrefs(userPrefs);
+        // Set new password to user prefs
+        userPrefs.setAddressBookEncryptedPassword(newPassword);
 
-            // Logs new password and saved password for debugging purposes
-            String hashedNewPassword = forwardHash(newPassword);
-            String userPrefsHashedPassword = userPrefs.getAddressBookEncryptedPassword();
-            logger.info("New Password: " + newPassword
-                    + "\nEncrypted New Password: " + hashedNewPassword
-                    + "\nEncrypted Password From UserPrefs:" + userPrefsHashedPassword
-                    + "\nCommand's Password and UserPrefs saved password matches: "
-                    + Boolean.toString(hashedNewPassword.equals(userPrefsHashedPassword)) + "\n");
+        // Logs new password and saved password for debugging purposes
+        String hashedNewPassword = forwardHash(newPassword);
+        String userPrefsHashedPassword = userPrefs.getAddressBookEncryptedPassword();
+        logger.info("New Password: " + newPassword
+                + "\nEncrypted New Password: " + hashedNewPassword
+                + "\nEncrypted Password From UserPrefs:" + userPrefsHashedPassword
+                + "\nCommand's Password and UserPrefs saved password matches: "
+                + Boolean.toString(hashedNewPassword.equals(userPrefsHashedPassword)) + "\n");
 
-            // Return command result
-            return new CommandResult(MESSAGE_SUCCESS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new CommandResult(MESSAGE_ERROR_OCCURED);
+        // Return command result
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }

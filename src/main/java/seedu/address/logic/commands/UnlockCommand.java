@@ -2,14 +2,12 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 import com.google.common.hash.Hashing;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserPrefs;
 
 //@@author charlesgoh
@@ -41,18 +39,10 @@ public class UnlockCommand extends Command {
      * Checks if input password matches the one saved in user prefs.
      */
     private boolean isPasswordCorrect() {
-        UserPrefs userPrefs;
-        try {
-            userPrefs = storage.readUserPrefs().get();
-            String hashedPassword = Hashing.sha256()
-                    .hashString(password, StandardCharsets.UTF_8).toString();
-            return hashedPassword.equals(userPrefs.getAddressBookEncryptedPassword());
-        } catch (DataConversionException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+        UserPrefs userPrefs = model.getUserPrefs();
+        String hashedPassword = Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8).toString();
+        return hashedPassword.equals(userPrefs.getAddressBookEncryptedPassword());
     }
 
     @Override
