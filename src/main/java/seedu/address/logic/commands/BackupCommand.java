@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.BackupRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -34,12 +36,7 @@ public class BackupCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         requireNonNull(model.getAddressBook());
-        requireNonNull(storage);
-        try {
-            storage.backupAddressBook(model.getAddressBook(), args);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        EventsCenter.getInstance().post(new BackupRequestEvent(model, args));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
