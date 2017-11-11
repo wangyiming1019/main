@@ -244,14 +244,9 @@ public class EditPersonCommand extends EditCommand {
      * depending on privacy and the input
      */
     private static Avatar createUpdatedAvatar(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        Avatar updatedAvatar;
-        if (!personToEdit.getAvatar().isPrivate()) {
-            updatedAvatar = editPersonDescriptor.getAvatar().orElse(personToEdit.getAvatar());
-            if (editPersonDescriptor.getAvatar().isPresent()) {
-                areFieldsAllPrivate = false;
-            }
-        } else {
-            updatedAvatar = personToEdit.getAvatar();
+        Avatar updatedAvatar = editPersonDescriptor.getAvatar().orElse(personToEdit.getAvatar());
+        if (editPersonDescriptor.getAvatar().isPresent()) {
+            areFieldsAllPrivate = false;
         }
         return updatedAvatar;
     }

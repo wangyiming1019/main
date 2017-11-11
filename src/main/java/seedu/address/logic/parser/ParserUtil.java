@@ -125,17 +125,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Avatar> parseAvatar(Optional<String> avatar, boolean isPrivate)
-            throws IllegalValueException {
-        requireNonNull(avatar);
-        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), isPrivate)) : Optional.empty();
-    }
-
-    /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */

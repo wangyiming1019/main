@@ -143,8 +143,6 @@ public class AddPersonCommandParser extends AddCommandParser {
         Avatar avatar;
         if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
             avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
-        } else if (arePrefixesPresent(argMultimap, PREFIX_AVATAR_PRIVATE)) {
-            avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR_PRIVATE), true).get();
         } else {
             avatar = new Avatar(null);
         }
