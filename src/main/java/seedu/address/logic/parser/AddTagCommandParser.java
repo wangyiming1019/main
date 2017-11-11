@@ -54,7 +54,9 @@ public class AddTagCommandParser extends AddCommandParser {
         ArrayList<Index> indexList = new ArrayList<Index>();
         String[] indexArray = indexes.split(" ");
         for (String s: indexArray) {
-            indexList.add(ParserUtil.parseIndex(s));
+            if (!s.isEmpty()) {
+                indexList.add(ParserUtil.parseIndex(s));
+            }
         }
         return indexList;
     }

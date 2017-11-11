@@ -26,7 +26,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_TASK).isPresent() && argMultimap.getValue(PREFIX_TAG_FULL).isPresent()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         } else if (argMultimap.getValue(PREFIX_TASK).isPresent()) {
-            return new EditTaskCommandParser().constructTaskDescriptor(args);
+            String filteredArgs = args.replace(PREFIX_TASK.getPrefix(), " ");
+            return new EditTaskCommandParser().constructTaskDescriptor(filteredArgs);
         } else if (argMultimap.getValue(PREFIX_TAG_FULL).isPresent()) {
             String filteredArgs = args.replace(PREFIX_TAG_FULL.getPrefix(), " ");
             return new EditTagCommandParser().parse(filteredArgs);

@@ -5,12 +5,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearPersonCommand;
+import seedu.address.logic.commands.ClearTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new ClearCommand object
  */
-public class ClearCommandParser {
+public class ClearCommandParser implements Parser<ClearCommand> {
 
     /**
      * Parses the given {@code String} of arguments and returns a {@code ClearCommand}
@@ -27,9 +29,9 @@ public class ClearCommandParser {
         if (argMultimap.getValue(PREFIX_PERSON).isPresent() && argMultimap.getValue(PREFIX_TASK).isPresent()) {
             return new ClearCommand();
         } else if (argMultimap.getValue(PREFIX_PERSON).isPresent()) {
-            return new ClearCommand(PREFIX_PERSON);
+            return new ClearPersonCommand();
         } else if (argMultimap.getValue(PREFIX_TASK).isPresent()) {
-            return new ClearCommand(PREFIX_TASK);
+            return new ClearTaskCommand();
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearCommand.MESSAGE_USAGE));
         }

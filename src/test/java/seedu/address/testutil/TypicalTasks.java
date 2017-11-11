@@ -29,7 +29,7 @@ public class TypicalTasks {
             .withDeadline("04-04-2017").withPriority("3")
             .withTaskAddress("21 Heng Mui Keng Terrace, #02-01-01 I-Cube Building").build();
     public static final ReadOnlyTask BUY = new TaskBuilder().withTaskName("Buy pencil")
-            .withDescription("Buy pencils for tomorrow's test")
+            .withDescription("Buy pencils for tomorrow's test").withState(true)
             .withDeadline("04-04-2017").withPriority("5").withTaskAddress("Tampines Mall").build();
     public static final ReadOnlyTask COOK = new TaskBuilder().withTaskName("Cook Paella")
             .withDescription("Cook Paella for 4 people tonight")
@@ -59,6 +59,8 @@ public class TypicalTasks {
             .withDescription(VALID_DESCRIPTION_PAPER)
             .withDeadline(VALID_DEADLINE_PAPER).withPriority(VALID_PRIORITY_PAPER)
             .withTaskAddress(VALID_TASK_ADDRESS_PAPER).build();
+
+    public static final String KEYWORD_MATCHING_LUCY = "Lucy"; // A keyword that matches LUCY
 
     private TypicalTasks() {} // prevents instantiation
 

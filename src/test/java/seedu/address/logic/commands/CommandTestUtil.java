@@ -24,6 +24,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.TaskContainsKeywordPredicate;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
@@ -52,7 +55,8 @@ public class CommandTestUtil {
     public static final String VALID_AVATAR_CHRIS = "chirsavatar";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_FAVOURITE = "false";
+    public static final String VALID_FAVOURITE_ALICE = "false";
+    public static final String VALID_FAVOURITE_BOB = "true";
     public static final String VALID_TAG_COLLEAGUE = "colleague";
     public static final String VALID_TAG_CHRISTAG = "special";
 
@@ -60,8 +64,8 @@ public class CommandTestUtil {
     public static final String VALID_TASK_NAME_PAPER = "Buy paper";
     public static final String VALID_DESCRIPTION_PENCIL = "Buy mechanical pencil from ABS";
     public static final String VALID_DESCRIPTION_PAPER = "Buy 500 pieces of paper";
-    public static final String VALID_DEADLINE_PENCIL = "04-04-2017";
-    public static final String VALID_DEADLINE_PAPER = "05-04-2017";
+    public static final String VALID_DEADLINE_PENCIL = "04-04-2017 12pm";
+    public static final String VALID_DEADLINE_PAPER = "05-04-2017 12pm";
     public static final String VALID_PRIORITY_PENCIL = "1";
     public static final String VALID_PRIORITY_PAPER = "3";
     public static final String VALID_TASK_ADDRESS_PENCIL = "12 Kent Ridge Cres";
@@ -101,12 +105,14 @@ public class CommandTestUtil {
     public static final String TASK_ADDRESS_DESC_PENCIL = " " + PREFIX_ADDRESS + VALID_TASK_ADDRESS_PENCIL;
     public static final String TASK_ADDRESS_DESC_PAPER = " " + PREFIX_ADDRESS + VALID_TASK_ADDRESS_PAPER;
 
+    public static final String INVALID_TASK_NAME_DESC = " " + PREFIX_NAME + " "; // task name cannot be blank
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE + "TIMELESS AGES"; // not a date
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "6"; // priority is out of bounds
+    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS + " "; // priority is out of bounds
 
     public static final String TASK_SEPARATOR = " " + PREFIX_TASK + " ";
 
@@ -119,11 +125,11 @@ public class CommandTestUtil {
         //TODO: Change avatar filename to a real filename
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withRemark(VALID_REMARK_AMY).withAvatar(VALID_AVATAR_AMY).withFavourite(VALID_FAVOURITE)
+                .withRemark(VALID_REMARK_AMY).withAvatar(VALID_AVATAR_AMY).withFavourite(VALID_FAVOURITE_ALICE)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withRemark(VALID_REMARK_BOB).withAvatar(VALID_AVATAR_BOB).withFavourite(VALID_FAVOURITE)
+                .withRemark(VALID_REMARK_BOB).withAvatar(VALID_AVATAR_BOB).withFavourite(VALID_FAVOURITE_ALICE)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         DESC_PENCIL = new EditTaskDescriptorBuilder().withTaskName(VALID_TASK_NAME_PENCIL)
                 .withDescription(VALID_DESCRIPTION_PENCIL)
@@ -193,6 +199,41 @@ public class CommandTestUtil {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
     }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first task in the {@code model}'s address book.
+     */
+    public static void showFirstTaskOnly(Model model) {
+        ReadOnlyTask task = model.getAddressBook().getTasksList().get(0);
+        final String[] splitName = task.getTaskName().taskName.split("\\s+");
+        model.updateFilteredTaskList(new TaskContainsKeywordPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredTaskList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first task in the {@code model}'s address book.
+     */
+    public static void showSecondTaskOnly(Model model) {
+        ReadOnlyTask task = model.getAddressBook().getTasksList().get(1);
+        final String[] splitName = task.getTaskName().taskName.split("\\s+");
+        model.updateFilteredTaskList(new TaskContainsKeywordPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredTaskList().size() == 1;
+    }
+
+    /**
+     * Deletes the first task in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstTask(Model model) {
+        ReadOnlyTask firstTask = model.getFilteredTaskList().get(0);
+        try {
+            model.deleteTask(firstTask);
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("Task in filtered list must exist in model.", pnfe);
+        }
+    }
+
     //@@author wangyiming1019
     /**
      * Favourites the first person in {@code model}'s filtered list from {@code model}'s address book.

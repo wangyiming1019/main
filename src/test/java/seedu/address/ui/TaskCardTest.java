@@ -1,4 +1,4 @@
-package seedu.address.ui.testutil;
+package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,8 +12,6 @@ import guitests.guihandles.TaskCardHandle;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
-import seedu.address.ui.GuiUnitTest;
-import seedu.address.ui.TaskCard;
 
 public class TaskCardTest extends GuiUnitTest {
 
