@@ -393,4 +393,9 @@ public class ModelManager extends ComponentManager implements Model {
     public int getPrivacyLevel() {
         return this.privacyLevel;
     }
+
+    @Override
+    public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
+        return getAddressBook().getPersonAtIndexFromPersonList(index);
+    }
 }

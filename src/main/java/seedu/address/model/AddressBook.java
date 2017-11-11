@@ -316,6 +316,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author
     //// util methods
 
+
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags"
@@ -326,6 +327,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    //@@author jeffreygohkw
+    @Override
+    public ReadOnlyPerson getPersonAtIndexFromPersonList(int index) {
+        return persons.asObservableList().get(index);
     }
 
     //@@author Esilocke

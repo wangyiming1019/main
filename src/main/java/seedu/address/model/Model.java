@@ -126,8 +126,10 @@ public interface Model {
      */
     void sortTasks(String field, String order);
 
-    //@@author jeffreygohke
+    //@@author jeffreygohkw
     void setPrivacyLevel(int level);
 
     int getPrivacyLevel();
+
+    ReadOnlyPerson getPersonAtIndexFromAddressBook(int index);
 }
