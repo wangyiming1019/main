@@ -22,6 +22,7 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -226,7 +227,7 @@ public class AddPersonCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called.");
         }
-
+        //@@author charlesgoh
         @Override
         public void sortPersons(String field, String order) {
             fail("This method should not be called.");
@@ -237,6 +238,41 @@ public class AddPersonCommandTest {
             fail("This method should not be called.");
         }
 
+        /**
+         * Returns lock state. True means locked. False means unlocked
+         */
+        @Override
+        public boolean getLockState() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        /**
+         * Locks address book from model
+         */
+        @Override
+        public void lockAddressBookFromModel() {
+            fail("This method should not be called.");
+        }
+
+        /**
+         * Unlock address book from model
+         */
+        @Override
+        public void unlockAddressBookFromModel() {
+            fail("This method should not be called.");
+        }
+
+        /**
+         * Returns a copy of the UserPrefs
+         */
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author
         @Override
         public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
