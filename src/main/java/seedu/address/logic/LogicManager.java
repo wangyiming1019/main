@@ -27,14 +27,6 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
 
-    public LogicManager(Model model, Storage storage) {
-        this.model = model;
-        this.storage = storage;
-        this.history = new CommandHistory();
-        this.addressBookParser = new AddressBookParser();
-        this.undoRedoStack = new UndoRedoStack();
-    }
-
     public LogicManager(Model model) {
         this.model = model;
         this.storage = null;
