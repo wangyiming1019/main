@@ -48,8 +48,10 @@ public class AssignTaskCommandParser implements Parser<AssignCommand> {
         int parsedInt;
         try {
             for (String s : splitted) {
-                parsedInt = Integer.parseInt(s);
-                targetsToAdd.add(Index.fromOneBased(parsedInt));
+                if (!s.isEmpty()) {
+                    parsedInt = Integer.parseInt(s);
+                    targetsToAdd.add(Index.fromOneBased(parsedInt));
+                }
             }
         } catch (NumberFormatException nfe) {
             throw new ParseException(MESSAGE_INVALID_INDEX);
