@@ -88,7 +88,6 @@ public class PrivacyLevelCommandTest {
             assertTrue(p.getEmail().getPrivacyLevel() == plc.getLevel());
             assertTrue(p.getAddress().getPrivacyLevel() == plc.getLevel());
             assertTrue(p.getRemark().getPrivacyLevel() == plc.getLevel());
-            assertTrue(p.getAvatar().getPrivacyLevel() == plc.getLevel());
         }
     }
 

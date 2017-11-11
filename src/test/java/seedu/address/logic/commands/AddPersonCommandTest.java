@@ -296,6 +296,12 @@ public class AddPersonCommandTest {
             fail("This method should not be called.");
             return 0;
         }
+
+        @Override
+        public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
+            fail("This method should not be called.");
+            return null;
+        }
     }
 
     /**
