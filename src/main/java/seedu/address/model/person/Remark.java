@@ -62,7 +62,7 @@ public class Remark {
             return value;
         }
     }
-    //@@author
+    //@@author charlesgoh
 
     @Override
     public boolean equals(Object other) {
@@ -76,14 +76,15 @@ public class Remark {
         return value.hashCode();
     }
 
-    public boolean isPrivate() {
+    //@@author jeffreygohkw
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
-    //@@author jeffreygohkw
+
     public void setPrivacyLevel(int level) {
         this.privacyLevel = level;
     }

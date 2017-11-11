@@ -23,11 +23,11 @@ public class PersonPrivacySettingsBuilder {
      */
     public PersonPrivacySettingsBuilder(ReadOnlyPerson person) {
         pps = new PersonPrivacySettings();
-        pps.setNameIsPrivate(person.getName().isPrivate());
-        pps.setPhoneIsPrivate(person.getPhone().isPrivate());
-        pps.setEmailIsPrivate(person.getEmail().isPrivate());
-        pps.setAddressIsPrivate(person.getAddress().isPrivate());
-        pps.setRemarkIsPrivate(person.getRemark().isPrivate());
+        pps.setNameIsPrivate(person.getName().getIsPrivate());
+        pps.setPhoneIsPrivate(person.getPhone().getIsPrivate());
+        pps.setEmailIsPrivate(person.getEmail().getIsPrivate());
+        pps.setAddressIsPrivate(person.getAddress().getIsPrivate());
+        pps.setRemarkIsPrivate(person.getRemark().getIsPrivate());
     }
 
     /**

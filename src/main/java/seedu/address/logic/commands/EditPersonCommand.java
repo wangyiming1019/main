@@ -144,7 +144,7 @@ public class EditPersonCommand extends EditCommand {
      */
     private static Name createUpdatedName(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Name updatedName;
-        if (!personToEdit.getName().isPrivate()) {
+        if (!personToEdit.getName().getIsPrivate()) {
             updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
             if (editPersonDescriptor.getName().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -164,7 +164,7 @@ public class EditPersonCommand extends EditCommand {
      */
     private static Phone createUpdatedPhone(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Phone updatedPhone;
-        if (!personToEdit.getPhone().isPrivate()) {
+        if (!personToEdit.getPhone().getIsPrivate()) {
             updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
             if (editPersonDescriptor.getPhone().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -184,7 +184,7 @@ public class EditPersonCommand extends EditCommand {
      */
     private static Email createUpdatedEmail(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Email updatedEmail;
-        if (!personToEdit.getEmail().isPrivate()) {
+        if (!personToEdit.getEmail().getIsPrivate()) {
             updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
             if (editPersonDescriptor.getEmail().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -205,7 +205,7 @@ public class EditPersonCommand extends EditCommand {
     private static Address createUpdatedAddress(ReadOnlyPerson personToEdit,
                                                 EditPersonDescriptor editPersonDescriptor) {
         Address updatedAddress;
-        if (!personToEdit.getAddress().isPrivate()) {
+        if (!personToEdit.getAddress().getIsPrivate()) {
             updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
             if (editPersonDescriptor.getAddress().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -225,7 +225,7 @@ public class EditPersonCommand extends EditCommand {
      */
     private static Remark createUpdatedRemark(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Remark updatedRemark;
-        if (!personToEdit.getRemark().isPrivate()) {
+        if (!personToEdit.getRemark().getIsPrivate()) {
             updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
             if (editPersonDescriptor.getRemark().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -244,14 +244,9 @@ public class EditPersonCommand extends EditCommand {
      * depending on privacy and the input
      */
     private static Avatar createUpdatedAvatar(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        Avatar updatedAvatar;
-        if (!personToEdit.getAvatar().isPrivate()) {
-            updatedAvatar = editPersonDescriptor.getAvatar().orElse(personToEdit.getAvatar());
-            if (editPersonDescriptor.getAvatar().isPresent()) {
-                areFieldsAllPrivate = false;
-            }
-        } else {
-            updatedAvatar = personToEdit.getAvatar();
+        Avatar updatedAvatar = editPersonDescriptor.getAvatar().orElse(personToEdit.getAvatar());
+        if (editPersonDescriptor.getAvatar().isPresent()) {
+            areFieldsAllPrivate = false;
         }
         return updatedAvatar;
     }

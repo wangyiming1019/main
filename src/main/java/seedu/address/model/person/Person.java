@@ -198,8 +198,11 @@ public class Person implements ReadOnlyPerson {
         this.getEmail().setPrivacyLevel(level);
         this.getAddress().setPrivacyLevel(level);
         this.getRemark().setPrivacyLevel(level);
-        this.getAvatar().setPrivacyLevel(level);
         this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 
     /**
@@ -207,7 +210,7 @@ public class Person implements ReadOnlyPerson {
      */
     @Override
     public boolean hasPrivateField() {
-        return (this.getName().isPrivate() || this.getPhone().isPrivate() || this.getAddress().isPrivate()
-                || this.getEmail().isPrivate() || this.getRemark().isPrivate() || this.getAvatar().isPrivate());
+        return (this.getName().getIsPrivate() || this.getPhone().getIsPrivate() || this.getAddress().getIsPrivate()
+                || this.getEmail().getIsPrivate() || this.getRemark().getIsPrivate());
     }
 }

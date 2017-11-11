@@ -147,5 +147,10 @@ public interface Model {
     UserPrefs getUserPrefs();
     //@@author
 
+    //@@author jeffreygohkw
     void setPrivacyLevel(int level);
+
+    int getPrivacyLevel();
+
+    ReadOnlyPerson getPersonAtIndexFromAddressBook(int index);
 }

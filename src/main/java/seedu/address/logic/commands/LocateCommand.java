@@ -40,7 +40,7 @@ public class LocateCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().isPrivate()) {
+        if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().getIsPrivate()) {
             throw new CommandException(String.format(MESSAGE_PRIVATE_ADDRESS_FAILURE, targetIndex.getOneBased()));
         }
         EventsCenter.getInstance().post(new BrowserPanelLocateEvent(

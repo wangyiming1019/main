@@ -584,6 +584,9 @@ that the execution of the sort methods result in the actual person list being so
 
 The `Name`, `Phone`, `Email`, `Address` and `Remark` of a `Person` contains a boolean `isPrivate`, which will determine if the field belonging to that person is private or not.
 
+image::PersonClassDiagramPrivacy.png[width="800"]
+_Figure 3.4.1 : Class diagram for a Person, only Name, Phone, Email, Address and Remark contain an isPrivate boolean to indicate if it is private or not_
+
 Adding a person with private fields uses the same `AddCommand` as adding a person with no public fields. +
 To determine if the field that is added should be set to private, a `p` is added to the start of the prefix. +
 Hence, `pe/[EMAIL]` will set that person's email to be private, whereas if `e/[EMAIL]` was used, that person's email would be public. +
@@ -594,7 +597,7 @@ Depending on whether or not the field is supposed to be private, `ParsetUtil` wi
 Upon obtaining all the fields anc creating a new `Person`, `AddCommandParser` will create a new `AddCommand` to handle the addition of the new `Person`.
 
 image::AddPrivateSequenceDiagram.png[width="800"]
-_Figure 3.6.1 : Sequence Diagram for adding a Person with private fields_
+_Figure 3.4.2 : Sequence Diagram for adding a Person with private fields_
 
 If a field is private, then the `toString` method will return a string `<Private [FIELD]>`, where `[FIELD]` is the name of that field. +
 This can be seen from the `toString` method in `Name`:
@@ -706,7 +709,7 @@ Upon generation of all the fields, if `areFieldsAllPrivate` is still true, `crea
 The sequence diagram for `ChangePrivacyCommand` is illustrated below.
 
 image::ChangePrivacySequenceDiagram.png[width="800"]
-_Figure 3.4.1 : Sequence Diagram for changing the privacy of a Person's fields_
+_Figure 3.5.1 : Sequence Diagram for changing the privacy of a Person's fields_
 
 Upon receiving a String containing the arguments from `AddressBookParser`, `ChangePrivacyCommandParser` will create a `PersonPrivacySettings` object.
 
@@ -732,6 +735,68 @@ This allows `isAnyFieldNonNull` to check if the user has input any field at all.
 **Alternative 2:** Enhance the functionality of EditCommand. +
 **Pros:** Can make use of existing code to aid the implementation. +
 **Cons:** Increases the complexity of EditCommand for both users and developers. More ambiguous as to how editing a private field will affect the data.
+
+=== Changing the address book's privacy level
+
+`PrivacyLevelCommand` allows the user to change the privacy level of Address++, letting users easily reveal data hidden by private fields, or hide persons containing private fields entirely.
+
+The sequence diagram for `PrivacyLevelCommand` is illustrated below.
+
+image::PrivacyLevelSequenceDiagram.png[width="800"]
+_Figure 3.6.1 : Sequence Diagram for changing the privacy level of the address book_
+
+`PrivacyLevelCommandParser` will accept any integer that is input in the command line, and create a `PrivacyLevelCommand` that stores the integer, which represents the privacy level to switch to.
+
+Upon execution,`PrivacyLevelCommand` will first check if the integer falls within the range of the minimum and maximum privacy level. If it does not, a new `CommandException` is thrown, reminding the user of the valid input levels.
+
+If the integer is within the valid range, `PrivacyLevelCommand` will update the privacy level of `Model`. Following that, it will proceed to update the privacy level of each person.
+
+`Model`, each `Person` and each field that can be set as private all contain a `privacyLevel` variable to indicate the current privacy level. This value should remain the same between all of these objects throughout the operation of Address++.
+
+image::PersonClassDiagramPrivacyLevel.png[width="800"]
+_Figure 3.6.2 : Class Diagram of Person, which shows which classes contain an integer to indicate the privacy level_
+
+Finally, depending on the privacy level, `PrivacyLevelCommand` will update the call `model.updateFilteredPersonList()` with the appropriate predicate.
+
+This process is illustrated in the code snippet below.
+
+[source, java]
+----
+public CommandResult execute() throws CommandException {
+    if (level < MIN_PRIVACY_LEVEL || level > MAX_PRIVACY_LEVEL) {
+        throw new CommandException(WRONG_PRIVACY_LEVEL_MESSAGE);
+    }
+    model.setPrivacyLevel(level);
+    for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+        ReadOnlyPerson toReplace = model.getPersonAtIndexFromAddressBook(i);
+        Person newPerson = new Person(toReplace);
+        newPerson.setPrivacyLevel(level);
+        try {
+            model.updatePerson(toReplace, newPerson);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+    }
+    if (level == 3) {
+        model.updateFilteredPersonList(new ShowAllPrivacyLevelPredicate());
+    } else {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+    }
+    return new CommandResult(String.format(CHANGE_PRIVACY_LEVEL_SUCCESS, Integer.toString(level)));
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Storing of the privacy level +
+**Alternative 1 (current choice):** Have each relevant class store a privacy level integer. +
+**Pros:** Less coupling, less modification of existing code required.  +
+**Cons:** Have to modify every relevant object every time `PrivacyLevelCommand` is called. Runs the risk that an object may accidentally not have its privacy level modified to match the other objects if privacy levels are not properly updated. +
+**Alternative 2:** Store the privacy level in the model and have any object that needs to check it query from model. +
+**Pros:** Only one integer needs to be modified for the privacy level of the entire address book to change, which also eliminates any possibility that privacy level may be different when used by different objects. +
+**Cons:** Increases coupling, classes such as Name will need to have a Model object as one of its variables to access Model. Large scale modification of existing code and tests are necessary.
 // end::privacy[]
 
 // tag::locate[]
@@ -794,7 +859,7 @@ BrowserPanel will then use `handleBrowserPanelLocationEvent` to process this new
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::LocateSequenceDiagram.png[width="800"]
-_Figure 3.5.1 : Sequence Diagram for Locating a Person's Address_
+_Figure 3.7.1 : Sequence Diagram for Locating a Person's Address_
 
 ==== Design Considerations
 
@@ -933,7 +998,7 @@ private void loadDirectionsPage(String fromLocation, String toLocation) {
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::NavigateSequenceDiagram.png[width="800"]
-_Figure 3.6.1 : Sequence Diagram for Navigating from one Address to another_
+_Figure 3.8.1 : Sequence Diagram for Navigating from one Address to another_
 
 
 ==== Design Considerations
@@ -1021,7 +1086,7 @@ Finally, both commands diverge as `handleOpen` will call `resetData` to reset th
 This process is illustrated using the sequence diagram below:
 
 image::OpenSequenceDiagram.png[width="800"]
-_Figure 3.7.1 : Sequence Diagram for Opening a save file_
+_Figure 3.8.1 : Sequence Diagram for Opening a save file_
 
 ==== Design Considerations
 **Aspect:** How does `OpenCommand` and `SaveAsCommand` determine the file location to save or load the save file from +

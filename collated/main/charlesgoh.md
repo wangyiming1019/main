@@ -37,32 +37,6 @@ public class BackupCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\ChangePrivacyCommand.java
 ``` java
-    /**
-     * Creates a new (@code Avatar) based on the input (@code Person) and (@code PersonPrivacySettings)
-     * @return A (@code Avatar) with the same value as that of the (@code Person)'s but with the privacy set to that
-     * of the (@code PersonPrivacySettings)
-     */
-    private static Avatar createAvatarWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
-        Avatar v;
-        try {
-            if (person.getAvatar().isPrivate()) {
-                person.getAvatar().setPrivate(false);
-                v = new Avatar(person.getAvatar().toString());
-                person.getAvatar().setPrivate(true);
-            } else {
-                v = new Avatar(person.getAvatar().toString());
-            }
-        } catch (IllegalValueException e) {
-            throw new AssertionError("Invalid Avatar");
-        }
-        if (pps.getAvatarIsPrivate() != null) {
-            v.setPrivate(pps.getAvatarIsPrivate());
-        }
-        return v;
-    }
-```
-###### \java\seedu\address\logic\commands\ChangePrivacyCommand.java
-``` java
         /**
          * Returns the value of remarkIsPrivate
          * @return the value of remarkIsPrivate
@@ -399,6 +373,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @param order
      */
     void sortTasks(String field, String order);
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -462,6 +437,7 @@ public class Remark {
 
     public final String value;
     private boolean isPrivate = false;
+    private int privacyLevel = 2;
 
     /**
      * Validates given remark.
@@ -491,13 +467,9 @@ public class Remark {
         return test.matches(REMARK_VALIDATION_REGEX) || test.equals(REMARK_PLACEHOLDER_VALUE);
     }
 
-    @Override
-    public String toString() {
-        if (isPrivate) {
-            return "<Private Remark>";
-        }
-        return value;
-    }
+```
+###### \java\seedu\address\model\person\Remark.java
+``` java
 
     @Override
     public boolean equals(Object other) {
@@ -511,14 +483,6 @@ public class Remark {
         return value.hashCode();
     }
 
-    public boolean isPrivate() {
-        return isPrivate;
-    }
-
-    public void setPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
-    }
-}
 ```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
@@ -604,7 +568,7 @@ public class UniquePersonList implements Iterable<Person> {
         Comparator<Person> personNameComparator = new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                return o1.getName().fullName.compareTo(o2.getName().fullName);
+                return o1.getName().value.compareTo(o2.getName().value);
             }
         };
 

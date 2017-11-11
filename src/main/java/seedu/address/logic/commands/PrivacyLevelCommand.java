@@ -20,6 +20,9 @@ public class PrivacyLevelCommand extends Command {
     public static final String WRONG_PRIVACY_LEVEL_MESSAGE = "Privacy Level can only be 1, 2 or 3";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
+    public static final int MIN_PRIVACY_LEVEL = 1;
+    public static final int MAX_PRIVACY_LEVEL = 3;
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Changes the privacy level of the address book. Level 1 shows all data, level 2 hides private fields"
             + " and level 3 hides persons with at least 1 private field.\n"
@@ -34,13 +37,13 @@ public class PrivacyLevelCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (level < 1 || level > 3) {
+        if (level < MIN_PRIVACY_LEVEL || level > MAX_PRIVACY_LEVEL) {
             throw new CommandException(WRONG_PRIVACY_LEVEL_MESSAGE);
         }
         model.setPrivacyLevel(level);
         for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
-            ReadOnlyPerson toReplace = model.getAddressBook().getPersonList().get(i);
-            Person newPerson = new Person(model.getAddressBook().getPersonList().get(i));
+            ReadOnlyPerson toReplace = model.getPersonAtIndexFromAddressBook(i);
+            Person newPerson = new Person(toReplace);
             newPerson.setPrivacyLevel(level);
             try {
                 model.updatePerson(toReplace, newPerson);
@@ -56,6 +59,10 @@ public class PrivacyLevelCommand extends Command {
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         }
         return new CommandResult(String.format(CHANGE_PRIVACY_LEVEL_SUCCESS, Integer.toString(level)));
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     @Override

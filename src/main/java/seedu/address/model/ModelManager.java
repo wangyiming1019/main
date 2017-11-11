@@ -335,11 +335,9 @@ public class ModelManager extends ComponentManager implements Model {
             if (predicate instanceof NameContainsKeywordsPredicate) {
                 this.updateFilteredPersonList(new NameContainsKeywordsPrivacyLevelPredicate(((
                         NameContainsKeywordsPredicate) predicate).getKeywords()));
-                System.out.println("!");
             } else if (predicate instanceof NameContainsTagsPredicate) {
                 this.updateFilteredPersonList(new NameContainsTagsPrivacyLevelPredicate(((
                         NameContainsTagsPredicate) predicate).getTags()));
-                System.out.println("!!");
             } else if (predicate instanceof NameContainsFavouritePredicate) {
                 this.updateFilteredPersonList(new NameContainsFavouritePrivacyLevelPredicate());
             } else if (predicate == PREDICATE_SHOW_ALL_PERSONS) {
@@ -397,6 +395,7 @@ public class ModelManager extends ComponentManager implements Model {
         return updatedTask;
     }
 
+    //@@author jeffreygohkw
     @Override
     public void setPrivacyLevel(int level) {
         if (level < 1 || level > 3) {
@@ -404,5 +403,15 @@ public class ModelManager extends ComponentManager implements Model {
         } else {
             this.privacyLevel = level;
         }
+    }
+
+    @Override
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+
+    @Override
+    public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
+        return addressBook.getPersonAtIndexFromPersonList(index);
     }
 }

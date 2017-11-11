@@ -29,7 +29,7 @@ public class PhoneTest {
     @Test
     public void privatePhoneIsHidden_success() throws IllegalValueException {
         Phone p = new Phone("999", true);
-        assertTrue(p.isPrivate());
+        assertTrue(p.getIsPrivate());
         assertEquals(p.toString(), "<Private Phone>");
     }
 }

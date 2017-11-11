@@ -18,8 +18,6 @@ public class Avatar {
     public static final String AVATAR_PLACEHOLDER_VALUE = "";
 
     public final String value;
-    private boolean isPrivate = false;
-    private int privacyLevel = 2;
 
     /**
      * Validates given address.
@@ -37,11 +35,6 @@ public class Avatar {
         this.value = address;
     }
 
-    public Avatar(String address, boolean isPrivate) throws IllegalValueException {
-        this(address);
-        this.setPrivate(isPrivate);
-    }
-
     /**
      * Returns true if a given string is a valid person email.
      */
@@ -52,14 +45,7 @@ public class Avatar {
     //@@author jeffreygohkw
     @Override
     public String toString() {
-        if (privacyLevel == 1) {
-            return value;
-        } else {
-            if (isPrivate) {
-                return "<Private Avatar>";
-            }
-            return value;
-        }
+        return value;
     }
     //@@author
 
@@ -73,22 +59,5 @@ public class Avatar {
     @Override
     public int hashCode() {
         return value.hashCode();
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
-    }
-
-    public void setPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
-    }
-
-    //@@author jeffreygohkw
-    public void setPrivacyLevel(int level) {
-        this.privacyLevel = level;
-    }
-
-    public int getPrivacyLevel() {
-        return this.privacyLevel;
     }
 }

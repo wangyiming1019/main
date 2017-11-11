@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-//@@author jeffregokw
+//@@author jeffreygohkw
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_PRIVATE;
@@ -143,8 +143,6 @@ public class AddPersonCommandParser extends AddCommandParser {
         Avatar avatar;
         if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
             avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
-        } else if (arePrefixesPresent(argMultimap, PREFIX_AVATAR_PRIVATE)) {
-            avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR_PRIVATE), true).get();
         } else {
             avatar = new Avatar(null);
         }
