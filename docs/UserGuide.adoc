@@ -581,34 +581,34 @@ Format: `sort LIST FIELD ORDER` +
 
 ****
 * Allows you to sort your contacts by any field in either ascending or descending order
-* Allows you to srot your tasks by deadline or by priority in ascending or descending order
+* Allows you to sort your tasks by deadline or by priority in ascending or descending order
 * Field parameters for person contacts: NAME, PHONE, EMAIL, ADDRESS, REMARK, AVATAR.
 * Field parameters for tasks: DEADLINE, PRIORITY.
 * Order parameters are limited to the following fields: ASC, DESC.
 * You can undo this command if you want to revert to the pre-sort ordering of contacts
 ****
 
-Examples for sorting person contacts:
+**Example Scenarios**:
+****
+**Example Scenario 1** +
+You have many contacts on Address++. You decide to make it neater by sorting your contacts
+by name in ascending order:
 
-* `sort person name asc` +
-This allows you to sort all persons in the address book in ascending order by the name field.
-* `sort person address desc` +
-This allows you to sort all persons in the address book in descending order by the address field.
+`sort person name asc`
+****
+****
+**Example Scenario 2** +
+You add a few tasks of different priorities. You decide to sort the tasks so you can see
+the higher priority tasks on the top of the list:
 
-Examples for sorting tasks:
-
-* `sort task deadline asc` +
-This allows you to sort all tasks in ascending order by the deadline field (i.e. closer deadlines are at the bottom).
-* `sort task priority desc` +
-This allows you to sort all tasks in descending order by the priority field (i.e. higher priority tasks
-are listed on top).
+`sort task priority desc`
+****
 //end::sort[]
+
 //tag::backup[]
 === Backing up your data : `backup`
 
-You can backup your saved data on Address++ by using the `backup` command.
-
-image::LockedRestriction.png[width="800"]
+You can back up your saved data on Address++ by using the `backup` command.
 
 Format: `backup [FILENAME]` +
 
@@ -623,8 +623,8 @@ cannot be undone. You type the following code:
 `backup filename.xml`
 ****
 //end::backup[]
-
 //tag::password[]
+
 === Protecting your data : `lock` `unlock`
 
 Worried about security? Address++ allows your to protect your data with a password.
