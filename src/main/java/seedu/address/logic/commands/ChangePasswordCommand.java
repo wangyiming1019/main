@@ -18,15 +18,17 @@ import seedu.address.model.UserPrefs;
  */
 public class ChangePasswordCommand extends Command {
     public static final String COMMAND_WORD = "changepassword";
-    public static final String COMMAND_ALIAS = "cps";
+    public static final String COMMAND_ALIAS = "cpw";
 
     public static final String MESSAGE_SUCCESS = "Password changed successfully";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes user password. \n"
-            + "[" + PREFIX_PASSWORD + "PASSWORD] "
-            + "[" + PREFIX_NEW_PASSWORD + "NEWPASSWORD] "
-            + "[" + PREFIX_CONFIRM_PASSWORD + "CONFIRMPASSWORD] \n"
+            + PREFIX_PASSWORD + "PASSWORD "
+            + PREFIX_NEW_PASSWORD + "NEWPASSWORD "
+            + PREFIX_CONFIRM_PASSWORD + "CONFIRMPASSWORD \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_PASSWORD + "password "
+            + PREFIX_NEW_PASSWORD + "mynewpassword111 " + PREFIX_CONFIRM_PASSWORD + "mynewpassword111\n"
+            + "Example 2: " + COMMAND_ALIAS + " " + PREFIX_PASSWORD + "password "
             + PREFIX_NEW_PASSWORD + "mynewpassword111 " + PREFIX_CONFIRM_PASSWORD + "mynewpassword111\n";
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n";
