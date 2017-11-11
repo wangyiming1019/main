@@ -48,9 +48,8 @@ public class AssignCommandParserTest {
     @Test
     public void parseInvalidArgsFailure() throws Exception {
         // no person indexes specified
-        String userInput = PREFIX_TARGET.getPrefix() + INDEX_FIRST_TASK.getOneBased();
-        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AssignCommand.MESSAGE_USAGE));
+        String userInput = " " + PREFIX_TARGET.getPrefix() + INDEX_FIRST_TASK.getOneBased();
+        assertParseFailure(parser, userInput, AssignCommand.MESSAGE_INVALID_PERSONS_ARGS);
         // no target prefix
         userInput = INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
                 + INDEX_FIRST_TASK.getOneBased();

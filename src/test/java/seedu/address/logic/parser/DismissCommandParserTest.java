@@ -48,9 +48,8 @@ public class DismissCommandParserTest {
     @Test
     public void parseInvalidArgsFailure() throws Exception {
         // no person indexes specified
-        String userInput = PREFIX_FROM.getPrefix() + INDEX_FIRST_TASK.getOneBased();
-        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                DismissCommand.MESSAGE_USAGE));
+        String userInput = " " + PREFIX_FROM.getPrefix() + INDEX_FIRST_TASK.getOneBased();
+        assertParseFailure(parser, userInput, DismissCommand.MESSAGE_INVALID_PERSONS_ARGS);
         // no target prefix
         userInput = INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
                 + INDEX_FIRST_TASK.getOneBased();
