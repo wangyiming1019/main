@@ -61,11 +61,11 @@ public class UserPrefs {
     }
 
     public void lockAddressBook() {
-        this.addressBookLockState = false;
+        this.addressBookLockState = true;
     }
 
     public void unlockAddressBook() {
-        this.addressBookLockState = true;
+        this.addressBookLockState = false;
     }
 
     public boolean getAddressBookLockState() {

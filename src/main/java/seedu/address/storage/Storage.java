@@ -56,6 +56,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
      * Getter method for lock state for external classes
      */
     boolean getLockState();
+
+    /**
+     * Updates user preferences within storage.
+     */
+    void updateUserPrefs();
     //@@author
 
     /**

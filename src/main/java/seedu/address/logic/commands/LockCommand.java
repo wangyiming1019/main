@@ -67,6 +67,9 @@ public class LockCommand extends Command {
             // Access model to lock
             storage.lockAddressBook();
 
+            // Update userPrefs
+            storage.updateUserPrefs();
+
             // Logs current state
             logger.info("Lock state is now: " + Boolean.toString(storage.getLockState()));
 

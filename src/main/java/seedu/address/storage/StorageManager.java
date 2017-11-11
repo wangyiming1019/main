@@ -110,6 +110,16 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
+    public void updateUserPrefs() {
+        try {
+            logger.info("Updating user prefereneces");
+            saveUserPrefs(this.userPrefs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void unlockAddressBook() {
         userPrefs.unlockAddressBook();
     }
