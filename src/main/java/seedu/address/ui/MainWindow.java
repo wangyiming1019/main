@@ -24,6 +24,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.TaskStateChangeEvent;
 import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.OpenRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -50,6 +51,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final String VIEW_PATH = "/view/";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -374,6 +376,17 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleSaveAs();
     }
+
+    /**
+     * Changes the existing theme to the input theme
+     */
+    public void handleChangeTheme(String theme) {
+        if (getRoot().getStylesheets().size() > 1) {
+            getRoot().getStylesheets().remove(1);
+        }
+        getRoot().getStylesheets().add(VIEW_PATH + theme);
+    }
+
     //@@author
     @FXML
     private void handleExit() {
@@ -430,5 +443,12 @@ public class MainWindow extends UiPart<Region> {
         } catch (TaskNotFoundException tnfe) {
             throw new AssertionError("The task cannot be missing");
         }
+    }
+
+    //@@author jeffreygohkw
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleChangeTheme(event.getStyleSheet());
     }
 }
