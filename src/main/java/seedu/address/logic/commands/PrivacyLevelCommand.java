@@ -58,6 +58,10 @@ public class PrivacyLevelCommand extends Command {
         return new CommandResult(String.format(CHANGE_PRIVACY_LEVEL_SUCCESS, Integer.toString(level)));
     }
 
+    public int getLevel() {
+        return level;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

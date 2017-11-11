@@ -379,6 +379,7 @@ public class ModelManager extends ComponentManager implements Model {
         return updatedTask;
     }
 
+    //@@author jeffreygohkw
     @Override
     public void setPrivacyLevel(int level) {
         if (level < 1 || level > 3) {
@@ -386,5 +387,10 @@ public class ModelManager extends ComponentManager implements Model {
         } else {
             this.privacyLevel = level;
         }
+    }
+
+    @Override
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }

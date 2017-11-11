@@ -202,6 +202,10 @@ public class Person implements ReadOnlyPerson {
         this.privacyLevel = level;
     }
 
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+
     /**
      * Returns true if the Person has at least one private field and false otherwise
      */

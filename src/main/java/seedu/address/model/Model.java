@@ -125,7 +125,9 @@ public interface Model {
      * @param order
      */
     void sortTasks(String field, String order);
-    //@@author
 
+    //@@author jeffreygohke
     void setPrivacyLevel(int level);
+
+    int getPrivacyLevel();
 }

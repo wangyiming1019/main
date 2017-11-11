@@ -290,6 +290,12 @@ public class AddPersonCommandTest {
         public void setPrivacyLevel(int level) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public int getPrivacyLevel() {
+            fail("This method should not be called.");
+            return 0;
+        }
     }
 
     /**

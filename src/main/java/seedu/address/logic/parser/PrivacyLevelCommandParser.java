@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 //@@author jeffreygohkw
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PrivacyLevelCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -7,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new PrivacyLevelCommand object
  */
-public class PrivacyLevelCommandParser {
+public class PrivacyLevelCommandParser implements Parser<PrivacyLevelCommand>{
     /**
      * Parses the given {@code String} of arguments in the context of the PrivacyLevelCommand
      * and returns an PrivacyLevelCommand object for execution.
@@ -19,7 +21,7 @@ public class PrivacyLevelCommandParser {
             return new PrivacyLevelCommand(level);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(PrivacyLevelCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrivacyLevelCommand.MESSAGE_USAGE));
         }
     }
 }
