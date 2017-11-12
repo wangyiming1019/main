@@ -26,7 +26,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 public class TypicalTasks {
     public static final ReadOnlyTask ACCEPT = new TaskBuilder().withTaskName("Acceptance Testing")
             .withDescription("Perform acceptance testing on application")
-            .withDeadline("04-04-2017").withPriority("3")
+            .withDeadline("04-04-2017").withPriority("3").withAssignees("4")
             .withTaskAddress("21 Heng Mui Keng Terrace, #02-01-01 I-Cube Building").build();
     public static final ReadOnlyTask BUY = new TaskBuilder().withTaskName("Buy pencil")
             .withDescription("Buy pencils for tomorrow's test").withState(true)
@@ -43,7 +43,7 @@ public class TypicalTasks {
             .withDeadline("04-04-2017").withPriority("1").withTaskAddress("16 Gemmill Ln").build();
     public static final ReadOnlyTask FREE = new TaskBuilder().withTaskName("Free memory space")
             .withDescription("Implement new version of free()")
-            .withDeadline("21-08-2019").withPriority("2").withState(true)
+            .withDeadline("21-08-2019").withPriority("2").withState(true).withAssignees("1", "2", "3")
             .withTaskAddress("NUS School of Computing, COM1, 13 Computing Drive, 117417").build();
     public static final ReadOnlyTask GRADLE = new TaskBuilder().withTaskName("Resolve gradle")
             .withDescription("Resolve gradle problems when building project")
