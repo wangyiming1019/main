@@ -82,8 +82,9 @@ image::FontSizeUI.png[width="540"]
 image::FontSizeCLI.png[width="540"]
 
 * Increase Size Command: `fontsize increase`
-* Decrease Size Command: `fontsize decrease`
+* Decrease Size Command: `fs decrease`
 * Reset Size Command: `fontsize reset`
+* `fontsize` can be replaced with `fs` for faster input. +
 ****
 //end::fontsize[]
 === Viewing help : `help`
@@ -686,7 +687,7 @@ _Figure 3.20.1 : DeleteTagCommand_
 
 Sort your contacts or tasks by using the `sort` command +
 [NOTE]
-`sort` can be replaced by `so` for faster input. +
+`sort` can be replaced with `so` for faster input. +
 
 Format: `sort LIST FIELD ORDER` +
 
@@ -722,6 +723,7 @@ the higher priority tasks on the top of the list:
 You can backup your saved data on Address++ by using the `backup` command. +
 
 Format: `backup [FILENAME]` +
+`backup` can be replaced with `bk` for faster input. +
 
 [NOTE]
 This allows you to backup your saved data on Address++ in another file.
@@ -749,7 +751,9 @@ your data, they will be greeted with this error:
 image::LockedRestriction.png[width="800"]
 
 Format for `lock` Command: `lock pw/[PASSWORD]` +
+`lock` can be replaced with `lk` for faster input. +
 Format for `unlock` Command: `unlock pw/[PASSWORD]` +
+`unlock` can be replaced with `ul` for faster input. +
 
 [NOTE]
 The default password is 'password'
@@ -781,6 +785,8 @@ The default password is 'password'
 image::ChangePasswordImages.png[width="800"]
 
 Format: `changepassword pw/[PASSWORD] np/[NEWPASSWORD] cfp/[CONFIRMPASSWORD]` +
+
+**`changepassword` can be replaced with `cpw` for faster input.** +
 
 **Example Scenarios**:
 ****

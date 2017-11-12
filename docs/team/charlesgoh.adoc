@@ -131,7 +131,7 @@ include::../DeveloperGuide.adoc[tag=fontsize]
 
 === Avatar and Remark Fields
 
-==== External behavior
+==== External behavior: Co-authored with Jeffrey Goh
 
 ---
 #Start of Extract [from: User Guide]#
