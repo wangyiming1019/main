@@ -30,7 +30,7 @@ public class SortCommand extends UndoableCommand {
                 + "Example 2: " + COMMAND_WORD + " task deadline desc\n";
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n"
-            + "Accepted Person Field Values: NAME, PHONE, EMAIL, ADDRESS, TASK \n"
+            + "Accepted Person Field Values: NAME, PHONE, EMAIL, ADDRESS \n"
             + "Accepted Task Field Values: DEADLINE, PRIORITY\n"
             + "Accepted Order Values: ASC, DESC";
 
