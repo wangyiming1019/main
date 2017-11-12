@@ -696,52 +696,116 @@ Format: `sort LIST FIELD ORDER` +
 
 ****
 * Allows you to sort your contacts by any field in either ascending or descending order
-* Allows you to srot your tasks by deadline or by priority in ascending or descending order
+* Allows you to sort your tasks by deadline or by priority in ascending or descending order
 * Field parameters for person contacts: NAME, PHONE, EMAIL, ADDRESS, REMARK, AVATAR.
 * Field parameters for tasks: DEADLINE, PRIORITY.
 * Order parameters are limited to the following fields: ASC, DESC.
 * You can undo this command if you want to revert to the pre-sort ordering of contacts
 ****
 
-Examples for sorting person contacts:
+**Example Scenarios**:
+****
+**Example Scenario 1** +
+You have many contacts on Address++. You decide to make it neater by sorting your contacts
+by name in ascending order:
 
-* `sort person name asc` +
-This allows you to sort all persons in the address book in ascending order by the name field.
-* `sort person address desc` +
-This allows you to sort all persons in the address book in descending order by the address field.
+`sort person name asc`
+****
+****
+**Example Scenario 2** +
+You add a few tasks of different priorities. You decide to sort the tasks so you can see
+the higher priority tasks on the top of the list:
 
-Examples for sorting tasks:
-
-* `sort task deadline asc` +
-This allows you to sort all tasks in ascending order by the deadline field (i.e. closer deadlines are at the bottom).
-* `sort task priority desc` +
-This allows you to sort all tasks in descending order by the priority field (i.e. higher priority tasks
-are listed on top).
+`sort task priority desc`
+****
 //end::sort[]
+
 //tag::backup[]
 === Backing up your data : `backup`
 
 You can backup your saved data on Address++ by using the `backup` command. +
+
+Format: `backup [FILENAME]` +
+
 [NOTE]
-`backup` can be replaced by `bk` for faster input. +
-
-Format: `backup [RELATIVE LOCATION]` +
-
+This allows you to backup your saved data on Address++ in another file.
 
 ****
-* Allows you to backup your saved data on Address++ in another file.
-* You can backup your data in the default location or you can specify your desired save location.
-* You can use the default save name or use your own.
+**Example Scenario**: +
+You decide to backup your data just in case you accidentally make changes that
+cannot be undone. You type the following code:
+
+`backup filename.xml`
+
+The file will then be saved in the same directory location as your .JAR application file
+****
+//end::backup[]
+//tag::password[]
+
+=== Protecting your data : `lock` `unlock`
+
+Worried about security? Address++ allows your to protect your data with a password.
+Using the `lock` and `unlock` commands, you can toggle between security modes. +
+
+Locked address books only allow viewing of data. If anyone attempts to tamper with
+your data, they will be greeted with this error:
+
+image::LockedRestriction.png[width="800"]
+
+Format for `lock` Command: `lock pw/[PASSWORD]` +
+Format for `unlock` Command: `unlock pw/[PASSWORD]` +
+
+[NOTE]
+The default password is 'password'
+
+**Example Scenarios**:
+****
+**Example Scenario 1** +
+You just finished editing your contacts on Address++ when you decide to have a break away from
+you computer. You decide to lock Address++ using the following command:
+
+`lock pw/password`
+****
+****
+**Example Scenario 2** +
+When you return to your computer, you decide to continue adding contacts in Address++.
+You decide to unlock Address++ using the following command:
+
+`unlock pw/password`
 ****
 
-Examples:
+=== Changing your password : `changepassword`
 
+Want to choose a better password? The `changepassword` command allows you to change your
+password whenever you want, provided you know the old password.
+
+[NOTE]
+The default password is 'password'
+
+image::ChangePasswordImages.png[width="800"]
+
+Format: `changepassword pw/[PASSWORD] pw/[NEWPASSWORD] pw/[CONFIRMPASSWORD]` +
+
+**Example Scenarios**:
+****
+**Example Scenario 1** +
+You open Address++ for the first time. After reading the user guide, you realize
+that the default password ("password") is not good enough. You decide to make a new
+one with the following command:
+
+`changepassword pw/password np/newpassword cfp/newpassword`
+****
+//end::password[]
+
+<<<<<<< HEAD
+=======
 * `backup` or `bk` +
 This command will help you back up in the default save location --> In the data directory of your application.
 * `backup ./test.xml` or `bk ./test.xml` +
 This saves the backup file in the current data directory, with the name `test.xml`.
 //end::backup[]
 
+>>>>>>> adb8cacc41228d12ab60533620ff59ea14d313e5
 === Selecting a person : `select`
 
 You can use `select` to pick out one contact, and look at it in greater detail. +

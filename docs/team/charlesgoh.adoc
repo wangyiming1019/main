@@ -3,14 +3,44 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook++
-AddressBook++ is a desktop address book application used for teaching Software Engineering principles.
-The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about
-6 kLoC.
+== Project: Address++
+Address++ is a desktop address book application that aims to provide students and
+professionals with an effective tool to help them manage their contacts and their time.
+
+A list of my contributions to Address++ are explained below:
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/main/charlesgoh.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/test/charlesgoh.md[Test code]]
 
-=== Enhancement Added: Sort Command
+=== Password Protection Commands `lock` `unlock` `changepassword`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=password]
+
+#End of Extract#
+---
+
+==== Justification
+
+Many users have security related concerns. In order to slow malicious users from causing
+damage to users' Address++ application, the password protection suite of commands were
+created.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=password]
+
+#End of Extract#
+
+---
+
+=== Sort Command
 
 ==== External behavior
 
@@ -39,7 +69,7 @@ include::../DeveloperGuide.adoc[tag=sort]
 
 ---
 
-=== Enhancement Added: Backup Command
+=== Backup Command
 
 ==== External behavior
 
@@ -67,7 +97,7 @@ include::../DeveloperGuide.adoc[tag=backup]
 
 ---
 
-=== Enhancement Added: Font Size Command
+=== Font Size Command
 
 ==== External behavior
 
@@ -95,7 +125,7 @@ include::../DeveloperGuide.adoc[tag=fontsize]
 
 ---
 
-=== Enhancement Added: Avatar and Remark Fields
+=== Avatar and Remark Fields
 
 ==== External behavior
 
