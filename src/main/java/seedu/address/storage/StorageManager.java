@@ -12,6 +12,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.BackupRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -79,16 +80,13 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     //@@author charlesgoh
-    /**
-     * Backs up data to a remote location.
-     * @param addressBook
-     * @param filePath
-     * @throws IOException
-     */
     @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+    @Subscribe
+    public void handleBackupAddressBook(BackupRequestEvent event) throws IOException {
         logger.fine("Attempting to write to backup data file in custom location");
-        this.saveAddressBook(addressBook, filePath);
+        ReadOnlyAddressBook addressBook = event.getModel().getAddressBook();
+        String args = event.getArgs();
+        this.saveAddressBook(addressBook, args);
     }
     //@@author
 

@@ -14,7 +14,7 @@ Initial source code this project was based on was from AddressBook-Level4 projec
 === Charles Goh
 {empty}[http://charlesgoh.me[homepage]] [https://github.com/charlesgoh[github]]
 
-Role: Project Integration, Git Expert
+Role: Project Integration, Git Expert, Password Security Commands
 
 Responsibilities: UI Component
 

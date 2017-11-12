@@ -28,6 +28,7 @@ import seedu.address.model.person.NameContainsKeywordsPrivacyLevelPredicate;
 import seedu.address.model.person.NameContainsTagsPredicate;
 import seedu.address.model.person.NameContainsTagsPrivacyLevelPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonCompleteMatchPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.ShowAllPrivacyLevelPredicate;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -235,13 +236,14 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.favouritePerson(target);
         indicateAddressBookChanged();
     }
+    //@@author
     //@@author wangyiming1019
     @Override
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.unfavouritePerson(target);
         indicateAddressBookChanged();
     }
-
+    //@@author
     //@@author Esilocke
     @Override
     public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
@@ -275,7 +277,10 @@ public class ModelManager extends ComponentManager implements Model {
         Assignees newAssignees = new Assignees(assignees);
         ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToAssign);
 
-        newAssignees.assign(positions);
+        boolean atLeastOneAdded = newAssignees.assign(positions);
+        if (!atLeastOneAdded) {
+            throw new DuplicateTaskException();
+        }
         ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToAssignTo, newAssignees);
         addressBook.updateTask(taskToAssignTo, updatedTask);
         indicateAddressBookChanged();
@@ -289,13 +294,17 @@ public class ModelManager extends ComponentManager implements Model {
         Assignees newAssignees = new Assignees(assignees);
         ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToDismiss);
 
-        newAssignees.dismiss(positions);
+        boolean atLeastOneDismissed = newAssignees.dismiss(positions);
+        if (!atLeastOneDismissed) {
+            throw new DuplicateTaskException();
+        }
         ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToDismissFrom, newAssignees);
         addressBook.updateTask(taskToDismissFrom, updatedTask);
         indicateAddressBookChanged();
     }
 
     //@@author Esilocke
+    @Override
     public void setAsComplete(ReadOnlyTask toSet, boolean isComplete)
             throws TaskNotFoundException, DuplicateTaskException {
         TaskName taskName = toSet.getTaskName();
@@ -310,6 +319,19 @@ public class ModelManager extends ComponentManager implements Model {
         }
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
         updateTask(toSet, updatedTask);
+    }
+
+    @Override
+    public void viewAssignees(ReadOnlyTask task) {
+        Assignees assignees = task.getAssignees();
+        ArrayList<Index> internalList = assignees.getList();
+        ArrayList<ReadOnlyPerson> personsToShow = new ArrayList<>();
+        for (Index i : internalList) {
+            assert(i.getZeroBased() < filteredPersons.size());
+            personsToShow.add(filteredPersons.get(i.getZeroBased()));
+        }
+        PersonCompleteMatchPredicate assignedPredicate = new PersonCompleteMatchPredicate(personsToShow);
+        updateFilteredPersonList(assignedPredicate);
     }
     //@@author
     //=========== Filtered Person List Accessors =============================================================

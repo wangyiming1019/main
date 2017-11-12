@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author charlesgoh
 /**
@@ -31,7 +32,9 @@ public class FontSizeCommand extends Command {
 
     public static final String MESSAGE_INVALID_INPUT = "Invalid Input.\n" + MESSAGE_USAGE;
 
-    public static final String MESSAGE_SUCCESS_FONT = "Font size increased successfully";
+    public static final String MESSAGE_SUCCESS_INCREASE_FONT = "Font size increased successfully";
+    public static final String MESSAGE_SUCCESS_DECREASE_FONT = "Font size decreased successfully";
+    public static final String MESSAGE_SUCCESS_RESET_FONT = "Font size reset successfully";
 
     private final String option;
 
@@ -44,25 +47,22 @@ public class FontSizeCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
-
         switch (option) {
         case INCREASE_SIZE_PARAMETER:
             EventsCenter.getInstance().post(new ChangeFontSizeEvent(ChangeFontSizeEvent.getIncreaseSizeEventIndex()));
-            break;
+            return new CommandResult(MESSAGE_SUCCESS_INCREASE_FONT);
         case DECREASE_SIZE_PARAMETER:
             EventsCenter.getInstance().post(new ChangeFontSizeEvent(ChangeFontSizeEvent.getDecreaseSizeEventIndex()));
-            break;
+            return new CommandResult(MESSAGE_SUCCESS_DECREASE_FONT);
         case RESET_SIZE_PARAMETER:
             EventsCenter.getInstance().post(new ChangeFontSizeEvent(ChangeFontSizeEvent.getResetSizeEventIndex()));
-            break;
+            return new CommandResult(MESSAGE_SUCCESS_RESET_FONT);
         default:
             System.err.println("Parameter is invalid");
-            break;
+            throw new CommandException(MESSAGE_INVALID_INPUT + MESSAGE_USAGE);
         }
-
-        return new CommandResult(MESSAGE_SUCCESS_FONT);
     }
 
 }

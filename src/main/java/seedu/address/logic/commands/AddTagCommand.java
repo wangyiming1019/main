@@ -27,7 +27,7 @@ public class AddTagCommand extends AddCommand {
             + "Parameters: "
             + "[INDEX] [MORE INDEXES] (index must be a positive integer)"
             + "[" + PREFIX_TAG + "TAG]... \n"
-            + "Example: " + COMMAND_WORD + " 1 2 t/friends \n";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG_FULL + " 1 2 t/friends \n";
 
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Tag: %1$s";

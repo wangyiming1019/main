@@ -42,6 +42,7 @@ import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.commands.UnlockCommand;
+import seedu.address.logic.commands.ViewAssignCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -169,6 +170,10 @@ public class AddressBookParser {
         case ChangePasswordCommand.COMMAND_WORD:
         case ChangePasswordCommand.COMMAND_ALIAS:
             return new ChangePasswordCommandParser().parse(arguments);
+
+        case ViewAssignCommand.COMMAND_WORD:
+        case ViewAssignCommand.COMMAND_ALIAS:
+            return new ViewAssignCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

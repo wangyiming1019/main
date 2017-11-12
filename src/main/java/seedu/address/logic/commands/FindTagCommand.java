@@ -15,7 +15,7 @@ public class FindTagCommand extends FindCommand {
             + ": Finds all persons whose tags contain any of "
             + "the specified tags (not case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " friends colleagues";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG_FULL + " friends colleagues";
 
     private final NameContainsTagsPredicate predicate;
 
