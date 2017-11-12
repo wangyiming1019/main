@@ -1554,6 +1554,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |be able to update the address book application easily when new updates are published |continue using the address book easily with any newly added features
 
+|`* * *` |cautious user |be able to lock my address book application whenever I want with a password | prevent people with malicious intent from making changes to my data
+
+|`* *` |cautious user |be able to back up my address book data | retrieve my back up data in the event I make breaking changes to my actual address book and there is no way of undoing them
+
+|`* *` |user with a 4K screen |be able to increase the font size | use the application without straining my eyes.
+
+|`* *` |user with a 4K screen |be able keep track of my upcoming tasks | ditch my Todo application and migrate to Address++ for my people and task management needs
 
 |=======================================================================
 
