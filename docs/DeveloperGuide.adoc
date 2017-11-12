@@ -654,7 +654,7 @@ file.
 
 [NOTE]
 SHA256 encryption was used to calculate a hash for the password. This is to delay anyone snooping around the
-user's file directories.
+user's file directories from seeing the real password immediately.
 
 **Validation Checks**
 ****
