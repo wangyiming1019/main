@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
-
+//@@author Esilocke
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
@@ -16,12 +17,11 @@ import seedu.address.model.tag.Tag;
 /**
  * Renames and edits the specified tag in the address book.
  */
-//@@author Esilocke
-public class EditTagCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "edittag";
-    public static final String COMMAND_ALIAS = "etag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the specified tag "
+public class EditTagCommand extends EditCommand {
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
+            + ": Edits the specified tag "
             + "and updates all existing contacts that shares this tag with the new value.\n"
             + "Parameters: TAGTOCHANGE (must be alphanumerical) "
             + "TAGNEWNAME (must be alphanumerical)\n"

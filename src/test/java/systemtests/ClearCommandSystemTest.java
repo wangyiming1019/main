@@ -1,7 +1,6 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.ClearCommand.TYPE_ALL;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -27,7 +26,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: undo clearing address book -> original address book restored */
         String command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = String.format(UndoCommand.MESSAGE_SUCCESS, TYPE_ALL);
+        String expectedResultMessage = String.format(UndoCommand.MESSAGE_SUCCESS);
         assertCommandSuccess(command,  expectedResultMessage, defaultModel);
         assertSelectedCardUnchanged();
 
@@ -69,7 +68,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
-        String expectedResultMessage = String.format(ClearCommand.MESSAGE_SUCCESS, TYPE_ALL);
+        String expectedResultMessage = String.format(ClearCommand.MESSAGE_SUCCESS);
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
     }
 

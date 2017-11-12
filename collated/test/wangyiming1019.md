@@ -739,7 +739,8 @@ public class UnFavouriteCommandTest {
     public void parseCommandFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
         FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindTagCommand.COMMAND_WORD + " " + PREFIX_TAG_FULL + " "
+                        + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }
@@ -748,7 +749,8 @@ public class UnFavouriteCommandTest {
     public void parseCommandAliasFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
         FindTagCommand command = (FindTagCommand) parser.parseCommand(
-                FindTagCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindTagCommand.COMMAND_ALIAS + " " + PREFIX_TAG_FULL + " "
+                        + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }

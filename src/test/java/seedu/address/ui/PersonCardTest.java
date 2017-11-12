@@ -22,20 +22,20 @@ public class PersonCardTest extends GuiUnitTest {
         int fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER;
         Person testPerson = new PersonBuilder().build();
         PersonCard personCard = new PersonCard(testPerson, 1, fontSizeMultiplier);
-        assertEquals(PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER, personCard.getFontSizeMultipler());
-        assertNotEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier + 1);
+        assertEquals(PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER, personCard.getFontSizeMultiplier());
+        assertNotEquals(personCard.getFontSizeMultiplier(), fontSizeMultiplier + 1);
 
         // Verify font size increase
         fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER + 1;
-        personCard.setFontSizeMultipler(fontSizeMultiplier);
-        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
-        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+        personCard.setFontSizeMultiplier(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultiplier(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultiplier(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
 
         // Verify font size decrease
         fontSizeMultiplier = PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER - 1;
-        personCard.setFontSizeMultipler(fontSizeMultiplier);
-        assertEquals(personCard.getFontSizeMultipler(), fontSizeMultiplier);
-        assertNotEquals(personCard.getFontSizeMultipler(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
+        personCard.setFontSizeMultiplier(fontSizeMultiplier);
+        assertEquals(personCard.getFontSizeMultiplier(), fontSizeMultiplier);
+        assertNotEquals(personCard.getFontSizeMultiplier(), PersonCard.DEFAULT_FONT_SIZE_MULTIPLIER);
     }
     //@@author
 

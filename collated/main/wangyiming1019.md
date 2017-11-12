@@ -3,6 +3,7 @@
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,9 @@ import seedu.address.model.tag.Tag;
 /**
  * Adds a tag to the persons in the latest list from the address book.
  */
-public class AddTagCommand extends UndoableCommand {
+public class AddTagCommand extends AddCommand {
 
-    public static final String COMMAND_WORD = "addtag";
-    public static final String COMMAND_ALIAS = "atag";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
             + ": Adds the tag to the persons with the index numbers used in the last person list."
             + " Command is case-sensitive. \n"
             + "Parameters: "
@@ -130,6 +128,7 @@ public class AddTagCommand extends UndoableCommand {
 ``` java
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,12 +144,9 @@ import seedu.address.model.tag.Tag;
 /**
  * Deletes a tag from identified persons using the last displayed indexes from the address book.
  */
-public class DeleteTagCommand extends UndoableCommand {
+public class DeleteTagCommand extends DeleteCommand {
 
-    public static final String COMMAND_WORD = "deletetag";
-    public static final String COMMAND_ALIAS = "dtag";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
             + ": Deletes the tag from the persons with the index numbers used in the last person list."
             + " Command is case-sensitive. \n"
             + "Parameters: "
@@ -342,18 +338,18 @@ public class FavouriteListCommand extends Command {
 ```
 ###### \java\seedu\address\logic\commands\FindTagCommand.java
 ``` java
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
+
 import seedu.address.model.person.NameContainsTagsPredicate;
 
 /**
  * Finds and lists all persons in address book who has a tag that contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
-public class FindTagCommand extends Command {
+public class FindTagCommand extends FindCommand {
 
-    public static final String COMMAND_WORD = "findtag";
-    public static final String COMMAND_ALIAS = "ftag";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose tags contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
+            + ": Finds all persons whose tags contain any of "
             + "the specified tags (not case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " friends colleagues";
@@ -524,7 +520,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -535,7 +530,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Parses input arguments and creates a new AddTagCommand object
  */
-public class AddTagCommandParser implements Parser<AddTagCommand> {
+public class AddTagCommandParser extends AddCommandParser {
     /**
      * Parses the given {@code String} of arguments in the context of the AddTagCommand
      * and returns a AddTagCommand object for execution.
@@ -569,21 +564,13 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
     /**
      * Returns an ArrayList of the indexes in the given {@code String}
      */
-    private static ArrayList<Index> toArrayList(String indexes) throws IllegalValueException {
+    protected static ArrayList<Index> toArrayList(String indexes) throws IllegalValueException {
         ArrayList<Index> indexList = new ArrayList<Index>();
         String[] indexArray = indexes.split(" ");
         for (String s: indexArray) {
             indexList.add(ParserUtil.parseIndex(s));
         }
         return indexList;
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
 ```
@@ -954,14 +941,6 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         return allTagNames.toString().trim();
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof NameContainsTagsPredicate // instanceof handles nulls
-                && this.tags.equals(((NameContainsTagsPredicate) other).tags)); // state check
-    }
-
-}
 ```
 ###### \java\seedu\address\model\person\Person.java
 ``` java

@@ -28,6 +28,11 @@ public interface ReadOnlyPerson {
     Boolean getFavourite();
     ObjectProperty<Avatar> avatarProperty();
     Avatar getAvatar();
+    //@@author jeffreygohkw
+    void setPrivacyLevel(int level);
+    int getPrivacyLevel();
+    boolean hasPrivateField();
+    //@@author
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

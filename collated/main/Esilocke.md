@@ -1,4 +1,75 @@
 # Esilocke
+###### \java\seedu\address\logic\commands\AddTaskCommand.java
+``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+
+/**
+ * Adds a task to the address book.
+ */
+public class AddTaskCommand extends AddCommand {
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TASK
+            + ": Adds a task to the address book. "
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_DESCRIPTION + "DESCRIPTION "
+            + PREFIX_DEADLINE + "DEADLINE "
+            + PREFIX_PRIORITY + "PRIORITY "
+            + PREFIX_ADDRESS + "ADDRESS"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TASK + " "
+            + PREFIX_NAME + "Buy pencil "
+            + PREFIX_DESCRIPTION + "Buy a new pencil from ABS "
+            + PREFIX_DEADLINE + "10-10-2017 "
+            + PREFIX_PRIORITY + "4 "
+            + PREFIX_ADDRESS + "12 Kent Ridge Crescent, 119275";
+    public static final String MESSAGE_SUCCESS = "New task added: \n%1$s";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book";
+
+    private final Task taskToAdd;
+
+    /**
+     * Creates an AddTaskCommand to add the specified {@code ReadOnlyTask}
+     */
+    public AddTaskCommand(ReadOnlyTask task) {
+        super();
+        taskToAdd = new Task(task);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addTask(taskToAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, taskToAdd));
+        } catch (DuplicateTaskException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        } else if (!(other instanceof AddTaskCommand)) {
+            return false;
+        } else {
+            assert (taskToAdd != null);
+            assert (((AddTaskCommand) other).taskToAdd != null); // The taskToAdd cannot be null
+            return taskToAdd.equals(((AddTaskCommand) other).taskToAdd);
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AssignCommand.java
 ``` java
 
@@ -140,6 +211,63 @@ public class AssignCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\DeleteTaskCommand.java
+``` java
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+
+/**
+ * Deletes a task from the address book.
+ */
+public class DeleteTaskCommand extends DeleteCommand {
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TASK
+            + ": Deletes the task identified by the index number used in the last listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_SUCCESS = "Deleted Task: %1$s";
+
+    private final Index targetIndex;
+
+    public DeleteTaskCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyTask> tasksList = model.getFilteredTaskList();
+
+        if (targetIndex.getZeroBased() >= tasksList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        }
+
+        try {
+            ReadOnlyTask taskToDelete = tasksList.get(targetIndex.getZeroBased());
+            model.deleteTask(taskToDelete);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, taskToDelete));
+        } catch (TaskNotFoundException tnfe) {
+            throw new AssertionError("The target task cannot be missing");
+        }
+    }
+
+
+
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteTaskCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DeleteTaskCommand) other).targetIndex)); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\DismissCommand.java
 ``` java
 
@@ -229,7 +357,218 @@ public class DismissCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### \java\seedu\address\logic\commands\EditTagCommand.java
+``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+/**
+ * Renames and edits the specified tag in the address book.
+ */
+
+public class EditTagCommand extends EditCommand {
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
+            + ": Edits the specified tag "
+            + "and updates all existing contacts that shares this tag with the new value.\n"
+            + "Parameters: TAGTOCHANGE (must be alphanumerical) "
+            + "TAGNEWNAME (must be alphanumerical)\n"
+            + "Example: " + COMMAND_WORD + " friends enemies";
+
+    public static final String MESSAGE_EDIT_TAG_SUCCESS = "Replaced tag %1$s with %2$s";
+    public static final String MESSAGE_TAG_NOT_FOUND = "No such tag was found in the address book.";
+    public static final String MESSAGE_INSUFFICIENT_ARGS = "Only 2 arguments should be provided!";
+    public static final String MESSAGE_INVALID_TAG_NAME = "Tag names must be alphanumerical.";
+    public static final String MESSAGE_DUPLICATE_TAGS = "The new name of the tag cannot be the same as the old name.";
+    private final ArrayList<Index> affectedIndexes;
+    private final Tag toEdit;
+    private final Tag newTag;
+
+    /**
+     * @param toEdit The value of the tag to be changed
+     * @param newTag The new value for the tag
+     */
+    public EditTagCommand(Tag toEdit, Tag newTag) {
+        requireNonNull(toEdit);
+        requireNonNull(newTag);
+        this.toEdit = toEdit;
+        this.newTag = newTag;
+        this.affectedIndexes = new ArrayList<>();
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        ReadOnlyPerson currentlyViewed;
+        Set<Tag> tagSet;
+        boolean tagNotPresent = true;
+        for (int i = 0; i < lastShownList.size(); i++) {
+            currentlyViewed = lastShownList.get(i);
+            tagSet = currentlyViewed.getTags();
+            if (tagSet.contains(toEdit)) {
+                tagNotPresent = false;
+                affectedIndexes.add(Index.fromZeroBased(i));
+            }
+        }
+
+        if (tagNotPresent) {
+            throw new CommandException(MESSAGE_TAG_NOT_FOUND);
+        }
+        try {
+            model.editTag(toEdit, newTag, affectedIndexes);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_TAGS);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_EDIT_TAG_SUCCESS, toEdit.tagName, newTag.tagName));
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditTagCommand)) {
+            return false;
+        }
+
+        // state check
+        EditTagCommand e = (EditTagCommand) other;
+        return toEdit.equals(e.toEdit)
+                && newTag.equals(e.newTag);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\EditTaskCommand.java
+``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
+
+import java.util.List;
+import java.util.Optional;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.Assignees;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
+import seedu.address.model.task.TaskName;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+
+/**
+ * Edits a task in the address book.
+ */
+public class EditTaskCommand extends EditCommand {
+    public static final String MESSAGE_TASK_USAGE = COMMAND_WORD  + " " + PREFIX_TASK
+            + ": Edits the details of the task identified "
+            + "by the index number used in the last task listing. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
+            + "[" + PREFIX_DEADLINE + "DEADLINE] "
+            + "[" + PREFIX_PRIORITY + "PRIORITY] "
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_DESCRIPTION + "write 1200-word essay "
+            + PREFIX_PRIORITY + "1";
+    public static final String MESSAGE_SUCCESS = "Edited Task: \n%1$s";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
+
+    private final EditTaskDescriptor editTaskDescriptor;
+    private final Index index;
+
+    /**
+     * @param index of the task in the filtered task list to edit
+     * @param editTaskDescriptor details to edit the task with
+     */
+    public EditTaskCommand(Index index, EditTaskDescriptor editTaskDescriptor) {
+        requireNonNull(index);
+        requireNonNull(editTaskDescriptor);
+
+        this.index = index;
+        this.editTaskDescriptor = new EditTaskDescriptor(editTaskDescriptor);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyTask> lastShownTaskList = model.getFilteredTaskList();
+
+        try {
+            if (index.getZeroBased() >= lastShownTaskList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+            }
+            ReadOnlyTask taskToEdit = lastShownTaskList.get(index.getZeroBased());
+            Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+            model.updateTask(taskToEdit, editedTask);
+            model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, editedTask));
+        } catch (DuplicateTaskException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("The target task cannot be missing");
+        }
+    }
+
+    /**
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}.
+     */
+    private static Task createEditedTask(ReadOnlyTask taskToEdit,
+                                         EditTaskDescriptor editTaskDescriptor) {
+        assert taskToEdit != null;
+
+        TaskName updatedTaskName;
+        Description updatedDescription;
+        Deadline updatedDeadline;
+        Priority updatedPriority;
+        Assignees assignees;
+        Boolean updatedState;
+        TaskAddress updatedTaskAddress;
+
+        updatedTaskName = editTaskDescriptor.getTaskName().orElse(taskToEdit.getTaskName());
+        updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
+        updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
+        // You cannot edit assignees or state using edit command
+        assignees = taskToEdit.getAssignees();
+        updatedState = taskToEdit.getCompleteState();
+        updatedTaskAddress = editTaskDescriptor.getTaskAddress().orElse(taskToEdit.getTaskAddress());
+
+        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees, updatedState,
+                updatedTaskAddress);
+    }
+
+```
+###### \java\seedu\address\logic\commands\EditTaskCommand.java
 ``` java
     /**
      * Stores the details to edit the task with. Each non-empty field value will replace the
@@ -326,85 +665,91 @@ public class DismissCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditTagCommand.java
+###### \java\seedu\address\logic\commands\FindTaskCommand.java
 ``` java
-public class EditTagCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "edittag";
-    public static final String COMMAND_ALIAS = "etag";
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the specified tag "
-            + "and updates all existing contacts that shares this tag with the new value.\n"
-            + "Parameters: TAGTOCHANGE (must be alphanumerical) "
-            + "TAGNEWNAME (must be alphanumerical)\n"
-            + "Example: " + COMMAND_WORD + " friends enemies";
+import seedu.address.model.task.TaskContainsKeywordPredicate;
 
-    public static final String MESSAGE_EDIT_TAG_SUCCESS = "Replaced tag %1$s with %2$s";
-    public static final String MESSAGE_TAG_NOT_FOUND = "No such tag was found in the address book.";
-    public static final String MESSAGE_INSUFFICIENT_ARGS = "Only 2 arguments should be provided!";
-    public static final String MESSAGE_INVALID_TAG_NAME = "Tag names must be alphanumerical.";
-    public static final String MESSAGE_DUPLICATE_TAGS = "The new name of the tag cannot be the same as the old name.";
-    private final ArrayList<Index> affectedIndexes;
-    private final Tag toEdit;
-    private final Tag newTag;
+/**
+ * Finds tasks in the address book.
+ */
+public class FindTaskCommand extends FindCommand {
+    public static final String MESSAGE_USAGE = COMMAND_WORD  + " " + PREFIX_TASK
+            + ": Finds all tasks whose names or descriptions "
+            + "contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]... [p/MINIMUM_PRIORITY] [done/TASK_STATE]\n"
+            + "Example: " + COMMAND_WORD + " task make";
+    public static final String MESSAGE_INVALID_COMPLETE_VALUE = "The task status should either be 'true' or 'false'";
+    public static final String MESSAGE_INVALID_PRIORITY = "The specified priority should be an integer from 1 to 5";
+    private final TaskContainsKeywordPredicate taskPredicate;
 
-    /**
-     * @param toEdit The value of the tag to be changed
-     * @param newTag The new value for the tag
-     */
-    public EditTagCommand(Tag toEdit, Tag newTag) {
-        requireNonNull(toEdit);
-        requireNonNull(newTag);
-        this.toEdit = toEdit;
-        this.newTag = newTag;
-        this.affectedIndexes = new ArrayList<>();
+    public FindTaskCommand(TaskContainsKeywordPredicate predicate) {
+        this.taskPredicate = predicate;
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        ReadOnlyPerson currentlyViewed;
-        Set<Tag> tagSet;
-        boolean tagNotPresent = true;
-        for (int i = 0; i < lastShownList.size(); i++) {
-            currentlyViewed = lastShownList.get(i);
-            tagSet = currentlyViewed.getTags();
-            if (tagSet.contains(toEdit)) {
-                tagNotPresent = false;
-                affectedIndexes.add(Index.fromZeroBased(i));
-            }
-        }
-
-        if (tagNotPresent) {
-            throw new CommandException(MESSAGE_TAG_NOT_FOUND);
-        }
-        try {
-            model.editTag(toEdit, newTag, affectedIndexes);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_TAGS);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_TAG_SUCCESS, toEdit.tagName, newTag.tagName));
+    public CommandResult execute() {
+        assert(taskPredicate != null);
+        model.updateFilteredTaskList(taskPredicate);
+        return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
     }
-
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
+        return other == this
+                || other instanceof FindTaskCommand
+                && this.taskPredicate.equals(((FindTaskCommand) other).taskPredicate);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SelectTaskCommand.java
+``` java
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import java.util.List;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestTaskEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.ReadOnlyTask;
+
+/**
+ * Selects a task in the address book and loads the view panel for that task.
+ */
+public class SelectTaskCommand extends SelectCommand {
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TASK
+            + ": Selects the task identified by the index number used in the last task listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_SUCCESS = "Selected Task: %1$s";
+
+    private final Index targetIndex;
+
+    public SelectTaskCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyTask> lastShownTaskList = model.getFilteredTaskList();
+
+        if (targetIndex.getZeroBased() >= lastShownTaskList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        // instanceof handles nulls
-        if (!(other instanceof EditTagCommand)) {
-            return false;
-        }
+        EventsCenter.getInstance().post(new JumpToListRequestTaskEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
+    }
 
-        // state check
-        EditTagCommand e = (EditTagCommand) other;
-        return toEdit.equals(e.toEdit)
-                && newTag.equals(e.newTag);
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SelectTaskCommand // instanceof handles nulls
+                && this.targetIndex.equals(((SelectTaskCommand) other).targetIndex)); // state check
     }
 }
 ```
@@ -516,18 +861,41 @@ public class SetIncompleteCommand extends UndoableCommand {
         return model.getFilteredTaskList();
     }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddTaskCommandParser.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
+import seedu.address.model.task.TaskName;
+
+/**
+ * Parses input arguments and creates a new ReadOnlyTask object in the context of AddTaskCommand.
+ */
+public class AddTaskCommandParser extends AddCommandParser {
     /**
      * Constructs a ReadOnlyTask from the arguments provided.
      */
-    private static ReadOnlyTask constructTask(String args) throws ParseException {
+    public static ReadOnlyTask constructTask(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION, PREFIX_DEADLINE, PREFIX_PRIORITY,
-                        PREFIX_ADDRESS);
+                        PREFIX_ADDRESS, PREFIX_TASK);
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_TASK_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -554,8 +922,7 @@ public class SetIncompleteCommand extends UndoableCommand {
                     ? ParserUtil.parseTaskAddress(argMultimap.getValue(PREFIX_ADDRESS)).get()
                     : new TaskAddress(null);
 
-            ReadOnlyTask task = new Task(name, description, deadline, priority, address);
-            return task;
+            return new Task(name, description, deadline, priority, address);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -618,6 +985,32 @@ public class AssignTaskCommandParser implements Parser<AssignCommand> {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return targetsToAdd;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\DeleteTaskCommandParser.java
+``` java
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.DeleteTaskCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new DeleteTaskCommand object
+ */
+public class DeleteTaskCommandParser {
+    /**
+     * Parses input arguments and creates a new DeleteTaskCommand object in the context of DeleteTaskCommand.
+     */
+    public DeleteTaskCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteTaskCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteTaskCommand.MESSAGE_USAGE));
+        }
     }
 }
 ```
@@ -688,8 +1081,8 @@ public class EditTagCommandParser implements Parser<EditTagCommand> {
     public static final int EXPECTED_NUMBER_OF_ARGS = 2;
 
     /**
-     * Parses the given {@code String} of arguments in the context of the EditCommand
-     * and returns an EditCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the EditTagCommand
+     * and returns an EditTagCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditTagCommand parse(String args) throws ParseException {
@@ -730,6 +1123,142 @@ public class EditTagCommandParser implements Parser<EditTagCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\EditTaskCommandParser.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EditPersonCommand;
+import seedu.address.logic.commands.EditTaskCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new EditTaskCommand object
+ */
+public class EditTaskCommandParser extends EditCommandParser {
+    /** Constructs a new EditTaskCommand that edits a Task object. **/
+    public EditTaskCommand constructTaskDescriptor(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_NAME, PREFIX_DESCRIPTION,
+                        PREFIX_DEADLINE, PREFIX_PRIORITY, PREFIX_ADDRESS);
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_TASK_USAGE));
+        }
+
+        EditTaskCommand.EditTaskDescriptor editTaskDescriptor = new EditTaskCommand.EditTaskDescriptor();
+        try {
+            ParserUtil.parseTaskName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editTaskDescriptor::setTaskName);
+            ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION))
+                    .ifPresent(editTaskDescriptor::setDescription);
+            ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).ifPresent(editTaskDescriptor::setDeadline);
+            ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editTaskDescriptor::setPriority);
+            ParserUtil.parseTaskAddress(argMultimap.getValue(PREFIX_ADDRESS))
+                    .ifPresent(editTaskDescriptor::setTaskAddress);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!editTaskDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditPersonCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditTaskCommand(index, editTaskDescriptor);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\FindTaskCommandParser.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import java.util.Arrays;
+
+import seedu.address.logic.commands.FindTaskCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.TaskContainsKeywordPredicate;
+
+/**
+ * Parses input arguments and creates a new FindTaskCommand object
+ */
+public class FindTaskCommandParser extends FindCommandParser {
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindTaskCommand
+     * and returns an FindTaskCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindTaskCommand parse(String args) throws ParseException {
+        String argsWithNoTaskPrefix = args.replaceFirst(PREFIX_TASK.getPrefix(), "");
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsWithNoTaskPrefix, PREFIX_PRIORITY, PREFIX_STATE);
+        String keywords = argMultimap.getPreamble();
+        String trimmedArgs = keywords.trim();
+        boolean isPriorityFindRequired = argMultimap.getValue(PREFIX_PRIORITY).isPresent();
+        boolean isStateFindRequired = argMultimap.getValue(PREFIX_STATE).isPresent();
+        int minPriority = 0;
+        boolean isComplete = false;
+        if (isPriorityFindRequired) {
+            minPriority = parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get());
+        }
+        if (isStateFindRequired) {
+            isComplete = parseState(argMultimap.getValue(PREFIX_STATE).get());
+        }
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTaskCommand.MESSAGE_USAGE));
+        }
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new FindTaskCommand(new TaskContainsKeywordPredicate(Arrays.asList(nameKeywords),
+                isStateFindRequired, isPriorityFindRequired, isComplete, minPriority));
+    }
+
+    /**
+     * Parses the given string, and returns an integer corresponding to its value
+     * Guarantees: The specified value is valid as a priority value
+     */
+    private int parsePriority(String args) throws ParseException {
+        if (args == null) {
+            throw new ParseException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+        }
+        int priority;
+        try {
+            priority = Integer.parseInt(args.trim());
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(FindTaskCommand.MESSAGE_INVALID_PRIORITY);
+        }
+        if (priority < 1 || priority > 5) {
+            throw new ParseException(FindTaskCommand.MESSAGE_INVALID_PRIORITY);
+        } else {
+            return priority;
+        }
+    }
+
+    /**
+     * Parses the given string, and returns a boolean value corresponding to its value
+     */
+    private boolean parseState(String args) throws ParseException {
+        String trimmed = args.trim();
+        if ("true".equals(trimmed) || "false".equals(trimmed)) {
+            return Boolean.valueOf(trimmed);
+        } else {
+            throw new ParseException(FindTaskCommand.MESSAGE_INVALID_COMPLETE_VALUE);
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -764,6 +1293,43 @@ public class EditTagCommandParser implements Parser<EditTagCommand> {
         return priority.isPresent() ? Optional.of(new Priority(priority.get())) : Optional.empty();
     }
 
+```
+###### \java\seedu\address\logic\parser\SelectTaskCommandParser.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.SelectTaskCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new SelectTaskCommand object
+ */
+public class SelectTaskCommandParser extends SelectCommandParser {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SelectTaskCommand
+     * and returns an SelectTaskCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SelectTaskCommand parse(String args) throws ParseException {
+        Index index = extractIndex(args);
+        return new SelectTaskCommand(index);
+    }
+
+    /**
+     * Extracts one index from the provided string and returns it
+     * @throws ParseException if the string does not contain a valid index
+     */
+    private Index extractIndex(String args) throws ParseException {
+        try {
+            return ParserUtil.parseIndex(args);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectTaskCommand.MESSAGE_USAGE));
+        }
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\SetTaskCompleteCommandParser.java
 ``` java

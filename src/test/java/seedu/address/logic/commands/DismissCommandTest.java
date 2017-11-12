@@ -33,7 +33,7 @@ public class DismissCommandTest {
 
 
     @Test
-    public void execute_assignOnePerson_addSuccessful() throws Exception {
+    public void execute_assignOnePerson_success() throws Exception {
         List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON);
         ReadOnlyTask dismissedTask = model.getFilteredTaskList().get(0);
         ReadOnlyPerson dismissedPerson = model.getFilteredPersonList().get(0);
@@ -49,7 +49,7 @@ public class DismissCommandTest {
     }
 
     @Test
-    public void execute_assignManyPersons_addSuccessful() throws Exception {
+    public void execute_assignManyPersons_success() throws Exception {
         List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON);
         ReadOnlyTask dismissedTask = model.getFilteredTaskList().get(0);
         ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
@@ -69,7 +69,7 @@ public class DismissCommandTest {
     }
 
     @Test
-    public void execute_assignDuplicates_addSuccessful() throws Exception {
+    public void execute_assignDuplicates_success() throws Exception {
         List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON, INDEX_FIRST_PERSON);
         ReadOnlyTask dismissedTask = model.getFilteredTaskList().get(0);
         ReadOnlyPerson dismissedPerson = model.getFilteredPersonList().get(0);
@@ -130,9 +130,9 @@ public class DismissCommandTest {
     /**
      * Generates a new DismissCommand with the specified targets.
      */
-    private DismissCommand prepareCommand(List<Index> personsToDismiss, Index task) {
+    private DismissCommand prepareCommand(List<Index> personsToDismiss, Index taskIndex) {
         ArrayList<Index> listIndexes = new ArrayList<>(personsToDismiss);
-        DismissCommand command = new DismissCommand(listIndexes, task);
+        DismissCommand command = new DismissCommand(listIndexes, taskIndex);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

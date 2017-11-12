@@ -46,8 +46,6 @@ public class XmlAdaptedPerson {
     private Boolean remarkIsPrivate;
     @XmlElement(required = true)
     private String avatar;
-    @XmlElement(required = true)
-    private Boolean avatarIsPrivate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -65,7 +63,7 @@ public class XmlAdaptedPerson {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().fullName;
+        name = source.getName().value;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
@@ -73,12 +71,11 @@ public class XmlAdaptedPerson {
         remark = source.getRemark().value;
         avatar = source.getAvatar().value;
 
-        nameIsPrivate = source.getName().isPrivate();
-        phoneIsPrivate = source.getPhone().isPrivate();
-        emailIsPrivate = source.getEmail().isPrivate();
-        addressIsPrivate = source.getAddress().isPrivate();
-        remarkIsPrivate = source.getRemark().isPrivate();
-        avatarIsPrivate = source.getAvatar().isPrivate();
+        nameIsPrivate = source.getName().getIsPrivate();
+        phoneIsPrivate = source.getPhone().getIsPrivate();
+        emailIsPrivate = source.getEmail().getIsPrivate();
+        addressIsPrivate = source.getAddress().getIsPrivate();
+        remarkIsPrivate = source.getRemark().getIsPrivate();
 
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -111,16 +108,13 @@ public class XmlAdaptedPerson {
         if (remarkIsPrivate == null) {
             remarkIsPrivate = false;
         }
-        if (avatarIsPrivate == null) {
-            avatarIsPrivate = false;
-        }
         final Name name = new Name(this.name, this.nameIsPrivate);
         final Phone phone = new Phone(this.phone, this.phoneIsPrivate);
         final Email email = new Email(this.email, this.emailIsPrivate);
         final Address address = new Address(this.address, this.addressIsPrivate);
         final Boolean favourite = new Boolean(this.favourite);
         final Remark remark = new Remark(this.remark, this.remarkIsPrivate);
-        final Avatar avatar = new Avatar(this.avatar, this.avatarIsPrivate);
+        final Avatar avatar = new Avatar(this.avatar);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, favourite, remark, avatar, tags);
     }

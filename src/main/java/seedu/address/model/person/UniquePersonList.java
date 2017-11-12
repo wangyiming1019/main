@@ -194,7 +194,7 @@ public class UniquePersonList implements Iterable<Person> {
         Comparator<Person> personNameComparator = new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                return o1.getName().fullName.compareTo(o2.getName().fullName);
+                return o1.getName().value.compareTo(o2.getName().value);
             }
         };
 

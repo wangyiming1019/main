@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -125,5 +126,38 @@ public interface Model {
      * @param order
      */
     void sortTasks(String field, String order);
+
+    /**
+     * Returns lock state. True means locked. False means unlocked
+     */
+    boolean getLockState();
+
+    /**
+     * Locks address book from model
+     */
+    void lockAddressBookFromModel();
+
+    /**
+     * Unlock address book from model
+     */
+    void unlockAddressBookFromModel();
+
+    /**
+     * Returns a copy of the UserPrefs
+     */
+    UserPrefs getUserPrefs();
     //@@author
+
+    //@@author jeffreygohkw
+    void setPrivacyLevel(int level);
+
+    int getPrivacyLevel();
+
+    ReadOnlyPerson getPersonAtIndexFromAddressBook(int index);
+
+    void setTheme(String theme);
+
+    String getTheme();
+
+    HashMap<String, String> getStyleMap();
 }

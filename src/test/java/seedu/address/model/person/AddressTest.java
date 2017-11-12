@@ -25,7 +25,7 @@ public class AddressTest {
     @Test
     public void privateAddressIsHidden_success() throws IllegalValueException {
         Address a = new Address("Any Address", true);
-        assertTrue(a.isPrivate());
+        assertTrue(a.getIsPrivate());
         assertEquals(a.toString(), "<Private Address>");
     }
 }

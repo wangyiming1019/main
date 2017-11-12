@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 //@@author wangyiming1019
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,9 @@ import seedu.address.model.tag.Tag;
 /**
  * Deletes a tag from identified persons using the last displayed indexes from the address book.
  */
-public class DeleteTagCommand extends UndoableCommand {
+public class DeleteTagCommand extends DeleteCommand {
 
-    public static final String COMMAND_WORD = "deletetag";
-    public static final String COMMAND_ALIAS = "dtag";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + PREFIX_TAG_FULL
             + ": Deletes the tag from the persons with the index numbers used in the last person list."
             + " Command is case-sensitive. \n"
             + "Parameters: "

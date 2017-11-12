@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Avatar> avatar;
+    private int privacyLevel = 2;
 
     /**
      * Every field must be present and not null.
@@ -189,4 +190,27 @@ public class Person implements ReadOnlyPerson {
         return getAsText();
     }
 
+    //@@author jeffreygohkw
+    @Override
+    public void setPrivacyLevel(int level) {
+        this.getName().setPrivacyLevel(level);
+        this.getPhone().setPrivacyLevel(level);
+        this.getEmail().setPrivacyLevel(level);
+        this.getAddress().setPrivacyLevel(level);
+        this.getRemark().setPrivacyLevel(level);
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+
+    /**
+     * Returns true if the Person has at least one private field and false otherwise
+     */
+    @Override
+    public boolean hasPrivateField() {
+        return (this.getName().getIsPrivate() || this.getPhone().getIsPrivate() || this.getAddress().getIsPrivate()
+                || this.getEmail().getIsPrivate() || this.getRemark().getIsPrivate());
+    }
 }

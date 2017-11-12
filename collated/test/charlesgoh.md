@@ -170,7 +170,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddPersonCommandTest.java
 ``` java
         public void increaseFontSize() {
             fail("This method should not be called.");
@@ -264,7 +264,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
         Comparator<ReadOnlyPerson> nameComparator = new Comparator<ReadOnlyPerson>() {
             @Override
             public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2) {
-                return o1.getName().fullName.compareTo(o2.getName().fullName);
+                return o1.getName().value.compareTo(o2.getName().value);
             }
         };
         Collections.sort(personList, nameComparator);

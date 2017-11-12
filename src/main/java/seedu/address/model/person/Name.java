@@ -19,8 +19,9 @@ public class Name {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String fullName;
+    public final String value;
     private boolean isPrivate = false;
+    private int privacyLevel = 2;
 
     /**
      * Validates given name.
@@ -33,7 +34,7 @@ public class Name {
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
-        this.fullName = trimmedName;
+        this.value = trimmedName;
     }
 
     //@@author jeffreygohkw
@@ -53,10 +54,14 @@ public class Name {
     //@@author jeffreygohkw
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Name>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Name>";
+            }
+            return value;
         }
-        return fullName;
     }
 
     //@@author
@@ -64,19 +69,27 @@ public class Name {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Name // instanceof handles nulls
-                && this.fullName.equals(((Name) other).fullName)); // state check
+                && this.value.equals(((Name) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return value.hashCode();
     }
     //@@author jeffreygohkw
-    public boolean isPrivate() {
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }

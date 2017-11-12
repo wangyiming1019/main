@@ -204,7 +204,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Email email = createEmailWithPrivacy(person, pps);
         Address address = createAddressWithPrivacy(person, pps);
         Remark remark = createRemarkWithPrivacy(person, pps);
-        Avatar avatar = createAvatarWithPrivacy(person, pps);
+        Avatar avatar = person.getAvatar();
         Boolean favourite = person.getFavourite();
         Set<Tag> tag = person.getTags();
 
@@ -219,7 +219,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Name createNameWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Name n;
         try {
-            if (person.getName().isPrivate()) {
+            if (person.getName().getIsPrivate()) {
                 person.getName().setPrivate(false);
                 n = new Name(person.getName().toString());
                 person.getName().setPrivate(true);
@@ -244,7 +244,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Phone createPhoneWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Phone p;
         try {
-            if (person.getPhone().isPrivate()) {
+            if (person.getPhone().getIsPrivate()) {
                 person.getPhone().setPrivate(false);
                 p = new Phone(person.getPhone().toString());
                 person.getPhone().setPrivate(true);
@@ -269,7 +269,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Email createEmailWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Email em;
         try {
-            if (person.getEmail().isPrivate()) {
+            if (person.getEmail().getIsPrivate()) {
                 person.getEmail().setPrivate(false);
                 em = new Email(person.getEmail().toString());
                 person.getEmail().setPrivate(true);
@@ -293,7 +293,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Address createAddressWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Address a;
         try {
-            if (person.getAddress().isPrivate()) {
+            if (person.getAddress().getIsPrivate()) {
                 person.getAddress().setPrivate(false);
                 a = new Address(person.getAddress().toString());
                 person.getAddress().setPrivate(true);
@@ -317,7 +317,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Remark createRemarkWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
         Remark r;
         try {
-            if (person.getRemark().isPrivate()) {
+            if (person.getRemark().getIsPrivate()) {
                 person.getRemark().setPrivate(false);
                 r = new Remark(person.getRemark().toString());
                 person.getRemark().setPrivate(true);
@@ -333,8 +333,115 @@ public class ChangePrivacyCommand extends UndoableCommand {
         return r;
     }
 
+    public Index getIndex() {
+        return index;
+    }
+
+    public PersonPrivacySettings getPps() {
+        return pps;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ChangePrivacyCommand)) {
+            return false;
+        }
+
+        // state check
+        ChangePrivacyCommand c = (ChangePrivacyCommand) other;
+        return index.equals(c.index)
+                && pps.equals(c.pps);
+    }
+
+    /**
+     * Stores the privacy settings for each field of a person.
+     */
+    public static class PersonPrivacySettings {
+        private Boolean nameIsPrivate;
+        private Boolean phoneIsPrivate;
+        private Boolean emailIsPrivate;
+        private Boolean addressIsPrivate;
+        private Boolean remarkIsPrivate;
+        private Boolean avatarIsPrivate;
+
+        public PersonPrivacySettings() {}
+
+        public PersonPrivacySettings(PersonPrivacySettings toCopy) {
+            this.nameIsPrivate = toCopy.nameIsPrivate;
+            this.phoneIsPrivate = toCopy.phoneIsPrivate;
+            this.emailIsPrivate = toCopy.emailIsPrivate;
+            this.addressIsPrivate = toCopy.addressIsPrivate;
+            this.remarkIsPrivate = toCopy.remarkIsPrivate;
+            this.avatarIsPrivate = toCopy.avatarIsPrivate;
+        }
+
+        /**
+         * Returns true if at least one field is not null.
+         */
+        public boolean isAnyFieldNonNull() {
+            return CollectionUtil.isAnyNonNull(this.nameIsPrivate, this.phoneIsPrivate,
+                    this.emailIsPrivate, this.addressIsPrivate, this.remarkIsPrivate, this.avatarIsPrivate);
+        }
+
+        /**
+         * Returns the value of nameIsPrivate
+         * @return the value of nameIsPrivate
+         */
+        public Boolean getNameIsPrivate() {
+            return nameIsPrivate;
+        }
+
+        public void setNameIsPrivate(boolean nameIsPrivate) {
+            requireNonNull(nameIsPrivate);
+            this.nameIsPrivate = nameIsPrivate;
+        }
+
+        /**
+         * Returns the value of phoneIsPrivate
+         * @return the value of phoneIsPrivate
+         */
+        public Boolean getPhoneIsPrivate() {
+            return phoneIsPrivate;
+        }
+
+        public void setPhoneIsPrivate(boolean phoneIsPrivate) {
+            requireNonNull(phoneIsPrivate);
+            this.phoneIsPrivate = phoneIsPrivate;
+        }
+
+        /**
+         * Returns the value of emailIsPrivate
+         * @return the value of emailIsPrivate
+         */
+        public Boolean getEmailIsPrivate() {
+            return emailIsPrivate;
+        }
+
+        public void setEmailIsPrivate(boolean emailIsPrivate) {
+            requireNonNull(emailIsPrivate);
+            this.emailIsPrivate = emailIsPrivate;
+        }
+
+        /**
+         * Returns the value of addressIsPrivate
+         * @return the value of addressIsPrivate
+         */
+        public Boolean getAddressIsPrivate() {
+            return addressIsPrivate;
+        }
+
+        public void setAddressIsPrivate(boolean addressIsPrivate) {
+            requireNonNull(addressIsPrivate);
+            this.addressIsPrivate = addressIsPrivate;
+        }
 ```
-###### \java\seedu\address\logic\commands\EditCommand.java
+###### \java\seedu\address\logic\commands\EditPersonCommand.java
 ``` java
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
@@ -376,7 +483,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
             throw new IllegalArgumentException();
         }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                          updateFavourite, updatedRemark, updatedAvatar, updatedTags);
+                updateFavourite, updatedRemark, updatedAvatar, updatedTags);
     }
 
     /**
@@ -387,7 +494,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
      */
     private static Name createUpdatedName(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Name updatedName;
-        if (!personToEdit.getName().isPrivate()) {
+        if (!personToEdit.getName().getIsPrivate()) {
             updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
             if (editPersonDescriptor.getName().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -407,7 +514,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
      */
     private static Phone createUpdatedPhone(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Phone updatedPhone;
-        if (!personToEdit.getPhone().isPrivate()) {
+        if (!personToEdit.getPhone().getIsPrivate()) {
             updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
             if (editPersonDescriptor.getPhone().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -427,7 +534,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
      */
     private static Email createUpdatedEmail(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Email updatedEmail;
-        if (!personToEdit.getEmail().isPrivate()) {
+        if (!personToEdit.getEmail().getIsPrivate()) {
             updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
             if (editPersonDescriptor.getEmail().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -448,7 +555,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
     private static Address createUpdatedAddress(ReadOnlyPerson personToEdit,
                                                 EditPersonDescriptor editPersonDescriptor) {
         Address updatedAddress;
-        if (!personToEdit.getAddress().isPrivate()) {
+        if (!personToEdit.getAddress().getIsPrivate()) {
             updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
             if (editPersonDescriptor.getAddress().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -468,7 +575,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
      */
     private static Remark createUpdatedRemark(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         Remark updatedRemark;
-        if (!personToEdit.getRemark().isPrivate()) {
+        if (!personToEdit.getRemark().getIsPrivate()) {
             updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
             if (editPersonDescriptor.getRemark().isPresent()) {
                 areFieldsAllPrivate = false;
@@ -487,14 +594,9 @@ public class ChangePrivacyCommand extends UndoableCommand {
      * depending on privacy and the input
      */
     private static Avatar createUpdatedAvatar(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        Avatar updatedAvatar;
-        if (!personToEdit.getAvatar().isPrivate()) {
-            updatedAvatar = editPersonDescriptor.getAvatar().orElse(personToEdit.getAvatar());
-            if (editPersonDescriptor.getAvatar().isPresent()) {
-                areFieldsAllPrivate = false;
-            }
-        } else {
-            updatedAvatar = personToEdit.getAvatar();
+        Avatar updatedAvatar = editPersonDescriptor.getAvatar().orElse(personToEdit.getAvatar());
+        if (editPersonDescriptor.getAvatar().isPresent()) {
+            areFieldsAllPrivate = false;
         }
         return updatedAvatar;
     }
@@ -526,35 +628,6 @@ public class ChangePrivacyCommand extends UndoableCommand {
             areFieldsAllPrivate = false;
         }
         return updateFavourite;
-    }
-
-    /**
-     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
-     * edited with {@code editTaskDescriptor}.
-     */
-    private static Task createEditedTask(ReadOnlyTask taskToEdit,
-                                             EditTaskDescriptor editTaskDescriptor) {
-        assert taskToEdit != null;
-
-        TaskName updatedTaskName;
-        Description updatedDescription;
-        Deadline updatedDeadline;
-        Priority updatedPriority;
-        Assignees assignees;
-        Boolean updatedState;
-        TaskAddress updatedTaskAddress;
-
-        updatedTaskName = editTaskDescriptor.getTaskName().orElse(taskToEdit.getTaskName());
-        updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
-        updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
-        updatedPriority = editTaskDescriptor.getPriority().orElse(taskToEdit.getPriority());
-        // You cannot edit assignees or state using edit command
-        assignees = taskToEdit.getAssignees();
-        updatedState = taskToEdit.getCompleteState();
-        updatedTaskAddress = editTaskDescriptor.getTaskAddress().orElse(taskToEdit.getTaskAddress());
-
-        return new Task(updatedTaskName, updatedDescription, updatedDeadline, updatedPriority, assignees, updatedState,
-                updatedTaskAddress);
     }
 
 ```
@@ -599,7 +672,7 @@ public class LocateCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().isPrivate()) {
+        if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().getIsPrivate()) {
             throw new CommandException(String.format(MESSAGE_PRIVATE_ADDRESS_FAILURE, targetIndex.getOneBased()));
         }
         EventsCenter.getInstance().post(new BrowserPanelLocateEvent(
@@ -698,7 +771,7 @@ public class NavigateCommand extends Command {
         } else {
             if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().toString().equals("")) {
                 throw new CommandException(String.format(MESSAGE_PERSON_HAS_NO_ADDRESS_ERROR, index.getOneBased()));
-            } else if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().isPrivate()) {
+            } else if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().getIsPrivate()) {
                 throw new IllegalArgumentException(MESSAGE_PRIVATE_PERSON_ADDRESS_ERROR);
             } else {
                 return new Location(model.getFilteredPersonList().get(index.getZeroBased())
@@ -862,6 +935,81 @@ public class OpenCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\PrivacyLevelCommand.java
+``` java
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ShowAllPrivacyLevelPredicate;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+/**
+ * Handles the changing of Privacy Levels in the address book
+ */
+public class PrivacyLevelCommand extends Command {
+
+    public static final String COMMAND_WORD = "privacylevel";
+    public static final String COMMAND_ALIAS = "pl";
+
+    public static final String CHANGE_PRIVACY_LEVEL_SUCCESS = "Successfully change privacy level to %1$s.";
+    public static final String WRONG_PRIVACY_LEVEL_MESSAGE = "Privacy Level can only be 1, 2 or 3";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    public static final int MIN_PRIVACY_LEVEL = 1;
+    public static final int MAX_PRIVACY_LEVEL = 3;
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Changes the privacy level of the address book. Level 1 shows all data, level 2 hides private fields"
+            + " and level 3 hides persons with at least 1 private field.\n"
+            + "Parameters: LEVEL (must be 1, 2 or 3)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    private final int level;
+
+    public PrivacyLevelCommand(int level) {
+        this.level = level;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (level < MIN_PRIVACY_LEVEL || level > MAX_PRIVACY_LEVEL) {
+            throw new CommandException(WRONG_PRIVACY_LEVEL_MESSAGE);
+        }
+        model.setPrivacyLevel(level);
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            ReadOnlyPerson toReplace = model.getPersonAtIndexFromAddressBook(i);
+            Person newPerson = new Person(toReplace);
+            newPerson.setPrivacyLevel(level);
+            try {
+                model.updatePerson(toReplace, newPerson);
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException e) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        }
+        if (level == 3) {
+            model.updateFilteredPersonList(new ShowAllPrivacyLevelPredicate());
+        } else {
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        }
+        return new CommandResult(String.format(CHANGE_PRIVACY_LEVEL_SUCCESS, Integer.toString(level)));
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PrivacyLevelCommand // instanceof handles nulls
+                && this.level == ((PrivacyLevelCommand) other).level); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\SaveAsCommand.java
 ``` java
 
@@ -885,12 +1033,47 @@ public class SaveAsCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddPersonCommandParser.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK_PRIVATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_PRIVATE;
+
+import java.util.Set;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddPersonCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
+
+/**
+ * Parses input arguments and creates a new ReadOnlyPerson object in the context of AddPersonCommand.
+ */
+public class AddPersonCommandParser extends AddCommandParser {
     /**
      * Constructs a ReadOnlyPerson from the arguments provided.
      */
-    private static ReadOnlyPerson constructPerson(String args) throws ParseException {
+    public static ReadOnlyPerson constructPerson(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_REMARK,
                         PREFIX_AVATAR, PREFIX_TAG, PREFIX_NAME_PRIVATE, PREFIX_PHONE_PRIVATE, PREFIX_EMAIL_PRIVATE,
@@ -898,7 +1081,7 @@ public class SaveAsCommand extends Command {
 
         if (!(arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || (arePrefixesPresent(argMultimap, PREFIX_NAME_PRIVATE)))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -909,51 +1092,17 @@ public class SaveAsCommand extends Command {
             Remark remark;
             Avatar avatar;
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
-                name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            } else {
-                name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME_PRIVATE), true).get();
-            }
+            name = makeName(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_PHONE))) {
-                phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_PHONE_PRIVATE)) {
-                phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE_PRIVATE), true).get();
-            } else {
-                phone = new Phone(null);
-            }
+            phone = makePhone(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_EMAIL))) {
-                email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_EMAIL_PRIVATE)) {
-                email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL_PRIVATE), true).get();
-            } else {
-                email = new Email(null);
-            }
+            email = makeEmail(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_ADDRESS))) {
-                address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_ADDRESS_PRIVATE)) {
-                address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS_PRIVATE), true).get();
-            } else {
-                address = new Address(null);
-            }
+            address = mmakeAddress(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
-                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_AVATAR_PRIVATE)) {
-                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR_PRIVATE), true).get();
-            } else {
-                avatar = new Avatar(null);
-            }
+            avatar = makeAvatar(argMultimap);
 
-            if ((arePrefixesPresent(argMultimap, PREFIX_REMARK))) {
-                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
-            } else if (arePrefixesPresent(argMultimap, PREFIX_REMARK_PRIVATE)) {
-                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK_PRIVATE), true).get();
-            } else {
-                remark = new Remark(null);
-            }
+            remark = makeRemark(argMultimap);
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyPerson person = new Person(name, phone, email, address, false, remark, avatar, tagList);
@@ -962,6 +1111,93 @@ public class SaveAsCommand extends Command {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
+
+    /**
+     * Creates a Name based on the input arguments
+     */
+    private static Name makeName(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Name name;
+        if ((arePrefixesPresent(argMultimap, PREFIX_NAME))) {
+            name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+        } else {
+            name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME_PRIVATE), true).get();
+        }
+        return name;
+    }
+
+    /**
+     * Creates a Phone based on the input arguments
+     */
+    private static Phone makePhone(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Phone phone;
+        if ((arePrefixesPresent(argMultimap, PREFIX_PHONE))) {
+            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_PHONE_PRIVATE)) {
+            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE_PRIVATE), true).get();
+        } else {
+            phone = new Phone(null);
+        }
+        return phone;
+    }
+
+    /**
+     * Creates an Email based on the input arguments
+     */
+    private static Email makeEmail(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Email email;
+        if ((arePrefixesPresent(argMultimap, PREFIX_EMAIL))) {
+            email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_EMAIL_PRIVATE)) {
+            email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL_PRIVATE), true).get();
+        } else {
+            email = new Email(null);
+        }
+        return email;
+    }
+
+    /**
+     * Creates an Address based on the input arguments
+     */
+    private static Address mmakeAddress(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Address address;
+        if ((arePrefixesPresent(argMultimap, PREFIX_ADDRESS))) {
+            address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_ADDRESS_PRIVATE)) {
+            address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS_PRIVATE), true).get();
+        } else {
+            address = new Address(null);
+        }
+        return address;
+    }
+
+    /**
+     * Creates an Avatar based on the input arguments
+     */
+    private static Avatar makeAvatar(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Avatar avatar;
+        if ((arePrefixesPresent(argMultimap, PREFIX_AVATAR))) {
+            avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+        } else {
+            avatar = new Avatar(null);
+        }
+        return avatar;
+    }
+
+    /**
+     * Creates a Remark based on the input arguments
+     */
+    private static Remark makeRemark(ArgumentMultimap argMultimap) throws IllegalValueException {
+        Remark remark;
+        if ((arePrefixesPresent(argMultimap, PREFIX_REMARK))) {
+            remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+        } else if (arePrefixesPresent(argMultimap, PREFIX_REMARK_PRIVATE)) {
+            remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK_PRIVATE), true).get();
+        } else {
+            remark = new Remark(null);
+        }
+        return remark;
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\ChangePrivacyCommandParser.java
 ``` java
@@ -984,8 +1220,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ChangePrivacyCommandParser implements Parser<ChangePrivacyCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the EditCommand
-     * and returns an EditCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the ChangePrivacyCommand
+     * and returns an ChangePrivacyCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public ChangePrivacyCommand parse(String args) throws ParseException {
@@ -1125,13 +1361,13 @@ import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new SelectCommand object
+ * Parses input arguments and creates a new LocateCommand object
  */
 public class LocateCommandParser implements Parser<LocateCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the SelectCommand
-     * and returns an SelectCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the LocateCommand
+     * and returns an LocateCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public LocateCommand parse(String args) throws ParseException {
@@ -1164,7 +1400,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Location;
 
 /**
- * Parses input arguments and creates a new SelectCommand object
+ * Parses input arguments and creates a new NavigateCommand object
  */
 public class NavigateCommandParser implements Parser<NavigateCommand> {
 
@@ -1173,8 +1409,8 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
     private Index fromIndex = null;
     private Index toIndex = null;
     /**
-     * Parses the given {@code String} of arguments in the context of the SelectCommand
-     * and returns an SelectCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the NavigateCommand
+     * and returns an NavigateCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public NavigateCommand parse(String args) throws ParseException {
@@ -1293,7 +1529,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 ``` java
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Name to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Name to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Name> parseName(Optional<String> name, boolean isPrivate) throws IllegalValueException {
@@ -1306,7 +1542,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 ``` java
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Phone to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Phone to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone, boolean isPrivate) throws IllegalValueException {
@@ -1319,7 +1555,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 ``` java
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Address to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address, boolean isPrivate)
@@ -1338,17 +1574,6 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Avatar> parseAvatar(Optional<String> avatar, boolean isPrivate)
-            throws IllegalValueException {
-        requireNonNull(avatar);
-        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), isPrivate)) : Optional.empty();
-    }
-
-    /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -1362,7 +1587,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Remark to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Remark to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Remark> parseRemark(Optional<String> remark, boolean isPrivate)
@@ -1375,7 +1600,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 ``` java
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Email to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Email to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email, boolean isPrivate) throws IllegalValueException {
@@ -1400,6 +1625,34 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
     public static Optional<Location> parseLocationFromAddress(Optional<String> location) throws IllegalValueException {
         requireNonNull(location);
         return location.isPresent() ? Optional.of(new Location(location.get())) : Optional.empty();
+    }
+}
+```
+###### \java\seedu\address\logic\parser\PrivacyLevelCommandParser.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.PrivacyLevelCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new PrivacyLevelCommand object
+ */
+public class PrivacyLevelCommandParser implements Parser<PrivacyLevelCommand>{
+    /**
+     * Parses the given {@code String} of arguments in the context of the PrivacyLevelCommand
+     * and returns an PrivacyLevelCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public PrivacyLevelCommand parse(String args) throws ParseException {
+        try {
+            int level = ParserUtil.parseIndex(args).getOneBased();
+            return new PrivacyLevelCommand(level);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrivacyLevelCommand.MESSAGE_USAGE));
+        }
     }
 }
 ```
@@ -1438,6 +1691,13 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
         launch(args);
     }
 }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    public ReadOnlyPerson getPersonAtIndexFromPersonList(int index) {
+        return persons.asObservableList().get(index);
+    }
+
 ```
 ###### \java\seedu\address\model\Location.java
 ``` java
@@ -1500,6 +1760,64 @@ public class Location {
     }
 }
 ```
+###### \java\seedu\address\model\Model.java
+``` java
+    void setPrivacyLevel(int level);
+
+    int getPrivacyLevel();
+
+    ReadOnlyPerson getPersonAtIndexFromAddressBook(int index);
+}
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        if (privacyLevel == 3) {
+            if (predicate instanceof NameContainsKeywordsPredicate) {
+                this.updateFilteredPersonList(new NameContainsKeywordsPrivacyLevelPredicate(((
+                        NameContainsKeywordsPredicate) predicate).getKeywords()));
+                System.out.println("!");
+            } else if (predicate instanceof NameContainsTagsPredicate) {
+                this.updateFilteredPersonList(new NameContainsTagsPrivacyLevelPredicate(((
+                        NameContainsTagsPredicate) predicate).getTags()));
+                System.out.println("!!");
+            } else if (predicate instanceof NameContainsFavouritePredicate) {
+                this.updateFilteredPersonList(new NameContainsFavouritePrivacyLevelPredicate());
+            } else if (predicate == PREDICATE_SHOW_ALL_PERSONS) {
+                this.updateFilteredPersonList(new ShowAllPrivacyLevelPredicate());
+            } else {
+                filteredPersons.setPredicate(predicate);
+            }
+        } else {
+            filteredPersons.setPredicate(predicate);
+        }
+    }
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void setPrivacyLevel(int level) {
+        if (level < 1 || level > 3) {
+            throw new IllegalArgumentException("Privacy Level can only be 0, 1 or 2");
+        } else {
+            this.privacyLevel = level;
+        }
+    }
+
+    @Override
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+
+    @Override
+    public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
+        return addressBook.getPersonAtIndexFromPersonList(index);
+    }
+}
+```
 ###### \java\seedu\address\model\person\Address.java
 ``` java
     public Address(String address, boolean isPrivate) throws IllegalValueException {
@@ -1512,23 +1830,42 @@ public class Location {
 ``` java
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Address>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Address>";
+            }
+            return value;
         }
-        return value;
     }
 
 ```
 ###### \java\seedu\address\model\person\Address.java
 ``` java
-    public boolean isPrivate() {
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
 }
+```
+###### \java\seedu\address\model\person\Avatar.java
+``` java
+    @Override
+    public String toString() {
+        return value;
+    }
 ```
 ###### \java\seedu\address\model\person\Email.java
 ``` java
@@ -1542,21 +1879,33 @@ public class Location {
 ``` java
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Email>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Email>";
+            }
+            return value;
         }
-        return value;
     }
 
 ```
 ###### \java\seedu\address\model\person\Email.java
 ``` java
-    public boolean isPrivate() {
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }
 ```
@@ -1572,21 +1921,133 @@ public class Location {
 ``` java
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Name>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Name>";
+            }
+            return value;
         }
-        return fullName;
     }
 
 ```
 ###### \java\seedu\address\model\person\Name.java
 ``` java
-    public boolean isPrivate() {
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+}
+```
+###### \java\seedu\address\model\person\NameContainsFavouritePrivacyLevelPredicate.java
+``` java
+import java.util.function.Predicate;
+
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} are favoured and has no private fields
+ */
+public class NameContainsFavouritePrivacyLevelPredicate implements Predicate<ReadOnlyPerson> {
+
+    public NameContainsFavouritePrivacyLevelPredicate() {
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return (person.getFavourite() && !person.hasPrivateField());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof NameContainsFavouritePrivacyLevelPredicate); // instanceof handles nulls
+    }
+}
+```
+###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
+``` java
+    public List<String> getKeywords() {
+        return keywords;
+    }
+```
+###### \java\seedu\address\model\person\NameContainsKeywordsPrivacyLevelPredicate.java
+``` java
+import java.util.List;
+import java.util.function.Predicate;
+
+import seedu.address.commons.util.StringUtil;
+
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given
+ * and has no private fields
+ */
+public class NameContainsKeywordsPrivacyLevelPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    public NameContainsKeywordsPrivacyLevelPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        System.out.println(person.getName().toString());
+        System.out.println((keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().value, keyword))
+                && !person.hasPrivateField()));
+        return (keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().value, keyword))
+                        && !person.hasPrivateField());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof NameContainsKeywordsPrivacyLevelPredicate // instanceof handles nulls
+                && this.keywords.equals(((NameContainsKeywordsPrivacyLevelPredicate) other).keywords)); //state check
+    }
+
+}
+```
+###### \java\seedu\address\model\person\NameContainsTagsPredicate.java
+``` java
+    public List<String> getTags() {
+        return tags;
+    }
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    @Override
+    public void setPrivacyLevel(int level) {
+        this.getName().setPrivacyLevel(level);
+        this.getPhone().setPrivacyLevel(level);
+        this.getEmail().setPrivacyLevel(level);
+        this.getAddress().setPrivacyLevel(level);
+        this.getRemark().setPrivacyLevel(level);
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+
+    /**
+     * Returns true if the Person has at least one private field and false otherwise
+     */
+    @Override
+    public boolean hasPrivateField() {
+        return (this.getName().getIsPrivate() || this.getPhone().getIsPrivate() || this.getAddress().getIsPrivate()
+                || this.getEmail().getIsPrivate() || this.getRemark().getIsPrivate());
     }
 }
 ```
@@ -1602,22 +2063,99 @@ public class Location {
 ``` java
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Phone>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Phone>";
+            }
+            return value;
         }
-        return value;
     }
 
 ```
 ###### \java\seedu\address\model\person\Phone.java
 ``` java
-    public boolean isPrivate() {
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+}
+```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+    void setPrivacyLevel(int level);
+    int getPrivacyLevel();
+    boolean hasPrivateField();
+```
+###### \java\seedu\address\model\person\Remark.java
+``` java
+    @Override
+    public String toString() {
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Remark>";
+            }
+            return value;
+        }
+    }
+```
+###### \java\seedu\address\model\person\Remark.java
+``` java
+    public boolean getIsPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
+}
+```
+###### \java\seedu\address\model\person\ShowAllPrivacyLevelPredicate.java
+``` java
+
+import java.util.function.Predicate;
+
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} are favoured after taking into account privacy level.
+ */
+public class ShowAllPrivacyLevelPredicate implements Predicate<ReadOnlyPerson> {
+
+    public ShowAllPrivacyLevelPredicate() {
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return !person.hasPrivateField();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ShowAllPrivacyLevelPredicate); // instanceof handles nulls
+    }
+
 }
 ```
 ###### \java\seedu\address\model\task\TaskAddress.java
@@ -1689,7 +2227,7 @@ public class TaskAddress {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().fullName;
+        name = source.getName().value;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
@@ -1697,12 +2235,11 @@ public class TaskAddress {
         remark = source.getRemark().value;
         avatar = source.getAvatar().value;
 
-        nameIsPrivate = source.getName().isPrivate();
-        phoneIsPrivate = source.getPhone().isPrivate();
-        emailIsPrivate = source.getEmail().isPrivate();
-        addressIsPrivate = source.getAddress().isPrivate();
-        remarkIsPrivate = source.getRemark().isPrivate();
-        avatarIsPrivate = source.getAvatar().isPrivate();
+        nameIsPrivate = source.getName().getIsPrivate();
+        phoneIsPrivate = source.getPhone().getIsPrivate();
+        emailIsPrivate = source.getEmail().getIsPrivate();
+        addressIsPrivate = source.getAddress().getIsPrivate();
+        remarkIsPrivate = source.getRemark().getIsPrivate();
 
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -1735,16 +2272,13 @@ public class TaskAddress {
         if (remarkIsPrivate == null) {
             remarkIsPrivate = false;
         }
-        if (avatarIsPrivate == null) {
-            avatarIsPrivate = false;
-        }
         final Name name = new Name(this.name, this.nameIsPrivate);
         final Phone phone = new Phone(this.phone, this.phoneIsPrivate);
         final Email email = new Email(this.email, this.emailIsPrivate);
         final Address address = new Address(this.address, this.addressIsPrivate);
         final Boolean favourite = new Boolean(this.favourite);
         final Remark remark = new Remark(this.remark, this.remarkIsPrivate);
-        final Avatar avatar = new Avatar(this.avatar, this.avatarIsPrivate);
+        final Avatar avatar = new Avatar(this.avatar);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, favourite, remark, avatar, tags);
     }
@@ -1758,7 +2292,7 @@ public class TaskAddress {
      * @param person The person's address we want to search for
      */
     private void loadMapsPage(ReadOnlyPerson person) {
-        if (person.getAddress().isPrivate()) {
+        if (person.getAddress().getIsPrivate()) {
             raise(new NewResultAvailableEvent(PRIVATE_ADDRESS_CANNOT_SEARCH));
         } else {
             loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")

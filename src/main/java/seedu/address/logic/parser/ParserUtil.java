@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Avatar;
@@ -64,7 +66,7 @@ public class ParserUtil {
     //@@author jeffreygohkw
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Name to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Name to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Name> parseName(Optional<String> name, boolean isPrivate) throws IllegalValueException {
@@ -85,7 +87,7 @@ public class ParserUtil {
     //@@author jeffreygohkw
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Phone to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Phone to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone, boolean isPrivate) throws IllegalValueException {
@@ -106,7 +108,7 @@ public class ParserUtil {
     //@@author jeffreygohkw
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Address to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address, boolean isPrivate)
@@ -125,17 +127,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Address to be private if true.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Avatar> parseAvatar(Optional<String> avatar, boolean isPrivate)
-            throws IllegalValueException {
-        requireNonNull(avatar);
-        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), isPrivate)) : Optional.empty();
-    }
-
-    /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -147,7 +138,7 @@ public class ParserUtil {
     //@@author jeffreygohkw
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Remark to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Remark to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Remark> parseRemark(Optional<String> remark, boolean isPrivate)
@@ -168,7 +159,7 @@ public class ParserUtil {
     //@@author jeffreygohkw
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * Takes in a (@code boolean isPrivate) which will set the Email to be private if true.
+     * Takes in a (@code boolean getIsPrivate) which will set the Email to be private if true.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email, boolean isPrivate) throws IllegalValueException {
@@ -237,5 +228,28 @@ public class ParserUtil {
     public static Optional<Location> parseLocationFromAddress(Optional<String> location) throws IllegalValueException {
         requireNonNull(location);
         return location.isPresent() ? Optional.of(new Location(location.get())) : Optional.empty();
+    }
+
+    //@@author Esilocke
+    /**
+     *   Parses the given {@code String} and returns an ArrayList of Indexes that correspond to
+     *   the value in the String.
+     *   @throws ParseException if any of the values in the String cannot be converted into an {@code Index}
+     */
+    public static ArrayList<Index> parseIndexes(String args) throws ParseException {
+        String[] splitted = args.split(" ");
+        ArrayList<Index> targetsToAdd = new ArrayList<>();
+        int parsedInt;
+        try {
+            for (String s : splitted) {
+                if (!s.isEmpty()) {
+                    parsedInt = Integer.parseInt(s);
+                    targetsToAdd.add(Index.fromOneBased(parsedInt));
+                }
+            }
+        } catch (NumberFormatException nfe) {
+            throw new ParseException(MESSAGE_INVALID_INDEX);
+        }
+        return targetsToAdd;
     }
 }

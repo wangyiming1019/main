@@ -7,11 +7,12 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_PENCIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.EditCommand.EditTaskDescriptor;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 //@@author Esilocke
@@ -49,6 +50,10 @@ public class EditTaskDescriptorTest {
 
         // different priority -> returns false
         editedPencil = new EditTaskDescriptorBuilder(DESC_PENCIL).withPriority(VALID_PRIORITY_PAPER).build();
+        assertFalse(DESC_PENCIL.equals(editedPencil));
+
+        // different task address -> returns false
+        editedPencil = new EditTaskDescriptorBuilder(DESC_PENCIL).withTaskAddress(VALID_TASK_ADDRESS_PAPER).build();
         assertFalse(DESC_PENCIL.equals(editedPencil));
     }
 }

@@ -148,7 +148,7 @@ public class ChangePrivacyCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditCommandTest.java
+###### \java\seedu\address\logic\commands\EditPersonCommandTest.java
 ``` java
     @Test
     public void execute_privateFields_success() throws Exception {
@@ -170,15 +170,15 @@ public class ChangePrivacyCommandTest {
         personInFilteredList.getRemark().setPrivate(true);
         Remark originalRemark = personInFilteredList.getRemark();
 
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
+        EditPersonCommand editPersonCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
+        String expectedMessage = String.format(EditPersonCommand.MESSAGE_ALL_FIELDS_PRIVATE);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), personInFilteredList);
 
-        assertCommandFailure(editCommand, model, expectedMessage);
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
 
         assertEquals(personInFilteredList.getName(), originalName);
         assertEquals(personInFilteredList.getPhone(), originalPhone);
@@ -195,11 +195,11 @@ public class ChangePrivacyCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_failure() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
+        EditPersonCommand editPersonCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_ALL_FIELDS_PRIVATE);
+        String expectedMessage = String.format(EditPersonCommand.MESSAGE_ALL_FIELDS_PRIVATE);
 
-        assertCommandFailure(editCommand, model, expectedMessage);
+        assertCommandFailure(editPersonCommand, model, expectedMessage);
     }
 
 ```
@@ -507,6 +507,124 @@ public class OpenCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\PrivacyLevelCommandTest.java
+``` java
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code PrivacyLevelCommand}.
+ */
+public class PrivacyLevelCommandTest {
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_validIndex_success() {
+        //valid levels
+        PrivacyLevelCommand onePlc = prepareCommand( 1);
+        PrivacyLevelCommand twoPlc = prepareCommand( 2);
+        PrivacyLevelCommand threePlc = prepareCommand( 3);
+
+        assertExecutionSuccess(onePlc);
+        assertExecutionSuccess(twoPlc);
+        assertExecutionSuccess(threePlc);
+    }
+
+    @Test
+    public void execute_invalidIndex_failure() {
+        //Negative level
+        PrivacyLevelCommand negativePlc = prepareCommand( -1);
+        //Zero level
+        PrivacyLevelCommand zeroPlc = prepareCommand( 0);
+        //Level greater than the maximum level allowed
+        PrivacyLevelCommand tooBigPlc = prepareCommand( 5);
+
+        assertExecutionFailure(negativePlc, PrivacyLevelCommand.WRONG_PRIVACY_LEVEL_MESSAGE);
+        assertExecutionFailure(zeroPlc, PrivacyLevelCommand.WRONG_PRIVACY_LEVEL_MESSAGE);
+        assertExecutionFailure(tooBigPlc, PrivacyLevelCommand.WRONG_PRIVACY_LEVEL_MESSAGE);
+    }
+
+    /**
+     * Executes a {@code PrivacyLevelCommand} and checks that the privacy level of the model and each person has been
+     * changed to that of the level as specified in the input (@code PrivacyLevelCommand)
+     */
+    private void assertExecutionSuccess(PrivacyLevelCommand plc) {
+        CommandResult commandResult;
+        try {
+            commandResult = plc.execute();
+            assertEquals(String.format(PrivacyLevelCommand.CHANGE_PRIVACY_LEVEL_SUCCESS, plc.getLevel()),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+
+        //Check the model's privacy level
+        assertTrue(model.getPrivacyLevel() == plc.getLevel());
+
+        //Iterate through the list of persons in the model
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            //Check the person's Privacy Level
+            ReadOnlyPerson p = model.getAddressBook().getPersonList().get(i);
+
+            //Check Privacy Level of all fields of each person that can be private
+            assertTrue(p.getName().getPrivacyLevel() == plc.getLevel());
+            assertTrue(p.getPhone().getPrivacyLevel() == plc.getLevel());
+            assertTrue(p.getEmail().getPrivacyLevel() == plc.getLevel());
+            assertTrue(p.getAddress().getPrivacyLevel() == plc.getLevel());
+            assertTrue(p.getRemark().getPrivacyLevel() == plc.getLevel());
+            assertTrue(p.getAvatar().getPrivacyLevel() == plc.getLevel());
+        }
+    }
+
+    /**
+     * Executes a {@code PrivacyLevelCommand} and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}
+     */
+    private void assertExecutionFailure(PrivacyLevelCommand plc, String expectedMessage) {
+        try {
+            plc.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            Assert.assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code LocateCommand} with parameters {@code index}.
+     */
+    private PrivacyLevelCommand prepareCommand(int level) {
+        PrivacyLevelCommand privacyLevelCommand = new PrivacyLevelCommand(level);
+        privacyLevelCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return privacyLevelCommand;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\SaveAsCommandTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
@@ -541,10 +659,10 @@ public class SaveAsCommandTest {
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
                 ChangePrivacyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
-                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
-                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().getIsPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().getIsPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().getIsPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -557,10 +675,10 @@ public class SaveAsCommandTest {
 
         ChangePrivacyCommand command = (ChangePrivacyCommand) parser.parseCommand(
                 ChangePrivacyCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + PREFIX_NAME + String.valueOf(person.getName().isPrivate())
-                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().isPrivate())
-                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().isPrivate())
-                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().isPrivate()));
+                        + " " + PREFIX_NAME + String.valueOf(person.getName().getIsPrivate())
+                        + " " + PREFIX_PHONE + String.valueOf(person.getPhone().getIsPrivate())
+                        + " " + PREFIX_EMAIL + String.valueOf(person.getEmail().getIsPrivate())
+                        + " " + PREFIX_ADDRESS + String.valueOf(person.getAddress().getIsPrivate()));
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
@@ -824,8 +942,8 @@ import org.junit.Test;
 import seedu.address.logic.commands.LocateCommand;
 
 /**
- * Test scope: similar to {@code SelectCommandParserTest}.
- * @see SelectCommandParserTest
+ * Test scope: similar to {@code SelectPersonCommandParserTest}.
+ * @see SelectPersonCommandParserTest
  */
 public class LocateCommandParserTest {
 
@@ -839,6 +957,41 @@ public class LocateCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LocateCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\PrivacyLevelCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.PrivacyLevelCommand;
+
+public class PrivacyLevelCommandParserTest {
+
+    private PrivacyLevelCommandParser parser = new PrivacyLevelCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, "1", new PrivacyLevelCommand(INDEX_FIRST_PERSON.getOneBased()));
+        assertParseSuccess(parser, "2", new PrivacyLevelCommand(INDEX_SECOND_PERSON.getOneBased()));
+        assertParseSuccess(parser, "3", new PrivacyLevelCommand(INDEX_THIRD_PERSON.getOneBased()));
+
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                PrivacyLevelCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "???", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                PrivacyLevelCommand.MESSAGE_USAGE));
+
     }
 }
 ```
@@ -900,7 +1053,7 @@ public class SortCommandParserTest {
     @Test
     public void privateAddressIsHidden_success() throws IllegalValueException {
         Address a = new Address("Any Address", true);
-        assertTrue(a.isPrivate());
+        assertTrue(a.getIsPrivate());
         assertEquals(a.toString(), "<Private Address>");
     }
 }
@@ -910,7 +1063,7 @@ public class SortCommandParserTest {
     @Test
     public void privateEmailIsHidden_success() throws IllegalValueException {
         Email e = new Email("AnyEmail@example.com", true);
-        assertTrue(e.isPrivate());
+        assertTrue(e.getIsPrivate());
         assertEquals(e.toString(), "<Private Email>");
     }
 }
@@ -920,7 +1073,7 @@ public class SortCommandParserTest {
     @Test
     public void privateNameIsHidden_success() throws IllegalValueException {
         Name n = new Name("Any Name", true);
-        assertTrue(n.isPrivate());
+        assertTrue(n.getIsPrivate());
         assertEquals(n.toString(), "<Private Name>");
     }
 }
@@ -930,7 +1083,7 @@ public class SortCommandParserTest {
     @Test
     public void privatePhoneIsHidden_success() throws IllegalValueException {
         Phone p = new Phone("999", true);
-        assertTrue(p.isPrivate());
+        assertTrue(p.getIsPrivate());
         assertEquals(p.toString(), "<Private Phone>");
     }
 }
@@ -959,11 +1112,11 @@ public class PersonPrivacySettingsBuilder {
      */
     public PersonPrivacySettingsBuilder(ReadOnlyPerson person) {
         pps = new PersonPrivacySettings();
-        pps.setNameIsPrivate(person.getName().isPrivate());
-        pps.setPhoneIsPrivate(person.getPhone().isPrivate());
-        pps.setEmailIsPrivate(person.getEmail().isPrivate());
-        pps.setAddressIsPrivate(person.getAddress().isPrivate());
-        pps.setRemarkIsPrivate(person.getRemark().isPrivate());
+        pps.setNameIsPrivate(person.getName().getIsPrivate());
+        pps.setPhoneIsPrivate(person.getPhone().getIsPrivate());
+        pps.setEmailIsPrivate(person.getEmail().getIsPrivate());
+        pps.setAddressIsPrivate(person.getAddress().getIsPrivate());
+        pps.setRemarkIsPrivate(person.getRemark().getIsPrivate());
     }
 
     /**

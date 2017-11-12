@@ -5,10 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//@@author charlesgoh
 /**
  * Sorts all persons in address book by any field. Sorting can be done in ascending or descending order
  */
-//@@author charlesgoh
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";

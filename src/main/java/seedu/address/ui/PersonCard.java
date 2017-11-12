@@ -6,6 +6,8 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -58,13 +60,14 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    private int fontSizeMultipler;
+    private int fontSizeMultiplier;
     public PersonCard(ReadOnlyPerson person, int displayedIndex, int fontSizeMultiplier) {
         super(FXML);
         this.person = person;
-        this.fontSizeMultipler = fontSizeMultiplier;
+        this.fontSizeMultiplier = fontSizeMultiplier;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initFavourite(person);
         bindListeners(person);
         updateAttributeSizes();
     }
@@ -83,7 +86,25 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavourite(person));
     }
+
+    //@@author wangyiming1019
+    /**
+     * display the heart for favourite person
+     */
+    private void initFavourite(ReadOnlyPerson person) {
+        boolean favouriteStatus = person.getFavourite();
+        Label favouriteLabel = new Label();
+        Image starFilled = new Image(getClass().getResource("/images/heart.png").toExternalForm());
+        if (favouriteStatus) {
+            favouriteLabel.setGraphic(new ImageView(starFilled));
+            favouriteLabel.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
+        }
+        cardPane.getChildren().add(favouriteLabel);
+    }
+    //@@author
+
     //@@author wangyiming1019
     /**
      * Locate hashed colour for tag. If not found, new colour is assigned to tag
@@ -118,8 +139,8 @@ public class PersonCard extends UiPart<Region> {
      * Set default size for all attributes
      */
     public void updateAttributeSizes() {
-        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
-        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultipler * FONT_SIZE_EXTENDER);
+        nameSize = DEFAULT_NAME_SIZE + (fontSizeMultiplier * FONT_SIZE_EXTENDER);
+        attributeSize = DEFAULT_ATTRIBUTE_SIZE + (fontSizeMultiplier * FONT_SIZE_EXTENDER);
 
         // Set styles using set name and attribute sizes
         name.setStyle("-fx-font-size: " + Integer.toString(nameSize));
@@ -174,12 +195,12 @@ public class PersonCard extends UiPart<Region> {
         return email;
     }
 
-    public int getFontSizeMultipler() {
-        return fontSizeMultipler;
+    public int getFontSizeMultiplier() {
+        return fontSizeMultiplier;
     }
 
-    public void setFontSizeMultipler(int fontSizeMultipler) {
-        this.fontSizeMultipler = fontSizeMultipler;
+    public void setFontSizeMultiplier(int fontSizeMultiplier) {
+        this.fontSizeMultiplier = fontSizeMultiplier;
     }
     //author
 }

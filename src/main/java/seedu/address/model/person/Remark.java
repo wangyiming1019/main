@@ -20,6 +20,7 @@ public class Remark {
 
     public final String value;
     private boolean isPrivate = false;
+    private int privacyLevel = 2;
 
     /**
      * Validates given remark.
@@ -49,13 +50,19 @@ public class Remark {
         return test.matches(REMARK_VALIDATION_REGEX) || test.equals(REMARK_PLACEHOLDER_VALUE);
     }
 
+    //@@author jeffreygohkw
     @Override
     public String toString() {
-        if (isPrivate) {
-            return "<Private Remark>";
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Remark>";
+            }
+            return value;
         }
-        return value;
     }
+    //@@author charlesgoh
 
     @Override
     public boolean equals(Object other) {
@@ -69,11 +76,20 @@ public class Remark {
         return value.hashCode();
     }
 
-    public boolean isPrivate() {
+    //@@author jeffreygohkw
+    public boolean getIsPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(boolean isPrivate) {
         this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
     }
 }
