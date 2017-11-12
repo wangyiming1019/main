@@ -579,13 +579,13 @@ image::BackupSequenceDiagram.png[width="800]
 
 **Aspect:** Implementation of `backup Command` +
 
-**Alternative 1 (current choice):** Implement backup command via Command Line Interface +
-**Pros:** Backing up data is easier and faster for users who are familiar with the commands. Less button clicks. +
-**Cons:** UI not as intuitive. Users who are not familiar with the application may not know about this feature +
+**Alternative 1 (current choice):** Use an event handler to initialize the backup process +
+**Pros:** Avoids coupling the logic to the storage unnecessarily. +
+**Cons:** May not be as intuitive for some developers in the beginning +
 
-**Alternative 2:** Implement backup command via GUI +
-**Pros:** More intuitive for all users since the options are all graphical +
-**Cons:** Hinders productivity. Excessive number of clicks to accomplish an essential task.
+**Alternative 2:** Access storage component directly instead of using event handlers +
+**Pros:** May be more intuitive as it is a direct approach +
+**Cons:** Violates the Law of Demeter.
 // end::backup[]
 
 // tag::password[]
@@ -598,9 +598,13 @@ Like most of the other commands, arguments are parsed through the `UnlockCommand
 which passes control over to the `UnlockCommand` and `LockCommand` class respectively.
 These `Command` classes will then call the Model to toggle the lock's state.
 
-The activity diagram below outlines the basic logic of the lock states concept:
+The activity diagram below outlines the basic logic of the lock states concept.:
 
 image::LockStatesActivityDiagram.png[width="800]
+
+From the activity diagram we can see that lock states are preserved in preferences.json
+after the application closes by passing the lock state into the `UserPrefs` class to be
+saved by the Storage component.
 
 [NOTE]
 The default state of the lock is set to False (i.e. locked) when the user first opens the
@@ -620,32 +624,56 @@ intuitive approach is to use event handlers +
 **Cons:** Will still have to access Model, which makes its advantage over direct calls next to none
 
 === ChangePassword Command
-//TODO: Finish lock, unlock and change password DG
-The backup command makes use of both the model manager and the storage manager. The `LogicManager` class was
-improved to support the accessing of storage value.
+The default password when users first open Address++ is `password`. The ChangePassword command
+sets a new password in the temporary User Preferences. When the application is closed, this
+information is passed to the Storage Component to be saved into the file `preferences.json`
 
-The backup command arguments are parsed through the `BackupCommandParser`, which passes control over to the
-`BackupCommand` class. The `BackupCommand` class will save the backup file to a user specified path.
+To illustrate this concept better, let us have a look at the `preferences.json` file:
+[source, json]
+{
+  "guiSettings" : {
+    "windowWidth" : 1080.0,
+    "windowHeight" : 720.0,
+    "windowCoordinates" : {
+      "x" : 0,
+      "y" : 22
+    }
+  },
+  "addressBookFilePath" : "data/addressbook.xml",
+  "addressBookName" : "My Address++",
+  "addressBookLockState" : false,
+  "addressBookEncryptedPassword" : "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+}
 
-Suppose a user enters a new command `backup filepath`. The backup file will be saved to a default location.
-The sequence diagram that illustrates this process is shown below:
-
-image::BackupSequenceDiagram.png[width="800]
+As shown in the cope snippet above, the password is stored as one of the entries in the JSON
+file.
 
 [NOTE]
-that the execution of the sort methods result in the actual person list being sorted.
+SHA256 encryption was used to calculate a hash for the password. This is to delay anyone snooping around the
+user's file directories.
+
+**Validation Checks**
+****
+1. Password Validation -> Is password correct?
+2. Password Confirmation -> Does the new password and confirmation password match?
+3. Password Uniqueness -> Is the new password different from the old password?
+****
+
+The activity diagram below outlines the process flow for the `ChangePasswordCommand`:
+
+image::ChangePasswordActivityDiagram.png[width="800]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `backup Command` +
+**Aspect:** On Demand Saving vs. Save On Exit +
 
-**Alternative 1 (current choice):** Implement backup command via Command Line Interface +
-**Pros:** Backing up data is easier and faster for users who are familiar with the commands. Less button clicks. +
-**Cons:** UI not as intuitive. Users who are not familiar with the application may not know about this feature +
+**Alternative 1 (current choice):** Save On Exit +
+**Pros:** Simplifies process flow as the command class no longer has to access both Model and Storage components +
+**Cons:** Any system/application crash may cause change password data to be lost +
 
-**Alternative 2:** Implement backup command via GUI +
-**Pros:** More intuitive for all users since the options are all graphical +
-**Cons:** Hinders productivity. Excessive number of clicks to accomplish an essential task.
+**Alternative 2:** On Demand Saving +
+**Pros:** Changes may persist even through system and application crashes +
+**Cons:** May slow down application, although not significantly. Complicates process flow.
 // end::password[]
 
 // tag::privacy[]

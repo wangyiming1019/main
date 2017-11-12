@@ -25,8 +25,8 @@ include::../UserGuide.adoc[tag=password]
 
 ==== Justification
 
-Many users have security related concerns. In order to prevent malicious access
-to users' Address++ application, the password protection suite of commands were
+Many users have security related concerns. In order to slow malicious users from causing
+damage to users' Address++ application, the password protection suite of commands were
 created.
 
 ==== Implementation
