@@ -38,6 +38,7 @@ import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.TagListCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.commands.UnlockCommand;
@@ -108,6 +109,10 @@ public class AddressBookParser {
         case PrivacyLevelCommand.COMMAND_WORD:
         case PrivacyLevelCommand.COMMAND_ALIAS:
             return new PrivacyLevelCommandParser().parse(arguments);
+
+        case ThemeCommand.COMMAND_WORD:
+        case ThemeCommand.COMMAND_ALIAS:
+            return new ThemeCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:

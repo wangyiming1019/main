@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyTask> filteredTasks;
     private final UserPrefs userPrefs;
     private int privacyLevel;
+    private String theme;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -69,6 +71,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredTasks = new FilteredList<>(this.addressBook.getTasksList());
+        this.theme = userPrefs.getTheme();
     }
 
     public ModelManager() {
@@ -414,4 +417,21 @@ public class ModelManager extends ComponentManager implements Model {
     public ReadOnlyPerson getPersonAtIndexFromAddressBook(int index) {
         return addressBook.getPersonAtIndexFromPersonList(index);
     }
+
+    @Override
+    public void setTheme(String theme) {
+        this.theme = theme;
+        userPrefs.setTheme(theme);
+    }
+
+    @Override
+    public String getTheme() {
+        return theme;
+    }
+
+    @Override
+    public HashMap<String, String> getStyleMap() {
+        return addressBook.getStyleMap();
+    }
+
 }

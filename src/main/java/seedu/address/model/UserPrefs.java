@@ -18,7 +18,9 @@ public class UserPrefs {
     private boolean addressBookLockState = false;
     private String addressBookEncryptedPassword = Hashing.sha256()
             .hashString("password", StandardCharsets.UTF_8).toString();
-
+    //@@author jeffreygohkw
+    private String theme;
+    //@@author
     public UserPrefs() {
         this.setGuiSettings(1080, 720, 0, 0);
     }
@@ -106,4 +108,16 @@ public class UserPrefs {
         return sb.toString();
     }
 
+    //@@author jeffreygohkw
+    public String getTheme() {
+        if (theme == null) {
+            return "/view/DarkTheme.css";
+        } else {
+            return theme;
+        }
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 }
