@@ -40,12 +40,12 @@ public class EditTaskCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Task editedTask = new TaskBuilder().build();
         EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
-        EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_TASK, descriptor);
+        EditTaskCommand editTaskCommand = prepareCommand(Index.fromZeroBased(3), descriptor);
 
         String expectedMessage = String.format(EditTaskCommand.MESSAGE_SUCCESS, editedTask);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updateTask(model.getFilteredTaskList().get(0), editedTask);
+        expectedModel.updateTask(model.getFilteredTaskList().get(3), editedTask);
 
         assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
     }
