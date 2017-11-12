@@ -82,7 +82,7 @@ public class NavigateCommand extends Command {
             if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().toString().equals("")) {
                 throw new CommandException(String.format(MESSAGE_PERSON_HAS_NO_ADDRESS_ERROR, index.getOneBased()));
             } else if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().getIsPrivate()) {
-                throw new IllegalArgumentException(MESSAGE_PRIVATE_PERSON_ADDRESS_ERROR);
+                throw new CommandException(String.format(MESSAGE_PRIVATE_PERSON_ADDRESS_ERROR, index.getOneBased()));
             } else {
                 return new Location(model.getFilteredPersonList().get(index.getZeroBased())
                         .getAddress().toString());
