@@ -26,7 +26,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see Person#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-//@@author charlesgoh
 public class UniquePersonList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
@@ -263,8 +262,8 @@ public class UniquePersonList implements Iterable<Person> {
                 e.printStackTrace();
             }
         }
-
     }
+    //@@author
 
     @Override
     public Iterator<Person> iterator() {
