@@ -7,6 +7,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Address++ is a desktop address book application that aims to provide students and
 professionals with an effective tool to help them manage their contacts and their time.
 
+This is a snapshot of our User Interface
+
+image::Ui.png[width="800"]
+
 My contributions to this project are listed below:
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/main/charlesgoh.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/test/charlesgoh.md[Test code]]
