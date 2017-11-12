@@ -208,17 +208,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandTheme() throws Exception {
         assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD + " dark", DEFAULT_STATE_LOCK)
-                instanceof PrivacyLevelCommand);
+                instanceof ThemeCommand);
         assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD + " light", DEFAULT_STATE_LOCK)
-                instanceof PrivacyLevelCommand);
+                instanceof ThemeCommand);
     }
 
     @Test
     public void parseCommandAliasTheme() throws Exception {
         assertTrue(parser.parseCommand(ThemeCommand.COMMAND_ALIAS + " dark", DEFAULT_STATE_LOCK)
-                instanceof PrivacyLevelCommand);
+                instanceof ThemeCommand);
         assertTrue(parser.parseCommand(ThemeCommand.COMMAND_ALIAS + " light", DEFAULT_STATE_LOCK)
-                instanceof PrivacyLevelCommand);
+                instanceof ThemeCommand);
     }
 
     //@@author
