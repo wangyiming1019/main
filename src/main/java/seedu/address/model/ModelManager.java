@@ -273,7 +273,10 @@ public class ModelManager extends ComponentManager implements Model {
         Assignees newAssignees = new Assignees(assignees);
         ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToAssign);
 
-        newAssignees.assign(positions);
+        boolean atLeastOneAdded = newAssignees.assign(positions);
+        if (!atLeastOneAdded) {
+            throw new DuplicateTaskException();
+        }
         ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToAssignTo, newAssignees);
         addressBook.updateTask(taskToAssignTo, updatedTask);
         indicateAddressBookChanged();

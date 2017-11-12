@@ -25,12 +25,15 @@ public class Assignees {
     }
 
     /** Assigns all {@code ReadOnlyPerson} in the specified list */
-    public void assign(ArrayList<Index> personsToAssign) {
+    public boolean assign(ArrayList<Index> personsToAssign) {
+        boolean atLeastOneAdded = false;
         for (Index i : personsToAssign) {
             if (!assignedList.contains(i)) {
                 assignedList.add(i);
+                atLeastOneAdded = true;
             }
         }
+        return atLeastOneAdded;
     }
 
     /** Updates the internal assignedList with the correct Index values after a sort operation */
