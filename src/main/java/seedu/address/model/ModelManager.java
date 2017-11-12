@@ -287,7 +287,10 @@ public class ModelManager extends ComponentManager implements Model {
         Assignees newAssignees = new Assignees(assignees);
         ArrayList<Index> positions = addressBook.extractPersonIndexes(personsToDismiss);
 
-        newAssignees.dismiss(positions);
+        boolean atLeastOneDismissed = newAssignees.dismiss(positions);
+        if (!atLeastOneDismissed) {
+            throw new DuplicateTaskException();
+        }
         ReadOnlyTask updatedTask = constructTaskWithNewAssignee(taskToDismissFrom, newAssignees);
         addressBook.updateTask(taskToDismissFrom, updatedTask);
         indicateAddressBookChanged();
