@@ -67,6 +67,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
             .withFavourite(VALID_FAVOURITE_ALICE).withRemark(VALID_REMARK_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+    //@@author wangyiming1019
     public static final ReadOnlyPerson CHRIS = new PersonBuilder().withName(VALID_NAME_CHRIS)
             .withPhone(VALID_PHONE_CHRIS).withEmail(VALID_EMAIL_CHRIS)
             .withAddress(VALID_ADDRESS_CHRIS).withFavourite(VALID_FAVOURITE_ALICE)
@@ -77,7 +78,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_CHRIS).withAddress(VALID_ADDRESS_CHRIS)
             .withFavourite(VALID_FAVOURITE_ALICE).withRemark(VALID_REMARK_CHRIS)
             .withTags("friends").build();
-
+    //@@author
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation

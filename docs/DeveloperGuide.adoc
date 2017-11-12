@@ -1494,13 +1494,14 @@ If the input index tags do not exist, the `FindTagCommand` will give a empty lis
 **Alternative 1 (current choice):** implement a new command `find tag/` +
 **Pros:** Easier to implement. `find tag/` command will be similar to the `find` command. +
 **Cons:** Must create `NameContainsTagsPredicate` in model. It does not fully utilize the existing `NameContainsKeywordsPredicate`. +
+
 **Alternative 2:** Implement the `find tag/` in `FindCommand`. +
 **Pros:** Easier for user. They do not have to memorize some many commands. +
 **Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
 and Separation of Concerns as FindCommand now needs to do two different things.
 // end::findtag[]
 
-
+// tag::favunfav[]
 
 === Favourite/Unfavourite Person mechanism
 To favourite a person is achieved by `FavouriteCommand`. It basically changes the value of the `favourite` status of a `Person` but there is no specific `Favourite` field for person.
@@ -1579,9 +1580,11 @@ The colours of the border and the background of the label are set to transparent
 **Alternative 1 (current choice):** Store it as a `Boolean` value +
 **Pros:** Easier to implement. Does not need to create another class. +
 **Cons:** Must modify `Model` and `ModelManager` to update the person status.It is also prone to bugs when developers forget to change the ObjectProperty to `String` in UI classes. +
+
 **Alternative 2:** Add a new `Favourite` field +
 **Pros:** Similar way to store other personal information. It also follows the open-close principle and exercises cohesion, where all matters related to `Favourite` field is dealt in its own class. +
 **Cons:** Difficult to implement. Adding a new field will cause many changes in UI, Logic, Model and Storage. Some test cases will be rewritten.
+// end::favunfav[]
 
 === Logging
 
