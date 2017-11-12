@@ -1538,6 +1538,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user who values privacy |be able to to choose and modify which contacts and what information are to be displayed |hide information I do not want to share from others
 
+|`* *` |user with a 4K screen |be able keep track of my upcoming tasks | ditch my Todo application and migrate to Address++ for my people and task management needs
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |lazy user |have an easy way to add a person with his full details into my address book |add new contacts quickly
@@ -1560,7 +1562,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user with a 4K screen |be able to increase the font size | use the application without straining my eyes.
 
-|`* *` |user with a 4K screen |be able keep track of my upcoming tasks | ditch my Todo application and migrate to Address++ for my people and task management needs
+|`* *` |picky user |be able to change the colour theme of the application | customize the application to suit my visual tastebuds.
 
 |=======================================================================
 
