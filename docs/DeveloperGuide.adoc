@@ -233,7 +233,7 @@ new events via `ComponentManager`.
 
 2. CLI commands also post new events to handle font size changes, when the relevant command is entered (e.g. `fontsize increase`).
 
-image::FontSizeChangeSequenceDiagram.png[width="700"]
+image::FontSizeChangeSequenceDiagram.png[width="800"]
 From the sequence diagram above, we can observe that the font size changes are handled by subscriber functions in PersonListPanel
 and TaskListPanel.
 
