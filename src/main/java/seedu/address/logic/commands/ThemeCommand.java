@@ -11,7 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  *
  */
-public class ThemeCommand extends UndoableCommand {
+public class ThemeCommand extends Command {
     public static final String COMMAND_WORD = "theme";
     public static final String COMMAND_ALIAS = "th";
 
@@ -32,7 +32,7 @@ public class ThemeCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
         String styleSheet;

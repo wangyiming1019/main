@@ -19,7 +19,7 @@ public class UserPrefs {
     private String addressBookEncryptedPassword = Hashing.sha256()
             .hashString("password", StandardCharsets.UTF_8).toString();
     //@@author jeffreygohkw
-    private String theme = "DarkTheme.css";
+    private String theme;
     //@@author
     public UserPrefs() {
         this.setGuiSettings(1080, 720, 0, 0);
@@ -110,7 +110,11 @@ public class UserPrefs {
 
     //@@author jeffreygohkw
     public String getTheme() {
-        return theme;
+        if (theme == null) {
+            return "/view/DarkTheme.css";
+        } else {
+            return theme;
+        }
     }
 
     public void setTheme(String theme) {
