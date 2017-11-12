@@ -192,9 +192,11 @@ public class AddressBookParser {
         // Cases for CRUD related functionality and for locking and unlocking
         switch (commandWord) {
         case OpenCommand.COMMAND_WORD:
+        case OpenCommand.COMMAND_ALIAS:
             return new OpenCommand();
 
         case SaveAsCommand.COMMAND_WORD:
+        case SaveAsCommand.COMMAND_ALIAS:
             return new SaveAsCommand();
 
         case ExitCommand.COMMAND_WORD:

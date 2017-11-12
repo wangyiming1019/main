@@ -79,6 +79,7 @@ public class EditPersonCommand extends EditCommand {
             }
             ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
             Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+            editedPerson.setPrivacyLevel(model.getPrivacyLevel());
             model.updatePerson(personToEdit, editedPerson);
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson));

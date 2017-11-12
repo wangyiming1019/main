@@ -23,7 +23,7 @@ public class LocateCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Searching for Person: %1$s";
+    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Searching for Person at Index: %1$s";
     public static final String MESSAGE_PRIVATE_ADDRESS_FAILURE = "Person %1$s has a Private Address";
 
     private final Index targetIndex;
