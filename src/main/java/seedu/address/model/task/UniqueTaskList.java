@@ -182,7 +182,11 @@ public class UniqueTaskList implements Iterable<Task> {
         Comparator<Task> deadlineComparator = new Comparator<Task>() {
             @Override
             public int compare(Task o1, Task o2) {
-                return o1.getDeadline().date.compareTo(o2.getDeadline().date);
+                if (o1.getDeadline().date == null || o2.getDeadline().date == null) {
+                    return 0;
+                } else {
+                    return o1.getDeadline().date.compareTo(o2.getDeadline().date);
+                }
             }
         };
 
