@@ -288,7 +288,7 @@ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedE
 ----
 
 [NOTE]
-As of v1.5rc, the avatar field supports only URLs sourced online. References to local files may work but require the
+As of v1.5, the avatar field supports only URLs sourced online. References to local files may work but require the
 prefix "file:"
 //end::avatar[]
 
