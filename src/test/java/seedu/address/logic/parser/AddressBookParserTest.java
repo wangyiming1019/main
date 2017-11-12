@@ -64,12 +64,14 @@ import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.NavigateCommand;
 import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.PrivacyLevelCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SaveAsCommand;
 import seedu.address.logic.commands.SelectPersonCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -174,6 +176,42 @@ public class AddressBookParserTest {
         ChangePrivacyCommand actualCommand = new ChangePrivacyCommand(INDEX_FIRST_PERSON, pps);
 
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
+    }
+
+    @Test
+    public void parseCommandPrivacyLevel() throws Exception {
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_WORD + " 1", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_WORD + " 2", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_WORD + " 3", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+    }
+
+    @Test
+    public void parseCommandAliasPrivacyLevel() throws Exception {
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_ALIAS + " 1", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_ALIAS + " 2", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_ALIAS + " 3", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+    }
+
+    @Test
+    public void parseCommandTheme() throws Exception {
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD + " dark", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD + " light", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+    }
+
+    @Test
+    public void parseCommandAliasTheme() throws Exception {
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_ALIAS + " dark", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_ALIAS + " light", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
     }
 
     //@@author
