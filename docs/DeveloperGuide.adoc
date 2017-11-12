@@ -596,7 +596,11 @@ the application.
 
 Like most of the other commands, arguments are parsed through the `UnlockCommandParser` or `LockCommandParser`,
 which passes control over to the `UnlockCommand` and `LockCommand` class respectively.
-These `Command` classes will then call the Model to toggle the lock's state
+These `Command` classes will then call the Model to toggle the lock's state.
+
+The activity diagram below outlines the basic logic of the lock states concept:
+
+image::LockStatesActivityDiagram.png[width="800]
 
 [NOTE]
 The default state of the lock is set to False (i.e. locked) when the user first opens the
