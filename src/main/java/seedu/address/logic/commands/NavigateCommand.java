@@ -89,6 +89,7 @@ public class NavigateCommand extends Command {
             }
         }
     }
+
     @Override
     public CommandResult execute() throws CommandException {
         Location from;
