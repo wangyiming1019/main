@@ -101,6 +101,18 @@ public class DismissCommandTest {
         assertCommandFailure(dismissCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
+
+    @Test
+    public void execute_noneAssigned_throwsCommandException() throws Exception {
+        List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON);
+        ReadOnlyPerson dismissedPerson = model.getFilteredPersonList().get(0);
+        ArrayList<ReadOnlyPerson> persons = new ArrayList<>();
+        persons.add(dismissedPerson);
+
+        DismissCommand assignCommand = prepareCommand(toAssign, INDEX_FIRST_TASK);
+        assertCommandFailure(assignCommand, model, DismissCommand.MESSAGE_NONE_ASSIGNED);
+    }
+
     @Test
     public void equals() {
         ArrayList<Index> dismissFirstThree = new ArrayList<>(Arrays.asList(INDEX_FIRST_PERSON,
