@@ -44,9 +44,9 @@ public class Assignees {
         assignedList.addAll(updatedList);
     }
 
-    /** Removes all {@code ReadOnlyPerson} from the specified list */
-    public void dismiss(ArrayList<Index> personsToDismiss) {
-        assignedList.removeAll(personsToDismiss);
+    /** Removes all {@code ReadOnlyPerson} from the specified list, and returns true if at least 1 person was removed */
+    public boolean dismiss(ArrayList<Index> personsToDismiss) {
+        return assignedList.removeAll(personsToDismiss);
     }
 
     public boolean contains(ReadOnlyPerson toFind) {
