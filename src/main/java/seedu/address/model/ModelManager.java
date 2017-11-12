@@ -27,6 +27,7 @@ import seedu.address.model.person.NameContainsKeywordsPrivacyLevelPredicate;
 import seedu.address.model.person.NameContainsTagsPredicate;
 import seedu.address.model.person.NameContainsTagsPrivacyLevelPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonCompleteMatchPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.ShowAllPrivacyLevelPredicate;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -293,6 +294,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author Esilocke
+    @Override
     public void setAsComplete(ReadOnlyTask toSet, boolean isComplete)
             throws TaskNotFoundException, DuplicateTaskException {
         TaskName taskName = toSet.getTaskName();
@@ -307,6 +309,19 @@ public class ModelManager extends ComponentManager implements Model {
         }
         ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, assignees, state, taskAddress);
         updateTask(toSet, updatedTask);
+    }
+
+    @Override
+    public void viewAssignees(ReadOnlyTask task) {
+        Assignees assignees = task.getAssignees();
+        ArrayList<Index> internalList = assignees.getList();
+        ArrayList<ReadOnlyPerson> personsToShow = new ArrayList<>();
+        for (Index i : internalList) {
+            assert(i.getZeroBased() < filteredPersons.size());
+            personsToShow.add(filteredPersons.get(i.getZeroBased()));
+        }
+        PersonCompleteMatchPredicate assignedPredicate = new PersonCompleteMatchPredicate(personsToShow);
+        updateFilteredPersonList(assignedPredicate);
     }
     //@@author
     //=========== Filtered Person List Accessors =============================================================
