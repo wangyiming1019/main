@@ -514,7 +514,7 @@ Furthermore, as you have several tasks related to "Report" that are already comp
 ****
 // end::findtask[]
 
-// tag::showandfindtag[]
+// tag::showtag[]
 
 === Listing all tags : `showtag` (Since V1.5)
 
@@ -530,6 +530,9 @@ Format: `showtag` +
 * `showtag` command: It will return an empty list if there is no tags in the address book.
 * You may want to use `showtag` command to help you recall all the `tags` in the address book before you try to use `findtag` to find persons.
 ****
+// end::showtag[]
+
+// end::findtag[]
 
 === Locating persons by tag : `find tag/` (Since V1.4)
 
@@ -573,7 +576,7 @@ Suppose you want to find contacts with tag `friends` but without `colleagues`, y
 ****
 image::FindTagCommand.png[width="790"]
 _Figure 3.17.1 : FindTagCommand_
-// end::showandfindtag[]
+// end::findtag[]
 
 === Deleting a person : `delete`
 

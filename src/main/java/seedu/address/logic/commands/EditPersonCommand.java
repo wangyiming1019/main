@@ -364,7 +364,7 @@ public class EditPersonCommand extends EditCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
-
+        //@@author wangyiming1019
         public void setFavourite(Boolean favourite) {
             this.favourite = favourite;
         }
@@ -372,7 +372,7 @@ public class EditPersonCommand extends EditCommand {
         public Optional<Boolean> getFavourite() {
             return Optional.ofNullable(favourite);
         }
-
+        //@@author
         public void setRemark(Remark remark) {
             this.remark = remark;
         }

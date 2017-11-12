@@ -134,7 +134,7 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommandParser().parse(arguments);
-
+        //@@author wangyiming1019
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
@@ -150,7 +150,7 @@ public class AddressBookParser {
         case TagListCommand.COMMAND_WORD:
         case TagListCommand.COMMAND_ALIAS:
             return new TagListCommand();
-
+        //@@author
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
