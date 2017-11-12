@@ -1,5 +1,8 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
+
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.task.Assignees;
 import seedu.address.model.task.Deadline;
@@ -113,6 +116,19 @@ public class TaskBuilder {
         }
         return this;
     }
+
+    /**
+     * Sets the {@code Assignees} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withAssignees(String... args) {
+        ArrayList<Index> indexes = new ArrayList<>();
+        for (String s : args) {
+            indexes.add(Index.fromOneBased(Integer.parseInt(s)));
+        }
+        this.task.setAssignees(new Assignees(indexes));
+        return this;
+    }
+
     public Task build() {
         return this.task;
     }

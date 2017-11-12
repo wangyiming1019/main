@@ -94,6 +94,9 @@ public interface Model {
     /** Changes the state of the specified task */
     void setAsComplete(ReadOnlyTask toSet, boolean isComplete) throws TaskNotFoundException, DuplicateTaskException;
 
+    /** Displays all persons assigned to the specified task */
+    void viewAssignees(ReadOnlyTask task);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 

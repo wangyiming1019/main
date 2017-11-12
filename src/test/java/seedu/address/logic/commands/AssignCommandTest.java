@@ -100,6 +100,25 @@ public class AssignCommandTest {
     }
 
     @Test
+    public void execute_allPersonsAlreadyAssigned_throwsCommandException() throws Exception {
+        List<Index> toAssign = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON);
+        ReadOnlyTask assignedTask = model.getFilteredTaskList().get(0);
+        ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
+        ReadOnlyPerson secondPerson = model.getFilteredPersonList().get(1);
+        ReadOnlyPerson thirdPerson = model.getFilteredPersonList().get(2);
+        ArrayList<ReadOnlyPerson> persons = new ArrayList<>();
+        persons.add(firstPerson);
+        persons.add(secondPerson);
+        persons.add(thirdPerson);
+
+        AssignCommand assignCommand = prepareCommand(toAssign, INDEX_FIRST_TASK);
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.assignToTask(persons, assignedTask);
+        assignCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
+        assertCommandFailure(assignCommand, expectedModel, AssignCommand.MESSAGE_NONE_ASSIGNED);
+    }
+
+    @Test
     public void equals() {
         ArrayList<Index> assignFirstThree = new ArrayList<>(Arrays.asList(INDEX_FIRST_PERSON,
                 INDEX_SECOND_PERSON, INDEX_THIRD_PERSON));
