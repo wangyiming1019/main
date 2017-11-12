@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -165,6 +166,7 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
     }
 
+    //@@author jeffreygohkw
     @Override
     public void setPrivacyLevel(int level) {
         fail("This method should not be called.");
@@ -181,6 +183,24 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
         return null;
     }
+
+    @Override
+    public void setTheme(String theme) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public String getTheme() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public HashMap<String, String> getStyleMap() {
+        fail("This method should not be called.");
+        return null;
+    }
+    //@@author
 
     @Override
     public boolean getLockState() {

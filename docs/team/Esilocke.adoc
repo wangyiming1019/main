@@ -72,7 +72,11 @@ include::../DeveloperGuide.adoc[tag=optional]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=task]
+include::../UserGuide.adoc[tag=addtask]
+include::../UserGuide.adoc[tag=edittask]
+include::../UserGuide.adoc[tag=deletetask]
+include::../UserGuide.adoc[tag=findtask]
+include::../UserGuide.adoc[tag=selecttask]
 include::../UserGuide.adoc[tag=setstate]
 include::../UserGuide.adoc[tag=assignDismiss]
 

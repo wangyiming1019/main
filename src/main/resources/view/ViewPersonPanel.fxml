@@ -16,14 +16,14 @@
          <children>
             <HBox prefHeight="92.0" prefWidth="800.0">
                <children>
-                  <Label fx:id="name" prefHeight="173.0" prefWidth="470.0" styleClass="cell_big_label" text="\$name" wrapText="true">
+                  <Label fx:id="name" prefHeight="173.0" prefWidth="470.0" styleClass="cell_big_label" text="\$name" textFill="BLACK" wrapText="true">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding></Label>
-                  <Label fx:id="favstatus" alignment="CENTER" prefHeight="177.0" prefWidth="230.0" styleClass="cell_small_label" text="\$favstatus">
+                  <Label fx:id="favstatus" alignment="CENTER" prefHeight="177.0" prefWidth="230.0" styleClass="cell_small_label" text="\$favstatus" textFill="BLACK">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
