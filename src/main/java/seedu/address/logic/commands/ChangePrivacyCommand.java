@@ -85,6 +85,7 @@ public class ChangePrivacyCommand extends UndoableCommand {
         Person newPerson = null;
         try {
             newPerson = createPersonWithChangedPrivacy(personToChange, pps);
+            newPerson.setPrivacyLevel(model.getPrivacyLevel());
         } catch (IllegalValueException e) {
             throw new AssertionError("Person must have all fields initialised.");
         }
