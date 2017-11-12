@@ -37,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueTaskList tasks;
+    private HashMap<String, String> styleMap;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -49,9 +50,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         tasks = new UniqueTaskList();
+        styleMap = new HashMap<String, String>();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+        initialiseStyleMap();
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -313,9 +317,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         Task editedTask = new Task(editedReadOnlyTask);
         tasks.setTask(target, editedTask);
     }
+
+    //@@author jeffreygohkw
+    //// task-level operations
+
+    /**
+     * Initialises the style map by adding the key value pairs
+     * for the strings that will be input in ThemeCommand and the file name of the .css file
+     */
+    private void initialiseStyleMap() {
+        styleMap.put("dark", "DarkTheme.css");
+        styleMap.put("Dark", "DarkTheme.css");
+        styleMap.put("light", "LightTheme.css");
+        styleMap.put("Light", "LightTheme.css");
+    }
+
+    public HashMap<String, String> getStyleMap() {
+        return styleMap;
+    }
     //@@author
     //// util methods
-
 
     @Override
     public String toString() {

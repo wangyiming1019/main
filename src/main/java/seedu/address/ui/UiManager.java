@@ -32,9 +32,10 @@ public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32_alternative.png";
 
+    private static UserPrefs prefs;
+
     private Logic logic;
     private Config config;
-    private UserPrefs prefs;
     private MainWindow mainWindow;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
@@ -66,6 +67,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Override
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
+        prefs.setTheme(mainWindow.getTheme());
         mainWindow.hide();
         mainWindow.releaseResources();
     }
@@ -94,7 +96,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.getDialogPane().getStylesheets().add(String.format("view/", prefs.getTheme()));
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

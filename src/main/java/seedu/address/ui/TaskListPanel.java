@@ -18,6 +18,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.JumpToListRequestTaskEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.address.model.task.ReadOnlyTask;
 
@@ -152,6 +153,12 @@ public class TaskListPanel extends UiPart<Region> {
     private void handleJumpToListRequestTaskEvent(JumpToListRequestTaskEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info("Attempting to clear selection in task list view");
+        Platform.runLater(taskListView.getSelectionModel()::clearSelection);
     }
 
     /**

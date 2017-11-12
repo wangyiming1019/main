@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 //@@author jeffreygohkw
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -37,6 +39,7 @@ public class PrivacyLevelCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(model);
         if (level < MIN_PRIVACY_LEVEL || level > MAX_PRIVACY_LEVEL) {
             throw new CommandException(WRONG_PRIVACY_LEVEL_MESSAGE);
         }

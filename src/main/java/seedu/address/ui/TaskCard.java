@@ -91,6 +91,8 @@ public class TaskCard  extends UiPart<Region> {
         deadline.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         priority.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
         taskAddress.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        assignCount.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
+        state.setStyle("-fx-font-size: " + Integer.toString(attributeSize));
     }
     //@@author charlesgoh
 
