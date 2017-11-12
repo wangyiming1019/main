@@ -64,10 +64,9 @@ adds a contact named `John Doe` to Address++.
 //tag::fontsize[]
 === Changing Font Sizes
 
-Are the font sizes too small or too big? Address++ allows you to change your font sizes at will. Here are some of the
-ways of triggering a change in font sizes:
+Are the font sizes too small or too big? Address++ allows you to change your font sizes at will. Here are three
+ways of changing the font sizes:
 ****
-
 **Option 1: Menu Font Size Buttons and Keyboard Shortcuts**
 
 image::FontSizeUI.png[width="540"]
@@ -75,16 +74,6 @@ image::FontSizeUI.png[width="540"]
 * *Increase Size:* kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
 * *Decrease Size:* kbd:[CTRL] + kbd:[E] (kbd:[CMD] + kbd:[E] on MacOS)
 * *Reset Size:* kbd:[CTRL] + kbd:[R] (kbd:[CMD] + kbd:[R] on MacOS)
-****
-
-****
-**Option 2: Change Font Size Buttons (Top Right Hand Corder)**
-
-image::FontSizePlusMinusButtons.png[width="540"]
-
-* Increase Size: kbd:[+]
-* Decrease Size: kbd:[-]
-* Reset Size: kbd:[R]
 ****
 
 ****
@@ -122,17 +111,17 @@ Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [r/REMARK] [v/AVATAR]
 **Things To Note** +
 * A person can have any number of tags (including 0) +
 * The `EMAIL` should be in the format address@email.domain +
-* You can set a person's `Name`, `Phone`, `Email`, `Address` and `Remark`, to be private by placing a `p` in front of the prefix. +
-* As of version 1.5rc, the avatar field supports only URLs sourced online. References to local files may not work.
+* You can set a person's `Name`, `Phone`, `Email`, `Address`, `Remark` and `Avatar`, to be private by placing a `p` in front of the prefix. +
+* As of version v1.5, the avatar fields accepts all URLs, and filenames with the prefix "file:"
 ****
 
 **Example Scenarios**:
 ****
 **Example Scenario 1** +
-You met your new friend John Doe, and want to save him into Address++. You could type the following command to add his details:
+You made a new friend John Doe, and want to save him into Address++. You could type the following command to add his details:
 
 >> `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/11-11-1995 r/Likes panda bears
-v/https://helloworld/image.png`
+v/https://helloworld.world/image.png`
 ****
 ****
 **Example Scenario 2** +
@@ -149,7 +138,7 @@ option while typing in your command:
 
 >> `add pn/Neville Shorttop pp/46492787 pe/nevilleS@gmail.com pa/Gryphon Gate pr/A true hero` +
 
-* Do note that you do not have to set all fields as private, and you can choose which specific fields you want to set as private.
+**Note:** you do not have to set all fields as private, and you can choose which specific fields you want to set as private.
 ****
 //end::avatar[]
 
@@ -709,14 +698,14 @@ Format: `sort LIST FIELD ORDER` +
 You have many contacts on Address++. You decide to make it neater by sorting your contacts
 by name in ascending order:
 
-`sort person name asc`
+>> `sort person name asc`
 ****
 ****
 **Example Scenario 2** +
 You add a few tasks of different priorities. You decide to sort the tasks so you can see
 the higher priority tasks on the top of the list:
 
-`sort task priority desc`
+>> `sort task priority desc`
 ****
 //end::sort[]
 
@@ -737,7 +726,7 @@ cannot be undone. You type the following code:
 
 `backup filename.xml`
 
-The file will then be saved in the same directory location as your .JAR application file
+The file will then be saved in the same directory location as your `JAR` application file
 ****
 //end::backup[]
 //tag::password[]
@@ -761,17 +750,17 @@ The default password is 'password'
 **Example Scenarios**:
 ****
 **Example Scenario 1** +
-You just finished editing your contacts on Address++ when you decide to have a break away from
-you computer. You decide to lock Address++ using the following command:
+You have just finished editing your contacts on Address++ and you decide to have a break away from
+your computer. You decide to lock Address++ using the following command:
 
-`lock pw/password`
+>> `lock pw/password`
 ****
 ****
 **Example Scenario 2** +
 When you return to your computer, you decide to continue adding contacts in Address++.
-You decide to unlock Address++ using the following command:
+To unlock the Address++ application, you use the following command:
 
-`unlock pw/password`
+>> `unlock pw/password`
 ****
 
 === Changing your password : `changepassword`
@@ -784,7 +773,7 @@ The default password is 'password'
 
 image::ChangePasswordImages.png[width="800"]
 
-Format: `changepassword pw/[PASSWORD] pw/[NEWPASSWORD] pw/[CONFIRMPASSWORD]` +
+Format: `changepassword pw/[PASSWORD] np/[NEWPASSWORD] cfp/[CONFIRMPASSWORD]` +
 
 **Example Scenarios**:
 ****
@@ -793,19 +782,10 @@ You open Address++ for the first time. After reading the user guide, you realize
 that the default password ("password") is not good enough. You decide to make a new
 one with the following command:
 
-`changepassword pw/password np/newpassword cfp/newpassword`
+>> `changepassword pw/password np/newpassword cfp/newpassword`
 ****
 //end::password[]
 
-<<<<<<< HEAD
-=======
-* `backup` or `bk` +
-This command will help you back up in the default save location --> In the data directory of your application.
-* `backup ./test.xml` or `bk ./test.xml` +
-This saves the backup file in the current data directory, with the name `test.xml`.
-//end::backup[]
-
->>>>>>> adb8cacc41228d12ab60533620ff59ea14d313e5
 === Selecting a person : `select`
 
 You can use `select` to pick out one contact, and look at it in greater detail. +

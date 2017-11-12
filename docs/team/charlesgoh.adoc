@@ -7,7 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Address++ is a desktop address book application that aims to provide students and
 professionals with an effective tool to help them manage their contacts and their time.
 
-A list of my contributions to Address++ are explained below:
+My contributions to this project are listed below:
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/main/charlesgoh.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/test/charlesgoh.md[Test code]]
 
@@ -55,7 +55,7 @@ include::../UserGuide.adoc[tag=sort]
 ==== Justification
 
 As more contacts and tasks are added to the application, the lists may get long and disorganized. The Sort Command
-allows users to sort both contacts and tasks by important fields. Examples include sorting contacts by name and
+allows users to sort both contacts and tasks by key fields. Examples include sorting contacts by name and
 sorting contacts by deadlines.
 
 ==== Implementation
@@ -83,8 +83,8 @@ include::../UserGuide.adoc[tag=backup]
 
 ==== Justification
 
-Users are able to back up their data before making any changes so that in the event of an emergency (e.g. clearing all data and then closing afterwards)
-, the old save data can be restored.
+Users are able to back up their data before making any changes so that in the event of an
+emergency (e.g. clearing all data and then closing afterwards), the old save data can be restored.
 
 ==== Implementation
 
@@ -111,7 +111,7 @@ include::../UserGuide.adoc[tag=fontsize]
 
 ==== Justification
 
-Different monitors render the application differently. On some monitors, the words appear to be too small. The font size
+Different monitors render the application differently. On some monitors, the words may appear to be too small. The font size
 commands and buttons allow users to increase/decrease/reset the font sizes at any time when using the application.
 
 ==== Implementation

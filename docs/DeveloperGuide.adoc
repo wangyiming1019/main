@@ -245,7 +245,7 @@ standardised the handling of font size change requests through events.
 
 **Aspect:** Use either UI or CLI based implementations +
 **Alternative 1 (current choice):** Implementing both UI and CLI functionality +
-**Pros:** More options for the user. The was also not much increase in complexity when implementing the CLI version  +
+**Pros:** More options for the user. Not much increase in complexity when implementing the CLI version  +
 **Cons:** This implementation required passing information between classes, which may cause unnecessary coupling. +
 
 **Alternative 2:** Implementing only UI functionality +
@@ -279,16 +279,17 @@ the `ImageView` attribute.
 [source,java]
 ----
 @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        this.person = event.getNewSelection().person;
-        initializeWithPerson(person);
-        initializeAvatar();
-    }
+private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    this.person = event.getNewSelection().person;
+    initializeWithPerson(person);
+    initializeAvatar();
+}
 ----
 
 [NOTE]
-As of v1.5rc, the avatar field supports only URLs sourced online. References to local files may not work at the moment.
+As of v1.5rc, the avatar field supports only URLs sourced online. References to local files may work but require the
+prefix "file:"
 //end::avatar[]
 
 //tag::undoredo[]
@@ -523,20 +524,21 @@ The UML Class diagram for sort commands that trigger sorting in person listings 
 
 image::SortCommandPersonDiagram.png[width="800"]
 
-Likewise, the UML Class diagram for sort commands that trigger sorting in person listings is shown below:
+Likewise, the UML Class diagram for sort commands that trigger sorting in task listings is shown below:
 
 image::SortCommandTaskDiagram.png[width="800"]
 
 We can deduce from the UML diagrams diagrams above that the only difference between the implementation
 of the sorting for persons and tasks lies in the location where the sorting is actually executed.
+The sorting of persons happens in `UniquePersonList` class while the sorting of tasks happens in `UniqueTaskList`.
 
-Suppose a user enters a new command `sort name desc`. The following sequence diagram
+Suppose a user enters a new command `sort person name desc`. The following sequence diagram
 demonstrates how the sort command works.
 
 image::SortSequenceDiagram.png[width="800]
 
-Note that the execution of the sort methods result in the actual person or task list being sorted. The resulting list
-is not returned, but will be reflected in the application's storage and graphical user interface.
+Note that the execution of the sort methods results in the actual person or task list being sorted. This list will be
+reflected in both the application's storage as well as the graphical user interface.
 
 ==== Design Considerations
 
@@ -549,7 +551,8 @@ Future changes to the implementation will be easier as a consequence. +
 
 **Alternative 2:** Implement the sorting functionality within other classes like `AddressBook` or `SortCommand`. +
 **Pros:** May be more intuitive for new developers and it is easier to trace function calls between lesser classes involved. +
-**Cons:** Violates Separation of Concern principle and causes unnecessary content coupling whereby the `UniquePersonList` will have to rely on the `SortCommand` class.
+**Cons:** Violates Separation of Concern principle and causes unnecessary content coupling whereby the `UniquePersonList`
+and `UniqueTaskList` will have to rely on the `SortCommand` class.
 
 ---
 
@@ -594,7 +597,7 @@ image::BackupSequenceDiagram.png[width="800]
 The `lock` and `unlock` commands utilise the Model to access the user preferences of
 the application.
 
-Like most of the other commands, arguments are parsed through the `UnlockCommandParser` or `LockCommandParser`,
+Arguments are processed in the `UnlockCommandParser` or `LockCommandParser`,
 which passes control over to the `UnlockCommand` and `LockCommand` class respectively.
 These `Command` classes will then call the Model to toggle the lock's state.
 
@@ -602,8 +605,8 @@ The activity diagram below outlines the basic logic of the lock states concept.:
 
 image::LockStatesActivityDiagram.png[width="800]
 
-From the activity diagram we can see that lock states are preserved in preferences.json
-after the application closes by passing the lock state into the `UserPrefs` class to be
+From the activity diagram we can see that lock states are preserved in the `preferences.json`
+file after the application closes by passing the lock state into the `UserPrefs` class to be
 saved by the Storage component.
 
 [NOTE]
@@ -632,7 +635,7 @@ To illustrate this concept better, let us have a look at the `preferences.json` 
 [source, json]
 {
   "guiSettings" : {
-    "windowWidth" : 1080.0,
+    "windowWidth" : 1309.0,
     "windowHeight" : 720.0,
     "windowCoordinates" : {
       "x" : 0,
@@ -642,7 +645,8 @@ To illustrate this concept better, let us have a look at the `preferences.json` 
   "addressBookFilePath" : "data/addressbook.xml",
   "addressBookName" : "My Address++",
   "addressBookLockState" : false,
-  "addressBookEncryptedPassword" : "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+  "addressBookEncryptedPassword" : "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+  "theme" : "/view/DarkTheme.css"
 }
 
 As shown in the cope snippet above, the password is stored as one of the entries in the JSON
@@ -654,9 +658,9 @@ user's file directories.
 
 **Validation Checks**
 ****
-1. Password Validation -> Is password correct?
-2. Password Confirmation -> Does the new password and confirmation password match?
-3. Password Uniqueness -> Is the new password different from the old password?
+1. **Password Validation** -> Is the password correct?
+2. **Password Confirmation** -> Does the new password and confirmation password match?
+3. **Password Uniqueness** -> Is the new password different from the old password?
 ****
 
 The activity diagram below outlines the process flow for the `ChangePasswordCommand`:
