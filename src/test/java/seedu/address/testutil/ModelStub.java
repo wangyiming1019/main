@@ -223,4 +223,9 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
         return null;
     }
+
+    @Override
+    public void viewAssignees(ReadOnlyTask task) {
+        fail("This method should not be called");
+    }
 }

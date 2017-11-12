@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.BackupRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -31,11 +32,9 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
 
     //@@author charlesgoh
     /**
-     * Backs up address book data at designated file name
-     * @param addressBook
-     * @param filePath
+     * Backs up data to a remote location. Subscribes to BackupRequestEvent
      */
-    void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
+    void handleBackupAddressBook(BackupRequestEvent event) throws IOException;
     //@@author
 
     /**
