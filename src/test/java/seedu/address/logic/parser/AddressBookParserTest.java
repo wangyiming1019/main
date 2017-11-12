@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAVIGATE_TO_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
@@ -34,6 +35,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddPersonCommand;
+import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.BackupCommand;
@@ -43,6 +45,7 @@ import seedu.address.logic.commands.ChangePrivacyCommand.PersonPrivacySettings;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeletePersonCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.commands.DismissCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -52,6 +55,8 @@ import seedu.address.logic.commands.EditTagCommand;
 import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FavouriteCommand;
+import seedu.address.logic.commands.FavouriteListCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.commands.FindTagCommand;
@@ -70,7 +75,9 @@ import seedu.address.logic.commands.SelectPersonCommand;
 import seedu.address.logic.commands.SetCompleteCommand;
 import seedu.address.logic.commands.SetIncompleteCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.TagListCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Location;
@@ -339,7 +346,80 @@ public class AddressBookParserTest {
         assertEquals(new FindTaskCommand(new TaskContainsKeywordPredicate(
                 keywords, DEFAULT_STATE_LOCK, false, false, 0)), command);
     }
+
     //@@author wangyiming1019
+    @Test
+    public void parseCommandAddTag() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        final String tagName = "friends";
+        Tag toAdd = new Tag(tagName);
+        AddTagCommand command = (AddTagCommand) parser.parseCommand(AddTagCommand.COMMAND_WORD
+                + " " + PREFIX_TAG_FULL
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName, DEFAULT_STATE_LOCK);
+        assertEquals(new AddTagCommand(toAdd, indexes), command);
+    }
+
+    @Test
+    public void parseCommandAliasAddTag() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        final String tagName = "friends";
+        Tag toAdd = new Tag(tagName);
+        AddTagCommand command = (AddTagCommand) parser.parseCommand(AddTagCommand.COMMAND_ALIAS
+                + " " + PREFIX_TAG_FULL
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName, DEFAULT_STATE_LOCK);
+        assertEquals(new AddTagCommand(toAdd, indexes), command);
+    }
+
+    @Test
+    public void parseCommandDeleteTag() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        final String tagName = "friends";
+        Tag toDelete = new Tag(tagName);
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(DeleteTagCommand.COMMAND_WORD
+                + " " + PREFIX_TAG_FULL
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName, DEFAULT_STATE_LOCK);
+        assertEquals(new DeleteTagCommand(toDelete, indexes), command);
+    }
+
+    @Test
+    public void parseCommandAliasDeleteTag() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        final String tagName = "friends";
+        Tag toDelete = new Tag(tagName);
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(DeleteTagCommand.COMMAND_ALIAS
+                + " " + PREFIX_TAG_FULL
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName, DEFAULT_STATE_LOCK);
+        assertEquals(new DeleteTagCommand(toDelete, indexes), command);
+    }
+
+    @Test
+    public void parseCommandTagList() throws Exception {
+        assertTrue(parser.parseCommand(TagListCommand.COMMAND_WORD,
+                DEFAULT_STATE_LOCK) instanceof TagListCommand);
+        assertTrue(parser.parseCommand(TagListCommand
+                .COMMAND_WORD + " 3", DEFAULT_STATE_LOCK) instanceof TagListCommand);
+    }
+
+    @Test
+    public void parseCommandAliasTagList() throws Exception {
+        assertTrue(parser.parseCommand(TagListCommand.COMMAND_ALIAS,
+                DEFAULT_STATE_LOCK) instanceof TagListCommand);
+        assertTrue(parser.parseCommand(TagListCommand
+                .COMMAND_WORD + " 3", DEFAULT_STATE_LOCK) instanceof TagListCommand);
+    }
+
     @Test
     public void parseCommandFindTag() throws Exception {
         List<String> keywords = Arrays.asList("friend", "colleague");
@@ -359,7 +439,56 @@ public class AddressBookParserTest {
         assertEquals(new FindTagCommand(
                 new NameContainsTagsPredicate(keywords)), command);
     }
+
+    @Test
+    public void parseCommandFavourite() throws Exception {
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(
+                FavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+                DEFAULT_STATE_LOCK);
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandAliasFavourite() throws Exception {
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(
+                FavouriteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased(),
+                DEFAULT_STATE_LOCK);
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandUnfavourite() throws Exception {
+        UnfavouriteCommand command = (UnfavouriteCommand) parser.parseCommand(
+                UnfavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+                DEFAULT_STATE_LOCK);
+        assertEquals(new UnfavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandAliasUnfavourite() throws Exception {
+        UnfavouriteCommand command = (UnfavouriteCommand) parser.parseCommand(
+                UnfavouriteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased(),
+                DEFAULT_STATE_LOCK);
+        assertEquals(new UnfavouriteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandFavouriteList() throws Exception {
+        assertTrue(parser.parseCommand(FavouriteListCommand.COMMAND_WORD,
+                DEFAULT_STATE_LOCK) instanceof FavouriteListCommand);
+        assertTrue(parser.parseCommand(FavouriteListCommand
+                .COMMAND_WORD + " 3", DEFAULT_STATE_LOCK) instanceof FavouriteListCommand);
+    }
+
+    @Test
+    public void parseCommandAliasFavouriteList() throws Exception {
+        assertTrue(parser.parseCommand(FavouriteListCommand.COMMAND_ALIAS,
+                DEFAULT_STATE_LOCK) instanceof FavouriteListCommand);
+        assertTrue(parser.parseCommand(FavouriteListCommand
+                .COMMAND_WORD + " 3", DEFAULT_STATE_LOCK) instanceof FavouriteListCommand);
+    }
     //@@author
+
     @Test
     public void parseCommandHelp() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, DEFAULT_STATE_LOCK) instanceof HelpCommand);

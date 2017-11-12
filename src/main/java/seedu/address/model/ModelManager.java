@@ -236,13 +236,14 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.favouritePerson(target);
         indicateAddressBookChanged();
     }
+    //@@author
     //@@author wangyiming1019
     @Override
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.unfavouritePerson(target);
         indicateAddressBookChanged();
     }
-
+    //@@author
     //@@author Esilocke
     @Override
     public synchronized void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {

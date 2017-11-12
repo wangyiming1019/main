@@ -27,7 +27,7 @@ public class DeleteTagCommand extends DeleteCommand {
             + "Parameters: "
             + "[INDEX] [MORE INDEXES] (index must be a positive integer) "
             + "[" + PREFIX_TAG + "TAG]... \n"
-            + "Example: " + COMMAND_WORD + " 1 2 t/friends \n";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG_FULL + " 1 2 t/friends \n";
 
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Deleted Tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";

@@ -1201,7 +1201,7 @@ Finally, both commands diverge as `handleOpen` will call `resetData` to reset th
 This process is illustrated using the sequence diagram below:
 
 image::OpenSequenceDiagram.png[width="800"]
-_Figure 3.8.1 : Sequence Diagram for Opening a save file_
+_Figure 3.13.1 : Sequence Diagram for Opening a save file_
 
 ==== Design Considerations
 **Aspect:** How does `OpenCommand` and `SaveAsCommand` determine the file location to save or load the save file from +
@@ -1224,8 +1224,8 @@ tag for all persons in the address book. This command will inherit from `Undoabl
 
 The add/delete tag command are executed by `AddTagCommand` and `DeleteTagCommand` are parsed through `AddTagCommandParser` and `DeleteTagCommandParser`.
 It is different from `edit [INDEX] [TAG]` since it allows the user to perform the addition and deletion of tags for multiple people at once.
-If the user wants to add the `t/friends` tag for the first 3 persons in the address book, the `AddTagCommand` (`addtag 1 2 3 t/friends`) will be executed.
-The same operation will happen for `deletetag` command.
+If the user wants to add the `t/friends` tag for the first 3 persons in the address book, the `AddTagCommand` (`add tag/ 1 2 3 t/friends`) will be executed.
+The same operation will happen for `delete tag/` command.
 
 The `AddTagCommand` goes through all the persons in the address book and add tag to the persons with specific index. The `DeleteTagCommand` works
 in a similar way.
@@ -1236,7 +1236,7 @@ The example of how `AddTagCommand` is working:
 /**
  * Adds a tag to the persons in the list from the address book.
  */
-public class AddTagCommand extends UndoableCommand {
+public class AddTagCommand extends AddCommand {
     /**
          * Check whether the index within the range then checks whether the specific persons have the tag.
          * If not, add the tag to the person that doesn't have the given tag.
@@ -1255,11 +1255,11 @@ public class AddTagCommand extends UndoableCommand {
         }
 ----
 
-Suppose the user enter the `addtag 1 2 t/friends` command. The following sequence diagram shows how the add tag command works:
+Suppose the user enter the `add tag/ 1 2 t/friends` command. The following sequence diagram shows how the add tag command works:
 
 image::AddTagSdForLogic.png[width="800"]
 _Figure 3.8.1 : Add Tag Sequence Diagram for Logic_ +
-The `deletetag` command works the same as `addtag` command with different name only.
+The `delete tag/` command works the same as `add tag/` command with different name only.
 
 [NOTE]
 If the input index does not exist, the `AddTagCommand` and `DeleteTagCommand` will throw an exception. +
@@ -1268,8 +1268,8 @@ If the tag to be added exists in every target person in the address book, the `A
 
 ==== Design Considerations
 
-**Aspect:** Implementation of the `addtag` and `deletetag` +
 
+**Aspect:** Implementation of the `add tag/` and `delete tag/` +
 **Alternative 1 (current choice):** implement the methods in `ModelManager` +
 **Pros:** Easier to implement. `ModelManager` includes all the methods and variables. +
 **Cons:** Must modify `Model` also to fit the `ModelManager`. Beginner may have difficulty to understand the different functions in Model component+
@@ -1281,8 +1281,7 @@ This violates the Single Responsibility Principle.
 
 ---
 **Aspect:** Implementation of the `AddTagCommand` and `DeleteTagCommand` +
-
-**Alternative 1 (current choice):** create new command `addtag` and `deletetag` +
+**Alternative 1 (current choice):** create new command `add tag/` and `delete tag/` +
 **Pros:** Less modification of existing command and parser +
 **Cons:** Users have to learn how to use the additional commands +
 
@@ -1298,7 +1297,7 @@ This violates the Single Responsibility Principle.
 The find tag mechanism is facilitated by an ArrayList of Tags, which resides inside `LogicManager`. It supports finding persons by their tags in the address book.
 This command will not inherit from `UndoableCommand`.
 
-The `findtag` command is executed by `FindTagCommand` and is parsed through `FindTagCommandParser`.
+The `find tag/` command is executed by `FindTagCommand` and is parsed through `FindTagCommandParser`.
 After parsing through `FindTagCommandParser`, it does not goes to the `FindTagCommand` straightly. The list of tags input will be processed by `NameContainsTagsPredicate` first.
 It is similar to the `find` command since find persons through their names and find persons through their tags are quite similar.
 
@@ -1342,37 +1341,109 @@ is for the tags to be excluded.
 ----
 
 Lastly, it will return the result according to the user input. +
-Suppose the user enter `findtag friends` command. The following sequence diagram shows how the find tag command works:
+Suppose the user enter `find tag/ friends` command. The following sequence diagram shows how the find tag command works:
 
 image::FindTagSequenceDiagram.png[width="800"]
-_Figure 3.9.1 : Find Tag Sequence Diagram for Logic_ +
+_Figure 3.14.1 : Find Tag Sequence Diagram for Logic_ +
 
 [NOTE]
 If the input index tags do not exist, the `FindTagCommand` will give a empty list.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of the `findtag` +
 
-**Alternative 1 (current choice):** implement a new command `findtag` +
-**Pros:** Easier to implement. `findtag` command will be similar to the `find` command. +
+**Aspect:** Implementation of the `find tag/` +
+**Alternative 1 (current choice):** implement a new command `find tag/` +
+**Pros:** Easier to implement. `find tag/` command will be similar to the `find` command. +
 **Cons:** Must create `NameContainsTagsPredicate` in model. It does not fully utilize the existing `NameContainsKeywordsPredicate`. +
-
-**Alternative 2:** Implement the `findtag` in `FindCommand`. +
+**Alternative 2:** Implement the `find tag/` in `FindCommand`. +
 **Pros:** Easier for user. They do not have to memorize some many commands. +
 **Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
 and Separation of Concerns as FindCommand now needs to do two different things.
 // end::findtag[]
 
+
+
 === Favourite/Unfavourite Person mechanism
-To favourite a person is achieved by `FavouriteCommand`. It basically changes the value of the `Favourite` field of a `Person`. The `Favourite` class has two status indicators: one is a boolean value and the other is a String. The boolean one is used in the constructor while the String one is for UI and output purposes.
+To favourite a person is achieved by `FavouriteCommand`. It basically changes the value of the `favourite` status of a `Person` but there is no specific `Favourite` field for person.
 
-In this sense, `Favourite` class needs to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is false.
+In this sense, a boolean value needs to be created to store the favourite status of a contact. As `AddCommand` does not involve `favourite`, the default `favourite` status for every newly added `Person` is false.
 
-The following sequence diagram shows how a `FavouriteCommand` is processed:
+The `favourite` status is a boolean value and it will be set as true through `FavouriteCommand`. Then, the target person will be updated.
+
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        // throw invalid person index
+
+        // update favourite status
+        ReadOnlyPerson personToFavourite = lastShownList.get(targetIndex.getZeroBased());
+        Person editedPerson = new Person(personToFavourite.getName(),
+                personToFavourite.getPhone(), personToFavourite.getEmail(),
+                personToFavourite.getAddress(), true,
+                personToFavourite.getRemark(), personToFavourite.getAvatar(),
+                personToFavourite.getTags());
+        // update target person
+        try {
+            model.updatePerson(personToFavourite, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            // throw exception
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, personToFavourite));
+    }
+----
+`FavouriteCommand` takes in an integer as its argument. The command is first being parsed in `AddressBookParser` to be identified as an instance of `FavouriteCommand`.
+Then it is parsed by `FavouriteCommandParser` to parse the index. Invalid indexes will be handled by throwing an exception. This is how `FavouriteCommandParser` is implemented:
+[source,java]
+----
+/**
+     * Parses the given {@code String} of arguments in the context of the FavouriteCommand
+     * and returns an FavouriteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FavouriteCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new FavouriteCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The following sequence diagram shows how a `FavouriteCommand` is processed: +
 
 image::FavouriteSequenceDiagram.png[width="800"]
+_Figure 3.15.1 : Favourite Sequence Diagram for Logic_ +
 
+To indicate that a person has been `favoured`, `PersonCard` is modified to contain a `favouriteLabel` that changes its appearance based on the `favourite` status of the person.
+It will first detect the boolean favourite status of the person. If the person is a favourite contact, a heart will be shown.
+The colours of the border and the background of the label are set to transparent, so that only the background picture, which is a heart, will be shown.
+
+==== Design Consideration
+
+**Aspect:** Implementation of `favourite` +
+**Alternative 1 (current choice):** implement a new command `favourite`. +
+**Pros:** Easier to implement. Does not need to modify existing command. +
+**Cons:** Must modify `Person` class to update the person status. The constructor of `person` has been modified so all the `person` in the address book must change accordingly. +
+**Alternative 2:** Implement the `favourite` in `AddCommand` +
+**Pros:** Easier for user. They do not have to memorize some many commands. +
+**Cons:** Difficult to implement. The `favourite` status will be treated as an optional field when using `AddCommand`. In order to change `favourite` status, `EditCommand` may be modified which is very troublesome. +
+
+---
+**Aspect:** Store `Favourite` values +
+**Alternative 1 (current choice):** Store it as a `Boolean` value +
+**Pros:** Easier to implement. Does not need to create another class. +
+**Cons:** Must modify `Model` and `ModelManager` to update the person status.It is also prone to bugs when developers forget to change the ObjectProperty to `String` in UI classes. +
+**Alternative 2:** Add a new `Favourite` field +
+**Pros:** Similar way to store other personal information. It also follows the open-close principle and exercises cohesion, where all matters related to `Favourite` field is dealt in its own class. +
+**Cons:** Difficult to implement. Adding a new field will cause many changes in UI, Logic, Model and Storage. Some test cases will be rewritten.
 
 === Logging
 

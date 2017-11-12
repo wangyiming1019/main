@@ -204,7 +204,7 @@ Suppose you want to add tag `friends` to the 1st and 2nd persons in the address 
 then use the `addtag` command to achieve it.
 
 >> `list` +
->> `addtag 1 2 t/friends` +
+>> `add tag/ 1 2 t/friends` +
 ****
 
 ****
@@ -212,8 +212,10 @@ then use the `addtag` command to achieve it.
 Suppose you want to add a common tag to all the persons in the address book. You can type in the following command:
 
 >> `list` +
->> `addtag t/acquaintance` +
+>> `add tag/ t/acquaintance` +
 ****
+image::AddTagCommand.png[width="790"]
+_Figure 3.5.1 : AddTagCommand_
 // end::addtag[]
 
 === Listing all persons : `list`
@@ -407,7 +409,7 @@ Instead of `listing` all the contacts, you can `find` all the `Besty` first, the
 >> `favourite 1` +
 ****
 image::FavouriteCommandBeforeAndAfter.png[width="790"]
-_Figure 3.9.1 : FavouriteCommand_
+_Figure 3.12.1 : FavouriteCommand_
 // end::favourite[]
 
 // tag::showfavourite[]
@@ -425,7 +427,7 @@ Format: `showfavourite` +
 * `showfavourite` command: It will return an empty list if there is no favourite persons.
 ****
 image::ShowFavouriteCommand.png[width="790"]
-_Figure 3.10.1 : ShowFavouriteCommand_
+_Figure 3.13.1 : ShowFavouriteCommand_
 // end::showfavourite[]
 
 === Locating persons by name : `find`
@@ -511,6 +513,7 @@ Furthermore, as you have several tasks related to "Report" that are already comp
 >> `find task/ report p/4 done/false` +
 ****
 // end::findtask[]
+
 // tag::showandfindtag[]
 
 === Listing all tags : `showtag` (Since V1.5)
@@ -528,14 +531,14 @@ Format: `showtag` +
 * You may want to use `showtag` command to help you recall all the `tags` in the address book before you try to use `findtag` to find persons.
 ****
 
-=== Locating persons by tag : `findtag` (Since V1.4)
+=== Locating persons by tag : `find tag/` (Since V1.4)
 
-You can use the `findtag` command to quickly filter out contacts who match your criteria. For example, you may wish to find contacts who are your `classmates`. +
+You can use the `find tag/` command to quickly filter out contacts who match your criteria. For example, you may wish to find contacts who are your `classmates`. +
 If you want to find contacts who are your `classmates` but not your `friends`, you just need to add `/` in front of the `friends`. +
 [NOTE]
-`findtag` can be replaced by `ftag` for faster input. +
+`find tag/` can be replaced by `f tag/` for faster input. +
 
-Format: `findtag KEYWORD [MORE_KEYWORDS]` +
+Format: `find tag/ KEYWORD [MORE_KEYWORDS]` +
 
 ****
 **Things To Note** +
@@ -552,22 +555,24 @@ Format: `findtag KEYWORD [MORE_KEYWORDS]` +
 **Example Scenario 1:** +
 Suppose you want to find contatcs with tag `friends` or `colleagues`, you can just key in the following command.
 
->> `findtag friends colleagues`
+>> `find tag/ friends colleagues`
 ****
 
 ****
 **Example Scenario 2:** +
 Suppose you want to find contacts without tag `frineds`, you can key in the following command.
 
->> `findtag /friends`
+>> `find tag/ /friends`
 ****
 
 ****
 **Example Scenario 3:** +
 Suppose you want to find contacts with tag `friends` but without `colleagues`, you can key in the following command.
 
->> `findtag friends /colleagues`
+>> `find tag/ friends /colleagues`
 ****
+image::FindTagCommand.png[width="790"]
+_Figure 3.17.1 : FindTagCommand_
 // end::showandfindtag[]
 
 === Deleting a person : `delete`
@@ -642,7 +647,7 @@ You thus use `find task/` to find tasks related to "Essays", before using `delet
 
 You can use `delete tag/` to delete the tag of multiple persons from the address book. +
 [NOTE]
-`delete tag/` can be replaced by `dtag` for faster input. +
+`delete tag/` can be replaced by `d tag/` for faster input. +
 
 Format: `delete tag/ INDEX... t/[TAG]` +
 
@@ -662,17 +667,19 @@ Format: `delete tag/ INDEX... t/[TAG]` +
 Suppose you want to delete `classmates` tag for the first two persons in the address book, you can `list` all the persons first, then
 use the `delete tag/` command to achieve.
 
-`list` +
-`delete tag/ 1 2 t/friends` +
+>> `list` +
+>> `delete tag/ 1 2 t/friends` +
 ****
 
 ****
 **Example Scenario 2:** +
 Suppose you want to delete `friends` tag from all contacts in the address book.
 
-`list` +
-`delete tag/ t/friends` +
+>> `list` +
+>> `delete tag/ t/friends` +
 ****
+image::DeleTagCommand.png[width="790"]
+_Figure 3.20.1 : DeleteTagCommand_
 // end::deletetag[]
 
 // tag::sort[]
@@ -1091,6 +1098,7 @@ Finally, you edit Clarissa's name correctly.
 >> `edit 5 n/Clarissa Liselotte`
 ****
 // end::undo[]
+
 // tag::unfavourite[]
 
 === Unfavouriting persons : `unfavourite` (since V1.3)
@@ -1116,19 +1124,22 @@ Format: `unfavourite INDEX [MORE INDEX]` +
 **Example Scenario 1:** +
 Suppose you do not want to the 2nd person in the address book to be your favourite contact anymore, you should `list` all the persons first, then use `unfavourite` command to achieve it.
 
-`list` +
-`unfavourite 2` +
+>> `list` +
+>> `unfavourite 2` +
 ****
 
 ****
 **Example Scenario 2:** +
 Suppose you have `Betsy Brandt, Betsy Devos and Betsy Ross` in your address book. You want to `unfavourite` `Betsy Brandt` in the address book.
-Instead of `listing` all the contacts, you can `find` all the `Besty` first, then `unfavourite` her.
+Instead of `listing` all the contacts, you can `find` all the `Besty` first, then `unfavourite` `Betsy Brandt`.
 
-`find Betsy` +
-`unfavourite 1` +
+>> `find Betsy` +
+>> `unfavourite 1` +
 ****
+image::UnfavouriteCommand.png[width="790"]
+_Figure 3.20.1 : UnfavouriteCommand_
 // end::unfavourite[]
+
 // tag::redo[]
 === Redoing the previously undone command : `redo`
 
