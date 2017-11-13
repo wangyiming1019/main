@@ -200,7 +200,6 @@ public class ChangePasswordCommand extends Command {
 ``` java
         /**
          * Returns the value of remarkIsPrivate
-         * @return the value of remarkIsPrivate
          */
         public Boolean getRemarkIsPrivate() {
             return remarkIsPrivate;
@@ -209,19 +208,6 @@ public class ChangePasswordCommand extends Command {
         public void setRemarkIsPrivate(boolean remarkIsPrivate) {
             requireNonNull(remarkIsPrivate);
             this.remarkIsPrivate = remarkIsPrivate;
-        }
-
-        /**
-         * Returns the value of avatarIsPrivate
-         * @return the value of avatarIsPrivate
-         */
-        public Boolean getAvatarIsPrivate() {
-            return avatarIsPrivate;
-        }
-
-        public void setAvatarIsPrivate(boolean avatarIsPrivate) {
-            requireNonNull(avatarIsPrivate);
-            this.avatarIsPrivate = avatarIsPrivate;
         }
 ```
 ###### \java\seedu\address\logic\commands\FontSizeCommand.java
@@ -487,9 +473,11 @@ public class UnlockCommand extends Command {
         // Cases for CRUD related functionality and for locking and unlocking
         switch (commandWord) {
         case OpenCommand.COMMAND_WORD:
+        case OpenCommand.COMMAND_ALIAS:
             return new OpenCommand();
 
         case SaveAsCommand.COMMAND_WORD:
+        case SaveAsCommand.COMMAND_ALIAS:
             return new SaveAsCommand();
 
         case ExitCommand.COMMAND_WORD:

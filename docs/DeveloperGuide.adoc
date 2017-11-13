@@ -741,7 +741,7 @@ image::ChangePasswordActivityDiagram.png[width="800]
 The `Name`, `Phone`, `Email`, `Address` and `Remark` of a `Person` contains a boolean `isPrivate`, which will determine if the field belonging to that person is private or not.
 
 image::PersonClassDiagramPrivacy.png[width="800"]
-_Figure 3.7.1 : Class diagram for a Person, only Name, Phone, Email, Address and Remark contain an isPrivate boolean to indicate if it is private or not_
+_Figure 3.10.1 : Class diagram for a Person, only Name, Phone, Email, Address and Remark contain an isPrivate boolean to indicate if it is private or not_
 
 Adding a person with private fields uses the same `AddCommand` as adding a person with no public fields. +
 To determine if the field that is added should be set to private, a `p` is added to the start of the prefix. +
@@ -753,7 +753,7 @@ Depending on whether or not the field is supposed to be private, `ParsetUtil` wi
 Upon obtaining all the fields anc creating a new `Person`, `AddCommandParser` will create a new `AddCommand` to handle the addition of the new `Person`.
 
 image::AddPrivateSequenceDiagram.png[width="800"]
-_Figure 3.7.2 : Sequence Diagram for adding a Person with private fields_
+_Figure 3.10.2 : Sequence Diagram for adding a Person with private fields_
 
 If a field is private, then the `toString` method will return a string `<Private [FIELD]>`, where `[FIELD]` is the name of that field. +
 This can be seen from the `toString` method in `Name`:
@@ -869,7 +869,7 @@ Upon generation of all the fields, if `areFieldsAllPrivate` is still true, `crea
 The sequence diagram for `ChangePrivacyCommand` is illustrated below.
 
 image::ChangePrivacySequenceDiagram.png[width="800"]
-_Figure 3.8.1 : Sequence Diagram for changing the privacy of a Person's fields_
+_Figure 3.11.1 : Sequence Diagram for changing the privacy of a Person's fields_
 
 Upon receiving a String containing the arguments from `AddressBookParser`, `ChangePrivacyCommandParser` will create a `PersonPrivacySettings` object.
 
@@ -944,7 +944,7 @@ This allows `isAnyFieldNonNull` to check if the user has input any field at all.
 The sequence diagram for `PrivacyLevelCommand` is illustrated below.
 
 image::PrivacyLevelSequenceDiagram.png[width="800"]
-_Figure 3.9.1 : Sequence Diagram for changing the privacy level of the address book_
+_Figure 3.12.1 : Sequence Diagram for changing the privacy level of the address book_
 
 `PrivacyLevelCommandParser` will accept any integer that is input in the command line, and create a `PrivacyLevelCommand` that stores the integer, which represents the privacy level to switch to.
 
@@ -955,7 +955,7 @@ If the integer is within the valid range, `PrivacyLevelCommand` will update the 
 `Model`, each `Person` and each field that can be set as private all contain a `privacyLevel` variable to indicate the current privacy level. This value should remain the same between all of these objects throughout the operation of Address++.
 
 image::PersonClassDiagramPrivacyLevel.png[width="800"]
-_Figure 3.9.2 : Class Diagram of Person, which shows which classes contain an integer to indicate the privacy level_
+_Figure 3.12.2 : Class Diagram of Person, which shows which classes contain an integer to indicate the privacy level_
 
 Finally, depending on the privacy level, `PrivacyLevelCommand` will update the call `model.updateFilteredPersonList()` with the appropriate predicate.
 
@@ -1064,7 +1064,7 @@ BrowserPanel will then use `handleBrowserPanelLocationEvent` to process this new
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::LocateSequenceDiagram.png[width="800"]
-_Figure 3.10.1 : Sequence Diagram for Locating a Person's Address_
+_Figure 3.13.1 : Sequence Diagram for Locating a Person's Address_
 
 ==== Design Considerations
 
@@ -1214,7 +1214,7 @@ private void loadDirectionsPage(String fromLocation, String toLocation) {
 The overall sequence of events is illustrated by the following sequence diagram:
 
 image::NavigateSequenceDiagram.png[width="800"]
-_Figure 3.11.1 : Sequence Diagram for Navigating from one Address to another_
+_Figure 3.14.1 : Sequence Diagram for Navigating from one Address to another_
 
 
 ==== Design Considerations
@@ -1306,7 +1306,7 @@ Finally, both commands diverge as `handleOpen` will call `resetData` to reset th
 This process is illustrated using the sequence diagram below:
 
 image::OpenSequenceDiagram.png[width="800"]
-_Figure 3.12.1 : Sequence Diagram for Opening a save file_
+_Figure 3.15.1 : Sequence Diagram for Opening a save file_
 
 ==== Design Considerations
 **Aspect:** How does `OpenCommand` and `SaveAsCommand` determine the file location to save or load the save file from +
@@ -1397,7 +1397,7 @@ public CommandResult execute() throws CommandException {
 The sequence diagram for the whole process is show below:
 
 image::ThemeSequenceDiagram.png[width="800"]
-_Figure 3.13.1 : Sequence Diagram for Changing Themes_
+_Figure 3.16.1 : Sequence Diagram for Changing Themes_
 
 ==== Design Considerations
 **Aspect:** Getting the correct file path to the .css file +

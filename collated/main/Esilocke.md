@@ -1863,7 +1863,7 @@ public class TaskNotFoundException extends Exception {
 public class Priority {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
-            "Task priorities must be an integer from 1 to 5, inclusive, where 1 represents the lowest priority";
+            "Task priorities must be an integer from 0 to 5, inclusive, where 5 represents the highest priority";
     public static final String[] PRIORITY_TEXT_STRINGS = {"", "Lowest", "Low", "Medium", "High", "Highest"};
 
     public static final int PRIORITY_LOWER_BOUND = 0;

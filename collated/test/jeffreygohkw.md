@@ -685,6 +685,42 @@ public class SaveAsCommandTest {
         assertTrue(changePrivacyCommandsEqual(command, actualCommand));
     }
 
+    @Test
+    public void parseCommandPrivacyLevel() throws Exception {
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_WORD + " 1", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_WORD + " 2", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_WORD + " 3", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+    }
+
+    @Test
+    public void parseCommandAliasPrivacyLevel() throws Exception {
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_ALIAS + " 1", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_ALIAS + " 2", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+        assertTrue(parser.parseCommand(PrivacyLevelCommand.COMMAND_ALIAS + " 3", DEFAULT_STATE_LOCK)
+                instanceof PrivacyLevelCommand);
+    }
+
+    @Test
+    public void parseCommandTheme() throws Exception {
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD + " dark", DEFAULT_STATE_LOCK)
+                instanceof ThemeCommand);
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_WORD + " light", DEFAULT_STATE_LOCK)
+                instanceof ThemeCommand);
+    }
+
+    @Test
+    public void parseCommandAliasTheme() throws Exception {
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_ALIAS + " dark", DEFAULT_STATE_LOCK)
+                instanceof ThemeCommand);
+        assertTrue(parser.parseCommand(ThemeCommand.COMMAND_ALIAS + " light", DEFAULT_STATE_LOCK)
+                instanceof ThemeCommand);
+    }
+
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -1050,6 +1086,37 @@ public class SortCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
 
     }
+```
+###### \java\seedu\address\logic\parser\ThemeCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.ThemeCommand;
+
+public class ThemeCommandParserTest {
+    private ThemeCommandParser parser = new ThemeCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ThemeCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        ThemeCommand expectedFindPersonCommand =
+                new ThemeCommand("light");
+        assertParseSuccess(parser, "light", expectedFindPersonCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " light     ", expectedFindPersonCommand);
+    }
+}
 ```
 ###### \java\seedu\address\model\person\AddressTest.java
 ``` java
