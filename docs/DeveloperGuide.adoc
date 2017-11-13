@@ -462,11 +462,16 @@ The Parser in charge of the command will thus return either an AddPersonCommand,
 The sequence diagram below shows how this is done:
 
 image::AddTaskSeq.png[width="800"]
+_Figure 3.4.1.1 : Sequence Diagram for adding a Task_
 
 ==== Task structure and subclasses
 
 The Task object has several subclasses, which store information about the task. The following class diagram illustrates the structure of a Task object.
 
+image::TaskClassDiagram.png[width="800"]
+_Figure 3.4.2.1 : Class Diagram for the Task class_
+
+Each subclass contains its own methods for input validation, and the Assignees class supports some methods for changing its assignedList.
 
 ==== Task Object Storage
 
@@ -524,6 +529,7 @@ The indexes stored in the Assignees class *refer to the index of the person in t
 For example, given the below list of persons:
 
 image::AssignIndexMovement.png[width="800"]
+_Figure 3.5.1 : Mapping of indexes to a task_
 
 After a `find` operation, only the second, fourth and fifth persons are visible.
 When you call `assign 1 2 to/1`, while the first and second persons in the visible list will be assigned to the first Task, in this case the "Second person" and "Fourth person", internally the assignee list contain Indexes corresponding the following values: +
@@ -543,11 +549,13 @@ After a `delete` operation, the order of the persons in the persons list may cha
 The activity diagram below illustrates the process of updating task assignee lists when a person is deleted.
 
 image::AssignIndexDelete.png[width="800]
+_Figure 3.5.2 : Activity Diagram for updating Assignees after deleting a Person_
 
 After a `sort` operation, the order of the persons in the persons list may change as well. However, in comparison to `delete`, the new position of the person is not fixed.
 To ensure that the indexes are updated properly, the change in positions after each `sort` operation is maintained as well inside the UniquePersonList. +
 
 image::AssignIndexSort.png[width="800"]
+_Figure 3.5.3 : Mapping of indexes after a sort operation_
 
 All task assignee lists will thus be updated using the mappings from the sort operation. Each index in the list will be replaced by the value given in the mappings.
 For example, if a task previously had an index of "1" assigned to it, it be replaced by an index of "4".
