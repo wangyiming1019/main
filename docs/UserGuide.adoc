@@ -145,7 +145,7 @@ option while typing in your command:
 
 //end::addprivacy[]
 //tag::addtask[]
-=== Adding a task: `add task/`
+=== Adding a task: `add task/` (Since V1.2)
 
 You can use the `add task/` command to add new tasks to your address book. This allows you to keep track of your
 assignments and project objectives.
@@ -263,7 +263,7 @@ that you are not aware of. You decide to update her entry in Address++ according
 ****
 // end::editprivacy[]
 // tag::edittask[]
-=== Editing a person : `edit task/`
+=== Editing a person : `edit task/` (Since V1.2)
 
 You can use the `edit task/` command to quickly fix mistakes in your entries, or add/remove details in your tasks. You may wish to edit your tasks when their requirements change, for example. +
 [NOTE]
@@ -473,7 +473,7 @@ Additionally, you would also like to find people whose name contain the word "Da
 >> `find David Joe` +
 ****
 // tag::findtask[]
-=== Finding a task : `find task/`
+=== Finding a task : `find task/` (Since V1.3)
 
 You can use the `find task/` command to quickly find tasks that match your criteria, as well as tasks that have a certain level of urgency. +
 Furthermore, you can choose to only retrieve tasks that are either complete, or still in progress. +
@@ -619,7 +619,7 @@ You thus use `find` to find contacts who are named "Maribel", then delete Maribe
 >> `delete 3`
 ****
 // tag::deletetask[]
-=== Deleting a task : `delete task/`
+=== Deleting a task : `delete task/` (Since V1.2)
 
 You can use the `delete task/` command to remove tasks from the address book. The `delete task/` command will help you clean up obsolete or completed tasks. +
 [NOTE]
@@ -694,7 +694,7 @@ _Figure 3.20.1 : DeleteTagCommand_
 // end::deletetag[]
 
 // tag::sort[]
-=== Sorting your contact list and tasks : `sort`
+=== Sorting your contact list and tasks : `sort` (Since V1.1)
 
 Sort your contacts or tasks by using the `sort` command +
 [NOTE]
@@ -729,7 +729,7 @@ the higher priority tasks on the top of the list:
 //end::sort[]
 
 //tag::backup[]
-=== Backing up your data : `backup`
+=== Backing up your data : `backup` (Since V1.2)
 
 You can backup your saved data on Address++ by using the `backup` command. +
 
@@ -751,7 +751,7 @@ The file will then be saved in the same directory location as your `JAR` applica
 //end::backup[]
 //tag::password[]
 
-=== Protecting your data : `lock` `unlock`
+=== Protecting your data : `lock` `unlock` (Since V1.5)
 
 Worried about security? Address++ allows your to protect your data with a password.
 Using the `lock` and `unlock` commands, you can toggle between security modes. +
@@ -785,7 +785,7 @@ To unlock the Address++ application, you use the following command:
 >> `unlock pw/password`
 ****
 
-=== Changing your password : `changepassword`
+=== Changing your password : `changepassword` (Since V1.5)
 
 Want to choose a better password? The `changepassword` command allows you to change your
 password whenever you want, provided you know the old password.
@@ -835,7 +835,7 @@ The first person in your contacts has a very long address, and you want to see i
 >> `select 1` +
 ****
 // tag::selecttask[]
-=== Selecting a task : `select task/`
+=== Selecting a task : `select task/` (Since V1.4)
 
 You can use `select task/` to pick out a task, and look at it in greater detail. +
 [NOTE]
@@ -1066,7 +1066,7 @@ However you have forgotten who you have assigned to that task. You thus use `vie
 // end::assignDismiss[]
 
 // tag::theme[]
-=== Changing the Address Book's theme : `theme`
+=== Changing the Address Book's theme : `theme` (Since V1.5)
 
 Perhaps you may not be too fond of the existing style of the address book and you want to have something fresh. The `theme` command changes the address book between two themes, `light` and `dark`.
 [NOTE]
