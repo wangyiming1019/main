@@ -36,6 +36,7 @@ My contributions to this project are listed below:
 
 include::../UserGuide.adoc[tag=addtag]
 include::../UserGuide.adoc[tag=deletetag]
+
 #End of Extract#
 
 ---
