@@ -30,7 +30,7 @@ Responsibilities: UI Component
 '''
 
 === Lin Ziwen Kelvin
-{empty}[http://github.com/esiloke[github]]
+{empty}[http://github.com/esilocke[github]]
 
 Role: Code Quality
 
