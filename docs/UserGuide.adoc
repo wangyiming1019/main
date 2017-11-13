@@ -157,7 +157,8 @@ Format: `add task/ n/NAME [d/DESCRIPTION] [by/DEADLINE] [p/PRIORITY] [a/ADDRESS]
 
 ****
 **Things To Note** +
-* A task priority must be a positive integer from 1 to 5 inclusive, with 5 being the highest priority +
+* A task priority must be a positive integer from 0 to 5 inclusive, with 5 being the highest priority +
+* Adding a task with a priority of 0 is the same as not adding a priority. Only priority level above 1 will be displayed in the User Interface +
 * Newly added tasks are marked as incomplete by default.
 ****
 
