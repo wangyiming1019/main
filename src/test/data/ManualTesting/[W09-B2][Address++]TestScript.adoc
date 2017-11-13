@@ -37,156 +37,193 @@ Ensure that you have the Address++.jar file and the [W09-B2][Address++]SampleDat
 
 == Testing
 
-=== LocateCommand
+[NOTE]
+Unless explicitly stated, each test section for each command is assumed to be carried out continuously. +
+This means that you *should carry out the tests in the given order*. +
+Each test section is carried out independently. This means that you are recommended to `undo` to restore the address book after each test section.
 
-*Locating a person's address on Google Maps*
+=== HelpCommand
+
+*Opening the help window*
 
 Input Command: +
 ****
-locate 1
+help
 ****
 Expected Result: +
-Google Maps opens, and searches for Blk 30 Geylang Street 29. +
+The User Guide appears in a separate window.
 
 Expected Message: +
 ****
-Searching for Person at Index: 1
+Opened help window.
 ****
 
-*Failing to locate a person with no address*
+=== AddPersonCommand
+
+*Adding a person with all details*
 
 Input Command: +
 ****
-locate 2
+add n/Svea Lisenhower p/98009621 e/svea_li@example.com a/Jurong West Street 65 Blk 667A r/Russian Exchange Student v/https://example.com/image.png
 ****
 Expected Result: +
-An error message is printed, as the person at index 2 has no address. +
+A person named Svea Lisenhower, with the details as stated above is added to the address book at index 21. +
 
 Expected Message: +
 ****
-Person 2 has no Address
+New person added: +
+Svea Lisenhower Phone: 98009621 Email: svea_li@example.com Address: Jurong West Street 65 Blk 667A Remark: Russian Exchange Student Avatar: https://example.com/image.png Tags:
 ****
 
-=== ThemeCommand
-
-*Changing the theme of the address book*
+*Adding a person with missing compulsory details*
 
 Input Command: +
 ****
-theme light
+add p/98009621 e/svea_li@example.com a/Jurong West Street 65 Blk 667A r/Russian Exchange Student v/https://example.com/image.png
 ****
 Expected Result: +
-The address book's colour scheme changes to a bright colour. +
+An error message is printed out, as name is a compulsory field and cannot be missing.
 
 Expected Message: +
 ****
-Theme Changed to: light
+Invalid command format! +
+add: Adds a person to the address book. Parameters: n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [v/AVATAR] [t/TAG]... +
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 r/Sells sea shells on the sea shore v/avatar-filepath.pngt/friends t/owesMoney
 ****
+
+*Adding a person with missing optional details*
 
 Input Command: +
 ****
-theme dark
+add n/Kent Seethis
 ****
 Expected Result: +
-The address book's colour scheme changes to a dark colour.+
+A person named Kent Seethis, but with no other details is added to the address book at index 22. +
+
 Expected Message: +
 ****
-Theme Changed to: dark
+New person added: +
+Kent Seethis Phone:  Email:  Address:  Remark:  Avatar:  Tags:
 ****
 
-=== HistoryCommand
-
-*Lists all commands done in reverser chronological order*
+*Adding a person with invalid phones*
 
 Input Command: +
 ****
-notacommand +
-alsonotacommand +
-history
+add n/Fionnes Karl p/@
 ****
 Expected Result: +
-The two previous commands are listed in the box below the command line in reverse chronological order from top to bottom. +
+An error message is printed, as the specified phone is invalid.
 
 Expected Message: +
 ****
-Entered commands (from most recent to earliest): +
-alsonotacommand +
-notacommand
+Phone numbers can only contain numbers, and should be at least 3 digits long
 ****
 
-=== ClearCommand
+*Adding a person with invalid emails*
+
 Input Command: +
 ****
-clear
+add n/Fionnes Karl e/here
 ****
 Expected Result: +
-All persons and tasks vanish from the leftmost and middle columns, leaving them empty. +
+An error message is printed, as the specified email is invalid.
 
 Expected Message: +
 ****
-*Address book has been cleared!*
+Person emails should be 2 alphanumeric/period strings separated by '@'
 ****
 
-****
-* You may wish to use `undo` to restore the address book before continuing with testing.
-****
-
-=== OpenCommand and SaveAsCommand
-
-*Saves data as a new .xml file and switches to that file*
+*Adding a person with invalid tags*
 
 Input Command: +
 ****
-save +
-Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml. +
-Save the new save file as test.xml. +
-Click save.
+add n/Fionnes Karl t/@
 ****
-
-Expected Result: The file path in the bottom right corner changes to the location of where you saved the file followed by test.xml. +
-
-Expected Message: +
-****
-Successfully saved file.
-****
-*Opens and switches to a new .xml save file*
-
-Following the above save command:
-
-Input Command: +
-****
-clear
-****
-To differentiate the test.xml with the [W09-B2][Address++]SampleData.xml. +
-
 Expected Result: +
-****
-The address book contains no more persons or tasks.
-****
-
-Input Command: +
-****
-open +
-Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml and select [W09-B2][Address++]SampleData.xml. +
-Click open.
-****
-Expected Result: The file path in the bottom right corner changes to the location of where you saved the [W09-B2][Address++]SampleData.xml followed by the name [W09-B2][Address++]SampleData.xml. +
-The original data is restored in the address book. +
+An error message is printed, as the specified tag is invalid.
 
 Expected Message: +
 ****
-Successfully opened file.
+Tags names should be alphanumeric
 ****
 
-=== ExitCommand
+=== AddTaskCommand
 
-*Exits Address++*
+*Adding a task with all details*
 
-Input Command:
+Input Command: +
 ****
-exit
+add task/ n/Buy pencils d/Buy 4 pencils from Popular by/18 November 7pm p/2 a/West Point
 ****
-Expected Result: Address++ closes.
+Expected Result: +
+A task named "Buy pencils", with a description of "Buy 4 pencils from Popular", with a deadline of "Sat Nov 18 19:00:00 SGT 2017",
+a priority of "Low", and an address of "West Point" is added to the addresss book at index 8 in the task list. +
+
+Expected Message: +
+****
+New task added: +
+Buy pencils Description: Buy 4 pencils from Popular Deadline: Sat Nov 18 19:00:00 SGT 2017 Priority: Low Address: West Point <Incomplete> +
+****
+
+*Adding a task with missing compulsory details*
+
+Input Command: +
+****
+add task/ d/Buy 4 pencils from Popular by/18 November 7pm p/2 a/West Point
+****
+Expected Result: +
+An error message is printed out, as name is a compulsory field and cannot be missing.
+
+Expected Message: +
+****
+Invalid command format! +
+add task/: Adds a task to the address book. Parameters: n/NAME [d/DESCRIPTION] [by/DEADLINE] [p/PRIORITY] [a/ADDRESS] +
+Example: add task/ n/Buy pencil d/Buy a new pencil from ABS by/10-10-2017 p/4 a/12 Kent Ridge Crescent, 119275
+****
+
+*Adding a task with missing optional details*
+
+Input Command: +
+****
+add task/ n/Create better task
+****
+Expected Result: +
+A task with the name "Create better task", and no other details present is added to the address book at index 9 in the task list. +
+
+Expected Message: +
+****
+New task added:
+Create better task Description:  Deadline:  Priority:  Address:  <Incomplete>
+****
+
+*Adding a task with invalid deadlines*
+
+Input Command: +
+****
+add task/ n/Create better task by/AAAAAAAAAAAAA
+****
+Expected Result: +
+An error message is printed, as the specified deadline is invalid.
+
+Expected Message: +
+****
+The specified date is invalid.
+****
+
+*Adding a task with invalid priority*
+
+Input Command: +
+****
+add task/ n/Create better task p/99999999
+****
+Expected Result: +
+An error message is printed, as the specified priority is invalid.
+
+Expected Message: +
+****
+Task priorities must be an integer from 0 to 5, inclusive, where 5 represents the highest priority
+****
 
 === AddTagCommand
 
@@ -248,65 +285,584 @@ An error message will displayed since there is no input tags.
 Expected Message: +
 Tags names should be alphanumeric
 
-=== DeleteTagCommand
+=== ListCommand
 
-*Deleting tags from persons in the Address++*
+*List all entries*
 
 Input Command: +
 ****
-delete tag/ 1 2 t/friends
+list
 ****
 Expected Result: +
-The tag `friends` for the first person will be deleted. The rest tags remain no change.
+All tasks and persons in the address book are listed.
 
 Expected Message: +
-Deleted Tag: [friends]
+****
+Listed all entries
+****
+
+=== EditPersonCommand
+
+*Editing a person for all entries*
 
 Input Command: +
 ****
-delete tag/ t/friends
+edit 7 n/Laura Edelweiss p/1111111 a/House of Edelweiss e/laura@example.com r/Heiress to the House of Edelweiss t/Heiress v/https://example.com/validimage2.png
 ****
 Expected Result: +
-All persons in the Address++ will not have the tag `friends`.
+The person at index 7 (Elizabeth Edelweiss) is updated and now has new details matching the command.
 
 Expected Message: +
-Deleted Tag: [friends]
+****
+Edited Person: +
+Laura Edelweiss Phone: 1111111 Email: laura@example.com Address: House of Edelweiss Remark: Heiress to the House of Edelweiss Avatar: https://example.com/validimage2.png Tags: [Heiress]
+****
 
-*Failing to delete tags from persons if none of them have the input tags*
+*Editing a person with only 1 entry*
 
 Input Command: +
 ****
-delete tag/ 1 2 t/neighbour
+edit 7 n/Elizabath Edelweiss
+
 ****
 Expected Result: +
-An error message will display since target persons do not have tag `neighbour`.
+Only the name of the person at index 7 (Now named Laura Edelweiss) is changed to Elizabeth Edelweiss. All other details remain the same.
 
 Expected Message: +
-The target persons do not have input tags.
+****
+Edited Person: +
+Elizabath Edelweiss Phone: 1111111 Email: laura@example.com Address: House of Edelweiss Remark: Heiress to the House of Edelweiss Avatar: https://example.com/validimage2.png Tags: [Heiress]
+****
 
-*Failing to delete tags from persons with invalid index*
+*Editing a task with invalid details*
 
 Input Command: +
 ****
-delete tag/ 23 t/friends
+edit 7 n/
 ****
 Expected Result: +
-An error message will displayed since there is no 23rd person in the person list.
+An error message is printed, as the specified name is invalid.
+
+Expected Message: +
+****
+Person names should only contain alphanumeric characters and spaces, and it should not be blank
+****
+
+Input Command: +
+****
+edit 7 p/ppp
+****
+Expected Result: +
+An error message is printed, as the specified phone is invalid.
+
+Expected Message: +
+****
+Phone numbers can only contain numbers, and should be at least 3 digits long
+****
+
+Input Command: +
+****
+edit 7 e/ppp
+****
+Expected Result: +
+An error message is printed, as the specified email is invalid.
+
+Expected Message: +
+****
+Person emails should be 2 alphanumeric/period strings separated by '@'
+****
+
+Input Command: +
+****
+edit 7 t/@@@@@@
+****
+Expected Result: +
+An error message is printed, as the specified name is invalid.
+
+Expected Message: +
+****
+Tags names should be alphanumeric
+****
+
+*Editing a private person*
+
+Input Command: +
+****
+edit 11 n/Unhide me
+****
+Expected Result: +
+An error message is printed, as the person's name is private.
+
+Expected Message: +
+****
+At least one field to be edited must be public.
+****
+
+*Editing an invalid person*
+
+Input Command: +
+****
+edit 19999 n/Unhide me
+****
+Expected Result: +
+An error message is printed, as the index is invalid.
+
+Expected Message: +
+****
+The person index provided is invalid
+****
+
+=== EditTaskCommand
+
+*Editing a task for all entries*
+
+Input Command: +
+****
+edit task/ 7 n/Paper Castle d/Castle Garde by/9 December 2017 8pm p/1 a/NUS
+****
+Expected Result: +
+The task at index 7 is updated and now has new details matching the command.
+
+Expected Message: +
+****
+Edited Task: +
+Paper Castle Description: Castle Garde Deadline: Sat Dec 09 20:00:00 SGT 2017 Priority: Lowest Address: NUS <Incomplete>
+****
+
+*Editing a task with only 1 entry*
+
+Input Command: +
+****
+edit task/ 7 n/Sandcastle
+
+****
+Expected Result: +
+Only the name of the task at index 7 (Now named Paper Castle) is changed to Sandcastle. All other details remain the same.
+
+Expected Message: +
+****
+Edited Task: +
+Sandcastle Description: Castle Garde Deadline: Sat Dec 09 20:00:00 SGT 2017 Priority: Lowest Address: NUS <Incomplete>
+****
+
+*Editing a task with invalid details*
+
+Input Command: +
+****
+edit task/ 7 n/
+****
+Expected Result: +
+An error message is printed, as the specified name is invalid.
+
+Expected Message: +
+****
+Task names can be in any format, and should not be blank
+****
+
+Input Command: +
+****
+edit task/ 7 by/AAAAAAAA
+****
+Expected Result: +
+An error message is printed, as the specified phone is invalid.
+
+Expected Message: +
+****
+The specified date is invalid.
+****
+
+Input Command: +
+****
+edit task/ 7 e/ppp
+****
+Expected Result: +
+An error message is printed, as the specified email is invalid.
+
+Expected Message: +
+****
+Task priorities must be an integer from 0 to 5, inclusive, where 5 represents the highest priority
+****
+
+*Editing an invalid task*
+
+Input Command: +
+****
+edit task/ 19999 n/Tiny, tiny house
+****
+Expected Result: +
+An error message is printed, as the index is invalid.
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== EditTagCommand
+
+*Renaming a tag in the address book*
+
+Input Command: +
+****
+edit tag/ friends goodFriends
+****
+Expected Result: +
+All instances of "friends" tags are replaced with "goodFriends" tags (at indexes 1, 3, 10, 11, 12, 17). +
+
+Expected Message: +
+****
+Replaced tag friends with goodFriends
+****
+
+*Renaming a non-existant tag in the address book*
+
+Input Command: +
+****
+edit tag/ friends nemesis
+****
+Expected Result: +
+As "friends" were renamed to "goodFriends", there are no more "friends" tags. +
+An error message is printed out as the tag "friends" is not in any of the contacts.
+
+Expected Message: +
+****
+No such tag was found in the address book.
+****
+
+*Renaming a tag to another one with the exact same name*
+
+Input Command: +
+****
+edit tag/ goodFriends goodFriends
+****
+Expected Result: +
+An error message is printed out as the two tag names are exactly the same. +
+
+Expected Message: +
+****
+The new name of the tag cannot be the same as the old name.
+****
+
+*Renaming a tag to another one with an invalid name*
+
+Input Command: +
+****
+edit tag/ goodFriends @@@@
+****
+Expected Result: +
+An error message is printed out as the new tag name is invalid. +
+
+Expected Message: +
+****
+Invalid command format! +
+edit tag/: Edits the specified tag and updates all existing contacts that shares this tag with the new value. +
+Parameters: TAGTOCHANGE (must be alphanumerical) TAGNEWNAME (must be alphanumerical) +
+Example: edit friends enemies
+****
+
+*Renaming a tag to another one with an invalid name*
+
+Input Command: +
+****
+edit tag/ goodFriends @@@@
+****
+Expected Result: +
+An error message is printed out as the new tag name is invalid. +
+
+Expected Message: +
+****
+Invalid command format! +
+edit tag/: Edits the specified tag and updates all existing contacts that shares this tag with the new value. +
+Parameters: TAGTOCHANGE (must be alphanumerical) TAGNEWNAME (must be alphanumerical) +
+Example: edit friends enemies
+****
+
+=== ChangePrivacyCommand
+
+*Changing the privacy of public fields*
+
+Input Command: +
+****
+changeprivacy 20 n/true p/true e/true a/true r/true
+****
+Expected Result: +
+The 20th person has all of their fields set as private, and the original data is hidden in the UI.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: <Private Name> Phone: <Private Phone> Email: <Private Email> Address: <Private Address> Remark: <Private Remark> Avatar:  Tags: [project]
+****
+
+Input Command: +
+****
+changeprivacy 6 n/false
+****
+Expected Result: +
+The 6th person's name, being originally public, remains public.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: David Ng Phone: 87877003 Email: david_ng@example.com Address: <Private Address> Remark:  Avatar:  Tags:
+****
+
+*Changing the privacy of private fields*
+
+Input Command: +
+****
+changeprivacy 20 n/false p/false e/false a/false r/false
+****
+Expected Result: +
+The 20th person has all of their fields set as public, revealing all the original data in the UI.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: Myuria Plumley Phone: 99831115 Email: myuria@example.com Address: #02, Bukit Timah Street 56 Remark: Wears her hair on her right Avatar:  Tags: [project]
+****
+
+Input Command: +
+****
+changeprivacy 6 a/true
+****
+Expected Result: +
+The 6th person's address, being originally private, remains private.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: David Ng Phone: 87877003 Email: david_ng@example.com Address: <Private Address> Remark:  Avatar:  Tags:
+****
+
+*Changing the privacy of empty fields*
+
+Input Command: +
+****
+changeprivacy 2 r/true
+****
+Expected Result: +
+The 2nd person has their remark set to private.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: Antoinette Chan Phone: 89912301 Email: antoinette@example.com Address:  Remark: <Private Remark> Avatar:  Tags: [GEQ2000]
+****
+
+Input Command: +
+****
+changeprivacy 2 r/false
+****
+Expected Result: +
+The 2nd person has their remark set to public, but since it is empty, it does not display any data.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: Antoinette Chan Phone: 89912301 Email: antoinette@example.com Address:  Remark:  Avatar:  Tags: [GEQ2000]
+****
+
+=== PrivacyLevelCommand
+
+*Changing the privacy level*
+
+Input Command: +
+****
+privacylevel 1
+****
+Expected Result: +
+All persons are listed with any private data revealed.
+
+Expected Message: +
+****
+Successfully changed privacy level to 1.
+****
+
+Input Command: +
+****
+privacylevel 3
+****
+Expected Result: +
+Lists all persons except those that have at least one private field.
+
+Expected Message: +
+****
+Successfully changed privacy level to 3.
+****
+
+Input Command: +
+****
+privacylevel 2
+****
+Expected Result: +
+List all persons. Fields that are private will have their data hidden.
+
+Expected Message: +
+****
+Successfully changed privacy level to 2.
+****
+
+=== FavouriteCommand
+
+*Setting a person in the Address++ to be the favourite person*
+
+Input Command: +
+****
+list +
+favourite 2
+****
+Expected Result: +
+The 2nd person in the Address++ will be favoured and a heart picture will be shown next to his name.
+
+Expected Message: +
+Favourited Person: Antoinette Chan Phone: 89912301 Email: antoinette@example.com Address:  Remark:  Avatar:  Tags: [GEQ2000]
+
+*Failing to set a favourite person if he has been favoured*
+
+Input Command: +
+****
+list +
+favourite 1
+****
+Expected Result: +
+An error message will display since the first person in the Address++ has been favoured.
+
+Expected Message: +
+Person is already favourited.
+
+*Failing to set a favourite person with invalid index*
+
+Input Command: +
+****
+favourite 56
+****
+Expected Result: +
+An error message will display since there is no 56th person in the current list.
 
 Expected Message: +
 The person index provided is invalid
 
-*Failing to delete tags from persons with no input tags*
+=== FavouriteListCommand
+
+*Listing all favoured persons in the Address++*
 
 Input Command: +
 ****
-delete tag/ 1 t/
+showfavourite
 ****
 Expected Result: +
-An error message will displayed since there is no input tags.
+List all the favoured persons.
 
 Expected Message: +
-Tags names should be alphanumeric
+Listed all favourited persons.
+
+*Listing empty list with no favoured person in the Address++*
+
+Input Command: +
+****
+showfavourite
+****
+Expected Result: +
+An empty list but with successful message.
+
+Expected Message: +
+Listed all favourited persons.
+
+=== FindPersonCommand
+
+*Finding one keyword*
+
+Input Command: +
+****
+find plumley
+****
+Expected Result: +
+All contacts with the word "plumley", case insensitive, in their name are displayed. +
+
+Expected Message: +
+****
+2 persons listed!
+****
+
+*Finding multiple keywords*
+
+Input Command: +
+****
+find plumley edelweiss
+****
+Expected Result: +
+All contacts with the word "plumley" or "edelweiss", case insensitive, in their name are displayed. +
+
+Expected Message: +
+****
+4 persons listed!
+****
+
+=== FindTaskCommand
+
+*Finding one keyword*
+
+Input Command: +
+****
+find task/ on
+****
+Expected Result: +
+All tasks with the word "on", case insensitive, in their name or description are displayed. +
+
+Expected Message: +
+****
+2 tasks listed!
+****
+
+*Finding multiple keywords*
+
+Input Command: +
+****
+find task/ on stew
+****
+Expected Result: +
+All tasks with the word "on" or "stew", case insensitive, in their name or description are displayed. +
+
+Expected Message: +
+****
+3 tasks listed!
+****
+
+*Finding multiple keywords with priority search*
+
+Input Command: +
+****
+find task/ on stew p/4
+****
+Expected Result: +
+All tasks with the word "on" or "stew", case insensitive, in their name or description, and have a priority of "High" or above are displayed. +
+
+Expected Message: +
+****
+1 tasks listed!
+****
+
+*Finding multiple keywords with state search*
+
+Input Command: +
+****
+find task/ on stew done/true
+****
+Expected Result: +
+All tasks with the word "on" or "stew", case insensitive, in their name or description, and are currently complete are displayed. +
+
+Expected Message: +
+****
+2 tasks listed!
+****
+
+*Finding multiple keywords with state and priority search*
+
+Input Command: +
+****
+find task/ on stew done/true p/3
+****
+Expected Result: +
+All tasks with the word "on" or "stew", case insensitive, in their name or description, with a priority of at least "medium", and are currently complete are displayed. +
+
+Expected Message: +
+****
+1 tasks listed!
+****
 
 === TagListCommand
 
@@ -384,45 +940,818 @@ Although it is a valid tag, there is no person with tag `fff`. Hence, no person 
 Expected Message: +
 0 persons listed!
 
-=== FavouriteCommand
+=== DeletePersonCommand
 
-*Setting a person in the Address++ to be the favourite person*
+*Deleting a person*
 
 Input Command: +
 ****
-list +
-favourite 2
+delete 20
 ****
 Expected Result: +
-The 2nd person in the Address++ will be favoured and a heart picture will be shown next to his name.
+The contact at index 20, Myuria Plumley is deleted from the address book. +
 
 Expected Message: +
-Favourited Person: Antoinette Chan Phone: 89912301 Email: antoinette@example.com Address:  Remark:  Avatar:  Tags: [GEQ2000]
+****
+Deleted Person: Myuria Plumley Phone: 99831115 Email: myuria@example.com Address: #02, Bukit Timah Street 56 Remark: Wears her hair on her right Avatar:  Tags: [project]
+****
 
-*Failing to set a favourite person if he has been favoured*
+*Deleting a person with an invalid index*
 
 Input Command: +
 ****
-list +
-favourite 1
+delete 2000
 ****
 Expected Result: +
-An error message will display since the first person in the Address++ has been favoured.
+An error message is printed out as the index is invalid. +
 
 Expected Message: +
-Person is already favourited.
+****
+The person index provided is invalid
+****
 
-*Failing to set a favourite person with invalid index*
+=== DeleteTaskCommand
+
+*Deleting a person*
 
 Input Command: +
 ****
-favourite 56
+delete task/ 7
 ****
 Expected Result: +
-An error message will display since there is no 56th person in the current list.
+The task at index 7, "Paper Model for project" is deleted from the address book. +
+
+Expected Message: +
+****
+Deleted Task: Paper Model for project Description: Paper model of Himeji castle for project. Myucel/Myuria twins in charge Deadline: Wed Dec 13 17:00:00 SGT 2017 Priority: Medium Address:  <Incomplete>
+****
+
+*Deleting a person with an invalid index*
+
+Input Command: +
+****
+delete task/ 7000
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== DeleteTagCommand
+
+*Deleting tags from persons in the Address++*
+
+Input Command: +
+****
+delete tag/ 1 2 t/friends
+****
+Expected Result: +
+The tag `friends` for the first person will be deleted. The rest tags remain no change.
+
+Expected Message: +
+Deleted Tag: [friends]
+
+Input Command: +
+****
+delete tag/ t/friends
+****
+Expected Result: +
+All persons in the Address++ will not have the tag `friends`.
+
+Expected Message: +
+Deleted Tag: [friends]
+
+*Failing to delete tags from persons if none of them have the input tags*
+
+Input Command: +
+****
+delete tag/ 1 2 t/neighbour
+****
+Expected Result: +
+An error message will display since target persons do not have tag `neighbour`.
+
+Expected Message: +
+The target persons do not have input tags.
+
+*Failing to delete tags from persons with invalid index*
+
+Input Command: +
+****
+delete tag/ 23 t/friends
+****
+Expected Result: +
+An error message will displayed since there is no 23rd person in the person list.
 
 Expected Message: +
 The person index provided is invalid
+
+*Failing to delete tags from persons with no input tags*
+
+Input Command: +
+****
+delete tag/ 1 t/
+****
+Expected Result: +
+An error message will displayed since there is no input tags.
+
+Expected Message: +
+Tags names should be alphanumeric
+
+=== SelectPersonCommand
+
+*Selecting a person*
+
+Input Command: +
+****
+select 19
+****
+Expected Result: +
+The person at index 19, "Myucel Plumley" is selected, and her details are listed in the UI panel. +
+
+Expected Message: +
+****
+Selected Person: 19
+****
+
+*Selecting a person with an invalid index*
+
+Input Command: +
+****
+select 19999
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The person index provided is invalid
+****
+
+=== SelectTaskCommand
+
+*Selecting a task*
+
+Input Command: +
+****
+select task/ 7
+****
+Expected Result: +
+The task at index 7, "Paper Model for project" is selected and its details are shown in the UI panel. +
+
+Expected Message: +
+****
+Selected Task: 7
+****
+
+*Selecting a task with an invalid index*
+
+Input Command: +
+****
+select task/ 7000
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== LocateCommand
+
+*Locating a person's address on Google Maps*
+
+Input Command: +
+****
+locate 1
+****
+Expected Result: +
+Google Maps opens, and searches for the first person's address. +
+
+Expected Message: +
+****
+Searching for Person at Index: 1
+****
+
+*Failing to locate a person with no address*
+
+Input Command: +
+****
+locate 2
+****
+Expected Result: +
+An error message is printed, as the person at index 2 has no address. +
+
+Expected Message: +
+****
+Person 2 has no Address
+****
+
+*Failing to locate a person with a private address*
+
+Input Command: +
+****
+locate 6
+****
+Expected Result: +
+An error message is printed, as the person at index 6 has a private address. +
+
+Expected Message: +
+****
+Person 6 has a Private Address
+****
+
+=== NavigateCommand
+
+*Navigating from Person to Person*
+
+Input Command: +
+****
+navigate fp/1 tp/3
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first person's address to the third person's address. +
+
+Expected Message: +
+****
+Navigating from Blk 30 Geylang Street 29, #06-40 to Blk 30 Lorong 3 Serangoon Gardens, #07-18
+****
+
+*Navigating from Person to Task*
+
+Input Command: +
+****
+navigate fp/4 tt/1
+****
+Expected Result: +
+Google Maps opens, and provides directions from the fourth person's address to the first task's address. +
+
+Expected Message: +
+****
+Navigating from Blk 11 Ang Mo Kio Street 74, #11-04 to Blk 45 Aljunied Street 85, #11-31
+****
+
+*Navigating from Person to Address*
+
+Input Command: +
+****
+navigate fp/4 ta/NUS
+****
+Expected Result: +
+Google Maps opens, and provides directions from the fourth person's address to NUS. +
+
+Expected Message: +
+****
+Navigating from Blk 11 Ang Mo Kio Street 74, #11-04 to NUS
+****
+
+*Navigating from Task to Person*
+
+Input Command: +
+****
+navigate ft/1 tp/3
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first task's address to the third person's address. +
+
+Expected Message: +
+****
+Navigating from Blk 45 Aljunied Street 85, #11-31 to Blk 30 Lorong 3 Serangoon Gardens, #07-18
+****
+
+*Navigating from Task to Task*
+
+Input Command: +
+****
+navigate ft/1 tt/4
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first task's address to the fourth task's address. +
+
+Expected Message: +
+****
+Navigating from Blk 45 Aljunied Street 85, #11-31 to SR-1, COM-1 NUS
+****
+
+*Navigating from Task to Address*
+
+Input Command: +
+****
+navigate ft/1 ta/NUS
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first task's address to NUS. +
+
+Expected Message: +
+****
+Navigating from Blk 45 Aljunied Street 85, #11-31 to NUS
+****
+
+*Navigating from Address to Person*
+
+Input Command: +
+****
+navigate fa/NUS tp/3
+****
+Expected Result: +
+Google Maps opens, and provides directions from NUS to the third person's address. +
+
+Expected Message: +
+****
+Navigating from NUS to Blk 30 Lorong 3 Serangoon Gardens, #07-18
+****
+
+*Navigating from Address to Task*
+
+Input Command: +
+****
+navigate fa/NTU tt/4
+****
+Expected Result: +
+Google Maps opens, and provides directions from NTU to the fourth task's address. +
+
+Expected Message: +
+****
+Navigating from NTU to SR-1, COM-1 NUS
+****
+
+*Navigating from Address to Address*
+
+Input Command: +
+****
+navigate fa/SMU ta/NUS
+****
+Expected Result: +
+Google Maps opens, and provides directions from SMU to NUS. +
+
+Expected Message: +
+****
+Navigating from SMU to NUS
+****
+
+*Failing to navigate if a person has a private address*
+
+Input Command: +
+****
+navigate fp/6 ta/Changi Airport
+****
+Expected Result: +
+An error message is printed, as the person at index 6 has a private address. +
+
+Expected Message: +
+****
+Address of the Person at index 6 is private.
+****
+
+*Failing to navigate if a person has no address*
+
+Input Command: +
+****
+navigate fp/8 ta/Changi Airport
+****
+Expected Result: +
+An error message is printed, as the person at index 8 has no address. +
+
+Expected Message: +
+****
+Person at index 8 does not have an address.
+****
+
+*Failing to navigate if a task has no address*
+
+Input Command: +
+****
+navigate ft/2 ta/Changi Airport
+****
+Expected Result: +
+An error message is printed, as the task at index 2 has no address. +
+
+Expected Message: +
+****
+Task at index 2 does not have an address.
+****
+
+*Error when no arguments are entered*
+
+Input Command: +
+****
+navigate
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Invalid command format! +
+navigate: Get directions from one address to another. +
+Parameters: [fp/INDEX] OR [ft/INDEX] (must be a positive integer) OR [fa/ADDRESS] (Only one of three) AND [tp/INDEX] OR [tt/INDEX] (must be a positive integer) OR [ta/ADDRESS] (Only one of three) +
+Example: navigate fp/2 ta/University Town
+****
+
+*Error when no address after a fa/ or ta/ prefix is entered*
+
+Input Command: +
+****
+navigate fa/ tp/1
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Location can take any value, and it should not be blank
+****
+
+*Error when no integer after a fp/, tp/, ft/ or tt/ prefix is entered*
+
+Input Command: +
+****
+navigate ft/ tp/1
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Index is not a non-zero unsigned integer.
+****
+
+=== SetCompleteCommand
+
+*Marking an existing task as complete*
+
+Input Command: +
+****
+setcomplete 3
+****
+Expected Result: +
+The task at index 3, "Visit David's house" is marked as completed. +
+
+Expected Message: +
+****
+Marked Task as completed: Visit David's house Description: Visit to David Li's house next Saturday Deadline: Sat Nov 18 12:00:00 SGT 2017 Priority: Low Address: Blk 436 Serangoon Gardens Street 26, #16-43 <Incomplete>
+****
+
+*Marking an already complete task as complete*
+
+Input Command: +
+****
+setcomplete 3
+****
+Expected Result: +
+An error message is printed out as the task is already complete +
+
+Expected Message: +
+****
+The specified task is already completed
+****
+
+*Marking a task with an invalid index*
+
+Input Command: +
+****
+setcomplete 7000
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== SetInompleteCommand
+
+*Marking an existing task as incomplete*
+
+Input Command: +
+****
+setincomplete 1
+****
+Expected Result: +
+The task at index 1, "Tuition" is marked as incomplete. +
+
+Expected Message: +
+****
+Marked Task as incomplete: Tuition Description: Roy's math tuition on Friday Deadline: Fri Nov 10 17:00:00 SGT 2017 Priority: Medium Address: Blk 45 Aljunied Street 85, #11-31 <Complete>
+****
+
+*Marking an already incomplete task as incomplete*
+
+Input Command: +
+****
+setincomplete 1
+****
+Expected Result: +
+An error message is printed out as the task is already incomplete +
+
+Expected Message: +
+****
+The specified task is already incomplete
+****
+
+*Marking a task with an invalid index*
+
+Input Command: +
+****
+setincomplete 7000
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== AssignCommand
+
+*Assigning 1 contact to a task*
+
+Input Command: +
+****
+assign 19 to/1
+****
+Expected Result: +
+The contact at index 1, Myucel Plumley is assigned to the first task, Tuition. The task now has 4 people assigned to it instead of 3. +
+
+Expected Message: +
+****
+Assigned 1 people to  +
+Tuition Description: Roy's math tuition on Friday Deadline: Fri Nov 10 17:00:00 SGT 2017 Priority: Medium Address: Blk 45 Aljunied Street 85, #11-31 <Complete>
+****
+
+*Assigning multiple contacts to a task*
+
+Input Command: +
+****
+assign 18 20 to/1
+****
+Expected Result: +
+The contacts at index 18 and 20, Myuria Plumley and Clarissa Liselotte are assigned to the first task, Tuition. The task now has 6 people assigned to it instead of 4. +
+
+Expected Message: +
+****
+Assigned 2 people to  +
+Tuition Description: Roy's math tuition on Friday Deadline: Fri Nov 10 17:00:00 SGT 2017 Priority: Medium Address: Blk 45 Aljunied Street 85, #11-31 <Complete>
+****
+
+*Assigning contacts who are already assigned to a task*
+
+Input Command: +
+****
+assign 19 to/1
+****
+Expected Result: +
+Myucel Plumley was already assigned to the task Tuition. An error message is printed out as she is already assigned to the task. +
+
+Expected Message: +
+****
+All the specified persons are already assigned to this task
+****
+
+*Assigning no contacts to a task*
+
+Input Command: +
+****
+assign to/1
+****
+Expected Result: +
+An error message is printed out as no person indexes were specified.
+
+Expected Message: +
+****
+At least 1 person index must be specified
+****
+
+*Assigning to a task with an invalid index*
+
+Input Command: +
+****
+assign 5 to/7000
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== DismissCommand
+
+*Dismissing 1 contact from a task*
+
+Input Command: +
+****
+dismiss 1 from/1
+****
+Expected Result: +
+The contact at index 1, Alex Yeoh is assigned to the first task, Tuition. The task now has 2 people assigned to it instead of 3. +
+
+Expected Message: +
+****
+Dismissed 1 people from task +
+Tuition Description: Roy's math tuition on Friday Deadline: Fri Nov 10 17:00:00 SGT 2017 Priority: Medium Address: Blk 45 Aljunied Street 85, #11-31 <Complete>
+****
+
+*Dismissing multiple contacts from a task*
+
+Input Command: +
+****
+dismiss 6 8 from/1
+****
+Expected Result: +
+The contacts at index 6 and 8, David Ng and Ima Hidearu are assigned to the first task, Tuition. The task now has 0 people assigned to it instead of 2. +
+
+Expected Message: +
+****
+Dismissed 2 people from task  +
+Tuition Description: Roy's math tuition on Friday Deadline: Fri Nov 10 17:00:00 SGT 2017 Priority: Medium Address: Blk 45 Aljunied Street 85, #11-31 <Complete>
+****
+
+*Dismissing contacts who are already assigned from a task*
+
+Input Command: +
+****
+dismiss 1 from/1
+****
+Expected Result: +
+There are no contacts assigned to the task Tuition.
+An error message is printed out as none of the specified contacts were assigned to the task.
+
+Expected Message: +
+****
+None of the specified persons are assigned to this task
+****
+
+*Dismissing no contacts from a task*
+
+Input Command: +
+****
+dismiss from/1
+****
+Expected Result: +
+An error message is printed out as no person indexes were specified.
+
+Expected Message: +
+****
+At least 1 person index must be specified
+****
+
+*Dismissing from a task with an invalid index*
+
+Input Command: +
+****
+dismiss 5 from/7000
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== ViewAssignCommand
+
+*Viewing a task with no persons assigned to it*
+
+Input Command: +
+****
+viewassign 2
+****
+Expected Result: +
+No contacts are listed +
+
+Expected Message: +
+****
+0 persons listed!
+****
+
+*Viewing a task with some persons assigned to it*
+
+Input Command: +
+****
+viewassign 1
+****
+Expected Result: +
+3 contacts are listed, Alex Yeoh, David Ng, Ima Hidearu +
+
+Expected Message: +
+****
+3 persons listed!
+****
+
+*Viewing from a task with an invalid index*
+
+Input Command: +
+****
+viewassign 99999
+****
+Expected Result: +
+An error message is printed out as the index is invalid. +
+
+Expected Message: +
+****
+The task index provided is invalid
+****
+
+=== ThemeCommand
+
+*Changing the theme of the address book*
+
+Input Command: +
+****
+theme light
+****
+Expected Result: +
+The address book's colour scheme changes to a bright colour. +
+
+Expected Message: +
+****
+Theme Changed to: light
+****
+
+Input Command: +
+****
+theme dark
+****
+Expected Result: +
+The address book's colour scheme changes to a dark colour.+
+Expected Message: +
+****
+Theme Changed to: dark
+****
+
+*Error when no arguments are entered*
+
+Input Command: +
+****
+theme
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Invalid command format! +
+theme: Sets the theme based on the specified style. +
+Parameters: STYLE +
+Example: theme dark
+****
+
+=== HistoryCommand
+
+*Lists all commands done in reverser chronological order*
+
+Input Command: +
+****
+notacommand +
+alsonotacommand +
+history
+****
+Expected Result: +
+The two previous commands are listed in the box below the command line in reverse chronological order from top to bottom. +
+
+Expected Message: +
+****
+Entered commands (from most recent to earliest): +
+alsonotacommand +
+notacommand
+****
+
+=== UndoCommand
+
+Input Command: +
+****
+delete 1 +
+undo
+****
+Expected Result: +
+The first person gets deleted from the address book, but gets restored after an undo. +
+
+Expected Message: +
+****
+Undo success!
+****
+
+Input Command: +
+****
+undo +
+add n/Reed Richards p/94444444 e/reed@futurefoundation.com a/Baxter Building r/Loves to stretch +
+undo
+****
+Expected Result: +
+A new person is added, then removed with an undo.
+
+Expected Message: +
+****
+Undo success!
+****
 
 === UnfavouriteCommand
 
@@ -464,30 +1793,165 @@ An error message will display since there is no 56th person in the current list.
 Expected Message: +
 The person index provided is invalid
 
-=== FavouriteListCommand
-
-*Listing all favoured persons in the Address++*
+=== RedoCommand
 
 Input Command: +
 ****
-showfavourite
+delete 1 +
+undo +
+redo
 ****
 Expected Result: +
-List all the favoured persons.
+The first person gets deleted from the address book, but gets restored after an undo and deleted again after a redo. +
 
 Expected Message: +
-Listed all favourited persons.
-
-*Listing empty list with no favoured person in the Address++*
+****
+Redo success!
+****
 
 Input Command: +
 ****
-showfavourite
+undo +
+add n/Peter Parker p/92241783 e/ceo@parkerindustries.com a/New York City r/Top 10 smartest people in the world +
+undo +
+redo
 ****
 Expected Result: +
-An empty list but with successful message.
+A new person is added, then removed with an undo and added again with a redo.
 
 Expected Message: +
-Listed all favourited persons.
+****
+Redo success!
+****
+
+[NOTE]
+You may wish to use `undo` to restore the address book to its original state before continuing with testing.
+
+=== ClearCommand
+
+*Clearing all entries*
+
+Input Command: +
+****
+clear
+****
+Expected Result: +
+All persons and tasks vanish from the leftmost and middle columns, leaving them empty. +
+
+Expected Message: +
+****
+Address book has been cleared!
+****
+
+*Clearing persons only*
+
+Input Command: +
+****
+clear person/
+****
+Expected Result: +
+All persons vanish from the leftmost column, leaving them empty. +
+
+Expected Message: +
+****
+All contacts have been cleared!
+****
+
+*Clearing tasks only*
+
+Input Command: +
+****
+clear task/
+****
+Expected Result: +
+All tasks vanish from the middle columns, leaving them empty. +
+
+Expected Message: +
+****
+All tasks have been cleared!
+****
+
+*Both person and task specified*
+
+Input Command: +
+****
+clear task/ person/ task/ task/ person/
+****
+Expected Result: +
+All persons and tasks vanish from the leftmost and middle columns, leaving them empty. +
+
+Expected Message: +
+****
+Address book has been cleared!
+****
+
+[NOTE]
+You may wish to use `undo` to restore the address book before continuing with testing.
+
+=== OpenCommand and SaveAsCommand
+
+*Saves data as a new .xml file and switches to that file*
+
+Input Command: +
+****
+save +
+Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml. +
+Save the new save file as test.xml. +
+Click save.
+****
+
+Expected Result: The file path in the bottom right corner changes to the location of where you saved the file followed by test.xml. +
+
+Expected Message: +
+****
+Successfully saved file.
+****
+*Opens and switches to a new .xml save file*
+
+Following the above save command:
+
+Input Command: +
+****
+clear
+****
+To differentiate the test.xml with the [W09-B2][Address++]SampleData.xml. +
+
+Expected Result: +
+****
+The address book contains no more persons or tasks.
+****
+
+Input Command: +
+****
+open +
+Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml and select [W09-B2][Address++]SampleData.xml. +
+Click open.
+****
+Expected Result: The file path in the bottom right corner changes to the location of where you saved the [W09-B2][Address++]SampleData.xml followed by the name [W09-B2][Address++]SampleData.xml. +
+The original data is restored in the address book. +
+
+Expected Message: +
+****
+Successfully opened file.
+****
+
+=== ExitCommand
+
+*Exits Address++*
+
+Input Command:
+****
+exit
+****
+Expected Result: Address++ closes.
+
+
+
+
+
+
+
+
+
 
 

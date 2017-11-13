@@ -4,13 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Address++
-Address++ is a desktop address book application primarily targeted at students with projects. Users will interact with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Address++ is a desktop address book application that aims to help users manage their contacts and their time. It is primarily targeted at students with projects, although it may be used in a wide variety of other settings as well. Users will be able to interact with it using a Command Line Interface, and it has a Graphic User Interface created with JavaFX.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/main/jeffreygohkw.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/test/jeffreygohkw.md[Test code]]
 
 === Enhancement Added: Privacy of Fields
 
-==== External behavior
+==== External behavior (Add and Edit Co-authored with Charles Goh)
 
 ---
 
@@ -150,3 +150,4 @@ include::../DeveloperGuide.adoc[tag=theme]
 * Created TaskAddress to store the address of tasks (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/129[#129], https://github.com/CS2103AUG2017-W09-B2/main/pull/132[#132])
 * Added Travis, Coveralls and Appveyor links for Continuous Integration (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/4[#4], https://github.com/CS2103AUG2017-W09-B2/main/pull/22[#22])
 * Performed Acceptance Testing for Team T16-B2 (Issue https://github.com/CS2103AUG2017-T16-B2/main/issues/102[#102])
+* Wrote some Manual Testing tests (Pull request https://github.com/CS2103AUG2017-W09-B2/main/pull/162[#162], https://github.com/CS2103AUG2017-W09-B2/main/pull/165[#165])
