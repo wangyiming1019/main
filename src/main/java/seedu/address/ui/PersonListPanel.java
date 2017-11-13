@@ -16,6 +16,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
+import seedu.address.commons.events.ui.BrowserPanelNavigateEvent;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -160,6 +162,18 @@ public class PersonListPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
+        logger.info("Attempting to clear selection in person list view");
+        Platform.runLater(personListView.getSelectionModel()::clearSelection);
+    }
+
+    @Subscribe
+    private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
+        logger.info("Attempting to clear selection in person list view");
+        Platform.runLater(personListView.getSelectionModel()::clearSelection);
+    }
+
+    @Subscribe
+    private void handleBrowserPanelNavigateEvent(BrowserPanelNavigateEvent event) {
         logger.info("Attempting to clear selection in person list view");
         Platform.runLater(personListView.getSelectionModel()::clearSelection);
     }
