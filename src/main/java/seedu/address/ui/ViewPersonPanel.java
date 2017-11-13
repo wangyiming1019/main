@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
@@ -65,15 +64,12 @@ public class ViewPersonPanel extends UiPart<Region> {
     private ImageView avatarImage;
     @FXML
     private Label email;
-    @FXML
-    private FlowPane tags;
 
     private int fontSizeMultipler;
     public ViewPersonPanel(ReadOnlyPerson person, int fontSizeMultiplier) {
         super(FXML);
         this.person = person;
         this.fontSizeMultipler = fontSizeMultiplier;
-        initTags(person);
         initializeWithPerson(person);
         initializeAvatar();
         updateAttributeSizes();
@@ -95,10 +91,6 @@ public class ViewPersonPanel extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initTags(person);
-        });
     }
 
     //author charlesgoh
@@ -117,36 +109,6 @@ public class ViewPersonPanel extends UiPart<Region> {
             Image imagePlaceholder = new Image("file:docs/images/Avatar.png");
             avatarImage.setImage(imagePlaceholder);
         }
-    }
-    //author
-
-    //@@author wangyiming1019
-    /**
-     * Locate hashed colour for tag. If not found, new colour is assigned to tag
-     * @param tag
-     * @return
-     */
-    private String getTagColour(String tag) {
-        if (!colourHash.containsKey(tag)) {
-            int randomiser = randomNumber.nextInt(ViewPersonPanel.Colours.values().length);
-            String colour = ViewPersonPanel.Colours.values()[randomiser].toString();
-            colourHash.put(tag, colour);
-        }
-        return colourHash.get(tag);
-    }
-
-    /**
-     * Assigns each tag a colour
-     * @param person
-     */
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label newTagLabel = new Label(tag.getTagName());
-
-            newTagLabel.setStyle("-fx-background-color: " + this.getTagColour(tag.getTagName()));
-
-            tags.getChildren().add(newTagLabel);
-        });
     }
     //@@author
     //@@author charlesgoh
