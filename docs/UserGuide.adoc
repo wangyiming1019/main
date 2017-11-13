@@ -195,7 +195,7 @@ Format: `add tag/ INDEX... t/[TAG]` +
 * You can add the tag of the person at the specific `INDEX`. +
 * The index refers to the index number shown in the most recent listing. +
 * The index you key in *must be a positive integer* 1, 2, 3, ... +
-* If you don not key in any indexes, addtag will add the tag to all contacts in the address book.
+* If you don not key in any indexes, `add tag/` will add the tag to all contacts in the address book.
 ****
 
 **Example Scenarios:**
@@ -434,7 +434,7 @@ Format: `showfavourite` +
 
 * `showfavourite` command: It will return an empty list if there is no favourite persons.
 ****
-image::ShowFavouriteCommand.png[width="790"]
+image::ShowFavouriteCommand.png[width="250"]
 _Figure 3.13.1 : ShowFavouriteCommand_
 // end::showfavourite[]
 
@@ -1183,7 +1183,7 @@ Instead of `listing` all the contacts, you can `find` all the `Besty` first, the
 >> `unfavourite 1` +
 ****
 image::UnfavouriteCommand.png[width="790"]
-_Figure 3.20.1 : UnfavouriteCommand_
+_Figure 3.37.1 : UnfavouriteCommand_
 // end::unfavourite[]
 
 // tag::redo[]
