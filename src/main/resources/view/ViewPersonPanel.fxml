@@ -5,7 +5,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -16,14 +15,7 @@
          <children>
             <HBox prefHeight="92.0" prefWidth="800.0">
                <children>
-                  <Label fx:id="name" prefHeight="173.0" prefWidth="470.0" styleClass="cell_big_label" text="\$name" textFill="BLACK" wrapText="true">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding></Label>
-                  <Label fx:id="favstatus" alignment="CENTER" prefHeight="177.0" prefWidth="230.0" styleClass="cell_small_label" text="\$favstatus" textFill="BLACK">
+                  <Label fx:id="name" prefHeight="150.0" prefWidth="971.0" styleClass="cell_big_label" text="\$name" wrapText="true">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -94,16 +86,6 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="64.0" prefWidth="798.0">
-                           <children>
-                              <Label prefHeight="64.0" prefWidth="75.0" styleClass="cell_small_label" text="Tags:">
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
-                              </Label>
-                              <FlowPane fx:id="tags" prefHeight="64.0" prefWidth="405.0" />
                            </children>
                         </HBox>
                      </children>
