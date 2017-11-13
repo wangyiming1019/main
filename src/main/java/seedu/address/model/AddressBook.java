@@ -329,10 +329,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * for the strings that will be input in ThemeCommand and the file name of the .css file
      */
     private void initialiseStyleMap() {
-        styleMap.put("dark", "DarkTheme.css");
-        styleMap.put("Dark", "DarkTheme.css");
-        styleMap.put("light", "LightTheme.css");
-        styleMap.put("Light", "LightTheme.css");
+        styleMap.put("dark", "/view/DarkTheme.css");
+        styleMap.put("Dark", "/view/DarkTheme.css");
+        styleMap.put("light", "/view/LightTheme.css");
+        styleMap.put("Light", "/view/LightTheme.css");
     }
 
     public HashMap<String, String> getStyleMap() {

@@ -18,7 +18,7 @@ public class PrivacyLevelCommand extends Command {
     public static final String COMMAND_WORD = "privacylevel";
     public static final String COMMAND_ALIAS = "pl";
 
-    public static final String CHANGE_PRIVACY_LEVEL_SUCCESS = "Successfully change privacy level to %1$s.";
+    public static final String CHANGE_PRIVACY_LEVEL_SUCCESS = "Successfully changed privacy level to %1$s.";
     public static final String WRONG_PRIVACY_LEVEL_MESSAGE = "Privacy Level can only be 1, 2 or 3";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 

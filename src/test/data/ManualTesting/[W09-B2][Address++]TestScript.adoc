@@ -37,6 +37,158 @@ Ensure that you have the Address++.jar file and the [W09-B2][Address++]SampleDat
 
 == Testing
 
+=== HelpCommand
+
+*Opening the help window*
+
+Input Command: +
+****
+help
+****
+Expected Result: +
+The User Guide appears in a separate window.
+
+Expected Message: +
+****
+Opened help window.
+****
+
+=== ChangePrivacyCommand
+
+*Changing the privacy of public fields*
+
+Input Command: +
+****
+changeprivacy 20 n/true p/true e/true a/true r/true
+****
+Expected Result: +
+The 20th person has all of their fields set as private, and the original data is hidden in the UI.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: <Private Name> Phone: <Private Phone> Email: <Private Email> Address: <Private Address> Remark: <Private Remark> Avatar:  Tags: [project]
+****
+
+Input Command: +
+****
+changeprivacy 6 n/false
+****
+Expected Result: +
+The 6th person's name, being originally public, remains public.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: David Ng Phone: 87877003 Email: david_ng@example.com Address: <Private Address> Remark:  Avatar:  Tags:
+****
+
+*Changing the privacy of private fields*
+
+Input Command: +
+****
+changeprivacy 20 n/false p/false e/false a/false r/false
+****
+Expected Result: +
+The 20th person has all of their fields set as public, revealing all the original data in the UI.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: Myuria Plumley Phone: 99831115 Email: myuria@example.com Address: #02, Bukit Timah Street 56 Remark: Wears her hair on her right Avatar:  Tags: [project]
+****
+
+Input Command: +
+****
+changeprivacy 6 a/true
+****
+Expected Result: +
+The 6th person's address, being originally private, remains private.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: David Ng Phone: 87877003 Email: david_ng@example.com Address: <Private Address> Remark:  Avatar:  Tags:
+****
+
+*Changing the privacy of empty fields*
+
+Input Command: +
+****
+changeprivacy 2 r/true
+****
+Expected Result: +
+The 2nd person has their remark set to private.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: Antoinette Chan Phone: 89912301 Email: antoinette@example.com Address:  Remark: <Private Remark> Avatar:  Tags: [GEQ2000]
+****
+
+Input Command: +
+****
+changeprivacy 2 r/false
+****
+Expected Result: +
+The 2nd person has their remark set to public, but since it is empty, it does not display any data.
+
+Expected Message: +
+****
+Changed the Privacy of the Person: Antoinette Chan Phone: 89912301 Email: antoinette@example.com Address:  Remark:  Avatar:  Tags: [GEQ2000]
+****
+
+=== PrivacyLevelCommand
+
+*Changing the privacy level*
+
+Input Command: +
+****
+privacylevel 1
+****
+Expected Result: +
+All persons are listed with any private data revealed.
+
+Expected Message: +
+****
+Successfully changed privacy level to 1.
+****
+
+Input Command: +
+****
+privacylevel 3
+****
+Expected Result: +
+Lists all persons except those that have at least one private field.
+
+Expected Message: +
+****
+Successfully changed privacy level to 3.
+****
+
+Input Command: +
+****
+privacylevel 2
+****
+Expected Result: +
+List all persons. Fields that are private will have their data hidden.
+
+Expected Message: +
+****
+Successfully changed privacy level to 2.
+****
+
+=== ListCommand
+
+*Opening the help window*
+
+Input Command: +
+****
+list
+****
+Expected Result: +
+All tasks and persons in the address book are listed.
+
+Expected Message: +
+****
+Listed all entries
+****
+
 === LocateCommand
 
 *Locating a person's address on Google Maps*
@@ -46,7 +198,7 @@ Input Command: +
 locate 1
 ****
 Expected Result: +
-Google Maps opens, and searches for Blk 30 Geylang Street 29. +
+Google Maps opens, and searches for the first person's address. +
 
 Expected Message: +
 ****
@@ -66,6 +218,236 @@ Expected Message: +
 ****
 Person 2 has no Address
 ****
+
+*Failing to locate a person with a private address*
+
+Input Command: +
+****
+locate 6
+****
+Expected Result: +
+An error message is printed, as the person at index 6 has a private address. +
+
+Expected Message: +
+****
+Person 6 has a Private Address
+****
+
+=== NavigateCommand
+
+*Navigating from Person to Person*
+
+Input Command: +
+****
+navigate fp/1 tp/3
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first person's address to the third person's address. +
+
+Expected Message: +
+****
+Navigating from Blk 30 Geylang Street 29, #06-40 to Blk 30 Lorong 3 Serangoon Gardens, #07-18
+****
+
+*Navigating from Person to Task*
+
+Input Command: +
+****
+navigate fp/4 tt/1
+****
+Expected Result: +
+Google Maps opens, and provides directions from the fourth person's address to the first task's address. +
+
+Expected Message: +
+****
+Navigating from Blk 11 Ang Mo Kio Street 74, #11-04 to Blk 45 Aljunied Street 85, #11-31
+****
+
+*Navigating from Person to Address*
+
+Input Command: +
+****
+navigate fp/4 ta/NUS
+****
+Expected Result: +
+Google Maps opens, and provides directions from the fourth person's address to NUS. +
+
+Expected Message: +
+****
+Navigating from Blk 11 Ang Mo Kio Street 74, #11-04 to NUS
+****
+
+*Navigating from Task to Person*
+
+Input Command: +
+****
+navigate ft/1 tp/3
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first task's address to the third person's address. +
+
+Expected Message: +
+****
+Navigating from Blk 45 Aljunied Street 85, #11-31 to Blk 30 Lorong 3 Serangoon Gardens, #07-18
+****
+
+*Navigating from Task to Task*
+
+Input Command: +
+****
+navigate ft/1 tt/4
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first task's address to the fourth task's address. +
+
+Expected Message: +
+****
+Navigating from Blk 45 Aljunied Street 85, #11-31 to SR-1, COM-1 NUS
+****
+
+*Navigating from Task to Address*
+
+Input Command: +
+****
+navigate ft/1 ta/NUS
+****
+Expected Result: +
+Google Maps opens, and provides directions from the first task's address to NUS. +
+
+Expected Message: +
+****
+Navigating from Blk 45 Aljunied Street 85, #11-31 to NUS
+****
+
+*Navigating from Address to Person*
+
+Input Command: +
+****
+navigate fa/NUS tp/3
+****
+Expected Result: +
+Google Maps opens, and provides directions from NUS to the third person's address. +
+
+Expected Message: +
+****
+Navigating from NUS to Blk 30 Lorong 3 Serangoon Gardens, #07-18
+****
+
+*Navigating from Address to Task*
+
+Input Command: +
+****
+navigate fa/NTU tt/4
+****
+Expected Result: +
+Google Maps opens, and provides directions from NTU to the fourth task's address. +
+
+Expected Message: +
+****
+Navigating from NTU to SR-1, COM-1 NUS
+****
+
+*Navigating from Address to Address*
+
+Input Command: +
+****
+navigate fa/SMU ta/NUS
+****
+Expected Result: +
+Google Maps opens, and provides directions from SMU to NUS. +
+
+Expected Message: +
+****
+Navigating from SMU to NUS
+****
+
+*Failing to navigate if a person has a private address*
+
+Input Command: +
+****
+navigate fp/6 ta/Changi Airport
+****
+Expected Result: +
+An error message is printed, as the person at index 6 has a private address. +
+
+Expected Message: +
+****
+Address of the Person at index 6 is private.
+****
+
+*Failing to navigate if a person has no address*
+
+Input Command: +
+****
+navigate fp/8 ta/Changi Airport
+****
+Expected Result: +
+An error message is printed, as the person at index 8 has no address. +
+
+Expected Message: +
+****
+Person at index 8 does not have an address.
+****
+
+*Failing to navigate if a task has no address*
+
+Input Command: +
+****
+navigate ft/2 ta/Changi Airport
+****
+Expected Result: +
+An error message is printed, as the task at index 2 has no address. +
+
+Expected Message: +
+****
+Task at index 2 does not have an address.
+****
+
+*Error when no arguments are entered*
+
+Input Command: +
+****
+navigate
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Invalid command format! +
+navigate: Get directions from one address to another. +
+Parameters: [fp/INDEX] OR [ft/INDEX] (must be a positive integer) OR [fa/ADDRESS] (Only one of three) AND [tp/INDEX] OR [tt/INDEX] (must be a positive integer) OR [ta/ADDRESS] (Only one of three) +
+Example: navigate fp/2 ta/University Town
+****
+
+*Error when no address after a fa/ or ta/ prefix is entered*
+
+Input Command: +
+****
+navigate fa/ tp/1
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Location can take any value, and it should not be blank
+****
+
+*Error when no integer after a fp/, tp/, ft/ or tt/ prefix is entered*
+
+Input Command: +
+****
+navigate ft/ tp/1
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Index is not a non-zero unsigned integer.
+****
+
 
 === ThemeCommand
 
@@ -94,6 +476,23 @@ Expected Message: +
 Theme Changed to: dark
 ****
 
+*Error when no arguments are entered*
+
+Input Command: +
+****
+theme
+****
+Expected Result: +
+The command fails, printing a message to tell the user of the proper input.
+
+Expected Message: +
+****
+Invalid command format! +
+theme: Sets the theme based on the specified style. +
+Parameters: STYLE +
+Example: theme dark
+****
+
 === HistoryCommand
 
 *Lists all commands done in reverser chronological order*
@@ -114,6 +513,69 @@ alsonotacommand +
 notacommand
 ****
 
+=== UndoCommand
+
+Input Command: +
+****
+delete 1 +
+undo
+****
+Expected Result: +
+The first person gets deleted from the address book, but gets restored after an undo. +
+
+Expected Message: +
+****
+Undo success!
+****
+
+Input Command: +
+****
+undo +
+add n/Reed Richards p/94444444 e/reed@futurefoundation.com a/Baxter Building r/Loves to stretch +
+undo
+****
+Expected Result: +
+A new person is added, then removed with an undo.
+
+Expected Message: +
+****
+Undo success!
+****
+
+=== RedoCommand
+
+Input Command: +
+****
+delete 1 +
+undo +
+redo
+****
+Expected Result: +
+The first person gets deleted from the address book, but gets restored after an undo and deleted again after a redo. +
+
+Expected Message: +
+****
+Redo success!
+****
+
+Input Command: +
+****
+undo +
+add n/Peter Parker p/92241783 e/ceo@parkerindustries.com a/New York City r/Top 10 smartest people in the world +
+undo +
+redo
+****
+Expected Result: +
+A new person is added, then removed with an undo and added again with a redo.
+
+Expected Message: +
+****
+Redo success!
+****
+
+[NOTE]
+You may wish to use `undo` to restore the address book to its original state before continuing with testing.
+
 === ClearCommand
 Input Command: +
 ****
@@ -124,12 +586,11 @@ All persons and tasks vanish from the leftmost and middle columns, leaving them 
 
 Expected Message: +
 ****
-*Address book has been cleared!*
+Address book has been cleared!
 ****
 
-****
-* You may wish to use `undo` to restore the address book before continuing with testing.
-****
+[NOTE]
+You may wish to use `undo` to restore the address book before continuing with testing.
 
 === OpenCommand and SaveAsCommand
 
