@@ -16,10 +16,10 @@ By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT` +
 
 == Getting Started
 
-Ensure that you have the Address++.jar file and the [W09-B2][Address++]SampleData.xml available on your computer and a working internet connection.
+Ensure that you have the [W09-B2][Address++].jar file and the [W09-B2][Address++]SampleData.xml available on your computer and a working internet connection.
 
 === Importing the test data
-. Launch Address++.jar.
+. Launch [W09-B2][Address++].jar.
 . On initial launch, it should contain sample data of 6 different persons and 0 tasks.
 . Type `open` to open a pop up window.
 . Navigate to the location of the [W09-B2][Address++]SampleData.xml file and click Open to open it.
@@ -1954,4 +1954,328 @@ Expected Result: Address++ closes.
 
 
 
+=== Sort Command
 
+*Sorts persons by name in ascending order*
+
+Input Command: +
+****
+sort person name asc
+****
+Expected Result: +
+Person list panel will sort all persons by their names in ascending order +
+
+Expected Message: +
+****
+All persons in address book successfully sorted
+****
+
+*Sorts tasks by priority in descending order*
+
+Input Command: +
+****
+sort task priority desc +
+****
+Expected Result: +
+Task list panel will sort all tasks by their priorities in descending order +
+
+Expected Message: +
+****
+All tasks in address book successfully sorted
+****
+
+*Incorrect Input Format*
+
+Input Command: +
+****
+sort task priority desc +
+****
+Expected Result: +
+Error message with usage message will appear in the result command box +
+
+Expected Message: +
+****
+Invalid command format! +
+sort: Sorts all persons or all tasks by chosen field [NAME/PHONE/EMAIL/ADDRESS -- PRIORITY/DEADLINE] by [ASC/DESC] order. Case insensitive +
+Parameters: KEYWORD [LIST] [FIELD] [ORDER] +
+Example: sort person email desc +
+Example 2: sort task deadline desc +
+****
+
+=== Backup Command
+
+[NOTE]
+Currently supports mac relative file paths. No guarantee of support for other operating system.
+
+*Incorrect Input Format*
+
+Input Command: +
+****
+backup +
+****
+Expected Result: +
+Error message with usage message will appear in the result command box +
+
+Expected Message: +
+****
+Invalid command format! +
+backup: Backs up data to a user input location field [FILEPATH] +
+Parameter: KEYWORD [FILEPATH] +
+Example: backupMyBackUpFile +
+****
+
+*Backs up data to same file path*
+
+Input Command: +
+****
+backup filename.xml
+****
+Expected Result: +
+filename.xml with a copy of the save data will appear in the same directory as the jar file +
+
+Expected Message: +
+****
+AddressBook++ data backed up successfully.
+****
+
+*Backs up data to relative file path*
+
+Input Command: +
+****
+backup ./../filename.xml +
+****
+Expected Result: +
+filename.xml with a copy of the save data will appear in the directory preceding one level above the jar file +
+
+Expected Message: +
+****
+AddressBook++ data backed up successfully.
+****
+
+=== Change Password Command
+
+*Invalid Command Format Input*
+
+Input Command: +
+****
+changepassword +
+****
+Expected Result: +
+Invalid command format error message with usage message +
+
+Expected Message: +
+****
+Invalid command format! +
+changepassword: Changes user password. +
+pw/PASSWORD np/NEWPASSWORD cfp/CONFIRMPASSWORD +
+Example: changepassword pw/password np/mynewpassword111 cfp/mynewpassword111 +
+Example 2: cpw pw/password np/mynewpassword111 cfp/mynewpassword111 +
+****
+
+*Change Password with valid inputs*
+
+Input Command: +
+****
+changepassword pw/password np/newpassword cfp/newpassword +
+****
+Expected Result: +
+Application password will change to `newpassword` +
+
+Expected Message: +
+****
+Password changed successfully
+****
+
+*Incorrect Password entered*
+
+[NOTE]
+Run this after running the previous command. Otherwise change the password to something incorrect. Default password
+is `password`
+
+Input Command: +
+****
+changepassword pw/password np/newpassword cfp/newpassword +
+****
+Expected Result: +
+Application password will remain as `newpassword` and reject input +
+
+Expected Message: +
+****
+Your password is incorrect. Please try again.
+****
+
+*Old and new passwords are the same*
+
+Input Command: +
+****
+changepassword pw/newpassword np/newpassword cfp/newpassword +
+****
+Expected Result: +
+Command exception. Error message will be displayed +
+
+Expected Message: +
+****
+New password must be different from your old password
+****
+
+*New password and confirmation passwords do not match*
+
+Input Command: +
+****
+changepassword pw/newpassword np/evennewerpassword cfp/wutwutWUUUUUT? +
+****
+Expected Result: +
+Command exception. Error message will be displayed +
+
+Expected Message: +
+****
+Your new password and confirmation password do not match. Please try again
+****
+
+=== Lock Command
+
+[NOTE]
+The following tests assume that the password has been set to `newpassword` from the above tests. If you opened the application
+for the first time, use the default password `password`.
+
+*Lock Application failure with incorrect password*
+
+Input Command: +
+****
+lock pw/wrongpasswordlol +
+****
+Expected Result: +
+Application will fail to lock +
+
+Expected Message: +
+****
+Password is incorrect. Please try again
+****
+
+*Lock Application with correct password*
+
+Input Command: +
+****
+lock pw/newpassword
+****
+Expected Result: +
+Locks application. Try performing any CRUD statements after locking (i.e. add or edit. It will fail) +
+
+Expected Message: +
+****
+Address++ locked successfully
+****
+
+=== Unlock Command
+
+[NOTE]
+This section is a continuation of the previous section on the Lock Command
+
+*Fail to unlock application with incorrect password*
+
+Input Command: +
+****
+unlock pw/wrongpassword:P
+****
+Expected Result: +
+Fails to unlock application. You will still not be able to execute CRUD commands +
+
+Expected Message: +
+****
+Password is incorrect. Please try again
+****
+
+*Unlock application with correct password*
+
+Input Command: +
+****
+unlock pw/newpassword:P
+****
+Expected Result: +
+Unlocks application. You can now execute CRUD commands +
+
+Expected Message: +
+****
+Address++ unlocked successfully
+****
+
+=== Font Size Command
+
+*Increase font size*
+
+Input Command: +
+****
+fontsize increase
+****
+Expected Result: +
+Increases font size by 1 level +
+
+Expected Message: +
+****
+Font size increased successfully
+****
+
+*Decrease font size*
+
+Input Command: +
+****
+fs decrease
+****
+Expected Result: +
+Decrease font size by 1 level +
+
+Expected Message: +
+****
+Font size decreased successfully
+****
+
+*Reset font size*
+
+[NOTE]
+You can try increasing the font size a few more times. There will be a max font size to prevent you from
+increasing too much.
+
+Input Command: +
+****
+fontsize reset +
+****
+Expected Result: +
+Resets font size in the application +
+
+Expected Message: +
+****
+Font size reset successfully
+****
+
+*Incorrect input format*
+
+Input Command: +
+****
+fontsize +
+****
+Expected Result: +
+Displays invalid command format error and the usage message +
+
+Expected Message: +
+****
+Invalid command format! +
+fontsize: Increases, decreases or resets font sizes +
+Parameters: KEYWORD [OPTION] +
+Example: fontsize increase +
+Example 2: fs reset +
+****
+
+=== Setting Avatars
+
+[NOTE]
+There is full support for URLs. No guarantee for local file paths. Local file paths must add a local prefix `file:`
+
+*Add avatar URL*
+
+Input Command: +
+****
+edit 1 v/[URL] +
+Replace [URL] with a valid image online.
+****
+Expected Result: +
+Replaces placeholder avatar with the online image +
