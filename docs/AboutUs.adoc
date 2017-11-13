@@ -12,11 +12,11 @@ Initial source code this project was based on was from AddressBook-Level4 projec
 == Project Team
 '''
 === Goh Chang Kang, Charles
-{empty}[http://charlesgoh.me[homepage]] [https://github.com/charlesgoh[github]]
+{empty}[https://github.com/charlesgoh[github]]
 
 Role: Project Integration, Git Expert, Password Security Commands
 
-Responsibilities: UI Component
+Responsibilities: Storage Component
 
 '''
 
@@ -25,7 +25,7 @@ Responsibilities: UI Component
 
 Role: Testing
 
-Responsibilities: Storage Component
+Responsibilities: UI Component
 
 '''
 
