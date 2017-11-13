@@ -31,7 +31,7 @@ public class DeleteTagCommand extends DeleteCommand {
 
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Deleted Tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_NONEXISTENT_TAG = "This is an nonexistent tag in the given persons list.";
+    public static final String MESSAGE_NONEXISTENT_TAG = "The target persons do not have input tags.";
 
     private final ArrayList<Index> targetIndexes;
     private final Tag toDelete;

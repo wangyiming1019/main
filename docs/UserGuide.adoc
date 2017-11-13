@@ -540,7 +540,7 @@ Format: `showtag` +
 ****
 // end::showtag[]
 
-// end::findtag[]
+// tag::findtag[]
 
 === Locating persons by tag : `find tag/` (Since V1.4)
 

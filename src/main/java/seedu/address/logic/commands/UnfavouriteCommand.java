@@ -51,7 +51,9 @@ public class UnfavouriteCommand extends UndoableCommand {
                 personToUnfavourite.getAddress(), false,
                 personToUnfavourite.getRemark(), personToUnfavourite.getAvatar(),
                 personToUnfavourite.getTags());
-
+        if (personToUnfavourite.getFavourite().equals(false)) {
+            throw new CommandException(MESSAGE_NOTFAVOURITEYET_PERSON);
+        }
         try {
             model.updatePerson(personToUnfavourite, editedPerson);
         } catch (DuplicatePersonException dpe) {
