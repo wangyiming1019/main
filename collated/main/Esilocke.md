@@ -1,4 +1,55 @@
 # Esilocke
+###### \java\seedu\address\commons\events\ui\JumpToListRequestTaskEvent.java
+``` java
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates a request to jump to the list of tasks
+ */
+public class JumpToListRequestTaskEvent extends BaseEvent {
+
+    public final int targetIndex;
+
+    public JumpToListRequestTaskEvent(Index targetIndex) {
+        //TODO optimize this class
+        this.targetIndex = targetIndex.getZeroBased();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\commons\events\ui\TaskPanelSelectionChangedEvent.java
+``` java
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.ui.TaskCard;
+
+/**
+ * Represents a selection change in the Task List Panel
+ */
+public class TaskPanelSelectionChangedEvent extends BaseEvent {
+
+
+    private final TaskCard newSelection;
+
+    public TaskPanelSelectionChangedEvent(TaskCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public TaskCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddTaskCommand.java
 ``` java
 import static java.util.Objects.requireNonNull;
@@ -179,6 +230,22 @@ public class AssignCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
+```
+###### \java\seedu\address\logic\commands\ClearTaskCommand.java
+``` java
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import seedu.address.model.AddressBook;
+
+/**
+ * Clears only the tasks in the address book.
+ */
+public class ClearTaskCommand extends ClearCommand {
+
+    public static final String MESSAGE_SUCCESS = "All tasks have been cleared!";
+
+    @Override
 ```
 ###### \java\seedu\address\logic\commands\ClearTaskCommand.java
 ``` java
@@ -734,7 +801,17 @@ public class SelectTaskCommand extends SelectCommand {
 ###### \java\seedu\address\logic\commands\SetCompleteCommand.java
 ``` java
 
-/** Marks the specified {@Code task} as complete */
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+
+
+/** Marks the task at the specified {@code Index} as complete */
 public class SetCompleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "setcomplete";
     public static final String COMMAND_ALIAS = "stc";
@@ -784,7 +861,17 @@ public class SetCompleteCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\commands\SetIncompleteCommand.java
 ``` java
 
-/** Marks the specified {@Code task} as incomplete */
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+
+
+/** Marks the task at the specified {@code Index} as incomplete */
 public class SetIncompleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "setincomplete";
     public static final String COMMAND_ALIAS = "sti";
@@ -834,6 +921,15 @@ public class SetIncompleteCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\commands\ViewAssignCommand.java
 ``` java
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.task.ReadOnlyTask;
+
 /**
  * Displays a list of all persons assigned to a specified task
  */
@@ -1052,6 +1148,20 @@ public class DismissTaskCommandParser implements Parser<DismissCommand> {
 ```
 ###### \java\seedu\address\logic\parser\EditTagCommandParser.java
 ``` java
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_DUPLICATE_TAGS;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_INSUFFICIENT_ARGS;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_INVALID_TAG_NAME;
+
+import java.util.ArrayList;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EditTagCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
+
 /** Parses input arguments and creates a new EditTagCommand object */
 public class EditTagCommandParser implements Parser<EditTagCommand> {
     public static final String EDITTAG_VALIDATION_REGEX = "[\\p{Alnum}\\s]+[\\p{Alnum}]+";
@@ -1445,6 +1555,27 @@ public class ViewAssignCommandParser implements Parser<ViewAssignCommand> {
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
+     * Returns an array list of {@code Index} corresponding to the index of {@code ReadOnlyPerson} specified
+     */
+    public ArrayList<Index> extractPersonIndexes(ArrayList<ReadOnlyPerson> personsToExtract) {
+        return persons.extractIndexes(personsToExtract);
+    }
+
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Returns an array containing:
+     * Index - The old index of each person in the UniquePersonList
+     * Value - The new index of each person after a sort operation
+     */
+    public Index[] getMappings() {
+        return persons.getMappings();
+    }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
      * Adds a task to the address book.
      *
      * @throws DuplicateTaskException if an equivalent task already exists.
@@ -1506,6 +1637,57 @@ public class ViewAssignCommandParser implements Parser<ViewAssignCommand> {
     public ObservableList<ReadOnlyTask> getTasksList() {
         return tasks.asObservableList();
     }
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Clears only part of the existing backing model and replaces with the provided new data. */
+    void resetPartialData(ReadOnlyAddressBook newData, Prefix type);
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Adds the given task */
+    void addTask(ReadOnlyTask task) throws DuplicateTaskException;
+
+    /** Deletes the given task */
+    void deleteTask(ReadOnlyTask toDelete) throws TaskNotFoundException;
+
+    /**
+     * Replaces the given task {@code target} with {@code editedTask}.
+     *
+     * @throws DuplicateTaskException if updating the task's details causes the task to be equivalent to
+     *      another existing task in the list.
+     * @throws TaskNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+            throws DuplicateTaskException, TaskNotFoundException;
+
+    /** Assigns all specified persons to the specified task */
+    void assignToTask(ArrayList<ReadOnlyPerson> personsToAssign, ReadOnlyTask assignedTask)
+            throws TaskNotFoundException, DuplicateTaskException;
+
+    /** Assigns all specified persons to the specified task */
+    void dismissFromTask(ArrayList<ReadOnlyPerson> personsToDismiss, ReadOnlyTask dismissedTask)
+            throws TaskNotFoundException, DuplicateTaskException;
+
+    /** Changes the state of the specified task */
+    void setAsComplete(ReadOnlyTask toSet, boolean isComplete) throws TaskNotFoundException, DuplicateTaskException;
+
+    /** Displays all persons assigned to the specified task */
+    void viewAssignees(ReadOnlyTask task);
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Returns an unmodifiable view of the filtered tasks list */
+    ObservableList<ReadOnlyTask> getFilteredTaskList();
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Updates the filter of the filtered task list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
@@ -1663,6 +1845,55 @@ public class ViewAssignCommandParser implements Parser<ViewAssignCommand> {
         filteredTasks.setPredicate(predicate);
     }
 ```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    /**
+     * Constructs a new {@code ReadOnlyTask} from an existing ReadOnlyTask, with the specified assignees list.
+     */
+    public ReadOnlyTask constructTaskWithNewAssignee(ReadOnlyTask originalTask, Assignees updatedAssignees) {
+        TaskName taskName = originalTask.getTaskName();
+        Description description = originalTask.getDescription();
+        Deadline deadline = originalTask.getDeadline();
+        Priority priority = originalTask.getPriority();
+        Boolean state = originalTask.getCompleteState();
+        TaskAddress taskAddress = originalTask.getTaskAddress();
+
+        ReadOnlyTask updatedTask = new Task(taskName, description, deadline, priority, updatedAssignees,
+                state, taskAddress);
+        return updatedTask;
+    }
+
+```
+###### \java\seedu\address\model\person\PersonCompleteMatchPredicate.java
+``` java
+import java.util.List;
+import java.util.function.Predicate;
+
+/**
+ * Tests that a {@code ReadOnlyPerson}'s matches any one of the keywords
+ */
+public class PersonCompleteMatchPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<ReadOnlyPerson> keywords;
+
+    public PersonCompleteMatchPredicate(List<ReadOnlyPerson> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(person::equals);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PersonCompleteMatchPredicate // instanceof handles nulls
+                && this.keywords.equals(((PersonCompleteMatchPredicate) other).keywords)); // state check
+    }
+
+}
+```
 ###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
@@ -1695,8 +1926,107 @@ public class ViewAssignCommandParser implements Parser<ViewAssignCommand> {
         return mappings;
     }
 ```
+###### \java\seedu\address\model\task\Assignees.java
+``` java
+import java.util.ArrayList;
+
+import seedu.address.commons.core.index.Index;
+/**
+ * Represents the list of {@code ReadOnlyPerson} assigned to a task.
+ * Contains support for some limited modification operations
+ */
+public class Assignees {
+    private ArrayList<Index> assignedList;
+
+    public Assignees(ArrayList<Index> assignees) {
+        this.assignedList = assignees;
+    }
+
+    public Assignees() {
+        this.assignedList = new ArrayList<>();
+    }
+
+    public Assignees(Assignees toCopy) {
+        this.assignedList = new ArrayList<>();
+        assignedList.addAll(toCopy.getList());
+    }
+
+    /** Assigns all {@code ReadOnlyPerson} in the specified list */
+    public boolean assign(ArrayList<Index> personsToAssign) {
+        boolean atLeastOneAdded = false;
+        for (Index i : personsToAssign) {
+            if (!assignedList.contains(i)) {
+                assignedList.add(i);
+                atLeastOneAdded = true;
+            }
+        }
+        return atLeastOneAdded;
+    }
+
+    /** Updates the internal assignedList with the correct Index values after a sort operation */
+    public void updateList(Index[] mappings) {
+        ArrayList<Index> updatedList = new ArrayList<>();
+        for (Index i : assignedList) {
+            Index updatedPosition = mappings[i.getZeroBased()];
+            updatedList.add(updatedPosition);
+        }
+        assignedList.clear();
+        assignedList.addAll(updatedList);
+    }
+
+    /** Removes all {@code ReadOnlyPerson} from the specified list, and returns true if at least 1 person was removed */
+    public boolean dismiss(ArrayList<Index> personsToDismiss) {
+        return assignedList.removeAll(personsToDismiss);
+    }
+
+    public ArrayList<Index> getList() {
+        return this.assignedList;
+    }
+
+    /**
+     * Deletes the specified index from the internal list, and decrements all other indexes in the assigned list
+     * that have a value lower than the deleted index by 1.
+     */
+    public void decrementIndex(Index deletedIndex) {
+        assignedList.remove(deletedIndex);
+        for (int i = 0; i < assignedList.size(); i++) {
+            Index current = assignedList.get(i);
+            if (current.getZeroBased() > deletedIndex.getZeroBased()) {
+                int indexValue = current.getZeroBased() - 1;
+                Index decrementedIndex = Index.fromZeroBased(indexValue);
+                assignedList.set(i, decrementedIndex);
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return assignedList.size() + " persons assigned";
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Assignees // instanceof handles nulls
+                && this.assignedList.equals(((Assignees) other).assignedList)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return assignedList.hashCode();
+    }
+}
+```
 ###### \java\seedu\address\model\task\Deadline.java
 ``` java
+import java.util.Date;
+import java.util.List;
+
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents the deadline of a task in the address book.
  */
@@ -1776,6 +2106,9 @@ public class Deadline {
 ```
 ###### \java\seedu\address\model\task\Description.java
 ``` java
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a task description in the address book.
  */
@@ -1857,6 +2190,10 @@ public class TaskNotFoundException extends Exception {
 ```
 ###### \java\seedu\address\model\task\Priority.java
 ``` java
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+
 /**
  * Represents a task priority in the address book.
  */
@@ -1986,6 +2323,11 @@ public interface ReadOnlyTask {
 ```
 ###### \java\seedu\address\model\task\Task.java
 ``` java
+import java.util.Objects;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 /**
  * Represents a task object in the address book.
  */
@@ -2182,6 +2524,11 @@ public class Task implements ReadOnlyTask {
 ```
 ###### \java\seedu\address\model\task\TaskContainsKeywordPredicate.java
 ``` java
+import java.util.List;
+import java.util.function.Predicate;
+
+import seedu.address.commons.util.StringUtil;
+
 /**
  * Tests that a {@code ReadOnlyTask}'s {@code TaskName} or {@code Description} matches any of the keywords given.
  */
@@ -2238,6 +2585,10 @@ public class TaskContainsKeywordPredicate  implements Predicate<ReadOnlyTask> {
 ```
 ###### \java\seedu\address\model\task\TaskName.java
 ``` java
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Task name in the address book.
  */
@@ -2365,7 +2716,7 @@ public class UniqueTaskList implements Iterable<Task> {
         if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        return taskFoundAndDeleted;
+        return true;
     }
 
     public void setTasks(UniqueTaskList replacement) {
@@ -2440,12 +2791,68 @@ public class UniqueTaskList implements Iterable<Task> {
 
     /**
      * Sorts person list by all persons by any field in ascending or descending order
-     * @param field
-     * @param order
      */
+```
+###### \java\seedu\address\storage\XmlAdaptedIndex.java
+``` java
+import javax.xml.bind.annotation.XmlValue;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * JAXB-friendly adapted version of the Index.
+ */
+public class XmlAdaptedIndex {
+
+    @XmlValue
+    private int index;
+
+    /**
+     * Constructs an XmlAdaptedIndex.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedIndex() {}
+
+    /**
+     * Converts a given Index into this class for JAXB use.
+     *
+     * @param source future changes to this will not affect the created
+     */
+    public XmlAdaptedIndex(Index source) {
+        index = source.getZeroBased();
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted tag object into an Index object.
+     *
+     * @throws IllegalValueException if there were any data constraints\
+     */
+    public Index toModelType() throws IllegalValueException {
+        return Index.fromZeroBased(index);
+    }
+
+}
 ```
 ###### \java\seedu\address\storage\XmlAdaptedTask.java
 ``` java
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.task.Assignees;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
+import seedu.address.model.task.TaskName;
+
+
 /** JAXB-friendly version of a Task */
 public class XmlAdaptedTask {
     @XmlElement(required = true)
@@ -2508,6 +2915,38 @@ public class XmlAdaptedTask {
         return new Task(name, description, deadline, priority, assignees, state, address);
     }
 }
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+    @Override
+    public ObservableList<ReadOnlyTask> getTasksList() {
+        final ObservableList<ReadOnlyTask> tasks = this.tasks.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(tasks);
+    }
+}
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(viewTaskPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(viewPersonPanel.getRoot());
+    }
 ```
 ###### \java\seedu\address\ui\TaskCard.java
 ``` java
@@ -2621,4 +3060,203 @@ public class TaskListPanel extends UiPart<Region> {
                 });
     }
 
+```
+###### \java\seedu\address\ui\TaskListPanel.java
+``` java
+    @Subscribe
+    private void handleJumpToListRequestTaskEvent(JumpToListRequestTaskEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info("Attempting to clear selection in task list view");
+        Platform.runLater(taskListView.getSelectionModel()::clearSelection);
+    }
+
+    @Subscribe
+    private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
+        logger.info("Attempting to clear selection in person list view");
+        Platform.runLater(taskListView.getSelectionModel()::clearSelection);
+    }
+
+    @Subscribe
+    private void handleBrowserPanelNavigateEvent(BrowserPanelNavigateEvent event) {
+        logger.info("Attempting to clear selection in person list view");
+        Platform.runLater(taskListView.getSelectionModel()::clearSelection);
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code TaskCard}.
+     */
+    class TaskListViewCell extends ListCell<TaskCard> {
+
+        @Override
+        protected void updateItem(TaskCard task, boolean empty) {
+            super.updateItem(task, empty);
+
+            if (empty || task == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(task.getRoot());
+            }
+        }
+    }
+}
+```
+###### \java\seedu\address\ui\ViewPersonPanel.java
+``` java
+    private static final String FXML = "ViewPersonPanel.fxml";
+    /**
+     * Preset values for random selection later.
+     */
+    private enum Colours {
+        blue, green, brown, purple, navy, crimson, firebrick, maroon, red, black
+    }
+    private static HashMap<String, String> colourHash = new HashMap<String, String>();
+    private static Random randomNumber = new Random();
+    private static int nameSize = DEFAULT_NAME_SIZE;
+    private static int attributeSize = DEFAULT_ATTRIBUTE_SIZE;
+
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+
+    private ReadOnlyPerson person;
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private VBox personPanel;
+    @FXML
+    private Label name;
+    @FXML
+    private Label phone;
+    @FXML
+    private Label address;
+    @FXML
+    private Label remark;
+    @FXML
+    private ImageView avatarImage;
+    @FXML
+    private Label email;
+
+    private int fontSizeMultipler;
+    public ViewPersonPanel(ReadOnlyPerson person, int fontSizeMultiplier) {
+        super(FXML);
+        this.person = person;
+        this.fontSizeMultipler = fontSizeMultiplier;
+        initializeWithPerson(person);
+        initializeAvatar();
+        updateAttributeSizes();
+        registerAsAnEventHandler(this);
+    }
+
+    public ViewPersonPanel() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void initializeWithPerson(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+    }
+
+    //author charlesgoh
+    /**
+     * Sets avatar to a URL or filepath and falls back to the placeholder avatar if specified path fits in
+     * neither categories
+     */
+    private void initializeAvatar() {
+        String avatarPath = person.getAvatar().value;
+        try {
+            logger.info("Attempting to set avatar to image at specified URL or filepath");
+            Image newImage = new Image(avatarPath);
+            avatarImage.setImage(newImage);
+        } catch (IllegalArgumentException ex) {
+            logger.warning("Saved path is not a valid filepath or URL path. Setting avatar to placeholder");
+            Image imagePlaceholder = new Image("file:docs/images/Avatar.png");
+            avatarImage.setImage(imagePlaceholder);
+        }
+    }
+```
+###### \java\seedu\address\ui\ViewTaskPanel.java
+``` java
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
+
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
+import seedu.address.model.task.ReadOnlyTask;
+
+/**
+ * Contains details of a Task.
+ */
+public class ViewTaskPanel extends UiPart<Region> {
+
+    private static final String FXML = "ViewTaskPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private Label taskName;
+    @FXML
+    private Label description;
+    @FXML
+    private Label deadline;
+    @FXML
+    private Label priority;
+    @FXML
+    private Label state;
+
+    private ReadOnlyTask task;
+
+    public ViewTaskPanel(ReadOnlyTask task) {
+        super(FXML);
+        if (task != null) {
+            this.task = task;
+            initializeWithTask(task);
+        }
+        registerAsAnEventHandler(this);
+    }
+
+    public ViewTaskPanel() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Task} properties
+     * so that they will be notified of any changes.
+     */
+    private void initializeWithTask(ReadOnlyTask task) {
+        taskName.textProperty().bind(Bindings.convert(task.taskNameProperty()));
+        description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
+        deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
+        priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
+        state.textProperty().bind(Bindings.convert(task.stateProperty()));
+    }
+
+    @Subscribe
+    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        initializeWithTask(event.getNewSelection().task);
+    }
+}
 ```

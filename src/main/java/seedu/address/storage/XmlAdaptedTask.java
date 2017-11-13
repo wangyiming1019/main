@@ -1,5 +1,5 @@
 package seedu.address.storage;
-
+//@@author Esilocke
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskAddress;
 import seedu.address.model.task.TaskName;
 
-//@@author Esilocke
+
 /** JAXB-friendly version of a Task */
 public class XmlAdaptedTask {
     @XmlElement(required = true)

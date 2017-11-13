@@ -775,13 +775,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
         tasks.sortBy(field, order);
     }
 
-    /**
-     * Returns an array list of {@code Index} corresponding to the index of {@code ReadOnlyPerson} specified
-     */
-    public ArrayList<Index> extractPersonIndexes(ArrayList<ReadOnlyPerson> personsToExtract) {
-        return persons.extractIndexes(personsToExtract);
-    }
-
 ```
 ###### \java\seedu\address\model\Model.java
 ``` java
@@ -1005,12 +998,7 @@ public class Remark {
             break;
 
         default:
-            try {
-                System.out.println("An error occured");
-                throw new Exception("Invalid field parameter entered...\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            throw new AssertionError("Invalid field parameter entered...\n");
         }
 
         //sortBy then chooses the right ordering
@@ -1024,12 +1012,7 @@ public class Remark {
             break;
 
         default:
-            try {
-                System.out.println("An error occured");
-                throw new Exception("Invalid field parameter entered...\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            throw new AssertionError("Invalid field parameter entered...\n");
         }
     }
 ```
@@ -1039,24 +1022,16 @@ public class Remark {
         //sortyBy first chooses the right comparator
         Comparator<Task> comparator = null;
 
-        /**
+        /*
          * Comparators for the various fields available for sorting
          */
-        Comparator<Task> priorityComparator = new Comparator<Task>() {
-            @Override
-            public int compare(Task o1, Task o2) {
-                return Integer.compare(o1.getPriority().value, o2.getPriority().value);
-            }
-        };
+        Comparator<Task> priorityComparator = Comparator.comparingInt(o -> o.getPriority().value);
 
-        Comparator<Task> deadlineComparator = new Comparator<Task>() {
-            @Override
-            public int compare(Task o1, Task o2) {
-                if (o1.getDeadline().date == null || o2.getDeadline().date == null) {
-                    return 0;
-                } else {
-                    return o1.getDeadline().date.compareTo(o2.getDeadline().date);
-                }
+        Comparator<Task> deadlineComparator = (o1, o2) -> {
+            if (o1.getDeadline().date == null || o2.getDeadline().date == null) {
+                return 0;
+            } else {
+                return o1.getDeadline().date.compareTo(o2.getDeadline().date);
             }
         };
 

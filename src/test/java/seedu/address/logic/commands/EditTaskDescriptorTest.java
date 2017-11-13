@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author Esilocke
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_PAPER;
@@ -15,7 +15,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 
-//@@author Esilocke
+
 public class EditTaskDescriptorTest {
     @Test
     public void equals() {

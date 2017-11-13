@@ -196,6 +196,7 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyTask>` that can be 'observed'.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -462,11 +463,16 @@ The Parser in charge of the command will thus return either an AddPersonCommand,
 The sequence diagram below shows how this is done:
 
 image::AddTaskSeq.png[width="800"]
+_Figure 3.4.1.1 : Sequence Diagram for adding a Task_
 
 ==== Task structure and subclasses
 
 The Task object has several subclasses, which store information about the task. The following class diagram illustrates the structure of a Task object.
 
+image::TaskClassDiagram.png[width="800"]
+_Figure 3.4.2.1 : Class Diagram for the Task class_
+
+Each subclass contains its own methods for input validation, and the Assignees class supports some methods for changing its assignedList.
 
 ==== Task Object Storage
 
@@ -524,6 +530,7 @@ The indexes stored in the Assignees class *refer to the index of the person in t
 For example, given the below list of persons:
 
 image::AssignIndexMovement.png[width="800"]
+_Figure 3.5.1 : Mapping of indexes to a task_
 
 After a `find` operation, only the second, fourth and fifth persons are visible.
 When you call `assign 1 2 to/1`, while the first and second persons in the visible list will be assigned to the first Task, in this case the "Second person" and "Fourth person", internally the assignee list contain Indexes corresponding the following values: +
@@ -543,11 +550,13 @@ After a `delete` operation, the order of the persons in the persons list may cha
 The activity diagram below illustrates the process of updating task assignee lists when a person is deleted.
 
 image::AssignIndexDelete.png[width="800]
+_Figure 3.5.2 : Activity Diagram for updating Assignees after deleting a Person_
 
 After a `sort` operation, the order of the persons in the persons list may change as well. However, in comparison to `delete`, the new position of the person is not fixed.
 To ensure that the indexes are updated properly, the change in positions after each `sort` operation is maintained as well inside the UniquePersonList. +
 
 image::AssignIndexSort.png[width="800"]
+_Figure 3.5.3 : Mapping of indexes after a sort operation_
 
 All task assignee lists will thus be updated using the mappings from the sort operation. Each index in the list will be replaced by the value given in the mappings.
 For example, if a task previously had an index of "1" assigned to it, it be replaced by an index of "4".
@@ -1761,7 +1770,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Address++ depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -1775,7 +1784,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | keep track of my contacts
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |add a new task | keep track of my tasks and assignments
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -1787,6 +1800,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with secretive friends |be able to add contacts with incomplete data |operate without the need to create dummy values
 
+|`* * *` |cautious user |be able to lock my address book application whenever I want with a password | prevent people with malicious intent from making changes to my data
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |load contact data from any file of my choosing | have more flexibility for my file's storage location
@@ -1794,8 +1809,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |save contact data in a directory of my choosing |save the file in a location that fits my needs
 
 |`* *` |user |type commands partially and have the application fill in the rest for me | increase typing productivity
-
-|`* *` |first-time user |be able to see a user guide when I first start the program |be clear on how to use it
 
 |`* *` |multi-tasking user |be able to record things other than contacts, such as tasks |manage myself better
 
@@ -1805,13 +1818,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user with multiple devices |be able to import and export my address book |use the address book without having to add all my contacts when I switch platforms
 
-|`* *` |user with many social media accounts |be able to add my contacts' social media accounts to the address book |improve connectivity and learn more about my contacts
-
 |`* *` |user who values privacy |be able to to choose and modify which contacts and what information are to be displayed |hide information I do not want to share from others
 
-|`* *` |user with a 4K screen |be able keep track of my upcoming tasks | ditch my Todo application and migrate to Address++ for my people and task management needs
+|`* *` |cautious user |be able to back up my address book data | retrieve my back up data in the event I make breaking changes to my actual address book and there is no way of undoing them
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with poor eyesight |be able to increase the font size | use the application without straining my eyes
+
+|`* *` |forgetful user |be able to see who is assigned to a task | find my contacts who are in charge more quickly
 
 |`*` |lazy user |have an easy way to add a person with his full details into my address book |add new contacts quickly
 
@@ -1819,21 +1832,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |have the ability to add a short description to my contacts |add more information about my contacts
 
+|`*` |user |be able to mark my favourite contacts |find them more easily
+
 |`*` |long-time user |be able to access shortcut commands |use the address book more efficiently
-
-|`*` |non tech-savvy user |have the option to fill out certain fields |use the address book without having to use the intimidating CLI.
-
-|`*` |error-prone user |have minor typos auto corrected |continue using the address book without correcting my mistakes
 
 |`*` |user |be able to update the address book application easily when new updates are published |continue using the address book easily with any newly added features
 
-|`* * *` |cautious user |be able to lock my address book application whenever I want with a password | prevent people with malicious intent from making changes to my data
-
-|`* *` |cautious user |be able to back up my address book data | retrieve my back up data in the event I make breaking changes to my actual address book and there is no way of undoing them
-
-|`* *` |user with a 4K screen |be able to increase the font size | use the application without straining my eyes.
-
-|`* *` |picky user |be able to change the colour theme of the application | customize the application to suit my visual tastebuds.
 
 |=======================================================================
 

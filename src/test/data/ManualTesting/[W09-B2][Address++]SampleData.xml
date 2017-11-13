@@ -65,7 +65,7 @@
         <name>David Li</name>
         <nameIsPrivate>false</nameIsPrivate>
         <phone>91031282</phone>
-        <phoneIsPrivate>false</phoneIsPrivate>
+        <phoneIsPrivate>true</phoneIsPrivate>
         <email>lidavid@example.com</email>
         <emailIsPrivate>false</emailIsPrivate>
         <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
@@ -84,7 +84,7 @@
         <email>david_ng@example.com</email>
         <emailIsPrivate>false</emailIsPrivate>
         <address>Blk 678 Clementi Street 34, #06-772</address>
-        <addressIsPrivate>false</addressIsPrivate>
+        <addressIsPrivate>true</addressIsPrivate>
         <favourite>false</favourite>
         <remark></remark>
         <remarkIsPrivate>false</remarkIsPrivate>
@@ -151,9 +151,9 @@
     </persons>
     <persons>
         <name>Louise Excella</name>
-        <nameIsPrivate>false</nameIsPrivate>
+        <nameIsPrivate>true</nameIsPrivate>
         <phone>98811314</phone>
-        <phoneIsPrivate>false</phoneIsPrivate>
+        <phoneIsPrivate>true</phoneIsPrivate>
         <email>louise_e@example.com</email>
         <emailIsPrivate>false</emailIsPrivate>
         <address></address>

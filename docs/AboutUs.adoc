@@ -11,7 +11,7 @@ Initial source code this project was based on was from AddressBook-Level4 projec
 
 == Project Team
 '''
-=== Charles Goh
+=== Goh Chang Kang, Charles
 {empty}[http://charlesgoh.me[homepage]] [https://github.com/charlesgoh[github]]
 
 Role: Project Integration, Git Expert, Password Security Commands
@@ -20,7 +20,7 @@ Responsibilities: UI Component
 
 '''
 
-=== Jeffrey Goh
+=== Jeffrey Goh Keng Wee
 {empty}[http://github.com/jeffreygohkw[github]]
 
 Role: Testing
@@ -29,7 +29,7 @@ Responsibilities: Storage Component
 
 '''
 
-=== Kelvin Lin
+=== Lin Ziwen Kelvin
 {empty}[http://github.com/esiloke[github]]
 
 Role: Code Quality
@@ -38,7 +38,7 @@ Responsibilities: Model Component
 
 '''
 
-=== Wang Yi Ming
+=== Wang Yiming
 {empty}[http://github.com/wangyiming1090[github]]
 
 Role: Developer

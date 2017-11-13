@@ -151,6 +151,7 @@ public class TaskListPanel extends UiPart<Region> {
         });
     }
 
+    //@@author Esilocke
     @Subscribe
     private void handleJumpToListRequestTaskEvent(JumpToListRequestTaskEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

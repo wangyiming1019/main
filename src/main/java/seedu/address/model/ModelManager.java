@@ -404,6 +404,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Utility methods =============================================================
 
+    //@@author Esilocke
     /**
      * Constructs a new {@code ReadOnlyTask} from an existing ReadOnlyTask, with the specified assignees list.
      */

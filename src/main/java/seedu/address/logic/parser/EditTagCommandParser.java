@@ -1,4 +1,5 @@
 package seedu.address.logic.parser;
+//@@author Esilocke
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -12,7 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
-//@@author Esilocke
+
 /** Parses input arguments and creates a new EditTagCommand object */
 public class EditTagCommandParser implements Parser<EditTagCommand> {
     public static final String EDITTAG_VALIDATION_REGEX = "[\\p{Alnum}\\s]+[\\p{Alnum}]+";

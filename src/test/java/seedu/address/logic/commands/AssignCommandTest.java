@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author Esilocke
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -26,7 +26,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
-//@@author Esilocke
+
 public class AssignCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

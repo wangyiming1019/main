@@ -86,7 +86,7 @@ public class UniqueTaskList implements Iterable<Task> {
         if (!taskFoundAndDeleted) {
             throw new TaskNotFoundException();
         }
-        return taskFoundAndDeleted;
+        return true;
     }
 
     public void setTasks(UniqueTaskList replacement) {
@@ -161,32 +161,22 @@ public class UniqueTaskList implements Iterable<Task> {
 
     /**
      * Sorts person list by all persons by any field in ascending or descending order
-     * @param field
-     * @param order
      */
     //@@author charlesgoh
     public void sortBy(String field, String order) {
         //sortyBy first chooses the right comparator
         Comparator<Task> comparator = null;
 
-        /**
+        /*
          * Comparators for the various fields available for sorting
          */
-        Comparator<Task> priorityComparator = new Comparator<Task>() {
-            @Override
-            public int compare(Task o1, Task o2) {
-                return Integer.compare(o1.getPriority().value, o2.getPriority().value);
-            }
-        };
+        Comparator<Task> priorityComparator = Comparator.comparingInt(o -> o.getPriority().value);
 
-        Comparator<Task> deadlineComparator = new Comparator<Task>() {
-            @Override
-            public int compare(Task o1, Task o2) {
-                if (o1.getDeadline().date == null || o2.getDeadline().date == null) {
-                    return 0;
-                } else {
-                    return o1.getDeadline().date.compareTo(o2.getDeadline().date);
-                }
+        Comparator<Task> deadlineComparator = (o1, o2) -> {
+            if (o1.getDeadline().date == null || o2.getDeadline().date == null) {
+                return 0;
+            } else {
+                return o1.getDeadline().date.compareTo(o2.getDeadline().date);
             }
         };
 

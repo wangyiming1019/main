@@ -421,6 +421,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Esilocke
     @Subscribe
     private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -434,6 +435,7 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(viewPersonPanel.getRoot());
     }
+    //@@author
 
     @Subscribe
     private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {

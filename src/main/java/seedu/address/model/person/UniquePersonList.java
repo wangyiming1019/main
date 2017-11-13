@@ -236,12 +236,7 @@ public class UniquePersonList implements Iterable<Person> {
             break;
 
         default:
-            try {
-                System.out.println("An error occured");
-                throw new Exception("Invalid field parameter entered...\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            throw new AssertionError("Invalid field parameter entered...\n");
         }
 
         //sortBy then chooses the right ordering
@@ -255,12 +250,7 @@ public class UniquePersonList implements Iterable<Person> {
             break;
 
         default:
-            try {
-                System.out.println("An error occured");
-                throw new Exception("Invalid field parameter entered...\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            throw new AssertionError("Invalid field parameter entered...\n");
         }
     }
     //@@author
