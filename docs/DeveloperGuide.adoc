@@ -463,6 +463,11 @@ The sequence diagram below shows how this is done:
 
 image::AddTaskSeq.png[width="800"]
 
+==== Task structure and subclasses
+
+The Task object has several subclasses, which store information about the task. The following class diagram illustrates the structure of a Task object.
+
+
 ==== Task Object Storage
 
 [source, xml]
@@ -508,7 +513,57 @@ Task objects are stored in a similar manner to Person objects, and share the sam
 **Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa. +
 **Cons:** All existing save/load functions will require an additional method to handle Task storage. +
 // end::task[]
+// tag::assignDismiss[]
 
+=== Assign and Dismiss Commands
+
+The `assign` and `dismiss` command allows you to assign contacts to and from your tasks, thus aiding coordination and collaboration. +
+The Assignees class stores information related to who is assigned to a particular task through maintaining an internal ArrayList that keeps track of all the indexes of the people who are assigned to the task. +
+
+The indexes stored in the Assignees class *refer to the index of the person in the UniquePersonList, not the visible index shown to the user in the UI*. This means that the indexes will not change even if the list shown in the UI changes, such as after a `find` operation. +
+For example, given the below list of persons:
+
+image::AssignIndexMovement.png[width="800"]
+
+After a `find` operation, only the second, fourth and fifth persons are visible.
+When you call `assign 1 2 to/1`, while the first and second persons in the visible list will be assigned to the first Task, in this case the "Second person" and "Fourth person", internally the assignee list contain Indexes corresponding the following values: +
+
+[source, java]
+assignedList = {1, 3}
+
+The indexes 1 and 3 refer to the zero-based index of the "Second person" and "Fourth person" in the complete list.
+
+Due to this requirement, when the UniquePersonList changes, the assigned indexes of each task will be updated as well.
+
+The `add` operation will not require the assigned indexes to be updated, as each newly added person is not assigned to any task by default, and when a person is added, he is inserted to the end of the list, thus the order of the other persons will not change.
+
+After a `clear` operation that clears only the persons list, all task assignee lists will be cleared and re-initialized.
+
+After a `delete` operation, the order of the persons in the persons list may change. This is especially so when the first person is deleted, as this will cause the positions of all other persons to decrease by 1.
+The activity diagram below illustrates the process of updating task assignee lists when a person is deleted.
+
+image::AssignIndexDelete.png[width="800]
+
+After a `sort` operation, the order of the persons in the persons list may change as well. However, in comparison to `delete`, the new position of the person is not fixed.
+To ensure that the indexes are updated properly, the change in positions after each `sort` operation is maintained as well inside the UniquePersonList. +
+
+image::AssignIndexSort.png[width="800"]
+
+All task assignee lists will thus be updated using the mappings from the sort operation. Each index in the list will be replaced by the value given in the mappings.
+For example, if a task previously had an index of "1" assigned to it, it be replaced by an index of "4".
+
+==== Design Considerations
+
+**Aspect:** Storage of assigned persons in the Assignee class +
+**Alternative 1 (current choice):** Store the Indexes of the persons only +
+**Pros:** The assigned persons will only need to be retrieved on a per-need basis, rather than residing in the Assignee class all the time, thus making storage simpler +
+**Cons:** UniquePersonList will be coupled to Tasks, as Tasks will need to retrieve information from the UniquePersonList in order to update itself after any operation that could potentially change the UniquePersonList ordering. +
+**Alternative 2:** Store the whole person in the Assignees class +
+**Pros:** The Assignees class will not need to depend on the UniquePersonList as its internal list is independent from that of the UniquePersonList +
+**Cons:** Repetition of information is incurred in the storage file, as the same person can appear multiple times if he is assigned to multiple tasks. This will increase the size of the storage file, and make read-write operations slow. +
+
+---
+// end::assignDismiss[]
 // tag::sort[]
 === Sort Command
 

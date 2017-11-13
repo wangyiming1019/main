@@ -21,7 +21,6 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.TaskStateChangeEvent;
 import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
 import seedu.address.commons.events.ui.BrowserPanelNavigateEvent;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
@@ -37,8 +36,6 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
-import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.storage.Storage;
 import seedu.address.storage.XmlFileStorage;
 
@@ -450,19 +447,6 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         browserPlaceholder.getChildren().clear();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
-    }
-
-    @Subscribe
-    private void handleTaskStateChangeEvent(TaskStateChangeEvent event) {
-        //TODO make sure this structure does not violate architecture
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        try {
-            model.updateTask(event.targetToReplace, event.newTask);
-        } catch (DuplicateTaskException dte) {
-            throw new AssertionError("The newly updated task cannot be the same as the previous one");
-        } catch (TaskNotFoundException tnfe) {
-            throw new AssertionError("The task cannot be missing");
-        }
     }
 
     //@@author jeffreygohkw
