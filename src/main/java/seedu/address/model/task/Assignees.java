@@ -1,9 +1,8 @@
 package seedu.address.model.task;
-
+//@@author Esilocke
 import java.util.ArrayList;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Represents the list of {@code ReadOnlyPerson} assigned to a task.
  * Contains support for some limited modification operations
@@ -52,10 +51,6 @@ public class Assignees {
         return assignedList.removeAll(personsToDismiss);
     }
 
-    public boolean contains(ReadOnlyPerson toFind) {
-        return assignedList.contains(toFind);
-    }
-
     public ArrayList<Index> getList() {
         return this.assignedList;
     }
@@ -72,7 +67,6 @@ public class Assignees {
                 int indexValue = current.getZeroBased() - 1;
                 Index decrementedIndex = Index.fromZeroBased(indexValue);
                 assignedList.set(i, decrementedIndex);
-                continue;
             }
         }
     }

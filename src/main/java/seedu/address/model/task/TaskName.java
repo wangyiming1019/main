@@ -1,10 +1,9 @@
 package seedu.address.model.task;
-
+//@@author Esilocke
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-//@@author Esilocke
 /**
  * Represents a Task name in the address book.
  */

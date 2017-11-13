@@ -27,8 +27,10 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
+    //@@author Esilocke
     /** Clears only part of the existing backing model and replaces with the provided new data. */
     void resetPartialData(ReadOnlyAddressBook newData, Prefix type);
+    //@@author
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
@@ -67,6 +69,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author Esilocke
     /** Adds the given task */
     void addTask(ReadOnlyTask task) throws DuplicateTaskException;
 
@@ -96,12 +99,15 @@ public interface Model {
 
     /** Displays all persons assigned to the specified task */
     void viewAssignees(ReadOnlyTask task);
+    //@@author
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author Esilocke
     /** Returns an unmodifiable view of the filtered tasks list */
     ObservableList<ReadOnlyTask> getFilteredTaskList();
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -109,6 +115,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author Esilocke
     /**
      * Updates the filter of the filtered task list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

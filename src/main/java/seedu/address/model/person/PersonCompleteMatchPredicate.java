@@ -1,5 +1,5 @@
 package seedu.address.model.person;
-
+//@@author Esilocke
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -16,7 +16,7 @@ public class PersonCompleteMatchPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> person.equals(keyword));
+                .anyMatch(person::equals);
     }
 
     @Override

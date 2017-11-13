@@ -1,5 +1,5 @@
 package seedu.address.model.task;
-
+//@@author Esilocke
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +7,7 @@ import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-//@@author Esilocke
+
 /**
  * Represents the deadline of a task in the address book.
  */
