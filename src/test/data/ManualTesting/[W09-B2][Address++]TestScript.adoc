@@ -16,10 +16,10 @@ By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT` +
 
 == Getting Started
 
-Ensure that you have the Address++.jar file and the [W09-B2][Address++]SampleData.xml available on your computer and a working internet connection.
+Ensure that you have the [W09-B2][Address++].jar file and the [W09-B2][Address++]SampleData.xml available on your computer and a working internet connection.
 
 === Importing the test data
-. Launch Address++.jar.
+. Launch [W09-B2][Address++].jar.
 . On initial launch, it should contain sample data of 6 different persons and 0 tasks.
 . Type `open` to open a pop up window.
 . Navigate to the location of the [W09-B2][Address++]SampleData.xml file and click Open to open it.
