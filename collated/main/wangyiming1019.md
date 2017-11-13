@@ -1085,33 +1085,3 @@ public class NameContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
         });
     }
 ```
-###### \java\seedu\address\ui\ViewPersonPanel.java
-``` java
-    /**
-     * Locate hashed colour for tag. If not found, new colour is assigned to tag
-     * @param tag
-     * @return
-     */
-    private String getTagColour(String tag) {
-        if (!colourHash.containsKey(tag)) {
-            int randomiser = randomNumber.nextInt(ViewPersonPanel.Colours.values().length);
-            String colour = ViewPersonPanel.Colours.values()[randomiser].toString();
-            colourHash.put(tag, colour);
-        }
-        return colourHash.get(tag);
-    }
-
-    /**
-     * Assigns each tag a colour
-     * @param person
-     */
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label newTagLabel = new Label(tag.getTagName());
-
-            newTagLabel.setStyle("-fx-background-color: " + this.getTagColour(tag.getTagName()));
-
-            tags.getChildren().add(newTagLabel);
-        });
-    }
-```

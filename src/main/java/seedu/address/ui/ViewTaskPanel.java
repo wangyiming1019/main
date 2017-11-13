@@ -6,14 +6,11 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.TaskStateChangeEvent;
 import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.Task;
 
 /**
  * Contains details of a Task.
@@ -33,8 +30,6 @@ public class ViewTaskPanel extends UiPart<Region> {
     private Label priority;
     @FXML
     private Label state;
-    @FXML
-    private Button markState;
 
     private ReadOnlyTask task;
 
@@ -62,12 +57,6 @@ public class ViewTaskPanel extends UiPart<Region> {
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
         priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
         state.textProperty().bind(Bindings.convert(task.stateProperty()));
-        markState.textProperty().bind(Bindings.convert(task.changeStateProperty()));
-        markState.setOnAction(event -> {
-            ReadOnlyTask updatedTask = new Task(task);
-            updatedTask.changeState();
-            raise(new TaskStateChangeEvent(task, updatedTask));
-        });
     }
 
     @Subscribe
