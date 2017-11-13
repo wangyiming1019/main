@@ -14,6 +14,8 @@ Address++ is a desktop address book application that aims to help users manage t
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=addprivacy]
 
 include::../UserGuide.adoc[tag=editprivacy]
@@ -21,6 +23,8 @@ include::../UserGuide.adoc[tag=editprivacy]
 include::../UserGuide.adoc[tag=changeprivacy]
 
 include::../UserGuide.adoc[tag=privacylevel]
+
+#End of Extract#
 
 ---
 
@@ -37,8 +41,11 @@ It may be inconvenient for a user to set a person's fields to public and back to
 ==== Implementation
 
 ---
+#Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=privacy]
+
+#End of Extract#
 
 ---
 
@@ -48,8 +55,11 @@ include::../DeveloperGuide.adoc[tag=privacy]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=locate]
 
+#End of Extract#
 
 ---
 
@@ -61,7 +71,11 @@ While a person's phone and email address can be used directly, users often are u
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=locate]
+
+#End of Extract#
 
 ---
 
@@ -71,8 +85,11 @@ include::../DeveloperGuide.adoc[tag=locate]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=navigate]
 
+#End of Extract#
 
 ---
 
@@ -86,7 +103,11 @@ Users are able to utilize the addresses attached to a person, as well as those a
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=navigate]
+
+#End of Extract#
 
 ---
 
@@ -96,12 +117,15 @@ include::../DeveloperGuide.adoc[tag=navigate]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=open]
 
 include::../UserGuide.adoc[tag=saveas]
 
 include::../UserGuide.adoc[tag=opensaveas]
 
+#End of Extract#
 
 ---
 
@@ -116,7 +140,11 @@ It can even potentially allow for syncing save files between devices if external
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=opensaveas]
+
+#End of Extract#
 
 ---
 
@@ -126,7 +154,11 @@ include::../DeveloperGuide.adoc[tag=opensaveas]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
 
 ---
 
@@ -138,7 +170,11 @@ Different users may have different preferences for the style and colour scheme o
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
 
 ---
 

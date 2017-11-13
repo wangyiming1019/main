@@ -1,4 +1,4 @@
-= Kelvin Lin - Project Portfolio
+= Lin Ziwen Kelvin - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
@@ -31,11 +31,7 @@ The user would need to delete the tag from all users who are tagged with `CS2103
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=edittag]
-
-#End of Extract#
+The EditTagCommand iterates through each person in the UniquePersonList, and replaces the old tag, if found, with the new tag.
 
 ---
 

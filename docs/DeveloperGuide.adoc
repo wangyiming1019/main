@@ -226,6 +226,7 @@ On some screens, the text appear to be too small. The aim of the increase/decrea
 users to customize the application's font size quickly on the go.
 
 image::FontSizeUI.png[width="540"]
+_Figure 3.1.1 : Using the UI to change font size_
 
 There are two methods of calling changes in font size:
 
@@ -235,6 +236,8 @@ new events via `ComponentManager`.
 2. CLI commands also post new events to handle font size changes, when the relevant command is entered (e.g. `fontsize increase`).
 
 image::FontSizeChangeSequenceDiagram.png[width="800"]
+_Figure 3.1.2 : Sequence diagram for fontsize changing_
+
 From the sequence diagram above, we can observe that the font size changes are handled by subscriber functions in PersonListPanel
 and TaskListPanel.
 
@@ -301,6 +304,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 3.3.1 : Command inheritance_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -340,10 +344,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 3.3.2 : Initial status of undo/redo stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 3.3.3 : After executing `delete 5`_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -353,6 +359,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 3.3.4 : Executing undo_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -360,6 +367,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 3.3.5 : Undo/redo sequence diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -369,14 +377,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 3.3.6 : Executing `clear`_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 3.3.7 : Stack is not changed after `list`_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 3.3.8 : Undo/Redo activity diagram_
 
 ==== Design Considerations
 
@@ -587,10 +598,12 @@ class. The actual sorting happens via the UniquePersonList class or the UniqueTa
 The UML Class diagram for sort commands that trigger sorting in person listings is shown below:
 
 image::SortCommandPersonDiagram.png[width="800"]
+_Figure 3.6.1 : Sort command class diagram_
 
 Likewise, the UML Class diagram for sort commands that trigger sorting in task listings is shown below:
 
 image::SortCommandTaskDiagram.png[width="800"]
+_Figure 3.6.1 : Sort task command class diagram_
 
 We can deduce from the UML diagrams diagrams above that the only difference between the implementation
 of the sorting for persons and tasks lies in the location where the sorting is actually executed.
@@ -600,6 +613,7 @@ Suppose a user enters a new command `sort person name desc`. The following seque
 demonstrates how the sort command works.
 
 image::SortSequenceDiagram.png[width="800]
+_Figure 3.6.1 : Sort command sequence diagram_
 
 Note that the execution of the sort methods results in the actual person or task list being sorted. This list will be
 reflected in both the application's storage as well as the graphical user interface.
@@ -641,6 +655,7 @@ The outlining sequence diagram for this process (excluding the interaction with 
 `BackupRequestEvent`) is shown below:
 
 image::BackupSequenceDiagram.png[width="800]
+_Figure 3.7.1 : Backup command sequence diagram_
 
 ==== Design Considerations
 
@@ -668,6 +683,7 @@ These `Command` classes will then call the Model to toggle the lock's state.
 The activity diagram below outlines the basic logic of the lock states concept.:
 
 image::LockStatesActivityDiagram.png[width="800]
+_Figure 3.8.1 : Lock/Unlock command activity diagram_
 
 From the activity diagram we can see that lock states are preserved in the `preferences.json`
 file after the application closes by passing the lock state into the `UserPrefs` class to be
@@ -730,6 +746,7 @@ user's file directories from seeing the real password immediately.
 The activity diagram below outlines the process flow for the `ChangePasswordCommand`:
 
 image::ChangePasswordActivityDiagram.png[width="800]
+_Figure 3.9.1 : ChangePassword command activity diagram_
 
 ==== Design Considerations
 

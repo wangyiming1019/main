@@ -286,7 +286,7 @@ is now 1800 words instead. You edit the task to reflect this change.
 ****
 ****
 **Example Scenario 2** +
-One of your assignments has been pushed back and is no longer as urgent as before. You edit teh task to reflect this change.
+One of your assignments has been pushed back and is no longer as urgent as before. You edit the task to reflect this change.
 
 >> `edit task/ 4 deadline/2 months later p/2`
 ****
