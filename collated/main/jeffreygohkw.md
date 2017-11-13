@@ -687,6 +687,7 @@ public class LocateCommand extends Command {
 
     public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Searching for Person at Index: %1$s";
     public static final String MESSAGE_PRIVATE_ADDRESS_FAILURE = "Person %1$s has a Private Address";
+    public static final String MESSAGE_NO_ADDRESS_FAILURE = "Person %1$s has no Address";
 
     private final Index targetIndex;
 
@@ -704,6 +705,9 @@ public class LocateCommand extends Command {
         }
         if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().getIsPrivate()) {
             throw new CommandException(String.format(MESSAGE_PRIVATE_ADDRESS_FAILURE, targetIndex.getOneBased()));
+        }
+        if (model.getFilteredPersonList().get(targetIndex.getZeroBased()).getAddress().toString().equals("")) {
+            throw new CommandException(String.format(MESSAGE_NO_ADDRESS_FAILURE, targetIndex.getOneBased()));
         }
         EventsCenter.getInstance().post(new BrowserPanelLocateEvent(
                 model.getFilteredPersonList().get(targetIndex.getZeroBased())));
