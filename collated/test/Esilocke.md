@@ -1,6 +1,153 @@
 # Esilocke
+###### \java\seedu\address\logic\commands\AddTaskCommandTest.java
+``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.testutil.ModelStub;
+import seedu.address.testutil.TaskBuilder;
+
+public class AddTaskCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void execute_taskAcceptedByModel_addSuccessful() throws Exception {
+        AddTaskCommandTest.ModelStubAcceptingTaskAdded modelStub = new AddTaskCommandTest.ModelStubAcceptingTaskAdded();
+        Task validTask = new TaskBuilder().build();
+
+        CommandResult commandResult = prepareCommand(validTask, modelStub).execute();
+
+        assertEquals(String.format(AddTaskCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
+    }
+
+    @Test
+    public void execute_duplicateTask_throwsCommandException() throws Exception {
+        ModelStub modelStub = new AddTaskCommandTest.ModelStubAlwaysThrowingDuplicateException();
+        Task validTask = new TaskBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddTaskCommand.MESSAGE_DUPLICATE_TASK);
+
+        prepareCommand(validTask, modelStub).execute();
+    }
+
+    @Test
+    public void equals() {
+        Task paper = new TaskBuilder().withTaskName("Paper").build();
+        Task pencil = new TaskBuilder().withTaskName("Pencil").build();
+
+        AddTaskCommand addPaperCommand = new AddTaskCommand(paper);
+        AddTaskCommand addPencilCommand = new AddTaskCommand(pencil);
+
+        // same object -> returns true
+        assertTrue(addPaperCommand.equals(addPaperCommand));
+
+        // same values -> returns true
+        AddTaskCommand addPaperCommandCopy = new AddTaskCommand(paper);
+        assertTrue(addPaperCommand.equals(addPaperCommandCopy));
+
+        // different types -> returns false
+        assertFalse(addPaperCommand.equals(""));
+
+        // null -> returns false
+        assertFalse(addPaperCommand.equals(null));
+
+        // different task -> returns false
+        assertFalse(addPaperCommand.equals(addPencilCommand));
+    }
+
+    /**
+     * Generates a new AddTaskCommand with the details of the given task.
+     */
+    private AddTaskCommand prepareCommand(Task task, Model model) {
+        AddTaskCommand command = new AddTaskCommand(task);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * A Model stub that always throw a DuplicateTaskException when trying to add a task.
+     */
+    private class ModelStubAlwaysThrowingDuplicateException extends ModelStub {
+
+        @Override
+        public void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+            throw new DuplicateTaskException();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always accept the task being added.
+     */
+    private class ModelStubAcceptingTaskAdded extends ModelStub {
+        private final ArrayList<Task> tasksAdded = new ArrayList<>();
+
+        @Override
+        public void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+            tasksAdded.add(new Task(task));
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AssignCommandTest.java
 ``` java
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
+
 public class AssignCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -129,8 +276,228 @@ public class AssignCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ClearPersonCommandTest.java
+``` java
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
+public class ClearPersonCommandTest {
+
+    @Test
+    public void execute_emptyAddressBook_success() {
+        Model model = new ModelManager();
+        assertCommandSuccess(prepareCommand(model), model, ClearPersonCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_nonEmptyAddressBook_success() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(prepareCommand(model), model, ClearPersonCommand.MESSAGE_SUCCESS, model);
+    }
+
+    /**
+     * Generates a new {@code ClearPersonCommand} which upon execution, clears the contents in {@code model}.
+     */
+    private ClearPersonCommand prepareCommand(Model model) {
+        ClearPersonCommand command = new ClearPersonCommand();
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ClearTaskCommandTest.java
+``` java
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
+public class ClearTaskCommandTest {
+
+    @Test
+    public void execute_emptyAddressBook_success() {
+        Model model = new ModelManager();
+        assertCommandSuccess(prepareCommand(model), model, ClearTaskCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_nonEmptyAddressBook_success() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
+        // Verify that only the tasks are cleared
+        assertCommandSuccess(prepareCommand(model), model, ClearTaskCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    /**
+     * Generates a new {@code ClearTaskCommand} which upon execution, clears the contents in {@code model}.
+     */
+    private ClearTaskCommand prepareCommand(Model model) {
+        ClearTaskCommand command = new ClearTaskCommand();
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\DeleteTaskCommandTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.address.testutil.TypicalTasks.getTypicalTasksOnlyAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.task.ReadOnlyTask;
+
+public class DeleteTaskCommandTest {
+    private Model model = new ModelManager(getTypicalTasksOnlyAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        ReadOnlyTask taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
+        DeleteTaskCommand deleteTaskCommand = prepareCommand(INDEX_FIRST_TASK);
+
+        String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_SUCCESS, taskToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteTask(taskToDelete);
+
+        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
+        DeleteTaskCommand deleteTaskCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() throws Exception {
+        showFirstTaskOnly(model);
+
+        ReadOnlyTask taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
+        DeleteTaskCommand deleteTaskCommand = prepareCommand(INDEX_FIRST_TASK);
+
+        String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_SUCCESS, taskToDelete);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteTask(taskToDelete);
+        showNoTask(expectedModel);
+
+        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showFirstTaskOnly(model);
+
+        Index outOfBoundIndex = INDEX_SECOND_TASK;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getTasksList().size());
+
+        DeleteTaskCommand deleteTaskCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        DeleteTaskCommand deleteFirstCommand = new DeleteTaskCommand(INDEX_FIRST_TASK);
+        DeleteTaskCommand deleteSecondCommand = new DeleteTaskCommand(INDEX_SECOND_TASK);
+
+        // same object -> returns true
+        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+
+        // same values -> returns true
+        DeleteTaskCommand deleteFirstCommandCopy = new DeleteTaskCommand(INDEX_FIRST_TASK);
+        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstCommand.equals(null));
+
+        // different task -> returns false
+        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+    }
+
+    /**
+     * Returns a {@code DeleteTaskCommand} with the parameter {@code index}.
+     */
+    private DeleteTaskCommand prepareCommand(Index index) {
+        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(index);
+        deleteTaskCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteTaskCommand;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show no tasks.
+     */
+    private void showNoTask(Model model) {
+        model.updateFilteredTaskList(p -> false);
+
+        assert model.getFilteredTaskList().isEmpty();
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\DismissCommandTest.java
 ``` java
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
+
 public class DismissCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -256,6 +623,36 @@ public class DismissCommandTest {
 ```
 ###### \java\seedu\address\logic\commands\EditTagCommandTest.java
 ``` java
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEAGUE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_EDIT_TAG_SUCCESS;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_TAG_NOT_FOUND;
+import static seedu.address.testutil.TypicalPersons.getTaglessAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersonsAddressBook;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PersonBuilder;
+
+
 public class EditTagCommandTest {
     private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
     @Test
@@ -337,8 +734,177 @@ public class EditTagCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\EditTaskCommandTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.address.testutil.TypicalTasks.getTypicalTasksOnlyAddressBook;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
+import seedu.address.testutil.TaskBuilder;
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for EditTaskCommand.
+ */
+public class EditTaskCommandTest {
+
+    private Model model = new ModelManager(getTypicalTasksOnlyAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Task editedTask = new TaskBuilder().build();
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder(editedTask).build();
+        EditTaskCommand editTaskCommand = prepareCommand(Index.fromZeroBased(3), descriptor);
+
+        String expectedMessage = String.format(EditTaskCommand.MESSAGE_SUCCESS, editedTask);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updateTask(model.getFilteredTaskList().get(3), editedTask);
+
+        assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Index indexLastTask = Index.fromOneBased(model.getFilteredTaskList().size());
+        ReadOnlyTask lastTask = model.getFilteredTaskList().get(indexLastTask.getZeroBased());
+
+        TaskBuilder taskInList = new TaskBuilder(lastTask);
+        Task editedTask = taskInList.withTaskName(VALID_TASK_NAME_PAPER).withDescription(VALID_DESCRIPTION_PAPER)
+                .withDeadline(VALID_DEADLINE_PAPER).build();
+
+
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withTaskName(VALID_TASK_NAME_PAPER).withDescription(VALID_DESCRIPTION_PAPER)
+                .withDeadline(VALID_DEADLINE_PAPER).build();
+        EditTaskCommand editTaskCommand = prepareCommand(indexLastTask, descriptor);
+
+        String expectedMessage = String.format(EditTaskCommand.MESSAGE_SUCCESS, editedTask);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updateTask(lastTask, editedTask);
+        assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_filteredList_success() throws Exception {
+        showFirstTaskOnly(model);
+
+        ReadOnlyTask taskInFilteredList = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
+        Task editedTask = new TaskBuilder(taskInFilteredList).withTaskName(VALID_TASK_NAME_PAPER).build();
+        EditTaskCommand editTaskCommand = prepareCommand(INDEX_FIRST_TASK,
+                new EditTaskDescriptorBuilder().withTaskName(VALID_TASK_NAME_PAPER).build());
+
+        String expectedMessage = String.format(EditTaskCommand.MESSAGE_SUCCESS, editedTask);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updateTask(model.getFilteredTaskList().get(0), editedTask);
+
+        assertCommandSuccess(editTaskCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidTaskIndexUnfilteredList_failure() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withTaskName(VALID_TASK_NAME_PAPER).build();
+        EditTaskCommand editTaskCommand = prepareCommand(outOfBoundIndex, descriptor);
+
+        assertCommandFailure(editTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Edit filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
+     */
+    @Test
+    public void execute_invalidTaskIndexFilteredList_failure() {
+        showFirstTaskOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_TASK;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getTasksList().size());
+
+        EditTaskCommand editTaskCommand = prepareCommand(outOfBoundIndex,
+                new EditTaskDescriptorBuilder().withTaskName(VALID_TASK_NAME_PAPER).build());
+
+        assertCommandFailure(editTaskCommand, model, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        final EditTaskCommand standardCommand = new EditTaskCommand(INDEX_FIRST_TASK, DESC_PENCIL);
+
+        // same values -> returns true
+        EditTaskCommand.EditTaskDescriptor copyDescriptor = new EditTaskCommand.EditTaskDescriptor(DESC_PENCIL);
+        EditTaskCommand commandWithSameValues = new EditTaskCommand(INDEX_FIRST_TASK, copyDescriptor);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different index -> returns false
+        assertFalse(standardCommand.equals(new EditTaskCommand(INDEX_SECOND_TASK, DESC_PENCIL)));
+
+        // different descriptor -> returns false
+        assertFalse(standardCommand.equals(new EditTaskCommand(INDEX_FIRST_TASK, DESC_PAPER)));
+    }
+
+    /**
+     * Returns an {@code EditTaskCommand} with parameters {@code index} and {@code descriptor}
+     */
+    private EditTaskCommand prepareCommand(Index index, EditTaskCommand.EditTaskDescriptor descriptor) {
+        EditTaskCommand editTaskCommand = new EditTaskCommand(index, descriptor);
+        editTaskCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return editTaskCommand;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\EditTaskDescriptorTest.java
 ``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
+
+
 public class EditTaskDescriptorTest {
     @Test
     public void equals() {
@@ -378,6 +944,241 @@ public class EditTaskDescriptorTest {
         // different task address -> returns false
         editedPencil = new EditTaskDescriptorBuilder(DESC_PENCIL).withTaskAddress(VALID_TASK_ADDRESS_PAPER).build();
         assertFalse(DESC_PENCIL.equals(editedPencil));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\FindTaskCommandTest.java
+``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_TASKS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalTasks.ACCEPT;
+import static seedu.address.testutil.TypicalTasks.DATE;
+import static seedu.address.testutil.TypicalTasks.GRADLE;
+import static seedu.address.testutil.TypicalTasks.getTypicalTasksOnlyAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.TaskContainsKeywordPredicate;
+
+
+public class FindTaskCommandTest {
+    private Model model = new ModelManager(getTypicalTasksOnlyAddressBook(), new UserPrefs());
+
+    @Test
+    public void equals() {
+        TaskContainsKeywordPredicate firstPredicate =
+                new TaskContainsKeywordPredicate(Collections.singletonList("first"));
+        TaskContainsKeywordPredicate secondPredicate =
+                new TaskContainsKeywordPredicate(Collections.singletonList("second"));
+
+        FindTaskCommand findFirstCommand = new FindTaskCommand(firstPredicate);
+        FindTaskCommand findSecondCommand = new FindTaskCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstCommand.equals(findFirstCommand));
+
+        // same values -> returns true
+        FindTaskCommand findFirstCommandCopy = new FindTaskCommand(firstPredicate);
+        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstCommand.equals(null));
+
+        // different task -> returns false
+        assertFalse(findFirstCommand.equals(findSecondCommand));
+    }
+
+    @Test
+    public void execute_zeroKeywords_noTaskFound() {
+        String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 0);
+        FindTaskCommand command = prepareCommand(" ");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_multipleKeywords_multipleTasksFound() {
+        String expectedMessage = String.format(MESSAGE_TASKS_LISTED_OVERVIEW, 3);
+        FindTaskCommand command = prepareCommand("Resolve Acceptance Date");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ACCEPT, DATE, GRADLE));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindTaskCommand}.
+     */
+    private FindTaskCommand prepareCommand(String userInput) {
+        FindTaskCommand command =
+                new FindTaskCommand(new TaskContainsKeywordPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<ReadOnlyTask>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(FindTaskCommand command, String expectedMessage,
+                                      List<ReadOnlyTask> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredTaskList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SelectTaskCommandTest.java
+``` java
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestTaskEvent;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+public class SelectTaskCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() {
+        Index lastTaskIndex = Index.fromOneBased(model.getFilteredTaskList().size());
+
+        assertExecutionSuccess(INDEX_FIRST_TASK);
+        assertExecutionSuccess(INDEX_THIRD_TASK);
+        assertExecutionSuccess(lastTaskIndex);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showFirstTaskOnly(model);
+
+        assertExecutionSuccess(INDEX_FIRST_TASK);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showFirstTaskOnly(model);
+
+        Index outOfBoundsIndex = INDEX_SECOND_TASK;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getTasksList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        SelectTaskCommand selectFirstCommand = new SelectTaskCommand(INDEX_FIRST_TASK);
+        SelectTaskCommand selectSecondCommand = new SelectTaskCommand(INDEX_SECOND_TASK);
+
+        // same object -> returns true
+        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+
+        // same values -> returns true
+        SelectTaskCommand selectFirstCommandCopy = new SelectTaskCommand(INDEX_FIRST_TASK);
+        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(selectFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(selectFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+    }
+
+    /**
+     * Executes a {@code SelectTaskCommand} with the given {@code index}, and checks that
+     * {@code JumpToListRequestTaskEvent} is raised with the correct index.
+     */
+    private void assertExecutionSuccess(Index index) {
+        SelectTaskCommand selectTaskCommand = prepareCommand(index);
+        String expectedMessage = String.format(SelectTaskCommand.MESSAGE_SUCCESS, index.getOneBased());
+        try {
+            CommandResult commandResult = selectTaskCommand.execute();
+            assertEquals(expectedMessage, commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+        JumpToListRequestTaskEvent lastEvent =
+                (JumpToListRequestTaskEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+    }
+
+    /**
+     * Executes a {@code SelectTaskCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the .
+     */
+    private void assertExecutionFailure(Index index, String expectedMessage) {
+        SelectTaskCommand selectTaskCommand = prepareCommand(index);
+
+        try {
+            selectTaskCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code SelectTaskCommand} with parameters {@code index}.
+     */
+    private SelectTaskCommand prepareCommand(Index index) {
+        SelectTaskCommand selectTaskCommand = new SelectTaskCommand(index);
+        selectTaskCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return selectTaskCommand;
     }
 }
 ```
@@ -908,6 +1709,70 @@ public class AddTaskCommandParserTest {
 
 }
 ```
+###### \java\seedu\address\logic\parser\AssignCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TARGET;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+public class AssignCommandParserTest {
+
+    private AssignTaskCommandParser parser = new AssignTaskCommandParser();
+
+    @Test
+    public void parseValidPersonIndexAndTaskIndex_success() throws ParseException {
+        ArrayList<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+
+        String userInput = INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
+                + PREFIX_TARGET.getPrefix() + INDEX_FIRST_TASK.getOneBased();
+        assertParseSuccess(parser, userInput, new AssignCommand(indexes, INDEX_FIRST_TASK));
+    }
+
+    @Test
+    public void parseInvalidIndexes_failure() throws ParseException {
+        // invalid person indexes
+        String userInput = "aaaaa" + " " + INDEX_SECOND_PERSON.getOneBased() + " "
+                + PREFIX_TARGET.getPrefix() + INDEX_FIRST_TASK.getOneBased();
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_INDEX);
+
+        // invalid task index
+        userInput = INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
+                + PREFIX_TARGET.getPrefix() + "aaaaa";
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_INDEX);
+    }
+
+    @Test
+    public void parseInvalidArgsFailure() throws Exception {
+        // no person indexes specified
+        String userInput = " " + PREFIX_TARGET.getPrefix() + INDEX_FIRST_TASK.getOneBased();
+        assertParseFailure(parser, userInput, AssignCommand.MESSAGE_INVALID_PERSONS_ARGS);
+        // no target prefix
+        userInput = INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
+                + INDEX_FIRST_TASK.getOneBased();
+        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AssignCommand.MESSAGE_USAGE));
+        // no task index specified
+        userInput = INDEX_FIRST_PERSON.getOneBased() + " " + INDEX_SECOND_PERSON.getOneBased() + " "
+                + PREFIX_TARGET.getPrefix();
+        assertParseFailure(parser, userInput, AssignCommand.MESSAGE_INVALID_TARGET_ARGS);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\DeleteTaskCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -939,6 +1804,22 @@ public class DeleteTaskCommandParserTest {
 ```
 ###### \java\seedu\address\logic\parser\EditTagCommandParserTest.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_DUPLICATE_TAGS;
+import static seedu.address.logic.commands.EditTagCommand.MESSAGE_INSUFFICIENT_ARGS;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EditTagCommand;
+import seedu.address.model.tag.Tag;
+
+
 public class EditTagCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
@@ -975,6 +1856,544 @@ public class EditTagCommandParserTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\EditTaskCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_PRIORITY_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TASK_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.TASK_ADDRESS_DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.TASK_ADDRESS_DESC_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.TASK_NAME_DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.TASK_SEPARATOR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.EditTaskCommand;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.TaskName;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
+
+public class EditTaskCommandParserTest {
+
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE);
+
+    private EditCommandParser parser = new EditCommandParser();
+
+    @Test
+    public void parse_missingParts_failure() {
+        // no index specified
+        assertParseFailure(parser, TASK_SEPARATOR + VALID_TASK_NAME_PAPER, MESSAGE_INVALID_FORMAT);
+
+        // no field specified
+        assertParseFailure(parser, TASK_SEPARATOR + "1", EditTaskCommand.MESSAGE_NOT_EDITED);
+
+        // no index and no field specified
+        assertParseFailure(parser, TASK_SEPARATOR + "", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidPreamble_failure() {
+        // negative index
+        assertParseFailure(parser, TASK_SEPARATOR + "-5" + TASK_NAME_DESC_PAPER, MESSAGE_INVALID_FORMAT);
+
+        // zero index
+        assertParseFailure(parser, TASK_SEPARATOR + "0" + TASK_NAME_DESC_PAPER, MESSAGE_INVALID_FORMAT);
+
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, TASK_SEPARATOR + "1 some random string", MESSAGE_INVALID_FORMAT);
+
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, TASK_SEPARATOR + "1 i/ string", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        assertParseFailure(parser, TASK_SEPARATOR + "1" + INVALID_TASK_NAME_DESC,
+                TaskName.MESSAGE_NAME_CONSTRAINTS); // invalid name
+        assertParseFailure(parser, TASK_SEPARATOR + "1" + INVALID_DEADLINE_DESC,
+                Deadline.MESSAGE_INVALID_DATE); // invalid deadline
+        assertParseFailure(parser, TASK_SEPARATOR + "1" + INVALID_PRIORITY_DESC,
+                Priority.MESSAGE_PRIORITY_CONSTRAINTS); // invalid priority
+
+        // invalid phone followed by valid email
+        assertParseFailure(parser, TASK_SEPARATOR + "1" + INVALID_DEADLINE_DESC + PRIORITY_DESC_PAPER,
+                Deadline.MESSAGE_INVALID_DATE);
+
+        // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
+        // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
+        assertParseFailure(parser, TASK_SEPARATOR + "1" + DEADLINE_DESC_PAPER + INVALID_DEADLINE_DESC,
+                Deadline.MESSAGE_INVALID_DATE);
+
+        // multiple invalid values, but only the first invalid value is captured
+        assertParseFailure(parser, TASK_SEPARATOR + "1" + INVALID_TASK_NAME_DESC + INVALID_PRIORITY_DESC
+                + VALID_DEADLINE_PAPER + VALID_DESCRIPTION_PAPER, TaskName.MESSAGE_NAME_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_allFieldsSpecified_success() {
+        Index targetIndex = INDEX_SECOND_TASK;
+        String userInput = TASK_SEPARATOR + targetIndex.getOneBased() + TASK_NAME_DESC_PAPER + DESCRIPTION_DESC_PAPER
+                + DEADLINE_DESC_PAPER + PRIORITY_DESC_PAPER + TASK_ADDRESS_DESC_PAPER;
+
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withTaskName(VALID_TASK_NAME_PAPER).withDescription(VALID_DESCRIPTION_PAPER)
+                .withDeadline(VALID_DEADLINE_PAPER).withPriority(VALID_PRIORITY_PAPER)
+                .withTaskAddress(VALID_TASK_ADDRESS_PAPER).build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_someFieldsSpecified_success() {
+        Index targetIndex = INDEX_FIRST_TASK;
+        String userInput = TASK_SEPARATOR + targetIndex.getOneBased() + DESCRIPTION_DESC_PAPER + DEADLINE_DESC_PAPER;
+
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withDescription(VALID_DESCRIPTION_PAPER).withDeadline(VALID_DEADLINE_PAPER).build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_oneFieldSpecified_success() {
+        // name
+        Index targetIndex = INDEX_THIRD_TASK;
+        String userInput = TASK_SEPARATOR + targetIndex.getOneBased() + TASK_NAME_DESC_PAPER;
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withTaskName(VALID_TASK_NAME_PAPER).build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // phone
+        userInput = TASK_SEPARATOR + targetIndex.getOneBased() + DESCRIPTION_DESC_PAPER;
+        descriptor = new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_PAPER).build();
+        expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // email
+        userInput = TASK_SEPARATOR + targetIndex.getOneBased() + DEADLINE_DESC_PAPER;
+        descriptor = new EditTaskDescriptorBuilder().withDeadline(VALID_DEADLINE_PAPER).build();
+        expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // address
+        userInput = TASK_SEPARATOR + targetIndex.getOneBased() + PRIORITY_DESC_PAPER;
+        descriptor = new EditTaskDescriptorBuilder().withPriority(VALID_PRIORITY_PAPER).build();
+        expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // tags
+        userInput = TASK_SEPARATOR + targetIndex.getOneBased() + TASK_ADDRESS_DESC_PAPER;
+        descriptor = new EditTaskDescriptorBuilder().withTaskAddress(VALID_TASK_ADDRESS_PAPER).build();
+        expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_multipleRepeatedFields_acceptsLast() {
+        Index targetIndex = INDEX_FIRST_TASK;
+        String userInput = TASK_SEPARATOR + targetIndex.getOneBased()  + DESCRIPTION_DESC_PAPER + DEADLINE_DESC_PAPER
+                + PRIORITY_DESC_PAPER + TASK_ADDRESS_DESC_PAPER + DESCRIPTION_DESC_PAPER + DEADLINE_DESC_PAPER
+                + PRIORITY_DESC_PAPER + TASK_ADDRESS_DESC_PAPER + DESCRIPTION_DESC_PENCIL + DEADLINE_DESC_PENCIL
+                + PRIORITY_DESC_PENCIL + TASK_ADDRESS_DESC_PENCIL;
+
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withDescription(VALID_DESCRIPTION_PENCIL).withDeadline(VALID_DEADLINE_PENCIL)
+                .withPriority(VALID_PRIORITY_PENCIL).withTaskAddress(VALID_TASK_ADDRESS_PENCIL).build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_invalidValueFollowedByValidValue_success() {
+        // no other valid values specified
+        Index targetIndex = INDEX_FIRST_TASK;
+        String userInput = TASK_SEPARATOR + targetIndex.getOneBased() + INVALID_DEADLINE_DESC + DEADLINE_DESC_PAPER;
+        EditTaskCommand.EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder()
+                .withDeadline(VALID_DEADLINE_PAPER).build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // other valid values specified
+        userInput = TASK_SEPARATOR + targetIndex.getOneBased() + PRIORITY_DESC_PAPER + INVALID_DEADLINE_DESC
+                + DESCRIPTION_DESC_PAPER + DEADLINE_DESC_PAPER;
+        descriptor = new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_PAPER)
+                .withDeadline(VALID_DEADLINE_PAPER).withPriority(VALID_PRIORITY_PAPER).build();
+        expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\FIndTaskCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.TASK_SEPARATOR;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.Arrays;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.FindTaskCommand;
+import seedu.address.model.task.TaskContainsKeywordPredicate;
+
+public class FIndTaskCommandParserTest {
+
+    private FindCommandParser parser = new FindCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, TASK_SEPARATOR + "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FindTaskCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        FindTaskCommand expectedFindTaskCommand =
+                new FindTaskCommand(new TaskContainsKeywordPredicate(Arrays.asList("Lucy", "Date")));
+        assertParseSuccess(parser, TASK_SEPARATOR + "Lucy Date", expectedFindTaskCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, TASK_SEPARATOR + " \n Lucy \n \t Date  \t", expectedFindTaskCommand);
+    }
+
+}
+```
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
+``` java
+    @Test
+    public void parseRemark_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRemark(null);
+    }
+
+    @Test
+    public void parseRemark_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseRemark(Optional.of(INVALID_REMARK));
+    }
+
+    @Test
+    public void parseRemark_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRemark_validValue_returnsRemark() throws Exception {
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
+        Remark expectedPrivateRemark = new Remark(VALID_REMARK, PRIVATE_FIELD);
+        Optional<Remark> actualPrivateRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
+
+        assertEquals(expectedRemark, actualRemark.get());
+        assertEquals(expectedPrivateRemark, actualPrivateRemark.get());
+    }
+
+    @Test
+    public void parseAvatar_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseAvatar(null);
+    }
+
+    @Test
+    public void parseAvatar_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseAvatar(Optional.of(INVALID_AVATAR));
+    }
+
+    @Test
+    public void parseAvatar_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseAvatar(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseAvatar_validValue_returnsAvatar() throws Exception {
+        Avatar expectedAvatar = new Avatar(VALID_AVATAR);
+        Optional<Avatar> actualAvatar = ParserUtil.parseAvatar(Optional.of(VALID_AVATAR));
+
+        assertEquals(expectedAvatar, actualAvatar.get());
+    }
+
+    @Test
+    public void parseTags_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTags(null);
+    }
+
+    @Test
+    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+    }
+
+    @Test
+    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
+    }
+
+    @Test
+    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
+        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+
+        assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseTaskName_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTaskName(null);
+    }
+
+    @Test
+    public void parseTaskName_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskName(Optional.of(INVALID_TASK_NAME));
+    }
+
+    @Test
+    public void parseTaskName_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTaskName(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTaskName_validValue_returnsTaskName() throws Exception {
+        TaskName expectedTaskName = new TaskName(VALID_TASK_NAME);
+        Optional<TaskName> actualTaskName = ParserUtil.parseTaskName(Optional.of(VALID_TASK_NAME));
+
+        assertEquals(expectedTaskName, actualTaskName.get());
+    }
+
+    @Test
+    public void parseDescription_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDescription(null);
+    }
+
+    @Test
+    public void parseDescription_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDescription(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDescription_validValue_returnsDescription() throws Exception {
+        Description expectedDescription = new Description(VALID_DESCRIPTION);
+        Optional<Description> actualDescription = ParserUtil.parseDescription(Optional.of(VALID_DESCRIPTION));
+
+        assertEquals(expectedDescription, actualDescription.get());
+    }
+
+    @Test
+    public void parseDeadline_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDeadline(null);
+    }
+
+    @Test
+    public void parseDeadline_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDeadline(Optional.of(INVALID_DEADLINE));
+    }
+
+    @Test
+    public void parseDeadline_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDeadline(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDeadline_validValue_returnsDeadline() throws Exception {
+        Deadline expectedDeadline = new Deadline(VALID_DEADLINE);
+        Optional<Deadline> actualDeadline = ParserUtil.parseDeadline(Optional.of(VALID_DEADLINE));
+
+        assertEquals(expectedDeadline, actualDeadline.get());
+    }
+
+    @Test
+    public void parsePriority_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parsePriority(null);
+    }
+
+    @Test
+    public void parsePriority_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parsePriority(Optional.of(INVALID_PRIORITY));
+    }
+
+    @Test
+    public void parsePriority_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parsePriority(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parsePriority_validValue_returnsPriority() throws Exception {
+        Priority expectedPriority = new Priority(VALID_PRIORITY);
+        Optional<Priority> actualPriority = ParserUtil.parsePriority(Optional.of(VALID_PRIORITY));
+
+        assertEquals(expectedPriority, actualPriority.get());
+    }
+
+    @Test
+    public void parseTaskAddress_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTaskAddress(null);
+    }
+
+    @Test
+    public void parseTaskAddress_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTaskAddress(Optional.of(INVALID_TASK_ADDRESS));
+    }
+
+    @Test
+    public void parseTaskAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTaskAddress(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTaskAddress_validValue_returnsTaskAddress() throws Exception {
+        TaskAddress expectedTaskAddress = new TaskAddress(VALID_TASK_ADDRESS);
+        Optional<TaskAddress> actualTaskAddress = ParserUtil.parseTaskAddress(Optional.of(VALID_TASK_ADDRESS));
+
+        assertEquals(expectedTaskAddress, actualTaskAddress.get());
+    }
+
+    @Test
+    public void parseIndexes_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseIndexes(null);
+    }
+
+    @Test
+    public void parseIndexes_invalidValue_throwsParseException() throws Exception {
+        thrown.expect(ParseException.class);
+        ParserUtil.parseIndexes("1 2 a b c");
+    }
+
+    @Test
+    public void parseIndexes_validValue_returnsIndexes() throws Exception {
+        ArrayList<Index> expectedIndexes = new ArrayList<>(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
+                INDEX_THIRD_PERSON));
+
+        assertEquals(expectedIndexes, ParserUtil.parseIndexes("1 2 3"));
+        assertEquals(expectedIndexes, ParserUtil.parseIndexes("     1   2    3   "));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\SelectTaskCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SelectTaskCommand;
+
+public class SelectTaskCommandParserTest {
+
+    private SelectCommandParser parser = new SelectCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, " " + PREFIX_TASK.getPrefix() + " 1",
+                new SelectTaskCommand(INDEX_FIRST_TASK));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, " " + PREFIX_TASK.getPrefix() + " -1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectTaskCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\SetCompleteCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SetCompleteCommand;
+
+public class SetCompleteCommandParserTest {
+
+    private SetTaskCompleteCommandParser parser = new SetTaskCompleteCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, " 1",
+                new SetCompleteCommand(INDEX_FIRST_TASK));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, " -1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetCompleteCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\SetIncompleteCommandParserTest.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.SetIncompleteCommand;
+
+public class SetIncompleteCommandParserTest {
+
+    private SetTaskIncompleteCommandParser parser = new SetTaskIncompleteCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, " 1",
+                new SetIncompleteCommand(INDEX_FIRST_TASK));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, " -1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetIncompleteCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\ViewAssignCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -999,6 +2418,77 @@ public class ViewAssignCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "a",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAssignCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\model\task\DeadlineTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class DeadlineTest {
+
+    @Test
+    public void isValidDeadline() {
+        // invalid deadlines
+        assertFalse(Deadline.isValidDeadline(" ")); // spaces only
+        assertFalse(Deadline.isValidDeadline("alphabets")); // non-numeric letters
+        assertFalse(Deadline.isValidDeadline("!@#$%^")); // invalid symbols
+
+        // valid deadline (empty deadline for optional data)
+        assertTrue(Deadline.isValidDeadline("")); // empty string
+
+        // valid deadlines
+        assertTrue(Deadline.isValidDeadline("04-04-2017")); // dashes
+        assertTrue(Deadline.isValidDeadline("the day after tomorrow")); // slashes
+        assertTrue(Deadline.isValidDeadline("4-11"));
+    }
+}
+```
+###### \java\seedu\address\model\task\DescriptionTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class DescriptionTest {
+
+    @Test
+    public void isValidDescription() {
+        // invalid descriptions
+        assertFalse(Description.isValidDescription(" ")); // spaces only
+
+        // valid descriptions
+        assertTrue(Description.isValidDescription("")); // empty string
+        assertTrue(Description.isValidDescription("alphanumerical contents")); // alphanumerical contents
+        assertTrue(Description.isValidDescription("-")); // single character
+    }
+}
+```
+###### \java\seedu\address\model\task\PriorityTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class PriorityTest {
+
+    @Test
+    public void isValidPriority() {
+        // invalid names
+
+        assertFalse(Priority.isValidPriority(" ")); // spaces only
+        assertFalse(Priority.isValidPriority("invalid")); // invalid priority
+        assertFalse(Priority.isValidPriority("777")); // priority out of range
+        assertFalse(Priority.isValidPriority("-1")); // priority out of range
+
+        // valid names
+        assertTrue(Priority.isValidPriority("")); // empty string
+        assertTrue(Priority.isValidPriority("1")); // numerical representation
     }
 }
 ```
@@ -1184,8 +2674,38 @@ public class TaskContainsKeywordPredicateTest {
     }
 }
 ```
+###### \java\seedu\address\model\task\TaskNameTest.java
+``` java
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class TaskNameTest {
+
+    @Test
+    public void isValidName() {
+        // invalid names
+        assertFalse(TaskName.isValidName(" ")); // spaces only
+        assertFalse(TaskName.isValidName("")); // empty string
+
+        // valid names
+        assertTrue(TaskName.isValidName(".")); // single character
+        assertTrue(TaskName.isValidName("buy pencil")); // alphanumerical with spaces
+        assertTrue(TaskName.isValidName("buy pencil!")); // special symbols
+    }
+}
+```
 ###### \java\seedu\address\testutil\EditTaskDescriptorBuilder.java
 ``` java
+import java.util.Optional;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EditTaskCommand.EditTaskDescriptor;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.task.ReadOnlyTask;
+
+
 /**
  * A utility class to help with building EditTaskDescriptor objects.
  */
@@ -1278,8 +2798,203 @@ public class EditTaskDescriptorBuilder {
     }
 }
 ```
+###### \java\seedu\address\testutil\TaskBuilder.java
+``` java
+import java.util.ArrayList;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.task.Assignees;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskAddress;
+import seedu.address.model.task.TaskName;
+
+/**
+ * A utility class to help with building Task objects.
+ */
+public class TaskBuilder {
+
+    public static final String DEFAULT_NAME = "Buy pencil";
+    public static final String DEFAULT_DESCRIPTION = "Buy a pencil from ABS by tomorrow";
+    public static final String DEFAULT_DEADLINE = "04-04-2017";
+    public static final String DEFAULT_PRIORITY = "4";
+    public static final String DEFAULT_ADDRESS = "12 Kent Ridge Crescent, 119275";
+
+    private Task task;
+
+    public TaskBuilder() {
+        try {
+            TaskName defaultTaskName = new TaskName(DEFAULT_NAME);
+            Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
+            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
+            Priority defaultPriority = new Priority(DEFAULT_PRIORITY);
+            Assignees defaultAssignees = new Assignees();
+            Boolean defaultState = false;
+            TaskAddress defaultAddress = new TaskAddress(DEFAULT_ADDRESS);
+            this.task = new Task(defaultTaskName, defaultDescription, defaultDeadline, defaultPriority,
+                    defaultAssignees, defaultState, defaultAddress);
+        } catch (IllegalValueException ive) {
+            throw new AssertionError("Default task's values are invalid.");
+        }
+    }
+
+    /**
+     * Initializes the TaskBuilder with the data of {@code taskToCopy}.
+     */
+    public TaskBuilder(ReadOnlyTask taskToCopy) {
+        this.task = new Task(taskToCopy);
+    }
+
+    /**
+     * Sets the {@code TaskName} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withTaskName(String name) {
+        try {
+            this.task.setTaskName(new TaskName(name));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("name is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Priority} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withPriority(String priority) {
+        try {
+            this.task.setPriority(new Priority(priority));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("priority is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Description} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withDescription(String description) {
+        try {
+            this.task.setDescription(new Description(description));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("description is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Deadline} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withDeadline(String deadline) {
+        try {
+            this.task.setDeadline(new Deadline(deadline));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("deadline is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the state of the {@code Task} that we are building.
+     */
+    public TaskBuilder withState(boolean state) {
+        this.task.setState(state);
+        return this;
+    }
+
+    /**
+     * Sets the {@code TaskAddress} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withTaskAddress(String address) {
+        try {
+            this.task.setTaskAddress(new TaskAddress(address));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Assignees} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withAssignees(String... args) {
+        ArrayList<Index> indexes = new ArrayList<>();
+        for (String s : args) {
+            indexes.add(Index.fromOneBased(Integer.parseInt(s)));
+        }
+        this.task.setAssignees(new Assignees(indexes));
+        return this;
+    }
+
+    public Task build() {
+        return this.task;
+    }
+}
+```
+###### \java\seedu\address\testutil\TaskUtil.java
+``` java
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
+
+import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.model.task.ReadOnlyTask;
+
+/**
+ * Utility class for Tasks
+ */
+public class TaskUtil {
+
+    /**
+     * Returns an add command string for adding the {@code task}.
+     */
+    public static String getAddCommand(ReadOnlyTask task) {
+        return AddTaskCommand.COMMAND_WORD + " " + PREFIX_TASK + " " + getTaskDetails(task);
+    }
+
+    /**
+     * Returns the part of command string for the given {@code task}'s details.
+     */
+    public static String getTaskDetails(ReadOnlyTask task) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_NAME + task.getTaskName().taskName + " ");
+        sb.append(PREFIX_DESCRIPTION + task.getDescription().value + " ");
+        sb.append(PREFIX_DEADLINE + task.getDeadline().value + " ");
+        sb.append(PREFIX_PRIORITY + Integer.toString(task.getPriority().value) + " ");
+        sb.append(PREFIX_ADDRESS + task.getTaskAddress().taskAddress + " ");
+
+        return sb.toString();
+    }
+}
+```
 ###### \java\seedu\address\testutil\TypicalTasks.java
 ``` java
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_ADDRESS_PENCIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TASK_NAME_PENCIL;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.AddressBook;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+
+
 /**
  * A utility class containing a list of {@code Task} objects to be used in tests.
  */

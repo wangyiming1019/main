@@ -1,4 +1,5 @@
 package seedu.address.logic.commands;
+//@@author Esilocke
 
 import java.util.List;
 
@@ -9,9 +10,8 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
-//@@author Esilocke
 
-/** Marks the specified {@Code task} as complete */
+/** Marks the task at the specified {@code Index} as complete */
 public class SetCompleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "setcomplete";
     public static final String COMMAND_ALIAS = "stc";

@@ -27,6 +27,7 @@ public class ViewPersonPanel extends UiPart<Region> {
     public static final int FONT_SIZE_EXTENDER = 5;
     public static final int DEFAULT_FONT_SIZE_MULTIPLIER = 0;
     //@@author
+    //@@author Esilocke
     private static final String FXML = "ViewPersonPanel.fxml";
     /**
      * Preset values for random selection later.

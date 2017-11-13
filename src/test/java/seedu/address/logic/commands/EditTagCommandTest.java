@@ -1,5 +1,5 @@
 package seedu.address.logic.commands;
-
+//@@author Esilocke
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -29,7 +29,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
-//@@author Esilocke
+
 public class EditTagCommandTest {
     private Model model = new ModelManager(getTypicalPersonsAddressBook(), new UserPrefs());
     @Test

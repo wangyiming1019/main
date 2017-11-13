@@ -1375,6 +1375,8 @@ e.g. `setincomplete 5`
 e.g. `assign 4 1 17 18 to/21`
 * *Dismiss from task* : `dismiss PERSONINDEX... from/TASKINDEX` +
 e.g. `dismiss 4 1 from/17`
+* *View contacts assigned to a task* : `viewassign INDEX` +
+e.g. `viewassign 1`
 * *Theme* : `theme THEME` +
 e.g. `theme light`
 * *History* : `history`
@@ -1440,6 +1442,8 @@ e.g. `sti 5`
 e.g. `as 4 1 17 18 to/21`
 * *Dismiss from task* : `ds PERSONINDEX... from/TASKINDEX` +
 e.g. `ds 4 1 from/17`
+* *View contacts assigned to a task* : `va INDEX` +
+e.g. `va 1`
 * *Theme* : `th THEME` +
 e.g. `th light`
 * *History* : `h`

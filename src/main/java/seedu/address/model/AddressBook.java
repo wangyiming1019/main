@@ -183,6 +183,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tasks.sortBy(field, order);
     }
 
+    //@@author Esilocke
     /**
      * Returns an array list of {@code Index} corresponding to the index of {@code ReadOnlyPerson} specified
      */
@@ -250,6 +251,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author Esilocke
     /**
      * Returns an array containing:
      * Index - The old index of each person in the UniquePersonList
@@ -258,6 +260,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public Index[] getMappings() {
         return persons.getMappings();
     }
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

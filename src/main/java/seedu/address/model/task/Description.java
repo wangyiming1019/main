@@ -1,8 +1,8 @@
 package seedu.address.model.task;
+//@@author Esilocke
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-//@@author Esilocke
 /**
  * Represents a task description in the address book.
  */

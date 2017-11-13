@@ -76,6 +76,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author Esilocke
     @Override
     public ObservableList<ReadOnlyTask> getTasksList() {
         final ObservableList<ReadOnlyTask> tasks = this.tasks.stream().map(t -> {

@@ -1,11 +1,10 @@
 package seedu.address.model.task;
-
+//@@author Esilocke
 import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
-//@@author Esilocke
 /**
  * Tests that a {@code ReadOnlyTask}'s {@code TaskName} or {@code Description} matches any of the keywords given.
  */
