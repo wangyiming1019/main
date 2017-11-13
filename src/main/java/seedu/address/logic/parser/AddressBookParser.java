@@ -134,7 +134,7 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommandParser().parse(arguments);
-
+        //@@author wangyiming1019
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
@@ -150,7 +150,7 @@ public class AddressBookParser {
         case TagListCommand.COMMAND_WORD:
         case TagListCommand.COMMAND_ALIAS:
             return new TagListCommand();
-
+        //@@author
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
@@ -192,9 +192,11 @@ public class AddressBookParser {
         // Cases for CRUD related functionality and for locking and unlocking
         switch (commandWord) {
         case OpenCommand.COMMAND_WORD:
+        case OpenCommand.COMMAND_ALIAS:
             return new OpenCommand();
 
         case SaveAsCommand.COMMAND_WORD:
+        case SaveAsCommand.COMMAND_ALIAS:
             return new SaveAsCommand();
 
         case ExitCommand.COMMAND_WORD:

@@ -334,12 +334,13 @@ Format: `changeprivacy INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK]
 * If you do not add a prefix for the field in the command, that field will keep its original privacy setting.
 ****
 
-Examples:
-
-* `changeprivacy 1 p/false e/true` +
-Sets the phone number of the 1st person to be public and their email address to be private. The 1st person's phone number will be displayed, if available, while their email address will be hidden in the UI.
-* `cp 2 a/false n/true e/false` +
-Sets the address and email of the 2nd person to be public and their name to be private. The 2nd person's address and email will be displayed, if available, while their name will be hidden in the UI.
+**Example Scenarios:**:
+****
+**Example Scenario 1** +
+You are meeting some new groupmates for your upcoming project and you are not too comfortable with exposing your family's particulars. +
+You decide to hide your family's phone number, email and home address by setting them to private. +
+>> `changeprivacy 1 p/true e/true a/true`
+****
 // end::changeprivacy[]
 
 // tag::privacylevel[]
@@ -362,14 +363,19 @@ Format: `privacylevel LEVEL`
 ** Similarly, since a person is completely hidden in privacy level 3, you will have to set the privacy level back to 2 or 1 to be able to modify that person.
 ****
 
-Examples:
+**Example Scenarios:**:
+****
+**Example Scenario 1** +
+You have an address book full of various contacts with private fields, however, now you need to access the email addresses of all your contacts to ask them for help in your upcoming survey. +
+You decide to use the privacylevel command to reveal all you contact's hidden data.
+>> `privacylevel 1`
 
-* `privacylevel 1` +
-Changes the privacy level of the address book to 1, revealing all data hidden by private fields.
+**Example Scenario 2** +
+You wish to completely hide some of your confidential contacts from view, but your address book is too large, and you don't want to have to individually set every field for every confidential person to be private. +
+Using the privacylevel command, you set each contact with any private field to be hidden in the address book. +
+>> `privacylevel 3`
 
-* `pl 3` +
- Changes the privacy level of the address book to 3, hiding all persons with private fields completely in the address book.
-
+****
 // end::privacylevel[]
 
 // tag::favourite[]
@@ -515,7 +521,7 @@ Furthermore, as you have several tasks related to "Report" that are already comp
 ****
 // end::findtask[]
 
-// tag::showandfindtag[]
+// tag::showtag[]
 
 === Listing all tags : `showtag` (Since V1.5)
 
@@ -531,6 +537,9 @@ Format: `showtag` +
 * `showtag` command: It will return an empty list if there is no tags in the address book.
 * You may want to use `showtag` command to help you recall all the `tags` in the address book before you try to use `findtag` to find persons.
 ****
+// end::showtag[]
+
+// end::findtag[]
 
 === Locating persons by tag : `find tag/` (Since V1.4)
 
@@ -574,7 +583,7 @@ Suppose you want to find contacts with tag `friends` but without `colleagues`, y
 ****
 image::FindTagCommand.png[width="790"]
 _Figure 3.17.1 : FindTagCommand_
-// end::showandfindtag[]
+// end::findtag[]
 
 === Deleting a person : `delete`
 
@@ -859,14 +868,18 @@ If you ever need to visit one of your contacts, you can use `locate` to choose a
 
 Format (person): `locate INDEX` +
 
-Examples:
+**Example Scenarios:** +
+****
+**Example Scenario 1:** +
+You wish to know where the second person in your address book lives. +
+>> `list` +
+>> `locate 2` +
 
-* `list` +
-`locate 2` +
-Locates the address of the 2nd person in the address book on Google Maps.
-* `find Betsy` +
-`locate 1` +
-Locates the address of the 1st person in the results of the `find` command on Google Maps.
+**Example Scenario 2:** +
+You wish to know where a specific person in your address book, Betsy, lives. +
+>> `find Betsy` +
+>> `locate 1` +
+****
 
 ****
 * Depending on the stored value of the address, Google Maps may be unable to find the correct address or may display multiple addresses of the same name. +
@@ -887,14 +900,24 @@ Although `locate` shows you where a person's address is, it does not tell you ho
 
 Format (person): `navigate [fp/INDEX] [ft/INDEX] [fa/ADDRESS] (Must have only one of three) [tp/INDEX] [tt/INDEX] [ta/ADDRESS] (Must have only one of three)` +
 
-Examples:
 
-* `navigate fa/NUS tp/1` +
-Opens Google Maps to provide directions on how to navigate from NUS to the address of the first person in the address book.
-* `navigate  fp/3 tt/2` +
-Opens Google Maps to provide directions on how to navigate from the address of the third person in the address book to the address of the second task in the address book.
-* `navigate  ft/1 ta/Changi Airport` +
-Opens Google Maps to provide directions on how to navigate from the address of the first task in the address book to Changi Airport.
+**Example Scenarios:** +
+****
+**Example Scenario 1:** +
+You are planning to go to your friend Roy's house for their birthday party that afternoon, but you've just ended class at NUS. +
+You've never been to their house before, and you enlist the aid of Address++ to find the fastest route to their house. +
+>> `find Roy` +
+>> `navigate fa/NUS tp/1`
+
+**Example Scenario 2:** +
+After the birthday party, you have a group meeting scheduled for your project. You have this meeting schedules as your first task, and you seek help from Address++ to find a path from Roy's house to the group meeting. +
+>> `navigate fp/1 tt/1`
+
+**Example Scenario 3:** +
+To conclude your long and busy day, you have to send off your sister at Changi Airport, who is going off on an exchange programme. +
+Using the navigate command once again, you find an efficient route from the location of your group meeting to the airport. +
+>> `navigate ft/1 ta/Changi Airport`
+****
 
 ****
 * Depending on the stored value of the address, Google Maps may be unable to find the correct address or may display multiple addresses of the same name. +
@@ -1040,6 +1063,27 @@ However you have forgotten who you have assigned to that task. You thus use `vie
 >> `viewassign 4`
 ****
 // end::assignDismiss[]
+
+// tag::theme[]
+=== Changing the Address Book's theme : `theme`
+
+Perhaps you may not be too fond of the existing style of the address book and you want to have something fresh. The `theme` command changes the address book between two themes, `light` and `dark`.
+[NOTE]
+`theme` can be replaced by `th` for faster input. +
+
+**Example Scenarios:** +
+****
+**Example Scenario 1:** +
+It is late at night and the light theme is a little too brightly coloured. Preferring a darker theme, you can choose to input the theme command to make the theme into a darker colour. +
+>> `theme dark`
+****
+
+Format: `theme` + THEME
+
+****
+* There are only two themes as of v1.5, light and dark. More themes of different colours could be added in a future release.
+****
+// end::theme[]
 
 === Listing entered commands : `history`
 
@@ -1296,6 +1340,8 @@ e.g. `setincomplete 5`
 e.g. `assign 4 1 17 18 to/21`
 * *Dismiss from task* : `dismiss PERSONINDEX... from/TASKINDEX` +
 e.g. `dismiss 4 1 from/17`
+* *Theme* : `theme THEME` +
+e.g. `theme light`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
@@ -1359,6 +1405,8 @@ e.g. `sti 5`
 e.g. `as 4 1 17 18 to/21`
 * *Dismiss from task* : `ds PERSONINDEX... from/TASKINDEX` +
 e.g. `ds 4 1 from/17`
+* *Theme* : `th THEME` +
+e.g. `th light`
 * *History* : `h`
 * *Undo* : `u`
 * *Redo* : `r`

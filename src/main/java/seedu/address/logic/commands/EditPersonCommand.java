@@ -79,6 +79,7 @@ public class EditPersonCommand extends EditCommand {
             }
             ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
             Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+            editedPerson.setPrivacyLevel(model.getPrivacyLevel());
             model.updatePerson(personToEdit, editedPerson);
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(String.format(MESSAGE_SUCCESS, editedPerson));
@@ -364,7 +365,7 @@ public class EditPersonCommand extends EditCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
-
+        //@@author wangyiming1019
         public void setFavourite(Boolean favourite) {
             this.favourite = favourite;
         }
@@ -372,7 +373,7 @@ public class EditPersonCommand extends EditCommand {
         public Optional<Boolean> getFavourite() {
             return Optional.ofNullable(favourite);
         }
-
+        //@@author
         public void setRemark(Remark remark) {
             this.remark = remark;
         }

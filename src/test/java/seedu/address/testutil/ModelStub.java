@@ -29,12 +29,12 @@ public class ModelStub implements Model {
     public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         fail("This method should not be called.");
     }
-
+    //@@author wangyiming1019
     @Override
     public void addTag(Tag toAdd, ArrayList<Index> targetIndexes)  {
         fail("This method should not be called.");
     }
-
+    //@@author
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         fail("This method should not be called.");
@@ -73,12 +73,12 @@ public class ModelStub implements Model {
     public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         fail("This method should not be called.");
     }
-
+    //@@author wangyiming1019
     @Override
     public void deleteTag(Tag toDelete, ArrayList<Index> targetIndexes) {
         fail("This method should not be called.");
     }
-
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException {
@@ -116,22 +116,22 @@ public class ModelStub implements Model {
     public void sortTasks(String field, String order) {
         fail("This method should not be called.");
     }
-
+    //@@author wangyiming1019
     @Override
     public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         fail("This method should not be called.");
     }
-
+    //@@author
     @Override
     public void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
         fail("This method should not be called.");
     }
-
+    //@@author wangyiming1019
     @Override
     public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         fail("This method should not be called.");
     }
-
+    //@@author
     @Override
     public void deleteTask(ReadOnlyTask toDelete) throws TaskNotFoundException {
         fail("This method should not be called.");

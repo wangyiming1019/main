@@ -53,6 +53,11 @@ public class ThemeCommand extends Command {
     }
 
     @Override
+    public String toString() {
+        return style;
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ThemeCommand // instanceof handles nulls
