@@ -7,11 +7,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 === Introduction
 Address++ is an application that targets university students, aiming to help them manage their contacts and other aspects of their university life in an efficient manner.
-Address++ is a Command Line Interface (CLI) application, where most of the commands are executed by typing rather than clicking on buttons.
-Address++ also provides a simple Graphical User Interface (GUI) for a better User Experience (UX).
+Our application is a Command Line Interface (CLI) application, where most of the commands are executed by typing rather than clicking on buttons.
+It also provides a simple Graphical User Interface (GUI) for a better User Experience (UX).
 
 This project is the result of a Software Engineering module, https://nus-cs2103.github.io/website/[CS2103T],
-in NUS. Address++ is written mainly in Java, while JavaFX is used for the frontend design. Address++ is built
+in NUS. It is written mainly in Java, while JavaFX is used for the frontend design. Address++ is built
 based on https://github.com/se-edu/addressbook-level4[Address Book (Level 4)] and the current codebase has expanded to around 10 kLoC.
 
 === Purpose of Project Portfolio

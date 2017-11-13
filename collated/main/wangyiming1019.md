@@ -32,7 +32,8 @@ public class AddTagCommand extends AddCommand {
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in all persons in the current list.";
+    public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in all "
+            + "target persons in the current list.";
 
     private final ArrayList<Index> targetIndexes;
     private final Tag addTag;
@@ -156,7 +157,7 @@ public class DeleteTagCommand extends DeleteCommand {
 
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Deleted Tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_NONEXISTENT_TAG = "This is an nonexistent tag in the given persons list.";
+    public static final String MESSAGE_NONEXISTENT_TAG = "The target persons do not have input tags.";
 
     private final ArrayList<Index> targetIndexes;
     private final Tag toDelete;
@@ -311,7 +312,9 @@ public class FavouriteCommand extends UndoableCommand {
                 personToFavourite.getAddress(), true,
                 personToFavourite.getRemark(), personToFavourite.getAvatar(),
                 personToFavourite.getTags());
-
+        if (personToFavourite.getFavourite().equals(true)) {
+            throw new CommandException(MESSAGE_DUPLICATE_FAVOURITE);
+        }
         try {
             model.updatePerson(personToFavourite, editedPerson);
         } catch (DuplicatePersonException dpe) {
@@ -520,7 +523,9 @@ public class UnfavouriteCommand extends UndoableCommand {
                 personToUnfavourite.getAddress(), false,
                 personToUnfavourite.getRemark(), personToUnfavourite.getAvatar(),
                 personToUnfavourite.getTags());
-
+        if (personToUnfavourite.getFavourite().equals(false)) {
+            throw new CommandException(MESSAGE_NOTFAVOURITEYET_PERSON);
+        }
         try {
             model.updatePerson(personToUnfavourite, editedPerson);
         } catch (DuplicatePersonException dpe) {
