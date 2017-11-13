@@ -39,7 +39,7 @@ Responsibilities: Model Component
 '''
 
 === Wang Yiming
-{empty}[http://github.com/wangyiming1090[github]]
+{empty}[http://github.com/wangyiming1019[github]]
 
 Role: Developer
 
