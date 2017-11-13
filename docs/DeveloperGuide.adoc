@@ -1784,7 +1784,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | keep track of my contacts
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |add a new task | keep track of my tasks and assignments
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -1796,6 +1800,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with secretive friends |be able to add contacts with incomplete data |operate without the need to create dummy values
 
+|`* * *` |cautious user |be able to lock my address book application whenever I want with a password | prevent people with malicious intent from making changes to my data
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |load contact data from any file of my choosing | have more flexibility for my file's storage location
@@ -1803,8 +1809,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |save contact data in a directory of my choosing |save the file in a location that fits my needs
 
 |`* *` |user |type commands partially and have the application fill in the rest for me | increase typing productivity
-
-|`* *` |first-time user |be able to see a user guide when I first start the program |be clear on how to use it
 
 |`* *` |multi-tasking user |be able to record things other than contacts, such as tasks |manage myself better
 
@@ -1814,13 +1818,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user with multiple devices |be able to import and export my address book |use the address book without having to add all my contacts when I switch platforms
 
-|`* *` |user with many social media accounts |be able to add my contacts' social media accounts to the address book |improve connectivity and learn more about my contacts
-
 |`* *` |user who values privacy |be able to to choose and modify which contacts and what information are to be displayed |hide information I do not want to share from others
 
-|`* *` |user with a 4K screen |be able keep track of my upcoming tasks | ditch my Todo application and migrate to Address++ for my people and task management needs
+|`* *` |cautious user |be able to back up my address book data | retrieve my back up data in the event I make breaking changes to my actual address book and there is no way of undoing them
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with poor eyesight |be able to increase the font size | use the application without straining my eyes
+
+|`* *` |forgetful user |be able to see who is assigned to a task | find my contacts who are in charge more quickly
 
 |`*` |lazy user |have an easy way to add a person with his full details into my address book |add new contacts quickly
 
@@ -1828,21 +1832,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |have the ability to add a short description to my contacts |add more information about my contacts
 
+|`*` |user |be able to mark my favourite contacts |find them more easily
+
 |`*` |long-time user |be able to access shortcut commands |use the address book more efficiently
-
-|`*` |non tech-savvy user |have the option to fill out certain fields |use the address book without having to use the intimidating CLI.
-
-|`*` |error-prone user |have minor typos auto corrected |continue using the address book without correcting my mistakes
 
 |`*` |user |be able to update the address book application easily when new updates are published |continue using the address book easily with any newly added features
 
-|`* * *` |cautious user |be able to lock my address book application whenever I want with a password | prevent people with malicious intent from making changes to my data
-
-|`* *` |cautious user |be able to back up my address book data | retrieve my back up data in the event I make breaking changes to my actual address book and there is no way of undoing them
-
-|`* *` |user with a 4K screen |be able to increase the font size | use the application without straining my eyes.
-
-|`* *` |picky user |be able to change the colour theme of the application | customize the application to suit my visual tastebuds.
 
 |=======================================================================
 
