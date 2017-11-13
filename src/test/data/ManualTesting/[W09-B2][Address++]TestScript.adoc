@@ -513,6 +513,69 @@ alsonotacommand +
 notacommand
 ****
 
+=== UndoCommand
+
+Input Command: +
+****
+delete 1 +
+undo
+****
+Expected Result: +
+The first person gets deleted from the address book, but gets restored after an undo. +
+
+Expected Message: +
+****
+Undo success!
+****
+
+Input Command: +
+****
+undo +
+add n/Reed Richards p/94444444 e/reed@futurefoundation.com a/Baxter Building r/Loves to stretch +
+undo
+****
+Expected Result: +
+A new person is added, then removed with an undo.
+
+Expected Message: +
+****
+Undo success!
+****
+
+=== RedoCommand
+
+Input Command: +
+****
+delete 1 +
+undo +
+redo
+****
+Expected Result: +
+The first person gets deleted from the address book, but gets restored after an undo and deleted again after a redo. +
+
+Expected Message: +
+****
+Redo success!
+****
+
+Input Command: +
+****
+undo +
+add n/Peter Parker p/92241783 e/ceo@parkerindustries.com a/New York City r/Top 10 smartest people in the world +
+undo +
+redo
+****
+Expected Result: +
+A new person is added, then removed with an undo and added again with a redo.
+
+Expected Message: +
+****
+Redo success!
+****
+
+[NOTE]
+You may wish to use `undo` to restore the address book to its original state before continuing with testing.
+
 === ClearCommand
 Input Command: +
 ****
@@ -523,10 +586,11 @@ All persons and tasks vanish from the leftmost and middle columns, leaving them 
 
 Expected Message: +
 ****
-*Address book has been cleared!*
+Address book has been cleared!
 ****
 
-[NOTE] You may wish to use `undo` to restore the address book before continuing with testing.
+[NOTE]
+You may wish to use `undo` to restore the address book before continuing with testing.
 
 === OpenCommand and SaveAsCommand
 
