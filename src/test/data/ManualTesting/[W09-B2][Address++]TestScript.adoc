@@ -1,0 +1,191 @@
+= Address++ - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W09-B2/main
+
+By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT` +
+
+== Getting Started
+
+Ensure that you have the Address++.jar file and the [W09-B2][Address++]SampleData.xml available on your computer and a working internet connection.
+
+=== Importing the test data
+. Launch Address++.jar.
+. On initial launch, it should contain sample data of 6 different persons and 0 tasks.
+. Type `open` to open a pop up window.
+. Navigate to the location of the [W09-B2][Address++]SampleData.xml file and click Open to open it.
+. The sample data containing 20 different persons and 7 different tasks should be loaded.
+. You are now ready to begin testing.
+
+== User Interface
+* The Menu on the top of the screen contains 3 buttons: `File`, `Help` and `Font Size`.
+* Below the menu is the command line, you can type your commands in here.
+* The box below the command line will show feedback when you type in commands, such as if the command is successful or if you have typed an erroneous command.
+* The leftmost panel contains the list of persons in the address book.
+* The middle panel contains the list of tasks in the address book.
+* The rightmost panel contains either the details of the selected task or person, or the in-application browser.
+* The bottom bar contains miscellaneous information about the address book, such as the file where the save data will be stored and the number of persons in the address book.
+
+== Testing
+
+=== LocateCommand
+
+*Locating a person's address on Google Maps*
+
+Input Command: +
+****
+locate 1
+****
+Expected Result: +
+Google Maps opens, and searches for Blk 30 Geylang Street 29. +
+
+Expected Message: +
+****
+Searching for Person at Index: 1
+****
+
+*Failing to locate a person with no address*
+
+Input Command: +
+****
+locate 2
+****
+Expected Result: +
+An error message is printed, as the person at index 2 has no address. +
+
+Expected Message: +
+****
+Person 2 has no Address
+****
+
+=== ThemeCommand
+
+*Changing the theme of the address book*
+
+Input Command: +
+****
+theme light
+****
+Expected Result: +
+The address book's colour scheme changes to a bright colour. +
+
+Expected Message: +
+****
+Theme Changed to: light
+****
+
+Input Command: +
+****
+theme dark
+****
+Expected Result: +
+The address book's colour scheme changes to a dark colour.+
+Expected Message: +
+****
+Theme Changed to: dark
+****
+
+=== HistoryCommand
+
+*Lists all commands done in reverser chronological order*
+
+Input Command: +
+****
+notacommand +
+alsonotacommand +
+history
+****
+Expected Result: +
+The two previous commands are listed in the box below the command line in reverse chronological order from top to bottom. +
+
+Expected Message: +
+****
+Entered commands (from most recent to earliest): +
+alsonotacommand +
+notacommand
+****
+
+=== ClearCommand
+Input Command: +
+****
+clear
+****
+Expected Result: +
+All persons and tasks vanish from the leftmost and middle columns, leaving them empty. +
+
+Expected Message: +
+****
+*Address book has been cleared!*
+****
+
+****
+* You may wish to use `undo` to restore the address book before continuing with testing.
+****
+
+=== OpenCommand and SaveAsCommand
+
+*Saves data as a new .xml file and switches to that file*
+
+Input Command: +
+****
+save +
+Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml. +
+Save the new save file as test.xml. +
+Click save.
+****
+
+Expected Result: The file path in the bottom right corner changes to the location of where you saved the file followed by test.xml. +
+
+Expected Message: +
+****
+Successfully saved file.
+****
+*Opens and switches to a new .xml save file*
+
+Following the above save command:
+
+Input Command: +
+****
+clear
+****
+To differentiate the test.xml with the [W09-B2][Address++]SampleData.xml. +
+
+Expected Result: +
+****
+The address book contains no more persons or tasks.
+****
+
+Input Command: +
+****
+open +
+Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml and select [W09-B2][Address++]SampleData.xml. +
+Click open.
+****
+Expected Result: The file path in the bottom right corner changes to the location of where you saved the [W09-B2][Address++]SampleData.xml followed by the name [W09-B2][Address++]SampleData.xml. +
+The original data is restored in the address book. +
+
+Expected Message: +
+****
+Successfully opened file.
+****
+
+=== ExitCommand
+
+*Exits Address++*
+
+Input Command:
+****
+exit
+****
+Expected Result: Address++ closes.
+
+

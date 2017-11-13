@@ -1451,7 +1451,7 @@ e.g. `th light`
 == Keyboard Shortcuts
 
 * *Exit* : kbd:[ALT]+kbd:[F4]
-* *Help* : kbd:[[F1]
+* *Help* : kbd:[F1]
 * *Open* : kbd:[CTRL]+kbd:[O]
 * *Save As* : kbd:[CTRL]+kbd:[S]
 * *Increase Size:* kbd:[CTRL] + kbd:[W] (kbd:[CMD] + kbd:[W] on MacOS)
