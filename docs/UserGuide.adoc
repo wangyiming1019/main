@@ -367,11 +367,11 @@ Format: `privacylevel LEVEL`
 ****
 **Example Scenario 1** +
 You have an address book full of various contacts with private fields, however, now you need to access the email addresses of all your contacts to ask them for help in your upcoming survey. +
-You decide to use the privacylevel command to reveal all you contact's hidden data.
+You decide to use the privacylevel command to reveal all you contacts' hidden data.
 >> `privacylevel 1`
 
 **Example Scenario 2** +
-You wish to completely hide some of your confidential contacts from view, but your address book is too large, and you don't want to have to individually set every field for every confidential person to be private. +
+You wish to completely hide some of your confidential contacts from view, but your address book is too large, and you do not want to have to individually set every field for every confidential person to be private. +
 Using the privacylevel command, you set each contact with any private field to be hidden in the address book. +
 >> `privacylevel 3`
 
@@ -424,8 +424,9 @@ _Figure 3.12.1 : FavouriteCommand_
 === Listing all favourite persons : `showfavourite` (since V1.3)
 
 You can use the `showfavourite` command to quickly show all your favourite contacts in the address book. +
-`showfavourite` can be replaced by `sfav` for faster input. +
 [NOTE]
+`showfavourite` can be replaced by `sfav` for faster input. +
+
 Format: `showfavourite` +
 
 ****
@@ -596,7 +597,7 @@ Format: `delete INDEX` +
 ****
 **Things To Note**
 
-* Deletes the person or task at the specified `INDEX`.
+* Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -620,17 +621,17 @@ You thus use `find` to find contacts who are named "Maribel", then delete Maribe
 // tag::deletetask[]
 === Deleting a task : `delete task/`
 
-You can use the `delete task/` command to remove tasks from the address book. The `delete` command will help you clean up obsolete or completed tasks. +
+You can use the `delete task/` command to remove tasks from the address book. The `delete task/` command will help you clean up obsolete or completed tasks. +
 [NOTE]
-`delete` can be replaced by `d` for faster input. +
+`delete task/` can be replaced by `d task/` for faster input. +
 
-Format: `delete task / INDEX` +
+Format: `delete task/ INDEX` +
 
 ****
 **Things To Note**
 
-* Deletes the person or task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* Deletes the  task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent task listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -639,7 +640,7 @@ Format: `delete task / INDEX` +
 **Example Scenario 1:** +
 You wish to delete the first task.
 
->> `delete task /1`
+>> `delete task/ 1`
 ****
 
 ****
@@ -648,7 +649,7 @@ You wish to delete a task named "1500-word Essay". However you have many tasks, 
 You thus use `find task/` to find tasks related to "Essays", before using `delete task/` to delete "1500-word Essay" accordingly.
 
 >> `find task/ Essay` +
->> `delete 3`
+>> `delete task/ 3`
 ****
 // end::deletetask[]
 // tag::deletetag[]
@@ -766,7 +767,7 @@ Format for `unlock` Command: `unlock pw/[PASSWORD]` +
 `unlock` can be replaced with `ul` for faster input. +
 
 [NOTE]
-The default password is 'password'
+The default password is `password`
 
 **Example Scenarios**:
 ****
@@ -904,8 +905,8 @@ Format (person): `navigate [fp/INDEX] [ft/INDEX] [fa/ADDRESS] (Must have only on
 **Example Scenarios:** +
 ****
 **Example Scenario 1:** +
-You are planning to go to your friend Roy's house for their birthday party that afternoon, but you've just ended class at NUS. +
-You've never been to their house before, and you enlist the aid of Address++ to find the fastest route to their house. +
+You are planning to go to your friend Roy's house for their birthday party that afternoon, but you have just ended class at NUS. +
+You have never been to their house before, and you enlist the aid of Address++ to find the fastest route to their house. +
 >> `find Roy` +
 >> `navigate fa/NUS tp/1`
 
@@ -1111,7 +1112,7 @@ Format: `undo` +
 ****
 **Things To Note**
 
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: Commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ****
 
 **Example Scenarios:** +
@@ -1230,14 +1231,48 @@ However you realise that no mistake was made. Instead of typing your commands ag
 >> `redo`
 ****
 // end::redo[]
+// tag::clear[]
 === Clearing all entries : `clear`
 
 If you would like to start fresh on a clean slate, you can use this command to clear all entries from the address book. +
+Additionally, if you clear only the contacts list or the task list, you can specify which type to clear in the command. +
 [NOTE]
 `clear` can be replaced by `c` for faster input. +
 
 Format: `clear` +
 
+To clear only the contacts list, type `clear person/` +
+To clear only the tasks list, type `clear task/` +
+
+****
+**Things To Note**
+
+* If both `person/` and `task` are specified, or if neither were specified, the `clear` command will delete all entries in the address book.
+****
+
+**Example Scenarios:** +
+****
+**Example Scenario 1:** +
+You have completed every task in your task list, and want to clean it up.
+
+>> `clear task/` +
+****
+
+****
+**Example Scenario 2:** +
+You first start up Address++, and after getting used to how the app works, find that you do not need the initial sample data anymore. However you would still like to keep smome of the tasks for further reference.
+
+>> `clear person/` +
+****
+
+****
+**Example Scenario 2:** +
+You first start up Address++, and after getting used to how the app works, find that you do not need the initial sample data anymore. You would like to clear everything in Address++ to make space for your own contacts and tasks.
+
+
+>> `clear` +
+****
+// end::clear[]
 // tag::open[]
 === Opening a save file : `open`
 Switching between address books is made easy with the `open` command, as it allows you can load different save files into the application. +
