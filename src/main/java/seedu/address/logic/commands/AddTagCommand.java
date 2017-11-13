@@ -32,7 +32,8 @@ public class AddTagCommand extends AddCommand {
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in all persons in the current list.";
+    public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in all "
+            + "target persons in the current list.";
 
     private final ArrayList<Index> targetIndexes;
     private final Tag addTag;

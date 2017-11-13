@@ -51,7 +51,9 @@ public class FavouriteCommand extends UndoableCommand {
                 personToFavourite.getAddress(), true,
                 personToFavourite.getRemark(), personToFavourite.getAvatar(),
                 personToFavourite.getTags());
-
+        if (personToFavourite.getFavourite().equals(true)) {
+            throw new CommandException(MESSAGE_DUPLICATE_FAVOURITE);
+        }
         try {
             model.updatePerson(personToFavourite, editedPerson);
         } catch (DuplicatePersonException dpe) {
