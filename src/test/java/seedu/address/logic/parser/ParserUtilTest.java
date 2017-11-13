@@ -201,6 +201,7 @@ public class ParserUtilTest {
         assertEquals(expectedPrivateEmail, actualPrivateEmail.get());
     }
 
+    //@@author Esilocke
     @Test
     public void parseRemark_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
