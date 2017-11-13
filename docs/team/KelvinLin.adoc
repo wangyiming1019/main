@@ -92,6 +92,7 @@ include::../UserGuide.adoc[tag=findtask]
 include::../UserGuide.adoc[tag=selecttask]
 include::../UserGuide.adoc[tag=setstate]
 include::../UserGuide.adoc[tag=assignDismiss]
+include::../UserGuide.adoc[tag=clear]
 
 #End of Extract#
 
